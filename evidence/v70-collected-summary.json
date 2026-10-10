@@ -1,0 +1,71 @@
+{
+  "identity": {
+    "engineSha256": "26145ea94ebb09b78271e75b185914856fce0376dafd6ef82a2f465bbf56a854",
+    "templateSha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796"
+  },
+  "scope": "Retrospective accuracy, not independent validation; normalized imported/end-acknowledged mass collection, deduplicated by replay bytes; v69 candidate binary with retail flags; exact skill times rounded to 0.1ms; replay samples use float32 position and wide wire encoding.",
+  "excluded": 0,
+  "groups": {
+    "all": {
+      "races": 12420,
+      "errors": 0,
+      "runners": 112065,
+      "winner": 12412,
+      "placements": 111995,
+      "finishExact": 12396,
+      "skillExact": 12400,
+      "frameExact": 12396,
+      "officialCasts": 1258749,
+      "simulatedCasts": 1258741,
+      "exactCasts": 1257899,
+      "finishMAE": 0.0003218278972966303,
+      "maxFinishError": 1.3089065551757812
+    },
+    "9 runners": {
+      "races": 12387,
+      "errors": 0,
+      "runners": 111483,
+      "winner": 12379,
+      "placements": 111413,
+      "finishExact": 12363,
+      "skillExact": 12367,
+      "frameExact": 12363,
+      "officialCasts": 1252179,
+      "simulatedCasts": 1252171,
+      "exactCasts": 1251329,
+      "finishMAE": 0.00032350800849050416,
+      "maxFinishError": 1.3089065551757812
+    },
+    "16 runners": {
+      "races": 6,
+      "errors": 0,
+      "runners": 96,
+      "winner": 6,
+      "placements": 96,
+      "finishExact": 6,
+      "skillExact": 6,
+      "frameExact": 6,
+      "officialCasts": 1079,
+      "simulatedCasts": 1079,
+      "exactCasts": 1079,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "18 runners": {
+      "races": 27,
+      "errors": 0,
+      "runners": 486,
+      "winner": 27,
+      "placements": 486,
+      "finishExact": 27,
+      "skillExact": 27,
+      "frameExact": 27,
+      "officialCasts": 5491,
+      "simulatedCasts": 5491,
+      "exactCasts": 5491,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    }
+  },
+  "scope_note": "Original scope string has a stale v69 label; engine hash identifies candidate-t packaged as v70."
+}

@@ -1,0 +1,1015 @@
+{
+  "version": "v70",
+  "archive_sha256": "b3959bcc729e32c046096c11344233b1b276a8cfaa896ca40fe27a2a5b22582a",
+  "files": [
+    {
+      "path": "Cargo.lock",
+      "archive_path": "Cargo.lock",
+      "archive_sha256": "b5167b819ffc84f07f42b614a24fbaa50668b50b3892d4b53f6cf07b8be05356",
+      "sha256": "b5167b819ffc84f07f42b614a24fbaa50668b50b3892d4b53f6cf07b8be05356"
+    },
+    {
+      "path": "Cargo.toml",
+      "archive_path": "Cargo.toml",
+      "archive_sha256": "4d32fc3e31527f8b26324d3dab7f08e2654aac5955dd7d679418fc6d335f2322",
+      "sha256": "4d32fc3e31527f8b26324d3dab7f08e2654aac5955dd7d679418fc6d335f2322"
+    },
+    {
+      "path": "data/course_geometry/10902.json",
+      "archive_path": "inputs/008a025830a0b43d9497390a1041d9f4db6443f036d64afd45327d8a28d07828-008a025830a0b43d9497390a1041d9f4db6443f036d64afd45327d8a28d07828-10902.json",
+      "archive_sha256": "008a025830a0b43d9497390a1041d9f4db6443f036d64afd45327d8a28d07828",
+      "sha256": "008a025830a0b43d9497390a1041d9f4db6443f036d64afd45327d8a28d07828"
+    },
+    {
+      "path": "data/course_geometry/10603.json",
+      "archive_path": "inputs/0404f614be9faa12c851fca6d39471e0021fa7ed2c24fac5539b21b239e04ec6-0404f614be9faa12c851fca6d39471e0021fa7ed2c24fac5539b21b239e04ec6-10603.json",
+      "archive_sha256": "0404f614be9faa12c851fca6d39471e0021fa7ed2c24fac5539b21b239e04ec6",
+      "sha256": "0404f614be9faa12c851fca6d39471e0021fa7ed2c24fac5539b21b239e04ec6"
+    },
+    {
+      "path": "data/course_geometry/11007.json",
+      "archive_path": "inputs/07e2330cecfbcfaa754380d89d6454ab38de4fc1da55b7cc00039b2d316ffd51-07e2330cecfbcfaa754380d89d6454ab38de4fc1da55b7cc00039b2d316ffd51-11007.json",
+      "archive_sha256": "07e2330cecfbcfaa754380d89d6454ab38de4fc1da55b7cc00039b2d316ffd51",
+      "sha256": "07e2330cecfbcfaa754380d89d6454ab38de4fc1da55b7cc00039b2d316ffd51"
+    },
+    {
+      "path": "data/course_geometry/10602.json",
+      "archive_path": "inputs/07f02685c113bcff18b3cc41751a85725939c24416609e719eff8449f8255e47-07f02685c113bcff18b3cc41751a85725939c24416609e719eff8449f8255e47-10602.json",
+      "archive_sha256": "07f02685c113bcff18b3cc41751a85725939c24416609e719eff8449f8255e47",
+      "sha256": "07f02685c113bcff18b3cc41751a85725939c24416609e719eff8449f8255e47"
+    },
+    {
+      "path": "data/course_geometry/10607.json",
+      "archive_path": "inputs/08843030c0ef0204c38fd8e684ed29de262e68063cb2d2ce7fc233048c07b407-08843030c0ef0204c38fd8e684ed29de262e68063cb2d2ce7fc233048c07b407-10607.json",
+      "archive_sha256": "08843030c0ef0204c38fd8e684ed29de262e68063cb2d2ce7fc233048c07b407",
+      "sha256": "08843030c0ef0204c38fd8e684ed29de262e68063cb2d2ce7fc233048c07b407"
+    },
+    {
+      "path": "data/course_geometry/11203.json",
+      "archive_path": "inputs/0c40ef272a0b73c5bac9b4e75d72d8a2078ce674528f4a96eb23a6df089e8dd9-0c40ef272a0b73c5bac9b4e75d72d8a2078ce674528f4a96eb23a6df089e8dd9-11203.json",
+      "archive_sha256": "0c40ef272a0b73c5bac9b4e75d72d8a2078ce674528f4a96eb23a6df089e8dd9",
+      "sha256": "0c40ef272a0b73c5bac9b4e75d72d8a2078ce674528f4a96eb23a6df089e8dd9"
+    },
+    {
+      "path": "data/course_geometry/10910.json",
+      "archive_path": "inputs/0e4559b644817cbeaa474d443dd0aa99141f1ed1497482d983fb46ce4dbfdc2b-0e4559b644817cbeaa474d443dd0aa99141f1ed1497482d983fb46ce4dbfdc2b-10910.json",
+      "archive_sha256": "0e4559b644817cbeaa474d443dd0aa99141f1ed1497482d983fb46ce4dbfdc2b",
+      "sha256": "0e4559b644817cbeaa474d443dd0aa99141f1ed1497482d983fb46ce4dbfdc2b"
+    },
+    {
+      "path": "data/course_geometry/10510.json",
+      "archive_path": "inputs/0edd56f93db6e03b7da867c5dd909982518b7899a9a0845b66738ae3d7e48870-0edd56f93db6e03b7da867c5dd909982518b7899a9a0845b66738ae3d7e48870-10510.json",
+      "archive_sha256": "0edd56f93db6e03b7da867c5dd909982518b7899a9a0845b66738ae3d7e48870",
+      "sha256": "0edd56f93db6e03b7da867c5dd909982518b7899a9a0845b66738ae3d7e48870"
+    },
+    {
+      "path": "data/course_geometry/10606.json",
+      "archive_path": "inputs/0eed113cd5d9b11fa8c0e916b0a99ad5c3a739492d25eec21c5de7097e3a19b0-0eed113cd5d9b11fa8c0e916b0a99ad5c3a739492d25eec21c5de7097e3a19b0-10606.json",
+      "archive_sha256": "0eed113cd5d9b11fa8c0e916b0a99ad5c3a739492d25eec21c5de7097e3a19b0",
+      "sha256": "0eed113cd5d9b11fa8c0e916b0a99ad5c3a739492d25eec21c5de7097e3a19b0"
+    },
+    {
+      "path": "data/course_geometry/10706.json",
+      "archive_path": "inputs/0f89881f7075dcb7cf9fac7503e8a217e1f01b635ead26b92be3d36ab7902218-0f89881f7075dcb7cf9fac7503e8a217e1f01b635ead26b92be3d36ab7902218-10706.json",
+      "archive_sha256": "0f89881f7075dcb7cf9fac7503e8a217e1f01b635ead26b92be3d36ab7902218",
+      "sha256": "0f89881f7075dcb7cf9fac7503e8a217e1f01b635ead26b92be3d36ab7902218"
+    },
+    {
+      "path": "tests/fixtures/retail_field_port.json",
+      "archive_path": "inputs/1237c2ad4e119f79e7214a7b9e73b4e642825d501ab139ff07e7f21512c68c3f-1237c2ad4e119f79e7214a7b9e73b4e642825d501ab139ff07e7f21512c68c3f-retail_field_port.json",
+      "archive_sha256": "1237c2ad4e119f79e7214a7b9e73b4e642825d501ab139ff07e7f21512c68c3f",
+      "sha256": "1237c2ad4e119f79e7214a7b9e73b4e642825d501ab139ff07e7f21512c68c3f"
+    },
+    {
+      "path": "data/course_geometry/10402.json",
+      "archive_path": "inputs/131a27e870a45b39bdca9d08b5f08e38ae48dbe5dc28df1179f3069a0ea8083f-131a27e870a45b39bdca9d08b5f08e38ae48dbe5dc28df1179f3069a0ea8083f-10402.json",
+      "archive_sha256": "131a27e870a45b39bdca9d08b5f08e38ae48dbe5dc28df1179f3069a0ea8083f",
+      "sha256": "131a27e870a45b39bdca9d08b5f08e38ae48dbe5dc28df1179f3069a0ea8083f"
+    },
+    {
+      "path": "data/course_geometry/10608.json",
+      "archive_path": "inputs/1334b7714298d0ea973b0aaddd7876ab51332eb441a17387c1dd2e74ab50ceab-1334b7714298d0ea973b0aaddd7876ab51332eb441a17387c1dd2e74ab50ceab-10608.json",
+      "archive_sha256": "1334b7714298d0ea973b0aaddd7876ab51332eb441a17387c1dd2e74ab50ceab",
+      "sha256": "1334b7714298d0ea973b0aaddd7876ab51332eb441a17387c1dd2e74ab50ceab"
+    },
+    {
+      "path": "data/course_geometry/11302.json",
+      "archive_path": "inputs/13b808eadc121524d0855fb71c89464747dbb8fd913251623fdc3a59522365de-13b808eadc121524d0855fb71c89464747dbb8fd913251623fdc3a59522365de-11302.json",
+      "archive_sha256": "13b808eadc121524d0855fb71c89464747dbb8fd913251623fdc3a59522365de",
+      "sha256": "13b808eadc121524d0855fb71c89464747dbb8fd913251623fdc3a59522365de"
+    },
+    {
+      "path": "data/course_geometry/10804.json",
+      "archive_path": "inputs/15950ac590a1d779d6991f75feccc2a82af653ea2007d30a4f154b0d6f517b2c-15950ac590a1d779d6991f75feccc2a82af653ea2007d30a4f154b0d6f517b2c-10804.json",
+      "archive_sha256": "15950ac590a1d779d6991f75feccc2a82af653ea2007d30a4f154b0d6f517b2c",
+      "sha256": "15950ac590a1d779d6991f75feccc2a82af653ea2007d30a4f154b0d6f517b2c"
+    },
+    {
+      "path": "data/course_geometry/10613.json",
+      "archive_path": "inputs/184c0143f816c840fa75d61e15c5af162e3eb9fe1f891012b1890a1abbe77416-184c0143f816c840fa75d61e15c5af162e3eb9fe1f891012b1890a1abbe77416-10613.json",
+      "archive_sha256": "184c0143f816c840fa75d61e15c5af162e3eb9fe1f891012b1890a1abbe77416",
+      "sha256": "184c0143f816c840fa75d61e15c5af162e3eb9fe1f891012b1890a1abbe77416"
+    },
+    {
+      "path": "data/course_geometry/11504.json",
+      "archive_path": "inputs/1bb3130cd9000d82b155fc249d0fa014d85f2b987daf8e11fd2129803d88ba2f-1bb3130cd9000d82b155fc249d0fa014d85f2b987daf8e11fd2129803d88ba2f-11504.json",
+      "archive_sha256": "1bb3130cd9000d82b155fc249d0fa014d85f2b987daf8e11fd2129803d88ba2f",
+      "sha256": "1bb3130cd9000d82b155fc249d0fa014d85f2b987daf8e11fd2129803d88ba2f"
+    },
+    {
+      "path": "data/course_geometry/10802.json",
+      "archive_path": "inputs/2226a69cd0c4a67fa7898c459b22ef017546f192654bf3456ce6745308663814-2226a69cd0c4a67fa7898c459b22ef017546f192654bf3456ce6745308663814-10802.json",
+      "archive_sha256": "2226a69cd0c4a67fa7898c459b22ef017546f192654bf3456ce6745308663814",
+      "sha256": "2226a69cd0c4a67fa7898c459b22ef017546f192654bf3456ce6745308663814"
+    },
+    {
+      "path": "data/course_geometry/11303.json",
+      "archive_path": "inputs/228e2ed04d6b59684220bea7e51123ed62d2994e527f28abd1df21f1bf89dfe1-228e2ed04d6b59684220bea7e51123ed62d2994e527f28abd1df21f1bf89dfe1-11303.json",
+      "archive_sha256": "228e2ed04d6b59684220bea7e51123ed62d2994e527f28abd1df21f1bf89dfe1",
+      "sha256": "228e2ed04d6b59684220bea7e51123ed62d2994e527f28abd1df21f1bf89dfe1"
+    },
+    {
+      "path": "data/course_geometry/10906.json",
+      "archive_path": "inputs/29e0a6651155d386bfee337c9b3ffb40b1b71b785d10b5b92fb0dc5252baa9fe-29e0a6651155d386bfee337c9b3ffb40b1b71b785d10b5b92fb0dc5252baa9fe-10906.json",
+      "archive_sha256": "29e0a6651155d386bfee337c9b3ffb40b1b71b785d10b5b92fb0dc5252baa9fe",
+      "sha256": "29e0a6651155d386bfee337c9b3ffb40b1b71b785d10b5b92fb0dc5252baa9fe"
+    },
+    {
+      "path": "data/course_geometry/11501.json",
+      "archive_path": "inputs/29f379601a60a13705b0be79554774d40326d060ea45ed595f564240305b1ffb-29f379601a60a13705b0be79554774d40326d060ea45ed595f564240305b1ffb-11501.json",
+      "archive_sha256": "29f379601a60a13705b0be79554774d40326d060ea45ed595f564240305b1ffb",
+      "sha256": "29f379601a60a13705b0be79554774d40326d060ea45ed595f564240305b1ffb"
+    },
+    {
+      "path": "data/course_geometry/10104.json",
+      "archive_path": "inputs/2bc8bdd761d65641555b780ec0e461c6b721ccced6ac12deb3a0d334353c0611-2bc8bdd761d65641555b780ec0e461c6b721ccced6ac12deb3a0d334353c0611-10104.json",
+      "archive_sha256": "2bc8bdd761d65641555b780ec0e461c6b721ccced6ac12deb3a0d334353c0611",
+      "sha256": "2bc8bdd761d65641555b780ec0e461c6b721ccced6ac12deb3a0d334353c0611"
+    },
+    {
+      "path": "data/course_geometry/10813.json",
+      "archive_path": "inputs/2ce253106e337c72ef61e076b1b24f8a46fb61a7485e0f26da66988ffcf6b325-2ce253106e337c72ef61e076b1b24f8a46fb61a7485e0f26da66988ffcf6b325-10813.json",
+      "archive_sha256": "2ce253106e337c72ef61e076b1b24f8a46fb61a7485e0f26da66988ffcf6b325",
+      "sha256": "2ce253106e337c72ef61e076b1b24f8a46fb61a7485e0f26da66988ffcf6b325"
+    },
+    {
+      "path": "data/course_geometry/10703.json",
+      "archive_path": "inputs/2d2b4328b83215ecbfd0c6b7dd3ba97c91f683d5a57ee3a5cbe6016e5c1d7814-2d2b4328b83215ecbfd0c6b7dd3ba97c91f683d5a57ee3a5cbe6016e5c1d7814-10703.json",
+      "archive_sha256": "2d2b4328b83215ecbfd0c6b7dd3ba97c91f683d5a57ee3a5cbe6016e5c1d7814",
+      "sha256": "2d2b4328b83215ecbfd0c6b7dd3ba97c91f683d5a57ee3a5cbe6016e5c1d7814"
+    },
+    {
+      "path": "data/course_geometry/11101.json",
+      "archive_path": "inputs/2e49a1033c7cc656f8e378b2a1b4cf6be3104e0caca499010703c62d280a265b-2e49a1033c7cc656f8e378b2a1b4cf6be3104e0caca499010703c62d280a265b-11101.json",
+      "archive_sha256": "2e49a1033c7cc656f8e378b2a1b4cf6be3104e0caca499010703c62d280a265b",
+      "sha256": "2e49a1033c7cc656f8e378b2a1b4cf6be3104e0caca499010703c62d280a265b"
+    },
+    {
+      "path": "data/course_geometry/10405.json",
+      "archive_path": "inputs/2ffaa06a2d122afb22e4d59682b2a8780abcddaeacf74c8b4b61b354678b5135-2ffaa06a2d122afb22e4d59682b2a8780abcddaeacf74c8b4b61b354678b5135-10405.json",
+      "archive_sha256": "2ffaa06a2d122afb22e4d59682b2a8780abcddaeacf74c8b4b61b354678b5135",
+      "sha256": "2ffaa06a2d122afb22e4d59682b2a8780abcddaeacf74c8b4b61b354678b5135"
+    },
+    {
+      "path": "data/course_geometry/10904.json",
+      "archive_path": "inputs/3020a02d7810d3f9708f4868b3aae6b732b1d26f6fe94d24361f87b208fa3962-3020a02d7810d3f9708f4868b3aae6b732b1d26f6fe94d24361f87b208fa3962-10904.json",
+      "archive_sha256": "3020a02d7810d3f9708f4868b3aae6b732b1d26f6fe94d24361f87b208fa3962",
+      "sha256": "3020a02d7810d3f9708f4868b3aae6b732b1d26f6fe94d24361f87b208fa3962"
+    },
+    {
+      "path": "data/course_geometry/10901.json",
+      "archive_path": "inputs/34253ee424feef467f47c6d0b46b826cb4bf46f9db5efc53ec56f3e4389da04c-34253ee424feef467f47c6d0b46b826cb4bf46f9db5efc53ec56f3e4389da04c-10901.json",
+      "archive_sha256": "34253ee424feef467f47c6d0b46b826cb4bf46f9db5efc53ec56f3e4389da04c",
+      "sha256": "34253ee424feef467f47c6d0b46b826cb4bf46f9db5efc53ec56f3e4389da04c"
+    },
+    {
+      "path": "data/course_geometry/10106.json",
+      "archive_path": "inputs/376080649d28ca5a3a33d8885e72312a90d94a732f8c9770398ec55a89c4bbaf-376080649d28ca5a3a33d8885e72312a90d94a732f8c9770398ec55a89c4bbaf-10106.json",
+      "archive_sha256": "376080649d28ca5a3a33d8885e72312a90d94a732f8c9770398ec55a89c4bbaf",
+      "sha256": "376080649d28ca5a3a33d8885e72312a90d94a732f8c9770398ec55a89c4bbaf"
+    },
+    {
+      "path": "data/course_geometry/10108.json",
+      "archive_path": "inputs/3c31ab830743f5dd4da9ed430d74efa26c0a511cf74bd9153730e0e53f548774-3c31ab830743f5dd4da9ed430d74efa26c0a511cf74bd9153730e0e53f548774-10108.json",
+      "archive_sha256": "3c31ab830743f5dd4da9ed430d74efa26c0a511cf74bd9153730e0e53f548774",
+      "sha256": "3c31ab830743f5dd4da9ed430d74efa26c0a511cf74bd9153730e0e53f548774"
+    },
+    {
+      "path": "data/course_geometry/11403.json",
+      "archive_path": "inputs/40818de71232e91d84b04c9ba8440341f9214be0d25d6e95fd1b0ac4c4ff5ac2-40818de71232e91d84b04c9ba8440341f9214be0d25d6e95fd1b0ac4c4ff5ac2-11403.json",
+      "archive_sha256": "40818de71232e91d84b04c9ba8440341f9214be0d25d6e95fd1b0ac4c4ff5ac2",
+      "sha256": "40818de71232e91d84b04c9ba8440341f9214be0d25d6e95fd1b0ac4c4ff5ac2"
+    },
+    {
+      "path": "data/course_geometry/10306.json",
+      "archive_path": "inputs/41ae650ef69ffe632d461f7cb712efc00d39ab6aba9fb15032e0322ffb9d69ac-41ae650ef69ffe632d461f7cb712efc00d39ab6aba9fb15032e0322ffb9d69ac-10306.json",
+      "archive_sha256": "41ae650ef69ffe632d461f7cb712efc00d39ab6aba9fb15032e0322ffb9d69ac",
+      "sha256": "41ae650ef69ffe632d461f7cb712efc00d39ab6aba9fb15032e0322ffb9d69ac"
+    },
+    {
+      "path": "data/course_geometry/10908.json",
+      "archive_path": "inputs/42694cb84f59f9bb5a49bb7a5871303a60b8f1b8e0619cee1df6be802996a814-42694cb84f59f9bb5a49bb7a5871303a60b8f1b8e0619cee1df6be802996a814-10908.json",
+      "archive_sha256": "42694cb84f59f9bb5a49bb7a5871303a60b8f1b8e0619cee1df6be802996a814",
+      "sha256": "42694cb84f59f9bb5a49bb7a5871303a60b8f1b8e0619cee1df6be802996a814"
+    },
+    {
+      "path": "data/course_geometry/10707.json",
+      "archive_path": "inputs/42d406ddd8620403c8f18956311f356c12bbe85457cae93a04a380c2fdf26092-42d406ddd8620403c8f18956311f356c12bbe85457cae93a04a380c2fdf26092-10707.json",
+      "archive_sha256": "42d406ddd8620403c8f18956311f356c12bbe85457cae93a04a380c2fdf26092",
+      "sha256": "42d406ddd8620403c8f18956311f356c12bbe85457cae93a04a380c2fdf26092"
+    },
+    {
+      "path": "tests/fixtures/retail_pacing_port.json",
+      "archive_path": "inputs/446fe7251d3fc53a6e0008295fa150ccf52f01b58efe79c85c814d7f4935b50f-446fe7251d3fc53a6e0008295fa150ccf52f01b58efe79c85c814d7f4935b50f-retail_pacing_port.json",
+      "archive_sha256": "446fe7251d3fc53a6e0008295fa150ccf52f01b58efe79c85c814d7f4935b50f",
+      "sha256": "446fe7251d3fc53a6e0008295fa150ccf52f01b58efe79c85c814d7f4935b50f"
+    },
+    {
+      "path": "data/global_parameters.json",
+      "archive_path": "inputs/4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1-4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1-global_parameters.json",
+      "archive_sha256": "4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1",
+      "sha256": "4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1"
+    },
+    {
+      "path": "data/course_geometry/11001.json",
+      "archive_path": "inputs/46768ca277b8f6bb671d51a7bb6221116bd908b4e91d378795c20355b37ea8e7-46768ca277b8f6bb671d51a7bb6221116bd908b4e91d378795c20355b37ea8e7-11001.json",
+      "archive_sha256": "46768ca277b8f6bb671d51a7bb6221116bd908b4e91d378795c20355b37ea8e7",
+      "sha256": "46768ca277b8f6bb671d51a7bb6221116bd908b4e91d378795c20355b37ea8e7"
+    },
+    {
+      "path": "data/course_geometry/10404.json",
+      "archive_path": "inputs/4679cac10ad07eb477370329543484fca580befff1b3642f7f783cf94bdfd6ba-4679cac10ad07eb477370329543484fca580befff1b3642f7f783cf94bdfd6ba-10404.json",
+      "archive_sha256": "4679cac10ad07eb477370329543484fca580befff1b3642f7f783cf94bdfd6ba",
+      "sha256": "4679cac10ad07eb477370329543484fca580befff1b3642f7f783cf94bdfd6ba"
+    },
+    {
+      "path": "data/course_geometry/11003.json",
+      "archive_path": "inputs/4abad45c68351c00ebd650c395c95a4515608ec157fc634e97a63620417fccf7-4abad45c68351c00ebd650c395c95a4515608ec157fc634e97a63620417fccf7-11003.json",
+      "archive_sha256": "4abad45c68351c00ebd650c395c95a4515608ec157fc634e97a63620417fccf7",
+      "sha256": "4abad45c68351c00ebd650c395c95a4515608ec157fc634e97a63620417fccf7"
+    },
+    {
+      "path": "data/course_geometry/10611.json",
+      "archive_path": "inputs/4b069a63cd4d716131eac08fb799b00d9ca580930aebf0b1fb7fcdff775bdde6-4b069a63cd4d716131eac08fb799b00d9ca580930aebf0b1fb7fcdff775bdde6-10611.json",
+      "archive_sha256": "4b069a63cd4d716131eac08fb799b00d9ca580930aebf0b1fb7fcdff775bdde6",
+      "sha256": "4b069a63cd4d716131eac08fb799b00d9ca580930aebf0b1fb7fcdff775bdde6"
+    },
+    {
+      "path": "data/course_geometry/10202.json",
+      "archive_path": "inputs/4b4acad7f46413beddb169e1c8400a00e513d49dff1ae054aeba37e2684703a5-4b4acad7f46413beddb169e1c8400a00e513d49dff1ae054aeba37e2684703a5-10202.json",
+      "archive_sha256": "4b4acad7f46413beddb169e1c8400a00e513d49dff1ae054aeba37e2684703a5",
+      "sha256": "4b4acad7f46413beddb169e1c8400a00e513d49dff1ae054aeba37e2684703a5"
+    },
+    {
+      "path": "data/course_geometry/10701.json",
+      "archive_path": "inputs/4d0231e7a6b3643e329a41167ee6b224ffe3af60e022bcb6a8435eb8ecc69058-4d0231e7a6b3643e329a41167ee6b224ffe3af60e022bcb6a8435eb8ecc69058-10701.json",
+      "archive_sha256": "4d0231e7a6b3643e329a41167ee6b224ffe3af60e022bcb6a8435eb8ecc69058",
+      "sha256": "4d0231e7a6b3643e329a41167ee6b224ffe3af60e022bcb6a8435eb8ecc69058"
+    },
+    {
+      "path": "data/course_geometry/10205.json",
+      "archive_path": "inputs/4de60e843a72ef0114573052880787361e37db717cec7e155ba2b53b3fa02ff7-4de60e843a72ef0114573052880787361e37db717cec7e155ba2b53b3fa02ff7-10205.json",
+      "archive_sha256": "4de60e843a72ef0114573052880787361e37db717cec7e155ba2b53b3fa02ff7",
+      "sha256": "4de60e843a72ef0114573052880787361e37db717cec7e155ba2b53b3fa02ff7"
+    },
+    {
+      "path": "data/course_geometry/10505.json",
+      "archive_path": "inputs/4f8551aad3f9e33c2746a63e5988e361200c943e5fab287a4e87aed54a7324d2-4f8551aad3f9e33c2746a63e5988e361200c943e5fab287a4e87aed54a7324d2-10505.json",
+      "archive_sha256": "4f8551aad3f9e33c2746a63e5988e361200c943e5fab287a4e87aed54a7324d2",
+      "sha256": "4f8551aad3f9e33c2746a63e5988e361200c943e5fab287a4e87aed54a7324d2"
+    },
+    {
+      "path": "data/course_geometry/10103.json",
+      "archive_path": "inputs/50310185b8f49eeb65b92627185128c4127db7b1658684d3ce8f43ca23d6a6f8-50310185b8f49eeb65b92627185128c4127db7b1658684d3ce8f43ca23d6a6f8-10103.json",
+      "archive_sha256": "50310185b8f49eeb65b92627185128c4127db7b1658684d3ce8f43ca23d6a6f8",
+      "sha256": "50310185b8f49eeb65b92627185128c4127db7b1658684d3ce8f43ca23d6a6f8"
+    },
+    {
+      "path": "data/course_geometry/10509.json",
+      "archive_path": "inputs/519667a2106e802a048c0cb4ad0c902b66a9dd71f080e034e93e7f2f846b7ae1-519667a2106e802a048c0cb4ad0c902b66a9dd71f080e034e93e7f2f846b7ae1-10509.json",
+      "archive_sha256": "519667a2106e802a048c0cb4ad0c902b66a9dd71f080e034e93e7f2f846b7ae1",
+      "sha256": "519667a2106e802a048c0cb4ad0c902b66a9dd71f080e034e93e7f2f846b7ae1"
+    },
+    {
+      "path": "tests/fixtures/retail_rng_dotnet.json",
+      "archive_path": "inputs/53c0800af32e3ab0b630216597799cff87bb933a77aac49dc1636a986773b958-53c0800af32e3ab0b630216597799cff87bb933a77aac49dc1636a986773b958-retail_rng_dotnet.json",
+      "archive_sha256": "53c0800af32e3ab0b630216597799cff87bb933a77aac49dc1636a986773b958",
+      "sha256": "53c0800af32e3ab0b630216597799cff87bb933a77aac49dc1636a986773b958"
+    },
+    {
+      "path": "data/course_geometry/10708.json",
+      "archive_path": "inputs/5b54a029c179229f3e817e94ce18d364e137d39621987e0dd5eac5e18c8c6cf8-5b54a029c179229f3e817e94ce18d364e137d39621987e0dd5eac5e18c8c6cf8-10708.json",
+      "archive_sha256": "5b54a029c179229f3e817e94ce18d364e137d39621987e0dd5eac5e18c8c6cf8",
+      "sha256": "5b54a029c179229f3e817e94ce18d364e137d39621987e0dd5eac5e18c8c6cf8"
+    },
+    {
+      "path": "data/course_geometry/11006.json",
+      "archive_path": "inputs/5c73f7cddd7d9a5f7d484ca41ffd9364a1f55e284e4cf5b253043e4ab58e7237-5c73f7cddd7d9a5f7d484ca41ffd9364a1f55e284e4cf5b253043e4ab58e7237-11006.json",
+      "archive_sha256": "5c73f7cddd7d9a5f7d484ca41ffd9364a1f55e284e4cf5b253043e4ab58e7237",
+      "sha256": "5c73f7cddd7d9a5f7d484ca41ffd9364a1f55e284e4cf5b253043e4ab58e7237"
+    },
+    {
+      "path": "data/course_geometry/10312.json",
+      "archive_path": "inputs/600277aec519139fba15c0d053e4ccb849ac830d935aef7fd67164c9c4edda04-600277aec519139fba15c0d053e4ccb849ac830d935aef7fd67164c9c4edda04-10312.json",
+      "archive_sha256": "600277aec519139fba15c0d053e4ccb849ac830d935aef7fd67164c9c4edda04",
+      "sha256": "600277aec519139fba15c0d053e4ccb849ac830d935aef7fd67164c9c4edda04"
+    },
+    {
+      "path": "data/course_geometry/10506.json",
+      "archive_path": "inputs/628b4020fcbf0fa5c80d5c9bf0801b39d9096dd94b14fc8db588fc7c95a2806b-628b4020fcbf0fa5c80d5c9bf0801b39d9096dd94b14fc8db588fc7c95a2806b-10506.json",
+      "archive_sha256": "628b4020fcbf0fa5c80d5c9bf0801b39d9096dd94b14fc8db588fc7c95a2806b",
+      "sha256": "628b4020fcbf0fa5c80d5c9bf0801b39d9096dd94b14fc8db588fc7c95a2806b"
+    },
+    {
+      "path": "data/course_geometry/10207.json",
+      "archive_path": "inputs/63a1a4cb5e2f4ed1a4519c59323b4aed39db431ed7b765972eecddafd67e8edb-63a1a4cb5e2f4ed1a4519c59323b4aed39db431ed7b765972eecddafd67e8edb-10207.json",
+      "archive_sha256": "63a1a4cb5e2f4ed1a4519c59323b4aed39db431ed7b765972eecddafd67e8edb",
+      "sha256": "63a1a4cb5e2f4ed1a4519c59323b4aed39db431ed7b765972eecddafd67e8edb"
+    },
+    {
+      "path": "data/course_geometry/10311.json",
+      "archive_path": "inputs/65a7c21405f1c20c8bdebbc710c748d53ed433a404149f135487956c627fb482-65a7c21405f1c20c8bdebbc710c748d53ed433a404149f135487956c627fb482-10311.json",
+      "archive_sha256": "65a7c21405f1c20c8bdebbc710c748d53ed433a404149f135487956c627fb482",
+      "sha256": "65a7c21405f1c20c8bdebbc710c748d53ed433a404149f135487956c627fb482"
+    },
+    {
+      "path": "tests/fixtures/retail_solver_port.json",
+      "archive_path": "inputs/688d2227ac77f578decaaa02f309f72a48d47c5b255005f31f212f6d8a99ff05-688d2227ac77f578decaaa02f309f72a48d47c5b255005f31f212f6d8a99ff05-retail_solver_port.json",
+      "archive_sha256": "688d2227ac77f578decaaa02f309f72a48d47c5b255005f31f212f6d8a99ff05",
+      "sha256": "688d2227ac77f578decaaa02f309f72a48d47c5b255005f31f212f6d8a99ff05"
+    },
+    {
+      "path": "data/course_geometry/10303.json",
+      "archive_path": "inputs/70008dcfe56452f1fcc38bb65e4afc7ec5eb33aed3ddecd8b65052a6effc2f5f-70008dcfe56452f1fcc38bb65e4afc7ec5eb33aed3ddecd8b65052a6effc2f5f-10303.json",
+      "archive_sha256": "70008dcfe56452f1fcc38bb65e4afc7ec5eb33aed3ddecd8b65052a6effc2f5f",
+      "sha256": "70008dcfe56452f1fcc38bb65e4afc7ec5eb33aed3ddecd8b65052a6effc2f5f"
+    },
+    {
+      "path": "data/course_geometry/10203.json",
+      "archive_path": "inputs/71fc72a3bd166074ed24fd6c2be60e37a67a2bea917dda6ed3755e386fbc450e-71fc72a3bd166074ed24fd6c2be60e37a67a2bea917dda6ed3755e386fbc450e-10203.json",
+      "archive_sha256": "71fc72a3bd166074ed24fd6c2be60e37a67a2bea917dda6ed3755e386fbc450e",
+      "sha256": "71fc72a3bd166074ed24fd6c2be60e37a67a2bea917dda6ed3755e386fbc450e"
+    },
+    {
+      "path": "data/course_geometry/10801.json",
+      "archive_path": "inputs/7330ada4f2292694b7f740ad8108c3e569048ec7ecf96384d2bc4fb8b0295a12-7330ada4f2292694b7f740ad8108c3e569048ec7ecf96384d2bc4fb8b0295a12-10801.json",
+      "archive_sha256": "7330ada4f2292694b7f740ad8108c3e569048ec7ecf96384d2bc4fb8b0295a12",
+      "sha256": "7330ada4f2292694b7f740ad8108c3e569048ec7ecf96384d2bc4fb8b0295a12"
+    },
+    {
+      "path": "data/course_geometry/10502.json",
+      "archive_path": "inputs/7355d15a1aab6c1682b4b7b97d3249a3ace843197ec97722693ac9e3e46d8fb7-7355d15a1aab6c1682b4b7b97d3249a3ace843197ec97722693ac9e3e46d8fb7-10502.json",
+      "archive_sha256": "7355d15a1aab6c1682b4b7b97d3249a3ace843197ec97722693ac9e3e46d8fb7",
+      "sha256": "7355d15a1aab6c1682b4b7b97d3249a3ace843197ec97722693ac9e3e46d8fb7"
+    },
+    {
+      "path": "data/course_geometry/10812.json",
+      "archive_path": "inputs/79e56266072a45d251c94988dee7d9833e9dd304fd8e5bac11dd1ba328b7605d-79e56266072a45d251c94988dee7d9833e9dd304fd8e5bac11dd1ba328b7605d-10812.json",
+      "archive_sha256": "79e56266072a45d251c94988dee7d9833e9dd304fd8e5bac11dd1ba328b7605d",
+      "sha256": "79e56266072a45d251c94988dee7d9833e9dd304fd8e5bac11dd1ba328b7605d"
+    },
+    {
+      "path": "data/course_geometry/10809.json",
+      "archive_path": "inputs/7c39ed67950b0a73291c7a979168b1d7f3e58b96b9af37dd697f739c04e2581a-7c39ed67950b0a73291c7a979168b1d7f3e58b96b9af37dd697f739c04e2581a-10809.json",
+      "archive_sha256": "7c39ed67950b0a73291c7a979168b1d7f3e58b96b9af37dd697f739c04e2581a",
+      "sha256": "7c39ed67950b0a73291c7a979168b1d7f3e58b96b9af37dd697f739c04e2581a"
+    },
+    {
+      "path": "data/course_geometry/10310.json",
+      "archive_path": "inputs/7d2fc10bd60b8701e74cc135b6b73041285865c999d367d0bec7d21004a03202-7d2fc10bd60b8701e74cc135b6b73041285865c999d367d0bec7d21004a03202-10310.json",
+      "archive_sha256": "7d2fc10bd60b8701e74cc135b6b73041285865c999d367d0bec7d21004a03202",
+      "sha256": "7d2fc10bd60b8701e74cc135b6b73041285865c999d367d0bec7d21004a03202"
+    },
+    {
+      "path": "data/course_geometry/10609.json",
+      "archive_path": "inputs/7d548b2326c6a220f3205aaf6d8dcfd753ad5b67fdf24f4b856ae11e6b5fdc4e-7d548b2326c6a220f3205aaf6d8dcfd753ad5b67fdf24f4b856ae11e6b5fdc4e-10609.json",
+      "archive_sha256": "7d548b2326c6a220f3205aaf6d8dcfd753ad5b67fdf24f4b856ae11e6b5fdc4e",
+      "sha256": "7d548b2326c6a220f3205aaf6d8dcfd753ad5b67fdf24f4b856ae11e6b5fdc4e"
+    },
+    {
+      "path": "data/course_geometry/10605.json",
+      "archive_path": "inputs/7e6c6b4ec1df140afee11076256796405965d9360dc6568212c25c1d398ac0de-7e6c6b4ec1df140afee11076256796405965d9360dc6568212c25c1d398ac0de-10605.json",
+      "archive_sha256": "7e6c6b4ec1df140afee11076256796405965d9360dc6568212c25c1d398ac0de",
+      "sha256": "7e6c6b4ec1df140afee11076256796405965d9360dc6568212c25c1d398ac0de"
+    },
+    {
+      "path": "data/course_geometry/11401.json",
+      "archive_path": "inputs/80a1537b155a2583952ffcd854091fde18981f81f46af7d0796a095971a0b9b5-80a1537b155a2583952ffcd854091fde18981f81f46af7d0796a095971a0b9b5-11401.json",
+      "archive_sha256": "80a1537b155a2583952ffcd854091fde18981f81f46af7d0796a095971a0b9b5",
+      "sha256": "80a1537b155a2583952ffcd854091fde18981f81f46af7d0796a095971a0b9b5"
+    },
+    {
+      "path": "data/course_data.json",
+      "archive_path": "inputs/812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98-course_data.json",
+      "archive_sha256": "812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98",
+      "sha256": "812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98"
+    },
+    {
+      "path": "data/course_geometry/10905.json",
+      "archive_path": "inputs/81d7833c748a59a97278b7051a0f1e1960c962e7c6fdd7a83165bd04e6199d0c-81d7833c748a59a97278b7051a0f1e1960c962e7c6fdd7a83165bd04e6199d0c-10905.json",
+      "archive_sha256": "81d7833c748a59a97278b7051a0f1e1960c962e7c6fdd7a83165bd04e6199d0c",
+      "sha256": "81d7833c748a59a97278b7051a0f1e1960c962e7c6fdd7a83165bd04e6199d0c"
+    },
+    {
+      "path": "data/course_geometry/11301.json",
+      "archive_path": "inputs/843b813baa555bf6694d675e0c71f7ef931a082cd317832953e8be09a6f005f6-843b813baa555bf6694d675e0c71f7ef931a082cd317832953e8be09a6f005f6-11301.json",
+      "archive_sha256": "843b813baa555bf6694d675e0c71f7ef931a082cd317832953e8be09a6f005f6",
+      "sha256": "843b813baa555bf6694d675e0c71f7ef931a082cd317832953e8be09a6f005f6"
+    },
+    {
+      "path": "data/course_geometry/11005.json",
+      "archive_path": "inputs/85ab318670ef3964f250f581e10ae657262a8223edfb7074838a245912b19dcd-85ab318670ef3964f250f581e10ae657262a8223edfb7074838a245912b19dcd-11005.json",
+      "archive_sha256": "85ab318670ef3964f250f581e10ae657262a8223edfb7074838a245912b19dcd",
+      "sha256": "85ab318670ef3964f250f581e10ae657262a8223edfb7074838a245912b19dcd"
+    },
+    {
+      "path": "data/course_geometry/10806.json",
+      "archive_path": "inputs/85ccf91b9fb8afb96d698d16eb6e79737ddc4d336e56909998bbfd1ba1d570bd-85ccf91b9fb8afb96d698d16eb6e79737ddc4d336e56909998bbfd1ba1d570bd-10806.json",
+      "archive_sha256": "85ccf91b9fb8afb96d698d16eb6e79737ddc4d336e56909998bbfd1ba1d570bd",
+      "sha256": "85ccf91b9fb8afb96d698d16eb6e79737ddc4d336e56909998bbfd1ba1d570bd"
+    },
+    {
+      "path": "data/course_geometry/10302.json",
+      "archive_path": "inputs/86dd9ebd52c2a1b29bceb3b72d1425c14a2c58ea0a2340ddecb7858bf95e9ada-86dd9ebd52c2a1b29bceb3b72d1425c14a2c58ea0a2340ddecb7858bf95e9ada-10302.json",
+      "archive_sha256": "86dd9ebd52c2a1b29bceb3b72d1425c14a2c58ea0a2340ddecb7858bf95e9ada",
+      "sha256": "86dd9ebd52c2a1b29bceb3b72d1425c14a2c58ea0a2340ddecb7858bf95e9ada"
+    },
+    {
+      "path": "data/course_geometry/10305.json",
+      "archive_path": "inputs/8905f46c7b762a1c0c15e2b3454479c982830ca45c40f37decf1d1213aea8c9c-8905f46c7b762a1c0c15e2b3454479c982830ca45c40f37decf1d1213aea8c9c-10305.json",
+      "archive_sha256": "8905f46c7b762a1c0c15e2b3454479c982830ca45c40f37decf1d1213aea8c9c",
+      "sha256": "8905f46c7b762a1c0c15e2b3454479c982830ca45c40f37decf1d1213aea8c9c"
+    },
+    {
+      "path": "data/course_geometry/10911.json",
+      "archive_path": "inputs/8d2bf8baa7b63f8c562532459d0446cbf16ff6b438699f442515c01079e87b24-8d2bf8baa7b63f8c562532459d0446cbf16ff6b438699f442515c01079e87b24-10911.json",
+      "archive_sha256": "8d2bf8baa7b63f8c562532459d0446cbf16ff6b438699f442515c01079e87b24",
+      "sha256": "8d2bf8baa7b63f8c562532459d0446cbf16ff6b438699f442515c01079e87b24"
+    },
+    {
+      "path": "data/course_geometry/10810.json",
+      "archive_path": "inputs/8ed34e28383ad40e38a1d7a46f94019292c7c493fc694df88f1ad04f840766a4-8ed34e28383ad40e38a1d7a46f94019292c7c493fc694df88f1ad04f840766a4-10810.json",
+      "archive_sha256": "8ed34e28383ad40e38a1d7a46f94019292c7c493fc694df88f1ad04f840766a4",
+      "sha256": "8ed34e28383ad40e38a1d7a46f94019292c7c493fc694df88f1ad04f840766a4"
+    },
+    {
+      "path": "data/course_geometry/10807.json",
+      "archive_path": "inputs/912198e8adce6f719ea11c4e4b9a5abe14c00059ee32103e8541839cbb94766d-912198e8adce6f719ea11c4e4b9a5abe14c00059ee32103e8541839cbb94766d-10807.json",
+      "archive_sha256": "912198e8adce6f719ea11c4e4b9a5abe14c00059ee32103e8541839cbb94766d",
+      "sha256": "912198e8adce6f719ea11c4e4b9a5abe14c00059ee32103e8541839cbb94766d"
+    },
+    {
+      "path": "data/course_geometry/10511.json",
+      "archive_path": "inputs/914f17d95c9116e90f836241cfa8c823d1a05073299661151eef93bb8fd2ed37-914f17d95c9116e90f836241cfa8c823d1a05073299661151eef93bb8fd2ed37-10511.json",
+      "archive_sha256": "914f17d95c9116e90f836241cfa8c823d1a05073299661151eef93bb8fd2ed37",
+      "sha256": "914f17d95c9116e90f836241cfa8c823d1a05073299661151eef93bb8fd2ed37"
+    },
+    {
+      "path": "data/course_geometry/11402.json",
+      "archive_path": "inputs/92529d13d3f4ce67c94422ef559ee124ea156a8a4f7e79b720e5d0f87e04ec16-92529d13d3f4ce67c94422ef559ee124ea156a8a4f7e79b720e5d0f87e04ec16-11402.json",
+      "archive_sha256": "92529d13d3f4ce67c94422ef559ee124ea156a8a4f7e79b720e5d0f87e04ec16",
+      "sha256": "92529d13d3f4ce67c94422ef559ee124ea156a8a4f7e79b720e5d0f87e04ec16"
+    },
+    {
+      "path": "tests/fixtures/retail_geometry_port.json",
+      "archive_path": "inputs/94bfc5496e2040ba76364e979fce86b2d104475c98b9e550e8b009c0916b03d0-94bfc5496e2040ba76364e979fce86b2d104475c98b9e550e8b009c0916b03d0-retail_geometry_port.json",
+      "archive_sha256": "94bfc5496e2040ba76364e979fce86b2d104475c98b9e550e8b009c0916b03d0",
+      "sha256": "94bfc5496e2040ba76364e979fce86b2d104475c98b9e550e8b009c0916b03d0"
+    },
+    {
+      "path": "data/course_geometry/10504.json",
+      "archive_path": "inputs/968bb01168db6f645094b8baf67ad134e58ac60f0c21931c75b495551fb158b0-968bb01168db6f645094b8baf67ad134e58ac60f0c21931c75b495551fb158b0-10504.json",
+      "archive_sha256": "968bb01168db6f645094b8baf67ad134e58ac60f0c21931c75b495551fb158b0",
+      "sha256": "968bb01168db6f645094b8baf67ad134e58ac60f0c21931c75b495551fb158b0"
+    },
+    {
+      "path": "data/course_geometry/10406.json",
+      "archive_path": "inputs/98c1f5192dc3b6c515910ecddf8ec540a350796e0d51c67a83591b2f9c25a877-98c1f5192dc3b6c515910ecddf8ec540a350796e0d51c67a83591b2f9c25a877-10406.json",
+      "archive_sha256": "98c1f5192dc3b6c515910ecddf8ec540a350796e0d51c67a83591b2f9c25a877",
+      "sha256": "98c1f5192dc3b6c515910ecddf8ec540a350796e0d51c67a83591b2f9c25a877"
+    },
+    {
+      "path": "data/course_geometry/10913.json",
+      "archive_path": "inputs/9a3bfce8ec420ff0213daa83ff7f418088ab97f05a67fb022969067877a6a0cd-9a3bfce8ec420ff0213daa83ff7f418088ab97f05a67fb022969067877a6a0cd-10913.json",
+      "archive_sha256": "9a3bfce8ec420ff0213daa83ff7f418088ab97f05a67fb022969067877a6a0cd",
+      "sha256": "9a3bfce8ec420ff0213daa83ff7f418088ab97f05a67fb022969067877a6a0cd"
+    },
+    {
+      "path": "data/course_geometry/10309.json",
+      "archive_path": "inputs/9a5f76040b08ab95c4a15a63b53a8b36123b7cb4c9921f7637ab40ddf1744478-9a5f76040b08ab95c4a15a63b53a8b36123b7cb4c9921f7637ab40ddf1744478-10309.json",
+      "archive_sha256": "9a5f76040b08ab95c4a15a63b53a8b36123b7cb4c9921f7637ab40ddf1744478",
+      "sha256": "9a5f76040b08ab95c4a15a63b53a8b36123b7cb4c9921f7637ab40ddf1744478"
+    },
+    {
+      "path": "data/course_geometry/10507.json",
+      "archive_path": "inputs/9a8ffd8209a7b17c2affa158af32e6355d546aea0a2e0ca8d0800a86de3edf31-9a8ffd8209a7b17c2affa158af32e6355d546aea0a2e0ca8d0800a86de3edf31-10507.json",
+      "archive_sha256": "9a8ffd8209a7b17c2affa158af32e6355d546aea0a2e0ca8d0800a86de3edf31",
+      "sha256": "9a8ffd8209a7b17c2affa158af32e6355d546aea0a2e0ca8d0800a86de3edf31"
+    },
+    {
+      "path": "data/course_geometry/10903.json",
+      "archive_path": "inputs/9d0dd49189d4e309208fcaaf9d12c6245e911a7382753bbccb190608a5dd0a3d-9d0dd49189d4e309208fcaaf9d12c6245e911a7382753bbccb190608a5dd0a3d-10903.json",
+      "archive_sha256": "9d0dd49189d4e309208fcaaf9d12c6245e911a7382753bbccb190608a5dd0a3d",
+      "sha256": "9d0dd49189d4e309208fcaaf9d12c6245e911a7382753bbccb190608a5dd0a3d"
+    },
+    {
+      "path": "data/course_geometry/10808.json",
+      "archive_path": "inputs/9ee5e4addadd2375406fe43030816c32fb0748004d9b6045be0c5d1af551047c-9ee5e4addadd2375406fe43030816c32fb0748004d9b6045be0c5d1af551047c-10808.json",
+      "archive_sha256": "9ee5e4addadd2375406fe43030816c32fb0748004d9b6045be0c5d1af551047c",
+      "sha256": "9ee5e4addadd2375406fe43030816c32fb0748004d9b6045be0c5d1af551047c"
+    },
+    {
+      "path": "tests/fixtures/retail_physics_port.json",
+      "archive_path": "inputs/a172af56188a235653d451fe08c466ec3bf15e7abbe2518d0ab1e094c986b7c5-a172af56188a235653d451fe08c466ec3bf15e7abbe2518d0ab1e094c986b7c5-retail_physics_port.json",
+      "archive_sha256": "a172af56188a235653d451fe08c466ec3bf15e7abbe2518d0ab1e094c986b7c5",
+      "sha256": "a172af56188a235653d451fe08c466ec3bf15e7abbe2518d0ab1e094c986b7c5"
+    },
+    {
+      "path": "data/course_geometry/10503.json",
+      "archive_path": "inputs/a4bd4d5b41672ee39c525613c0e0ee258fbdeac5e8c5f7d85aa4ed6cebe463d1-a4bd4d5b41672ee39c525613c0e0ee258fbdeac5e8c5f7d85aa4ed6cebe463d1-10503.json",
+      "archive_sha256": "a4bd4d5b41672ee39c525613c0e0ee258fbdeac5e8c5f7d85aa4ed6cebe463d1",
+      "sha256": "a4bd4d5b41672ee39c525613c0e0ee258fbdeac5e8c5f7d85aa4ed6cebe463d1"
+    },
+    {
+      "path": "data/course_geometry/10102.json",
+      "archive_path": "inputs/a662da2b246ce59f62f18d4972f69f8afa198e2799ede0a8be556fa1e7bd9238-a662da2b246ce59f62f18d4972f69f8afa198e2799ede0a8be556fa1e7bd9238-10102.json",
+      "archive_sha256": "a662da2b246ce59f62f18d4972f69f8afa198e2799ede0a8be556fa1e7bd9238",
+      "sha256": "a662da2b246ce59f62f18d4972f69f8afa198e2799ede0a8be556fa1e7bd9238"
+    },
+    {
+      "path": "data/skill_data.json",
+      "archive_path": "inputs/a6ff8655cf64558334a0f1293da4212094f47519cb34dc93fa875d7ffe24b046-a6ff8655cf64558334a0f1293da4212094f47519cb34dc93fa875d7ffe24b046-skill_data.json",
+      "archive_sha256": "a6ff8655cf64558334a0f1293da4212094f47519cb34dc93fa875d7ffe24b046",
+      "sha256": "a6ff8655cf64558334a0f1293da4212094f47519cb34dc93fa875d7ffe24b046"
+    },
+    {
+      "path": "data/course_geometry/11103.json",
+      "archive_path": "inputs/a7048cc7a20011397c371c3902c228cefbedea3dd9fb3740c532433d53fe9ba8-a7048cc7a20011397c371c3902c228cefbedea3dd9fb3740c532433d53fe9ba8-11103.json",
+      "archive_sha256": "a7048cc7a20011397c371c3902c228cefbedea3dd9fb3740c532433d53fe9ba8",
+      "sha256": "a7048cc7a20011397c371c3902c228cefbedea3dd9fb3740c532433d53fe9ba8"
+    },
+    {
+      "path": "data/course_geometry/10909.json",
+      "archive_path": "inputs/aac1b5597fd5f483c3d055310ef717c5d2545b3cf2ae8703a4701057172308a2-aac1b5597fd5f483c3d055310ef717c5d2545b3cf2ae8703a4701057172308a2-10909.json",
+      "archive_sha256": "aac1b5597fd5f483c3d055310ef717c5d2545b3cf2ae8703a4701057172308a2",
+      "sha256": "aac1b5597fd5f483c3d055310ef717c5d2545b3cf2ae8703a4701057172308a2"
+    },
+    {
+      "path": "tests/fixtures/retail_finish_crossings.json",
+      "archive_path": "inputs/ab7570695d6a00481746f338fb7996ee9ca26ff732a806a18ec7905f190a1187-ab7570695d6a00481746f338fb7996ee9ca26ff732a806a18ec7905f190a1187-retail_finish_crossings.json",
+      "archive_sha256": "ab7570695d6a00481746f338fb7996ee9ca26ff732a806a18ec7905f190a1187",
+      "sha256": "ab7570695d6a00481746f338fb7996ee9ca26ff732a806a18ec7905f190a1187"
+    },
+    {
+      "path": "data/course_geometry/10811.json",
+      "archive_path": "inputs/ae3a267eccc5db137d8bd6917be5aac4815e102120635430bd5f4eb833731efa-ae3a267eccc5db137d8bd6917be5aac4815e102120635430bd5f4eb833731efa-10811.json",
+      "archive_sha256": "ae3a267eccc5db137d8bd6917be5aac4815e102120635430bd5f4eb833731efa",
+      "sha256": "ae3a267eccc5db137d8bd6917be5aac4815e102120635430bd5f4eb833731efa"
+    },
+    {
+      "path": "data/course_geometry/10101.json",
+      "archive_path": "inputs/ae75a726bd10e7270d8cb236e952bfce4c92bbb142e2eaffd5019ce8d4f183e1-ae75a726bd10e7270d8cb236e952bfce4c92bbb142e2eaffd5019ce8d4f183e1-10101.json",
+      "archive_sha256": "ae75a726bd10e7270d8cb236e952bfce4c92bbb142e2eaffd5019ce8d4f183e1",
+      "sha256": "ae75a726bd10e7270d8cb236e952bfce4c92bbb142e2eaffd5019ce8d4f183e1"
+    },
+    {
+      "path": "data/course_geometry/10201.json",
+      "archive_path": "inputs/af31c96a195f3690c56cbcb370d07557ba60ef612f9bc12756fedd379daa50a6-af31c96a195f3690c56cbcb370d07557ba60ef612f9bc12756fedd379daa50a6-10201.json",
+      "archive_sha256": "af31c96a195f3690c56cbcb370d07557ba60ef612f9bc12756fedd379daa50a6",
+      "sha256": "af31c96a195f3690c56cbcb370d07557ba60ef612f9bc12756fedd379daa50a6"
+    },
+    {
+      "path": "tests/fixtures/retail_hp_port.json",
+      "archive_path": "inputs/b14fb50323606b76210cbebb1e91525eba6485418a420c7b6324b0d6f896aee7-b14fb50323606b76210cbebb1e91525eba6485418a420c7b6324b0d6f896aee7-retail_hp_port.json",
+      "archive_sha256": "b14fb50323606b76210cbebb1e91525eba6485418a420c7b6324b0d6f896aee7",
+      "sha256": "b14fb50323606b76210cbebb1e91525eba6485418a420c7b6324b0d6f896aee7"
+    },
+    {
+      "path": "data/course_geometry/10308.json",
+      "archive_path": "inputs/b4407ef848696f5d6a7f5d2fc3b3e9bc7d5e3708ebe9dcfc6066669705ea679d-b4407ef848696f5d6a7f5d2fc3b3e9bc7d5e3708ebe9dcfc6066669705ea679d-10308.json",
+      "archive_sha256": "b4407ef848696f5d6a7f5d2fc3b3e9bc7d5e3708ebe9dcfc6066669705ea679d",
+      "sha256": "b4407ef848696f5d6a7f5d2fc3b3e9bc7d5e3708ebe9dcfc6066669705ea679d"
+    },
+    {
+      "path": "data/course_geometry/10107.json",
+      "archive_path": "inputs/b7946af6d59cedf7240392cb8e54d3925583d7ea132254822b3bb458801fc460-b7946af6d59cedf7240392cb8e54d3925583d7ea132254822b3bb458801fc460-10107.json",
+      "archive_sha256": "b7946af6d59cedf7240392cb8e54d3925583d7ea132254822b3bb458801fc460",
+      "sha256": "b7946af6d59cedf7240392cb8e54d3925583d7ea132254822b3bb458801fc460"
+    },
+    {
+      "path": "data/course_geometry/10401.json",
+      "archive_path": "inputs/b83235e94dc46f37566cbe5f328c6244290f3dead919bcf4cf6bfd805ad66e32-b83235e94dc46f37566cbe5f328c6244290f3dead919bcf4cf6bfd805ad66e32-10401.json",
+      "archive_sha256": "b83235e94dc46f37566cbe5f328c6244290f3dead919bcf4cf6bfd805ad66e32",
+      "sha256": "b83235e94dc46f37566cbe5f328c6244290f3dead919bcf4cf6bfd805ad66e32"
+    },
+    {
+      "path": "data/course_geometry/11404.json",
+      "archive_path": "inputs/bb1f2e4a8b9238f077bb03c2453be3c48b9396ff1948165bf3d0247ed4ce6249-bb1f2e4a8b9238f077bb03c2453be3c48b9396ff1948165bf3d0247ed4ce6249-11404.json",
+      "archive_sha256": "bb1f2e4a8b9238f077bb03c2453be3c48b9396ff1948165bf3d0247ed4ce6249",
+      "sha256": "bb1f2e4a8b9238f077bb03c2453be3c48b9396ff1948165bf3d0247ed4ce6249"
+    },
+    {
+      "path": "data/course_geometry/10304.json",
+      "archive_path": "inputs/c091e1d7347d4562ae337ea6ac77adbb9ae58278c9d036458168e12549d59a47-c091e1d7347d4562ae337ea6ac77adbb9ae58278c9d036458168e12549d59a47-10304.json",
+      "archive_sha256": "c091e1d7347d4562ae337ea6ac77adbb9ae58278c9d036458168e12549d59a47",
+      "sha256": "c091e1d7347d4562ae337ea6ac77adbb9ae58278c9d036458168e12549d59a47"
+    },
+    {
+      "path": "data/course_geometry/10604.json",
+      "archive_path": "inputs/c39f7c3146b76c5f27e788460dd30459fef6d7743b232deca161da7d95beb346-c39f7c3146b76c5f27e788460dd30459fef6d7743b232deca161da7d95beb346-10604.json",
+      "archive_sha256": "c39f7c3146b76c5f27e788460dd30459fef6d7743b232deca161da7d95beb346",
+      "sha256": "c39f7c3146b76c5f27e788460dd30459fef6d7743b232deca161da7d95beb346"
+    },
+    {
+      "path": "data/course_geometry/11502.json",
+      "archive_path": "inputs/c811845e6a08bf89320a410f08c0f82df424a395c25efdb3cd5e36ac5b86fa7e-c811845e6a08bf89320a410f08c0f82df424a395c25efdb3cd5e36ac5b86fa7e-11502.json",
+      "archive_sha256": "c811845e6a08bf89320a410f08c0f82df424a395c25efdb3cd5e36ac5b86fa7e",
+      "sha256": "c811845e6a08bf89320a410f08c0f82df424a395c25efdb3cd5e36ac5b86fa7e"
+    },
+    {
+      "path": "data/course_geometry/11503.json",
+      "archive_path": "inputs/cb0c3620fc07ee6a09b369a72eef4e4900d51e7bb324c7cd30674e37d29c1d57-cb0c3620fc07ee6a09b369a72eef4e4900d51e7bb324c7cd30674e37d29c1d57-11503.json",
+      "archive_sha256": "cb0c3620fc07ee6a09b369a72eef4e4900d51e7bb324c7cd30674e37d29c1d57",
+      "sha256": "cb0c3620fc07ee6a09b369a72eef4e4900d51e7bb324c7cd30674e37d29c1d57"
+    },
+    {
+      "path": "data/course_geometry/10407.json",
+      "archive_path": "inputs/cc803e208c29a477acc83441a170a669bc1cf27db965ed76005986e6ef8a0ec9-cc803e208c29a477acc83441a170a669bc1cf27db965ed76005986e6ef8a0ec9-10407.json",
+      "archive_sha256": "cc803e208c29a477acc83441a170a669bc1cf27db965ed76005986e6ef8a0ec9",
+      "sha256": "cc803e208c29a477acc83441a170a669bc1cf27db965ed76005986e6ef8a0ec9"
+    },
+    {
+      "path": "data/course_geometry/10508.json",
+      "archive_path": "inputs/cdeae64ae5c758723a80acdd1f8a9ee5db69f84b0276392da1c8ed68e7e76950-cdeae64ae5c758723a80acdd1f8a9ee5db69f84b0276392da1c8ed68e7e76950-10508.json",
+      "archive_sha256": "cdeae64ae5c758723a80acdd1f8a9ee5db69f84b0276392da1c8ed68e7e76950",
+      "sha256": "cdeae64ae5c758723a80acdd1f8a9ee5db69f84b0276392da1c8ed68e7e76950"
+    },
+    {
+      "path": "data/course_geometry/10501.json",
+      "archive_path": "inputs/cf99f3ddb112713c64de05829d3e8e34e79930604d52a3457807be56b39acc88-cf99f3ddb112713c64de05829d3e8e34e79930604d52a3457807be56b39acc88-10501.json",
+      "archive_sha256": "cf99f3ddb112713c64de05829d3e8e34e79930604d52a3457807be56b39acc88",
+      "sha256": "cf99f3ddb112713c64de05829d3e8e34e79930604d52a3457807be56b39acc88"
+    },
+    {
+      "path": "data/course_geometry/10612.json",
+      "archive_path": "inputs/cf9d3ea697c4b9c43f19348e630037b86ed88eb6c00f65aedc8ea269a2ff48d7-cf9d3ea697c4b9c43f19348e630037b86ed88eb6c00f65aedc8ea269a2ff48d7-10612.json",
+      "archive_sha256": "cf9d3ea697c4b9c43f19348e630037b86ed88eb6c00f65aedc8ea269a2ff48d7",
+      "sha256": "cf9d3ea697c4b9c43f19348e630037b86ed88eb6c00f65aedc8ea269a2ff48d7"
+    },
+    {
+      "path": "data/course_geometry/10705.json",
+      "archive_path": "inputs/d15ff96bf0bb8686f6201236d0a81f9896d02a5acd6bb05519c9f0fbbbc05ee3-d15ff96bf0bb8686f6201236d0a81f9896d02a5acd6bb05519c9f0fbbbc05ee3-10705.json",
+      "archive_sha256": "d15ff96bf0bb8686f6201236d0a81f9896d02a5acd6bb05519c9f0fbbbc05ee3",
+      "sha256": "d15ff96bf0bb8686f6201236d0a81f9896d02a5acd6bb05519c9f0fbbbc05ee3"
+    },
+    {
+      "path": "data/course_geometry/10803.json",
+      "archive_path": "inputs/d1d7b65e5a527b424e4f41eb1f7c2c19d9e7f8ec0df1c1bda97d9e859589c421-d1d7b65e5a527b424e4f41eb1f7c2c19d9e7f8ec0df1c1bda97d9e859589c421-10803.json",
+      "archive_sha256": "d1d7b65e5a527b424e4f41eb1f7c2c19d9e7f8ec0df1c1bda97d9e859589c421",
+      "sha256": "d1d7b65e5a527b424e4f41eb1f7c2c19d9e7f8ec0df1c1bda97d9e859589c421"
+    },
+    {
+      "path": "tests/fixtures/retail_lane_state_port.json",
+      "archive_path": "inputs/d44d65c2f28d216a0ddf8dd5d953fbd39de9febcb654cb988ed515a24082aaf9-d44d65c2f28d216a0ddf8dd5d953fbd39de9febcb654cb988ed515a24082aaf9-retail_lane_state_port.json",
+      "archive_sha256": "d44d65c2f28d216a0ddf8dd5d953fbd39de9febcb654cb988ed515a24082aaf9",
+      "sha256": "d44d65c2f28d216a0ddf8dd5d953fbd39de9febcb654cb988ed515a24082aaf9"
+    },
+    {
+      "path": "data/course_geometry/11002.json",
+      "archive_path": "inputs/d49278696af378f45e3d904cd4594586be0c389bd626c1f9fac4be6cf3712cde-d49278696af378f45e3d904cd4594586be0c389bd626c1f9fac4be6cf3712cde-11002.json",
+      "archive_sha256": "d49278696af378f45e3d904cd4594586be0c389bd626c1f9fac4be6cf3712cde",
+      "sha256": "d49278696af378f45e3d904cd4594586be0c389bd626c1f9fac4be6cf3712cde"
+    },
+    {
+      "path": "data/course_geometry/10301.json",
+      "archive_path": "inputs/d52c87be11bc77611758e5a2980231cec62a7784c2714174142b1399eb3dd100-d52c87be11bc77611758e5a2980231cec62a7784c2714174142b1399eb3dd100-10301.json",
+      "archive_sha256": "d52c87be11bc77611758e5a2980231cec62a7784c2714174142b1399eb3dd100",
+      "sha256": "d52c87be11bc77611758e5a2980231cec62a7784c2714174142b1399eb3dd100"
+    },
+    {
+      "path": "data/course_geometry/10907.json",
+      "archive_path": "inputs/d73e323b8fa9041705a415989b727b270a01653f17c02847a4a205839ee24c90-d73e323b8fa9041705a415989b727b270a01653f17c02847a4a205839ee24c90-10907.json",
+      "archive_sha256": "d73e323b8fa9041705a415989b727b270a01653f17c02847a4a205839ee24c90",
+      "sha256": "d73e323b8fa9041705a415989b727b270a01653f17c02847a4a205839ee24c90"
+    },
+    {
+      "path": "data/course_geometry/11102.json",
+      "archive_path": "inputs/d77bebd95a7e4f1985af3ed2945b7de066b4b9bc7c785dcaa6d6d6315a10824d-d77bebd95a7e4f1985af3ed2945b7de066b4b9bc7c785dcaa6d6d6315a10824d-11102.json",
+      "archive_sha256": "d77bebd95a7e4f1985af3ed2945b7de066b4b9bc7c785dcaa6d6d6315a10824d",
+      "sha256": "d77bebd95a7e4f1985af3ed2945b7de066b4b9bc7c785dcaa6d6d6315a10824d"
+    },
+    {
+      "path": "data/course_geometry/10704.json",
+      "archive_path": "inputs/d7ee0c51f47c16ee46b60fa4a4b1b6de84ddd5de6ab688a5139301bca7f30a5a-d7ee0c51f47c16ee46b60fa4a4b1b6de84ddd5de6ab688a5139301bca7f30a5a-10704.json",
+      "archive_sha256": "d7ee0c51f47c16ee46b60fa4a4b1b6de84ddd5de6ab688a5139301bca7f30a5a",
+      "sha256": "d7ee0c51f47c16ee46b60fa4a4b1b6de84ddd5de6ab688a5139301bca7f30a5a"
+    },
+    {
+      "path": "data/course_geometry/11004.json",
+      "archive_path": "inputs/d99607e5d0d91496511d370c3ff96309a289b66699c849f500b5d33e1db41b56-d99607e5d0d91496511d370c3ff96309a289b66699c849f500b5d33e1db41b56-11004.json",
+      "archive_sha256": "d99607e5d0d91496511d370c3ff96309a289b66699c849f500b5d33e1db41b56",
+      "sha256": "d99607e5d0d91496511d370c3ff96309a289b66699c849f500b5d33e1db41b56"
+    },
+    {
+      "path": "data/course_geometry/10610.json",
+      "archive_path": "inputs/daaac9f22192472fb364bac5b7ae26bfbc649f0a7236b94d20ee42e683db3f25-daaac9f22192472fb364bac5b7ae26bfbc649f0a7236b94d20ee42e683db3f25-10610.json",
+      "archive_sha256": "daaac9f22192472fb364bac5b7ae26bfbc649f0a7236b94d20ee42e683db3f25",
+      "sha256": "daaac9f22192472fb364bac5b7ae26bfbc649f0a7236b94d20ee42e683db3f25"
+    },
+    {
+      "path": "data/course_geometry/10105.json",
+      "archive_path": "inputs/dd8c0d607ecedb14f8ac72f5a436c0d8c06f82f72978cddd7d6e51cb2278db5a-dd8c0d607ecedb14f8ac72f5a436c0d8c06f82f72978cddd7d6e51cb2278db5a-10105.json",
+      "archive_sha256": "dd8c0d607ecedb14f8ac72f5a436c0d8c06f82f72978cddd7d6e51cb2278db5a",
+      "sha256": "dd8c0d607ecedb14f8ac72f5a436c0d8c06f82f72978cddd7d6e51cb2278db5a"
+    },
+    {
+      "path": "data/course_geometry/10914.json",
+      "archive_path": "inputs/ddf9f3fb6f4a1bb6e8d0c51390c8fedf34d2443b35dc1164100a8515104527fc-ddf9f3fb6f4a1bb6e8d0c51390c8fedf34d2443b35dc1164100a8515104527fc-10914.json",
+      "archive_sha256": "ddf9f3fb6f4a1bb6e8d0c51390c8fedf34d2443b35dc1164100a8515104527fc",
+      "sha256": "ddf9f3fb6f4a1bb6e8d0c51390c8fedf34d2443b35dc1164100a8515104527fc"
+    },
+    {
+      "path": "data/course_geometry/10709.json",
+      "archive_path": "inputs/e151dcfdbc2ea35b0d7c87a64aaecf4feae596c0aef9268a2bbe6f71403ecbcd-e151dcfdbc2ea35b0d7c87a64aaecf4feae596c0aef9268a2bbe6f71403ecbcd-10709.json",
+      "archive_sha256": "e151dcfdbc2ea35b0d7c87a64aaecf4feae596c0aef9268a2bbe6f71403ecbcd",
+      "sha256": "e151dcfdbc2ea35b0d7c87a64aaecf4feae596c0aef9268a2bbe6f71403ecbcd"
+    },
+    {
+      "path": "data/course_geometry/10912.json",
+      "archive_path": "inputs/e2f8d087796c3bdc82ec95086ed3026491cb475581f67d65112f557c25a2f617-e2f8d087796c3bdc82ec95086ed3026491cb475581f67d65112f557c25a2f617-10912.json",
+      "archive_sha256": "e2f8d087796c3bdc82ec95086ed3026491cb475581f67d65112f557c25a2f617",
+      "sha256": "e2f8d087796c3bdc82ec95086ed3026491cb475581f67d65112f557c25a2f617"
+    },
+    {
+      "path": "data/course_geometry/10403.json",
+      "archive_path": "inputs/e336911fca2c4e3cc85871abe70aa73ac634352e3e40ee70fc59b1be478ded14-e336911fca2c4e3cc85871abe70aa73ac634352e3e40ee70fc59b1be478ded14-10403.json",
+      "archive_sha256": "e336911fca2c4e3cc85871abe70aa73ac634352e3e40ee70fc59b1be478ded14",
+      "sha256": "e336911fca2c4e3cc85871abe70aa73ac634352e3e40ee70fc59b1be478ded14"
+    },
+    {
+      "path": "data/course_geometry/10814.json",
+      "archive_path": "inputs/e4577fdfc1b9957cde80209c2a079c99d2bc4d254bdca95302283b30a3985ac2-e4577fdfc1b9957cde80209c2a079c99d2bc4d254bdca95302283b30a3985ac2-10814.json",
+      "archive_sha256": "e4577fdfc1b9957cde80209c2a079c99d2bc4d254bdca95302283b30a3985ac2",
+      "sha256": "e4577fdfc1b9957cde80209c2a079c99d2bc4d254bdca95302283b30a3985ac2"
+    },
+    {
+      "path": "data/starting_grids.json",
+      "archive_path": "inputs/e477d5b0356abaa80705c2a4a43e73b1f4976ce2950246dada5bd302998720c2-e477d5b0356abaa80705c2a4a43e73b1f4976ce2950246dada5bd302998720c2-starting_grids.json",
+      "archive_sha256": "e477d5b0356abaa80705c2a4a43e73b1f4976ce2950246dada5bd302998720c2",
+      "sha256": "e477d5b0356abaa80705c2a4a43e73b1f4976ce2950246dada5bd302998720c2"
+    },
+    {
+      "path": "tests/fixtures/retail_lane_port.json",
+      "archive_path": "inputs/eb800431464d7b9aba9b9a1124bc11f7538653cf080f0de8436936060c16078e-eb800431464d7b9aba9b9a1124bc11f7538653cf080f0de8436936060c16078e-retail_lane_port.json",
+      "archive_sha256": "eb800431464d7b9aba9b9a1124bc11f7538653cf080f0de8436936060c16078e",
+      "sha256": "eb800431464d7b9aba9b9a1124bc11f7538653cf080f0de8436936060c16078e"
+    },
+    {
+      "path": "tests/fixtures/retail_initialization_official.json",
+      "archive_path": "inputs/ed390b4e6cce5e8179705999004424949929ec5048cbb1390ad6325d2fd05c26-ed390b4e6cce5e8179705999004424949929ec5048cbb1390ad6325d2fd05c26-retail_initialization_official.json",
+      "archive_sha256": "ed390b4e6cce5e8179705999004424949929ec5048cbb1390ad6325d2fd05c26",
+      "sha256": "ed390b4e6cce5e8179705999004424949929ec5048cbb1390ad6325d2fd05c26"
+    },
+    {
+      "path": "data/course_geometry/10307.json",
+      "archive_path": "inputs/edd031a6ca66247bc2182d90b7cb28bdfbe742d1a21f5d947d62a2ef51029076-edd031a6ca66247bc2182d90b7cb28bdfbe742d1a21f5d947d62a2ef51029076-10307.json",
+      "archive_sha256": "edd031a6ca66247bc2182d90b7cb28bdfbe742d1a21f5d947d62a2ef51029076",
+      "sha256": "edd031a6ca66247bc2182d90b7cb28bdfbe742d1a21f5d947d62a2ef51029076"
+    },
+    {
+      "path": "data/course_geometry/10204.json",
+      "archive_path": "inputs/ef44246fc58ceecf5d2ba0c8af097b66822f17e08f672de033e1f9f82f5ef84e-ef44246fc58ceecf5d2ba0c8af097b66822f17e08f672de033e1f9f82f5ef84e-10204.json",
+      "archive_sha256": "ef44246fc58ceecf5d2ba0c8af097b66822f17e08f672de033e1f9f82f5ef84e",
+      "sha256": "ef44246fc58ceecf5d2ba0c8af097b66822f17e08f672de033e1f9f82f5ef84e"
+    },
+    {
+      "path": "data/course_geometry/10805.json",
+      "archive_path": "inputs/f0e37545d660ccb453f24e52cb919901df74293bfa547baf89046a6686062729-f0e37545d660ccb453f24e52cb919901df74293bfa547baf89046a6686062729-10805.json",
+      "archive_sha256": "f0e37545d660ccb453f24e52cb919901df74293bfa547baf89046a6686062729",
+      "sha256": "f0e37545d660ccb453f24e52cb919901df74293bfa547baf89046a6686062729"
+    },
+    {
+      "path": "data/course_geometry/10702.json",
+      "archive_path": "inputs/f40d89a800e9ad5df75a184eabe1cc204a0522ea586f517e8af24f7ccedb7483-f40d89a800e9ad5df75a184eabe1cc204a0522ea586f517e8af24f7ccedb7483-10702.json",
+      "archive_sha256": "f40d89a800e9ad5df75a184eabe1cc204a0522ea586f517e8af24f7ccedb7483",
+      "sha256": "f40d89a800e9ad5df75a184eabe1cc204a0522ea586f517e8af24f7ccedb7483"
+    },
+    {
+      "path": "data/course_geometry/10815.json",
+      "archive_path": "inputs/f62d461f8a709225ad17aa3fdcfd37157682fc345288db8ee5f816b3b3b43f6e-f62d461f8a709225ad17aa3fdcfd37157682fc345288db8ee5f816b3b3b43f6e-10815.json",
+      "archive_sha256": "f62d461f8a709225ad17aa3fdcfd37157682fc345288db8ee5f816b3b3b43f6e",
+      "sha256": "f62d461f8a709225ad17aa3fdcfd37157682fc345288db8ee5f816b3b3b43f6e"
+    },
+    {
+      "path": "data/course_geometry/10206.json",
+      "archive_path": "inputs/f764ea2dc787b47ac3cb959d45d35a1da72073b799184456389bb52e3241839c-f764ea2dc787b47ac3cb959d45d35a1da72073b799184456389bb52e3241839c-10206.json",
+      "archive_sha256": "f764ea2dc787b47ac3cb959d45d35a1da72073b799184456389bb52e3241839c",
+      "sha256": "f764ea2dc787b47ac3cb959d45d35a1da72073b799184456389bb52e3241839c"
+    },
+    {
+      "path": "data/course_geometry/10208.json",
+      "archive_path": "inputs/f846223a0faddae089e01e7296af89f63e1dc2470c5316786eff88741cec120d-f846223a0faddae089e01e7296af89f63e1dc2470c5316786eff88741cec120d-10208.json",
+      "archive_sha256": "f846223a0faddae089e01e7296af89f63e1dc2470c5316786eff88741cec120d",
+      "sha256": "f846223a0faddae089e01e7296af89f63e1dc2470c5316786eff88741cec120d"
+    },
+    {
+      "path": "data/course_geometry/10601.json",
+      "archive_path": "inputs/f8d2304ac0f912957b27edbd36468aa362e59d7f4cab56a1e2747048e65b82f4-f8d2304ac0f912957b27edbd36468aa362e59d7f4cab56a1e2747048e65b82f4-10601.json",
+      "archive_sha256": "f8d2304ac0f912957b27edbd36468aa362e59d7f4cab56a1e2747048e65b82f4",
+      "sha256": "f8d2304ac0f912957b27edbd36468aa362e59d7f4cab56a1e2747048e65b82f4"
+    },
+    {
+      "path": "src/activation_conditions.rs",
+      "archive_path": "src/activation_conditions.rs",
+      "archive_sha256": "38da21e2e840ebb7a5ff0c5bc9380e9809721f9795483e205e5b437addcc7a7a",
+      "sha256": "38da21e2e840ebb7a5ff0c5bc9380e9809721f9795483e205e5b437addcc7a7a"
+    },
+    {
+      "path": "src/activation_sample_policy.rs",
+      "archive_path": "src/activation_sample_policy.rs",
+      "archive_sha256": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+      "sha256": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e"
+    },
+    {
+      "path": "src/condition_parser.rs",
+      "archive_path": "src/condition_parser.rs",
+      "archive_sha256": "28b52708da250c1db85edb5bcd416d3e47bc3a0e72a0e1da4b4a40a7db461040",
+      "sha256": "28b52708da250c1db85edb5bcd416d3e47bc3a0e72a0e1da4b4a40a7db461040"
+    },
+    {
+      "path": "src/conserve_power.rs",
+      "archive_path": "src/conserve_power.rs",
+      "archive_sha256": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+      "sha256": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006"
+    },
+    {
+      "path": "src/course_data.rs",
+      "archive_path": "src/course_data.rs",
+      "archive_sha256": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+      "sha256": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c"
+    },
+    {
+      "path": "src/horse_types.rs",
+      "archive_path": "src/horse_types.rs",
+      "archive_sha256": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+      "sha256": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed"
+    },
+    {
+      "path": "src/hp_policy.rs",
+      "archive_path": "src/hp_policy.rs",
+      "archive_sha256": "c1d2f96d5dae2c117454ce02c1f88fab9dd22cc7bea1d073d0d62e4263d104e8",
+      "sha256": "d55a2f25a185cb8fbdb2db24ea6f5c9c6fab90e0c4a943fbc05d91d03d62ffab"
+    },
+    {
+      "path": "src/json.rs",
+      "archive_path": "src/json.rs",
+      "archive_sha256": "97603c4d6b41a141e1d46607ff492ff9203faca7a39c9089a6b02d84e115ea80",
+      "sha256": "97603c4d6b41a141e1d46607ff492ff9203faca7a39c9089a6b02d84e115ea80"
+    },
+    {
+      "path": "src/lane_selection.rs",
+      "archive_path": "src/lane_selection.rs",
+      "archive_sha256": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+      "sha256": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c"
+    },
+    {
+      "path": "src/main.rs",
+      "archive_path": "src/main.rs",
+      "archive_sha256": "c68a44baf8f0a8c66e08ff422ad2b9d8c7ff3e4e2138973f65d65de01f3b72f3",
+      "sha256": "e70e0dc1ce5a32c9cc941407610d951cc3d8077018c9244caec8ad969afe9f71"
+    },
+    {
+      "path": "src/overtaking.rs",
+      "archive_path": "src/overtaking.rs",
+      "archive_sha256": "208e0ac49cbcef918b80acc65ecffbce80c9933a6715e33fd92b56ce1838c0e2",
+      "sha256": "208e0ac49cbcef918b80acc65ecffbce80c9933a6715e33fd92b56ce1838c0e2"
+    },
+    {
+      "path": "src/race_field.rs",
+      "archive_path": "src/race_field.rs",
+      "archive_sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b",
+      "sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b"
+    },
+    {
+      "path": "src/race_field_retail.rs",
+      "archive_path": "src/race_field_retail.rs",
+      "archive_sha256": "1f74e0e1c0ba0ee60a51ffb52d86864ea35dfd48b317a5bf5238534877bbf89b",
+      "sha256": "1f74e0e1c0ba0ee60a51ffb52d86864ea35dfd48b317a5bf5238534877bbf89b"
+    },
+    {
+      "path": "src/race_parameters.rs",
+      "archive_path": "src/race_parameters.rs",
+      "archive_sha256": "192018df7429ee5d21d1b3115fb6eca2239a69ec8416c8dcc9c5556fb5932b11",
+      "sha256": "192018df7429ee5d21d1b3115fb6eca2239a69ec8416c8dcc9c5556fb5932b11"
+    },
+    {
+      "path": "src/race_solver.rs",
+      "archive_path": "src/race_solver.rs",
+      "archive_sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b",
+      "sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b"
+    },
+    {
+      "path": "src/race_solver_builder.rs",
+      "archive_path": "src/race_solver_builder.rs",
+      "archive_sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690",
+      "sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690"
+    },
+    {
+      "path": "src/race_solver_retail.rs",
+      "archive_path": "src/race_solver_retail.rs",
+      "archive_sha256": "0b9d4c01c348d9420faec616526a873ce7f8e8ff7c421f7d77e09235d3ade157",
+      "sha256": "9589a24b011eb1aa9843b30e40b54224b7495126c02581d8f4e9a5174bb0e4c9"
+    },
+    {
+      "path": "src/random_gen.rs",
+      "archive_path": "src/random_gen.rs",
+      "archive_sha256": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+      "sha256": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd"
+    },
+    {
+      "path": "src/region.rs",
+      "archive_path": "src/region.rs",
+      "archive_sha256": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+      "sha256": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf"
+    },
+    {
+      "path": "src/retail_geometry.rs",
+      "archive_path": "src/retail_geometry.rs",
+      "archive_sha256": "2773a11ecfff60f4ebcc023840e135c5c4345f8be0fabed77e9fdb2a38449310",
+      "sha256": "2ae174ab1f214005e74357ee71f21f4920f61413e5feb579dfe9509d7629b6d2"
+    },
+    {
+      "path": "src/retail_geometry_assets.rs",
+      "archive_path": "src/retail_geometry_assets.rs",
+      "archive_sha256": "7a8a4e18897f84414698c68bdc2ba6c796b52bf7ab8c47771cc9744286dfb8d8",
+      "sha256": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486"
+    },
+    {
+      "path": "src/retail_initialization.rs",
+      "archive_path": "src/retail_initialization.rs",
+      "archive_sha256": "e9ca4ec8b50370082836f332cb06d84101b83babcc97e99cd67779771760df22",
+      "sha256": "8e3b05622eb71091f5e57d134898f4d04124be68b2b72c6ff554d50804c5a4e3"
+    },
+    {
+      "path": "src/retail_lane.rs",
+      "archive_path": "src/retail_lane.rs",
+      "archive_sha256": "7c26006355c2f99b1d6c97fe65ad2b411233691e0421db69928dd02649e0c11b",
+      "sha256": "3027488fc1496c4b6d5f32f44ad3aa4fff4b04edea424107c6f9bae71e069272"
+    },
+    {
+      "path": "src/retail_physics.rs",
+      "archive_path": "src/retail_physics.rs",
+      "archive_sha256": "2c9846623be395f3cc38806edc2447bfc6297ed3cafd41555c21789f7a230cf5",
+      "sha256": "22139d5589ef4a8442def09ee66be05eb28c176fbdc46e55dbfae56c1f0b7000"
+    },
+    {
+      "path": "src/retail_position_keep.rs",
+      "archive_path": "src/retail_position_keep.rs",
+      "archive_sha256": "416a0b7e3fc91b9fe127ccba597c84eefa3e07ce274f24f5e19418442ec9817e",
+      "sha256": "3b2a03d6875044124f2101fdf1e0a6895e84b5ecddc09a55137250a8fd8e55c9"
+    },
+    {
+      "path": "src/retail_random.rs",
+      "archive_path": "src/retail_random.rs",
+      "archive_sha256": "121c7883c1b5b294e7c02038abeb1eb82a5180caf17ee54ac39b87d48f50098e",
+      "sha256": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463"
+    },
+    {
+      "path": "src/retail_sort.rs",
+      "archive_path": "src/retail_sort.rs",
+      "archive_sha256": "18facb726f431cd499ffb2444643e425f6f44f7a9269a7e488f7fece05e48b87",
+      "sha256": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03"
+    },
+    {
+      "path": "src/retail_spurt.rs",
+      "archive_path": "src/retail_spurt.rs",
+      "archive_sha256": "71670bbab6576a335bf21fb5a1f3d5f723cd1fb9fc06c8cdf633039fbad28459",
+      "sha256": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8"
+    },
+    {
+      "path": "src/retail_states.rs",
+      "archive_path": "src/retail_states.rs",
+      "archive_sha256": "aa93fb7a245269889efdc8e840c866a60d57f9c9a0a64792219f28904ce0442a",
+      "sha256": "51e007693bf5b1fdc89dbb45fc6aef449c915d24d8e23b8039152276c8de37e5"
+    },
+    {
+      "path": "src/rushing.rs",
+      "archive_path": "src/rushing.rs",
+      "archive_sha256": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+      "sha256": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67"
+    },
+    {
+      "path": "src/stadium_score.rs",
+      "archive_path": "src/stadium_score.rs",
+      "archive_sha256": "d0c49a85965d1eb565ba483623184ccb9605b38039531a3dddc5cefbc200c378",
+      "sha256": "d0c49a85965d1eb565ba483623184ccb9605b38039531a3dddc5cefbc200c378"
+    },
+    {
+      "path": "src/starting_grid.rs",
+      "archive_path": "src/starting_grid.rs",
+      "archive_sha256": "13faf3bc3d017769b08894088a08f507b81eec7271b8ac1f8b8a7b49bf371344",
+      "sha256": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
+    }
+  ],
+  "relocations": "Only include paths and the geometry-test-data directory path changed; physics and test expectations preserved."
+}

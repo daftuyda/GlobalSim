@@ -1,0 +1,342 @@
+warning: unnecessary parentheses around assigned value
+   --> src\race_solver_retail.rs:495:13
+    |
+495 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
+    |             ^                                                                                                                ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+495 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
+495 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32;
+    |
+
+warning: unnecessary parentheses around method argument
+   --> src\race_solver_retail.rs:758:13
+    |
+758 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+    |             ^                                                                                                                ^
+    |
+help: remove these parentheses
+    |
+758 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+758 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32,
+    |
+
+warning: function `strategy_id_for_output` is never used
+   --> src\main.rs:294:4
+    |
+294 | fn strategy_id_for_output(raw: &str) -> f64 {
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `noop_random` is never used
+   --> src\activation_conditions.rs:218:4
+    |
+218 | fn noop_random() -> Condition {
+    |    ^^^^^^^^^^^
+
+warning: function `noop_erlang_random` is never used
+   --> src\activation_conditions.rs:221:4
+    |
+221 | fn noop_erlang_random(k: i32, lam: f64) -> Condition {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `live_with_static` is never used
+   --> src\activation_conditions.rs:333:4
+    |
+333 | fn live_with_static(get_value: LiveValueFn, static_filter: StaticFilterFn) -> Condition {
+    |    ^^^^^^^^^^^^^^^^
+
+warning: function `section_random` is never used
+   --> src\activation_conditions.rs:434:4
+    |
+434 | fn section_random(start: f64, end: f64) -> Condition {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `change_order_up_end_after_static` is never used
+    --> src\activation_conditions.rs:1133:4
+     |
+1133 | fn change_order_up_end_after_static(regions: &[Region], _a: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParametersWit...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `change_order_up_finalcorner_after_static` is never used
+    --> src\activation_conditions.rs:1138:4
+     |
+1138 | fn change_order_up_finalcorner_after_static(regions: &[Region], _a: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParam...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `change_order_up_middle_static` is never used
+    --> src\activation_conditions.rs:1147:4
+     |
+1147 | fn change_order_up_middle_static(regions: &[Region], _a: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSk...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `activate_count_all_random_filter_gte` is never used
+    --> src\activation_conditions.rs:1630:4
+     |
+1630 | fn activate_count_all_random_filter_gte(regions: &[Region], n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParameters...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `activate_count_all_random_filter_lte` is never used
+    --> src\activation_conditions.rs:1641:4
+     |
+1641 | fn activate_count_all_random_filter_lte(_regions: &[Region], _n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWi...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_end_after_filter_gte` is never used
+    --> src\activation_conditions.rs:1645:4
+     |
+1645 | fn acr_activate_count_end_after_filter_gte(regions: &[Region], _n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParame...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_later_half_filter_gte` is never used
+    --> src\activation_conditions.rs:1650:4
+     |
+1650 | fn acr_activate_count_later_half_filter_gte(regions: &[Region], _n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParam...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_middle_filter_gte` is never used
+    --> src\activation_conditions.rs:1655:4
+     |
+1655 | fn acr_activate_count_middle_filter_gte(regions: &[Region], n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParameters...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_start_filter_gte` is never used
+    --> src\activation_conditions.rs:1662:4
+     |
+1662 | fn acr_activate_count_start_filter_gte(regions: &[Region], _n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParameters...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `build_conditions_with_activate_counts_as_random` is never used
+    --> src\activation_conditions.rs:1670:8
+     |
+1670 | pub fn build_conditions_with_activate_counts_as_random() -> BTreeMap<String, Condition> {
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variants `Uniform`, `LogNormal`, and `Erlang` are never constructed
+  --> src\activation_sample_policy.rs:22:5
+   |
+19 | pub enum SamplePolicy {
+   |          ------------ variants in this enum
+...
+22 |     Uniform,
+   |     ^^^^^^^
+23 |     LogNormal(f64, f64),
+   |     ^^^^^^^^^
+24 |     Erlang(i32, f64),
+   |     ^^^^^^
+   |
+   = note: `SamplePolicy` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `union_regions` is never used
+   --> src\activation_sample_policy.rs:244:8
+    |
+244 | pub fn union_regions(a: &[Region], b: &[Region]) -> Vec<Region> {
+    |        ^^^^^^^^^^^^^
+
+warning: function `parse` is never used
+   --> src\condition_parser.rs:192:8
+    |
+192 | pub fn parse(conditions: &'static BTreeMap<String, Condition>, s: &str) -> CondResult<Op> {
+    |        ^^^^^
+
+warning: function `parse_with_retail` is never used
+   --> src\condition_parser.rs:196:8
+    |
+196 | pub fn parse_with_retail(conditions: &'static BTreeMap<String, Condition>, s: &str,
+    |        ^^^^^^^^^^^^^^^^^
+
+warning: constant `SURFACE_TURF` is never used
+ --> src\course_data.rs:6:11
+  |
+6 | pub const SURFACE_TURF: i32 = 1;
+  |           ^^^^^^^^^^^^
+
+warning: constant `SURFACE_DIRT` is never used
+ --> src\course_data.rs:7:11
+  |
+7 | pub const SURFACE_DIRT: i32 = 2;
+  |           ^^^^^^^^^^^^
+
+warning: associated function `from_i32` is never used
+  --> src\horse_types.rs:55:12
+   |
+54 | impl Aptitude {
+   | ------------- associated function in this implementation
+55 |     pub fn from_i32(v: i32) -> Result<Aptitude, String> {
+   |            ^^^^^^^^
+
+warning: variant `Noop` is never constructed
+   --> src\hp_policy.rs:312:5
+    |
+311 | pub enum HpPolicy {
+    |          -------- variant in this enum
+312 |     Noop,
+    |     ^^^^
+
+warning: methods `is_null` and `get_object` are never used
+  --> src\json.rs:60:12
+   |
+23 | impl Value {
+   | ---------- methods in this implementation
+...
+60 |     pub fn is_null(&self) -> bool {
+   |            ^^^^^^^
+...
+79 |     pub fn get_object<'a>(&'a self, key: &str) -> Result<&'a BTreeMap<String, Value>, String> {
+   |            ^^^^^^^^^^
+
+warning: methods `has_character` and `did_overtake` are never used
+   --> src\race_field.rs:312:12
+    |
+ 90 | impl RaceField {
+    | -------------- methods in this implementation
+...
+312 |     pub fn has_character(&self, id: i64) -> bool { self.characters.contains(&id) }
+    |            ^^^^^^^^^^^^^
+...
+498 |     pub fn did_overtake(&self, i: usize) -> bool {
+    |            ^^^^^^^^^^^^
+
+warning: field `order_range` is never read
+   --> src\race_parameters.rs:122:9
+    |
+113 | pub struct RaceParameters {
+    |            -------------- field in this struct
+...
+122 |     pub order_range: Option<(i32, i32)>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `RaceParameters` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `pos_keep_min_threshold`, `pos_keep_max_threshold`, and `cp_activating` are never read
+   --> src\race_solver.rs:487:5
+    |
+379 | pub struct RaceSolver {
+    |            ---------- fields in this struct
+...
+487 |     pos_keep_min_threshold: f64,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+488 |     pos_keep_max_threshold: f64,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+...
+538 |     pub(crate) cp_activating: bool,
+    |                ^^^^^^^^^^^^^
+
+warning: methods `has_active_skill`, `is_spot_struggling`, `set_on_skill_activate`, `set_on_skill_deactivate`, and `cleanup` are never used
+    --> src\race_solver.rs:640:12
+     |
+ 612 | impl RaceSolver {
+     | --------------- methods in this implementation
+...
+ 640 |     pub fn has_active_skill(&self, skill_id: &str, perspective: Perspective) -> bool {
+     |            ^^^^^^^^^^^^^^^^
+...
+ 665 |     pub fn is_spot_struggling(&self) -> bool {
+     |            ^^^^^^^^^^^^^^^^^^
+...
+2732 |     pub fn set_on_skill_activate(&mut self, hook: SkillHook) {
+     |            ^^^^^^^^^^^^^^^^^^^^^
+...
+2736 |     pub fn set_on_skill_deactivate(&mut self, hook: SkillHook) {
+     |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2740 |     pub fn cleanup(&mut self) {
+     |            ^^^^^^^
+
+warning: field `spot_speed_coefficients` is never read
+  --> src\race_solver_retail.rs:31:9
+   |
+16 | pub(crate) struct RetailRuntimeConfig {
+   |                   ------------------- field in this struct
+...
+31 |     pub spot_speed_coefficients: [f32; 3],
+   |         ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `STRATEGY_PROFICIENCY_MODIFIER` is never used
+  --> src\race_solver_builder.rs:85:7
+   |
+85 | const STRATEGY_PROFICIENCY_MODIFIER: [f64; 8] = [1.1, 1.0, 0.85, 0.75, 0.6, 0.4, 0.2, 0.1];
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `ASITAME_BASE_MODIFIER` is never used
+  --> src\race_solver_builder.rs:94:7
+   |
+94 | const ASITAME_BASE_MODIFIER: f64 = 0.00875;
+   |       ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `asitame_calc_approximate_modifier` is never used
+   --> src\race_solver_builder.rs:111:15
+    |
+111 | pub(crate) fn asitame_calc_approximate_modifier(power: f64, strategy: Strategy, distance_type: i32) -> f64 {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `build_adjusted_stats` is never used
+   --> src\race_solver_builder.rs:202:8
+    |
+202 | pub fn build_adjusted_stats(base: &HorseParameters, course: &CourseData, ground: GroundCondition) -> HorseParameters {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: method `seed` is never used
+   --> src\race_solver_builder.rs:542:12
+    |
+520 | impl RaceSolverBuilder {
+    | ---------------------- method in this implementation
+...
+542 |     pub fn seed(&mut self, lo: u32, hi: u32) -> &mut Self {
+    |            ^^^^
+
+warning: fields `draw_start` and `draw_end` are never read
+  --> src\retail_initialization.rs:43:9
+   |
+36 | pub struct Trigger {
+   |            ------- fields in this struct
+...
+43 |     pub draw_start: usize,
+   |         ^^^^^^^^^^
+44 |     pub draw_end: usize,
+   |         ^^^^^^^^
+   |
+   = note: `Trigger` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: method `target_speed` is never used
+   --> src\retail_physics.rs:303:12
+    |
+121 | impl Parameters {
+    | --------------- method in this implementation
+...
+303 |     pub fn target_speed(&self, input: TargetSpeed, modifiers: &[f32]) -> f32 {
+    |            ^^^^^^^^^^^^
+
+warning: methods `values` and `values_except` are never used
+   --> src\retail_physics.rs:451:12
+    |
+450 | impl AdditiveReceiver {
+    | --------------------- methods in this implementation
+451 |     pub fn values(&self) -> impl Iterator<Item = f32> + '_ {
+    |            ^^^^^^
+...
+457 |     pub fn values_except(&self, token: u64) -> impl Iterator<Item = f32> + '_ {
+    |            ^^^^^^^^^^^^^
+
+warning: field `course_id` is never read
+   --> src\retail_geometry.rs:119:9
+    |
+118 | pub struct CourseGeometry {
+    |            -------------- field in this struct
+119 |     pub course_id: i32,
+    |         ^^^^^^^^^
+    |
+    = note: `CourseGeometry` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: associated function `load` is never used
+   --> src\retail_geometry.rs:143:12
+    |
+135 | impl CourseGeometry {
+    | ------------------- associated function in this implementation
+...
+143 |     pub fn load(directory: &Path, course_id: i32, distance: f32) -> Result<Self, String> {
+    |            ^^^^
+

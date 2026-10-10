@@ -1,0 +1,2 @@
+# Preserve archived bytes so source/data SHA256 provenance survives cloning.
+* -text

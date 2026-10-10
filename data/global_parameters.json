@@ -1,0 +1,1253 @@
+{
+  "ready": true,
+  "source": {
+    "extraction": "live RaceManager._paramDefine; metadata-resolved offsets",
+    "module_sha256": "98dd8ed57bc4ce1cd2dd8ce116aad71ffc276d50970ede986b4f8a6b853c3273",
+    "region": "global",
+    "extracted_date": "2026-09-20",
+    "activation_formula": "RaceUtil.CalcActivatePer, RVA 0x3613be0: max(ActivatePerMin, LotActivatePerVal1 - LotActivatePerVal2 / wisdom), percentage units.",
+    "rng": "Live RaceRandom._random field type: System.Random. Existing Rule30 RNG is not retail-verified.",
+    "order_rate_formula": {
+      "method": "SkillTriggerOrderRate..ctor",
+      "rva": "0x35c5710",
+      "operation": "truncate(float32(horse_count * float32(rate / divisor)) + roundingAdd)",
+      "divisor": 100,
+      "roundingAdd": 0.5
+    }
+  },
+  "parameters": {
+    "paramDefineVersion": "20180828",
+    "Global": {
+      "FinishTimeCoef": 1.1799999475479126,
+      "SingleModeAddSpeed": 400,
+      "SingleModeAddStamina": 400,
+      "SingleModeAddPow": 400,
+      "SingleModeAddGuts": 400,
+      "SingleModeAddWiz": 400
+    },
+    "raceBaseSpeedBaseSpeed": 20,
+    "raceBaseSpeedBaseDistance": 2000,
+    "raceBaseSpeedDistanceRate": 1000,
+    "accelPowCoef": 0.0006000000284984708,
+    "accelPowCoefUpSlope": 0.00039999998989515007,
+    "AccelPowCoefSqrt": 500,
+    "declBase": 1,
+    "declRateStart": 1.2000000476837158,
+    "declRateMiddle": 0.800000011920929,
+    "declRateEnd": 1,
+    "declRateHpZero": 1.2000000476837158,
+    "DeclRatePositionKeepPaseDown": 0.5,
+    "forceInMoveLaneThreshold": 0.11999999731779099,
+    "forceInMoveTargetSpeedAddRunningOut": 0.019999999552965164,
+    "forceInMoveTargetSpeedAddProceding": 0.009999999776482582,
+    "forceInMoveTargetSpeedAddInsertion": 0.009999999776482582,
+    "forceInMoveTargetSpeedAddChasing": 0.029999999329447746,
+    "forceInMoveTargetSpeedAddRandomRange": 0.10000000149011612,
+    "addSpeedParamCoef": 0.0020000000949949026,
+    "baseTargetSpeedCoef": 1.0499999523162842,
+    "LastSpurtTargetSpeedCoefSqrt": 500,
+    "LastSpurtDistanceGoalBuffer": 60,
+    "lastSpurtSpeedDelta": 0.10000000149011612,
+    "lastSpurtDistanceMaxFromGoal": 100,
+    "lastSpurtStep2SpeedDelta": 0.10000000149011612,
+    "lastSpurtStep2PerVal1": 15,
+    "lastSpurtStep2PerVal2": 0.05000000074505806,
+    "LastSpurtTargetSpeedGutsCoef1": 450,
+    "LastSpurtTargetSpeedGutsPow": 0.597000002861023,
+    "LastSpurtTargetSpeedGutsCoef2": 9.999999747378752e-05,
+    "StartSpeed": 3,
+    "StartAccelAdd": 24,
+    "Speed": {
+      "MinSpeedRate": 0.8500000238418579,
+      "MinSpeedGutsCoefSqrt": 200,
+      "MinSpeedGutsCoef": 0.0010000000474974513,
+      "TargetSpeedMin": 13,
+      "ExpectLastSpurtSpeed": 21,
+      "PhaseAccelCoefArray": [
+        {
+          "Start": 1,
+          "Middle": 1,
+          "End": 0.9959999918937683,
+          "Last": 0.9959999918937683
+        },
+        {
+          "Start": 0.9850000143051147,
+          "Middle": 1,
+          "End": 0.9959999918937683,
+          "Last": 0.9959999918937683
+        },
+        {
+          "Start": 0.9750000238418579,
+          "Middle": 1,
+          "End": 1,
+          "Last": 1
+        },
+        {
+          "Start": 0.9449999928474426,
+          "Middle": 1,
+          "End": 0.996999979019165,
+          "Last": 0.996999979019165
+        }
+      ],
+      "PhaseAccelCoefExArray": [
+        {
+          "Start": 1.1699999570846558,
+          "Middle": 0.9399999976158142,
+          "End": 0.9559999704360962,
+          "Last": 0.9559999704360962
+        }
+      ]
+    },
+    "CourseSetAdjust": {
+      "CoefAndThresholdArray": [
+        {
+          "Coef": 0.05000000074505806,
+          "StatusThreshold": 300
+        },
+        {
+          "Coef": 0.10000000149011612,
+          "StatusThreshold": 600
+        },
+        {
+          "Coef": 0.15000000596046448,
+          "StatusThreshold": 900
+        },
+        {
+          "Coef": 0.20000000298023224,
+          "StatusThreshold": 2000
+        }
+      ]
+    },
+    "Slope": {
+      "SlopePerThreshold": 0,
+      "UpSlopeAddSpeedVal1": 200,
+      "DownSlopeAddSpeedVal1": 0.30000001192092896,
+      "DownSlopeAddSpeedVal2": 10,
+      "DownSlopeAddSpeedStartWizRate": 0.03999999910593033,
+      "DownSlopeAddSpeedEndPer": 20
+    },
+    "lastSpurtBaseTargetSpeedAddCoef": 0.009999999776482582,
+    "_groundModifierParamTurf": [
+      {
+        "addSpeed": 0,
+        "addPower": 0,
+        "multiHpSub": 1
+      },
+      {
+        "addSpeed": 0,
+        "addPower": -50,
+        "multiHpSub": 1
+      },
+      {
+        "addSpeed": 0,
+        "addPower": -50,
+        "multiHpSub": 1.0199999809265137
+      },
+      {
+        "addSpeed": -50,
+        "addPower": -50,
+        "multiHpSub": 1.0199999809265137
+      }
+    ],
+    "_groundModifierParamDirt": [
+      {
+        "addSpeed": 0,
+        "addPower": -100,
+        "multiHpSub": 1
+      },
+      {
+        "addSpeed": 0,
+        "addPower": -50,
+        "multiHpSub": 1
+      },
+      {
+        "addSpeed": 0,
+        "addPower": -100,
+        "multiHpSub": 1.0099999904632568
+      },
+      {
+        "addSpeed": -50,
+        "addPower": -100,
+        "multiHpSub": 1.0199999809265137
+      }
+    ],
+    "BasetTargetSpeed": {
+      "PhaseBaseTargetSpeedPerArray": [
+        {
+          "Start": 100,
+          "Middle": 98,
+          "End": 96.19999694824219,
+          "Last": 96.19999694824219
+        },
+        {
+          "Start": 97.80000305175781,
+          "Middle": 99.0999984741211,
+          "End": 97.5,
+          "Last": 97.5
+        },
+        {
+          "Start": 93.80000305175781,
+          "Middle": 99.80000305175781,
+          "End": 99.4000015258789,
+          "Last": 99.4000015258789
+        },
+        {
+          "Start": 93.0999984741211,
+          "Middle": 100,
+          "End": 100,
+          "Last": 100
+        }
+      ],
+      "PhaseBaseTargetSpeedPerExArray": [
+        {
+          "Start": 106.30000305175781,
+          "Middle": 96.19999694824219,
+          "End": 95,
+          "Last": 95
+        }
+      ],
+      "BaseTargetSpeedRandomMinusVal1": -0.6499999761581421,
+      "BaseTargetSpeedRandomMinusVal2": 5500,
+      "BaseTargetSpeedRandomPlusVal1": 5500,
+      "PhaseEndBaseTargetSpeedCoef": 500
+    },
+    "laneMoveSpeedBase": 0.019999999552965164,
+    "laneMoveSpeedAdd": 0.30000001192092896,
+    "laneMoveSpeedPowCoef": 0.0010000000474974513,
+    "laneMoveSpeedOutCoef": 0.05000000074505806,
+    "CongestionLaneGapAbs": 0.30000001192092896,
+    "CongestionHorseCntThreshold": 3,
+    "laneMoveAccelMoveSpeedBaseCoef": 1.5,
+    "lastMoveOutLaneNormalizeVal": 0.10000000149011612,
+    "lastMoveOutLaneCoef": 0.5,
+    "lastMoveOutLaneAddRandom": 0.10000000149011612,
+    "LastMoveOutStartFinalCornerRate": 0,
+    "Block": {
+      "FrontBlockDistanceGap": 2,
+      "FrontBlockLaneGap": 0.0416666716337204,
+      "SideBlockDistanceGap": 1.0499999523162842,
+      "SideBlockLaneGap": 0.1111110970377922,
+      "FrontBlockMaxSpeedRateMin": 0.9879999756813049,
+      "FrontBlockMaxSpeedRateMax": 1
+    },
+    "Near": {
+      "DistanceThreshold": 3,
+      "LaneDistanceThreshold": 0.16665999591350555
+    },
+    "Hp": {
+      "HpInitialVal1": 0.800000011920929,
+      "HpDecBase": 20,
+      "HpMaxCoefOoNige": 0.8600000143051147,
+      "HpMaxCoefNige": 0.949999988079071,
+      "HpMaxCoefSenko": 0.8899999856948853,
+      "HpMaxCoefSashi": 1,
+      "HpMaxCoefOikomi": 0.9950000047683716,
+      "SpeedGapParam1": 12,
+      "SpeedGapParam1Pow": 144,
+      "HpDecRateBaseNormal": 1,
+      "HpDecRateBaseTemptation": 1.600000023841858,
+      "HpDecRateBasePositionKeepPaseDown": 0.6000000238418579,
+      "HpDecRateBaseCompeteTopNige": 1.399999976158142,
+      "HpDecRateBaseTemptationAndCompeteTopNige": 3.5999999046325684,
+      "HpDecRateBaseCompeteTopOonige": 3.5,
+      "HpDecRateBaseTemptationAndCompeteTopOonige": 7.699999809265137,
+      "HpDecRateMultiplyDownSlopeAccelMode": 0.4000000059604645,
+      "HpGutsCoef": 200,
+      "HpGutsCoefSqrt": 600
+    },
+    "PositionKeep": {
+      "PositionKeepCheckIntervalSec": 2,
+      "PositionKeepCoolDownSec": 1,
+      "PositionKeepStartSection": 1,
+      "PositionKeepEndSection": 10,
+      "PositionKeepContinueSection": 1,
+      "PositionKeepContinueSectionExArray": [
+        3
+      ],
+      "PositionKeepSpeedUpStartPerVal1": 20,
+      "PositionKeepSpeedUpBaseTargetSpeedMultiply": 1.0399999618530273,
+      "PositionKeepSpeedUpEndDistanceDiff": 4.5,
+      "PositionKeepSpeedUpEndDistanceDiffOne": 12.5,
+      "PositionKeepOvertakeStartPerVal1": 20,
+      "PositionKeepOvertakeEndDistanceDiff": 10,
+      "PositionKeepOvertakeBaseTargetSpeedMultiply": 1.0499999523162842,
+      "PositionKeepSpeedUpStartPerVal1Oonige": 20,
+      "PositionKeepSpeedUpBaseTargetSpeedMultiplyOonige": 1.0399999618530273,
+      "PositionKeepSpeedUpEndDistanceDiffOonige": 17.5,
+      "PositionKeepOvertakeStartPerVal1Oonige": 20,
+      "PositionKeepOvertakeEndDistanceDiffOonige": 27.5,
+      "PositionKeepOvertakeBaseTargetSpeedMultiplyOonige": 1.0499999523162842,
+      "PositionKeepPaseUpDownDistanceDiffMaxCoef": 0.5,
+      "PositionKeepPaseUpDownDistanceDiffMinSenko": 3,
+      "PositionKeepPaseUpDownDistanceDiffMaxSenko": 5,
+      "PositionKeepPaseUpDownDistanceDiffMinSashi": 6.5,
+      "PositionKeepPaseUpDownDistanceDiffMaxSashi": 7,
+      "PositionKeepPaseUpDownDistanceDiffMinOikomi": 7.5,
+      "PositionKeepPaseUpDownDistanceDiffMaxOikomi": 8,
+      "PositionKeepPaseBaseDistance": 1000,
+      "PositionKeepPaseBaseDistanceCoef": 0.0007999999797903001,
+      "PositionKeepPaseDownBaseTargetSpeedMultiply": 0.9150000214576721,
+      "PositionKeepPaseDownBaseTargetSpeedMultiplyPhaseMiddle": 0.9449999928474426,
+      "PositionKeepPaseDownTargetLane": 0.18000000715255737,
+      "PositionKeepPaseUpStartPerVal1": 15,
+      "PositionKeepPaseUpBaseTargetSpeedMultiply": 1.0399999618530273,
+      "PositionKeepPaseUpExBaseTargetSpeedMultiply": 2,
+      "PaseMakerChangeForwardRunningStyleRange": 10,
+      "PaseMakerChangeMostForwardStyleRange": 10,
+      "PaseMakerChangeTopHorseNotMostForwardStyleCount": 2
+    },
+    "startDelayMax": 0.10000000149011612,
+    "ConservePower": {
+      "ReleaseConservePowerAccelCoef": 0.0010000000474974513,
+      "ReleaseConservePowerDeclCoef": 130,
+      "ReleaseConservePowerAccelRunningStyleAndDistanceTypeCoefArray": [
+        {
+          "RunningStyle": 1,
+          "DistanceType": 1,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 2,
+          "DistanceType": 1,
+          "Coef": 0.699999988079071
+        },
+        {
+          "RunningStyle": 3,
+          "DistanceType": 1,
+          "Coef": 0.75
+        },
+        {
+          "RunningStyle": 4,
+          "DistanceType": 1,
+          "Coef": 0.699999988079071
+        },
+        {
+          "RunningStyle": 1,
+          "DistanceType": 2,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 2,
+          "DistanceType": 2,
+          "Coef": 0.800000011920929
+        },
+        {
+          "RunningStyle": 3,
+          "DistanceType": 2,
+          "Coef": 0.699999988079071
+        },
+        {
+          "RunningStyle": 4,
+          "DistanceType": 2,
+          "Coef": 0.75
+        },
+        {
+          "RunningStyle": 1,
+          "DistanceType": 3,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 2,
+          "DistanceType": 3,
+          "Coef": 0.8999999761581421
+        },
+        {
+          "RunningStyle": 3,
+          "DistanceType": 3,
+          "Coef": 0.875
+        },
+        {
+          "RunningStyle": 4,
+          "DistanceType": 3,
+          "Coef": 0.8600000143051147
+        },
+        {
+          "RunningStyle": 1,
+          "DistanceType": 4,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 2,
+          "DistanceType": 4,
+          "Coef": 0.8999999761581421
+        },
+        {
+          "RunningStyle": 3,
+          "DistanceType": 4,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 4,
+          "DistanceType": 4,
+          "Coef": 0.8999999761581421
+        }
+      ],
+      "ConservePowerDecreaseAccelCoefArray": [
+        {
+          "Mode": 3,
+          "Coef": 0.9800000190734863
+        },
+        {
+          "Mode": 4,
+          "Coef": 0.800000011920929
+        }
+      ],
+      "ReleaseConservePowerActivityTimeCoef": 1450,
+      "ReleaseConservePowerActivityTimeDistanceTypeCoefArray": [
+        {
+          "DistanceType": 1,
+          "Coef": 0.44999998807907104
+        },
+        {
+          "DistanceType": 2,
+          "Coef": 1
+        },
+        {
+          "DistanceType": 3,
+          "Coef": 0.875
+        },
+        {
+          "DistanceType": 4,
+          "Coef": 0.800000011920929
+        }
+      ],
+      "ConservePowerDefaultCoolDownTime": 1.5,
+      "ConservePowerIncreaseCoefArray": [
+        {
+          "Mode": 1,
+          "Coef": 6.699999809265137
+        },
+        {
+          "Mode": 2,
+          "Coef": 4.199999809265137
+        }
+      ],
+      "ConservePowerRunningStyleCoefArray": [
+        {
+          "RunningStyle": 1,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 2,
+          "Coef": 0.75
+        },
+        {
+          "RunningStyle": 3,
+          "Coef": 1
+        },
+        {
+          "RunningStyle": 4,
+          "Coef": 0.699999988079071
+        }
+      ],
+      "ConservePowerDecreaseCoefArray": [
+        {
+          "Mode": 3,
+          "Coef": 0.949999988079071
+        },
+        {
+          "Mode": 4,
+          "Coef": 0.800000011920929
+        }
+      ],
+      "ConservePowerReleasableActivityTimeThreshold": 0.20000000298023224
+    },
+    "Temptation": {
+      "TemptationLotSectionMin": 2,
+      "TemptationLotSectionMax": 9,
+      "TemptationStartPerVal1": 13,
+      "TemptationForceEndTime": 12,
+      "TemptationEndCheckTime": 3,
+      "TemptationEndPer": 55,
+      "OikomiToSashiPer": 10,
+      "OikomiToSenkoPer": 20,
+      "OikomiToNigePer": 70,
+      "SashiToSenkoPer": 25,
+      "SashiToNigePer": 75,
+      "SenkoToNigePer": 100
+    },
+    "CompeteTop": {
+      "CheckStartDistance": 150,
+      "CheckEndSection": 6,
+      "EndSection": 9,
+      "NigeCount": 1,
+      "OonigeCount": 1,
+      "DistanceGap1": 3.75,
+      "LaneGap1": 0.16500000655651093,
+      "DistanceGap2": 5,
+      "LaneGap2": 0.41600000858306885,
+      "TimeCoef1": 700,
+      "TimeCoef2": 0.5,
+      "TimeCoef3": 0.012000000104308128,
+      "AddParam1Coef1": 500,
+      "AddParam1Coef2": 0.6000000238418579,
+      "AddParam1Coef3": 9.999999747378752e-05
+    },
+    "CompeteFight": {
+      "DistanceGap": 3,
+      "LaneGap": 0.25,
+      "TargetContinueTime": 2,
+      "SpeedGap": 0.6000000238418579,
+      "TargetOrderPer": 50,
+      "TargetContinueDistance": 5,
+      "HpPer": 5,
+      "HpPer2": 15,
+      "AddParam1Coef1": 200,
+      "AddParam1Coef2": 0.7080000042915344,
+      "AddParam1Coef3": 9.999999747378752e-05,
+      "AddParam2Coef1": 160,
+      "AddParam2Coef2": 0.5899999737739563,
+      "AddParam2Coef3": 9.999999747378752e-05
+    },
+    "Surrounded": {
+      "DistanceGapAbs1": 1.5,
+      "LaneGap1": 0.16665999591350555,
+      "DistanceGap2": 3,
+      "LaneGapAbs2": 0.08332999795675278
+    },
+    "visibleDistance": 20,
+    "overTakeDistPerSpeed": 15,
+    "overTakeCoolDownTime": 1.5,
+    "overTakeCountCoolDownTime": 6,
+    "overTakeInLaneCoefEnd": 1,
+    "overTakeOutLaneCoefEnd": 1.149999976158142,
+    "Skill": {
+      "AbilityTimeDivideDistance": 1000,
+      "CoolDownTimeDivideDistance": 1000,
+      "RandomLotOtherActivateLotInterval": 1,
+      "LotActivatePerVal1": 100,
+      "LotActivatePerVal2": 9000,
+      "InfrontHorseNearDistance": 2.5,
+      "BehindHorseNearDistance": 2.5,
+      "InfrontHorseNearLaneDistance": 0.05559999868273735,
+      "BehindHorseNearLaneDistance": 0.05559999868273735,
+      "ActivatePerMin": 20,
+      "TeamTotalStatusCoefAscArray": [
+        {
+          "StatusThreshold": 1200,
+          "Multiply": 0.800000011920929
+        },
+        {
+          "StatusThreshold": 1800,
+          "Multiply": 0.8999999761581421
+        },
+        {
+          "StatusThreshold": 2600,
+          "Multiply": 1
+        },
+        {
+          "StatusThreshold": 3600,
+          "Multiply": 1.100000023841858
+        },
+        {
+          "StatusThreshold": 99999,
+          "Multiply": 1.2000000476837158
+        }
+      ],
+      "AbilityTimeDiffDistanceTopCoefPerDistance": 62.5,
+      "AbilityTimeDiffDistanceTopCoefMin": 0.800000011920929,
+      "AbilityTimeDiffDistanceTopCoefMax": 1.600000023841858,
+      "AbiiltyValueUsageRandom1Array": [
+        {
+          "AbilityValueCoef": 0,
+          "Per": 60
+        },
+        {
+          "AbilityValueCoef": 0.019999999552965164,
+          "Per": 30
+        },
+        {
+          "AbilityValueCoef": 0.03999999910593033,
+          "Per": 10
+        }
+      ],
+      "AbiiltyValueUsageRandom2Array": [
+        {
+          "AbilityValueCoef": 0,
+          "Per": 60
+        },
+        {
+          "AbilityValueCoef": 0.019999999552965164,
+          "Per": 30
+        },
+        {
+          "AbilityValueCoef": 0.03999999910593033,
+          "Per": 10
+        }
+      ],
+      "BehindNearParamArray": [
+        {
+          "Distance": 5,
+          "LaneDistance": 0.15000000596046448
+        }
+      ],
+      "LaneMoveAddParam1": 0.00019999999494757503,
+      "LaneMoveAddParam2": 0.5,
+      "TimeRemainHpCoefAscArray": [
+        {
+          "HpThreshold": 2000,
+          "Multiply": 1
+        },
+        {
+          "HpThreshold": 2400,
+          "Multiply": 1.5
+        },
+        {
+          "HpThreshold": 2600,
+          "Multiply": 2
+        },
+        {
+          "HpThreshold": 2800,
+          "Multiply": 2.200000047683716
+        },
+        {
+          "HpThreshold": 3000,
+          "Multiply": 2.5
+        },
+        {
+          "HpThreshold": 3200,
+          "Multiply": 3
+        },
+        {
+          "HpThreshold": 3500,
+          "Multiply": 3.5
+        },
+        {
+          "HpThreshold": 99999,
+          "Multiply": 4
+        }
+      ],
+      "TimeRemainHpCoefAscArray2": [
+        {
+          "HpThreshold": 1500,
+          "Multiply": 1
+        },
+        {
+          "HpThreshold": 1800,
+          "Multiply": 1.5
+        },
+        {
+          "HpThreshold": 2000,
+          "Multiply": 2
+        },
+        {
+          "HpThreshold": 2100,
+          "Multiply": 2.5
+        },
+        {
+          "HpThreshold": 99999,
+          "Multiply": 3
+        }
+      ],
+      "RaceWinCountCoefAscArray": [
+        {
+          "WinCountThreshold": 6,
+          "Multiply": 0.800000011920929
+        },
+        {
+          "WinCountThreshold": 14,
+          "Multiply": 0.8999999761581421
+        },
+        {
+          "WinCountThreshold": 18,
+          "Multiply": 1
+        },
+        {
+          "WinCountThreshold": 25,
+          "Multiply": 1.100000023841858
+        },
+        {
+          "WinCountThreshold": 99999,
+          "Multiply": 1.2000000476837158
+        }
+      ],
+      "OrderUpCornerPhaseEndAfterCoefAscArray": [
+        {
+          "OrderChangeCountThreshold": 2,
+          "Multiply": 1
+        },
+        {
+          "OrderChangeCountThreshold": 3,
+          "Multiply": 1.100000023841858
+        },
+        {
+          "OrderChangeCountThreshold": 4,
+          "Multiply": 1.2000000476837158
+        },
+        {
+          "OrderChangeCountThreshold": 99,
+          "Multiply": 1.25
+        }
+      ],
+      "BaseWizCoefAscArray": [
+        {
+          "BaseStatusThreshold": 500,
+          "Multiply": 0.5
+        },
+        {
+          "BaseStatusThreshold": 800,
+          "Multiply": 1
+        },
+        {
+          "BaseStatusThreshold": 1000,
+          "Multiply": 1.100000023841858
+        },
+        {
+          "BaseStatusThreshold": 1200,
+          "Multiply": 1.2000000476837158
+        },
+        {
+          "BaseStatusThreshold": 1300,
+          "Multiply": 1.2999999523162842
+        },
+        {
+          "BaseStatusThreshold": 9999,
+          "Multiply": 1.399999976158142
+        }
+      ],
+      "MaximumRawStatusCoefAscArray": [
+        {
+          "BaseStatusThreshold": 600,
+          "Multiply": 0.800000011920929
+        },
+        {
+          "BaseStatusThreshold": 800,
+          "Multiply": 0.8999999761581421
+        },
+        {
+          "BaseStatusThreshold": 1000,
+          "Multiply": 1
+        },
+        {
+          "BaseStatusThreshold": 1100,
+          "Multiply": 1.100000023841858
+        },
+        {
+          "BaseStatusThreshold": 9999,
+          "Multiply": 1.2000000476837158
+        }
+      ],
+      "OrderUpAddAbilityTime": 1,
+      "OrderUpAddAbilityTimeMaxCount": 3,
+      "SkillActivateTagGroupArray": [
+        {
+          "TagArray": [
+            101,
+            102,
+            103,
+            104,
+            201,
+            202,
+            203,
+            204,
+            301,
+            302,
+            303,
+            501,
+            502
+          ]
+        },
+        {
+          "TagArray": [
+            403
+          ]
+        }
+      ],
+      "AbilityValueUsageTagGroup1Array": [
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615
+      ],
+      "ActivateSpecificTagGroupSkillCountCoefAscArray": [
+        {
+          "ActivateSpecificTagGroupSkillCountThreshold": 3,
+          "Multiply": 0
+        },
+        {
+          "ActivateSpecificTagGroupSkillCountThreshold": 5,
+          "Multiply": 1
+        },
+        {
+          "ActivateSpecificTagGroupSkillCountThreshold": 6,
+          "Multiply": 2
+        },
+        {
+          "ActivateSpecificTagGroupSkillCountThreshold": 99,
+          "Multiply": 3
+        }
+      ],
+      "FanCountCoefAscArray": [
+        {
+          "FanCountThreshold": 20000,
+          "Multiply": 0.800000011920929
+        },
+        {
+          "FanCountThreshold": 50000,
+          "Multiply": 0.8999999761581421
+        },
+        {
+          "FanCountThreshold": 100000,
+          "Multiply": 1
+        },
+        {
+          "FanCountThreshold": 160000,
+          "Multiply": 1.100000023841858
+        },
+        {
+          "FanCountThreshold": 99999999,
+          "Multiply": 1.2000000476837158
+        }
+      ],
+      "AdditionalActivateAbilityMaxCountArray": [
+        {
+          "AdditionalActivateType": 0,
+          "AdditionalActivateMaxCount": 0
+        },
+        {
+          "AdditionalActivateType": 1,
+          "AdditionalActivateMaxCount": 3
+        },
+        {
+          "AdditionalActivateType": 2,
+          "AdditionalActivateMaxCount": 3
+        },
+        {
+          "AdditionalActivateType": 3,
+          "AdditionalActivateMaxCount": 2
+        }
+      ],
+      "DistanceDiffTopCoefAscArray": [
+        {
+          "DistanceDiffTopThreshold": 20,
+          "AddValue": 0
+        },
+        {
+          "DistanceDiffTopThreshold": 9999,
+          "AddValue": 1000
+        }
+      ],
+      "BlockedSideMaxContinueTimePhaseMiddleRunAbilityValueCoefAscArray1": [
+        {
+          "BlockedSideMaxContinueTimeThreshold": 2,
+          "Multiply": 1
+        },
+        {
+          "BlockedSideMaxContinueTimeThreshold": 4,
+          "Multiply": 2
+        },
+        {
+          "BlockedSideMaxContinueTimeThreshold": 6,
+          "Multiply": 3
+        },
+        {
+          "BlockedSideMaxContinueTimeThreshold": 999,
+          "Multiply": 4
+        }
+      ],
+      "BlockedSideMaxContinueTimePhaseMiddleRunAbilityValueCoefAscArray2": [],
+      "BlockedSideMaxContinueTimePhaseMiddleRunAbilityTimeCoefAscArray1": [
+        {
+          "BlockedSideMaxContinueTimeThreshold": 2,
+          "Multiply": 1
+        },
+        {
+          "BlockedSideMaxContinueTimeThreshold": 4,
+          "Multiply": 2
+        },
+        {
+          "BlockedSideMaxContinueTimeThreshold": 6,
+          "Multiply": 3
+        },
+        {
+          "BlockedSideMaxContinueTimeThreshold": 999,
+          "Multiply": 4
+        }
+      ],
+      "BlockedSideMaxContinueTimePhaseMiddleRunAbilityTimeCoefAscArray2": [],
+      "SpeedAbilityValueCoefAscArray1": [
+        {
+          "SpeedThreshold": 1700,
+          "Multiply": 0
+        },
+        {
+          "SpeedThreshold": 1800,
+          "Multiply": 1
+        },
+        {
+          "SpeedThreshold": 1900,
+          "Multiply": 2
+        },
+        {
+          "SpeedThreshold": 2000,
+          "Multiply": 3
+        },
+        {
+          "SpeedThreshold": 9999,
+          "Multiply": 4
+        }
+      ],
+      "SpeedAbilityValueCoefAscArray2": [
+        {
+          "SpeedThreshold": 1400,
+          "Multiply": 1
+        },
+        {
+          "SpeedThreshold": 1600,
+          "Multiply": 2
+        },
+        {
+          "SpeedThreshold": 9999,
+          "Multiply": 3
+        }
+      ]
+    },
+    "Popularity": {
+      "Z1Add": 1,
+      "Z1Coef": 0.20000000298023224,
+      "Z2Add": 1,
+      "Z2Coef": 0.20000000298023224,
+      "RankCenterZ1Pow": 1.5,
+      "RankCenterZ2Pow": 0.800000011920929,
+      "DeviationBase": 50,
+      "DeviationCoef": 10,
+      "DeviationThreshold": 55,
+      "DeviationMinus": 54,
+      "DeviationFix": 1
+    },
+    "Defeat": {
+      "DefeatSameRunningStylePer": 75,
+      "DefeatGutsOrderPer": 33,
+      "DefeatTemptaionCount": 1,
+      "DefeatFrontBlockAccumulateTime": 1,
+      "DefeatLoseFinishOrder": 2,
+      "DefeatLoseBashinDiff": 5,
+      "DefeatProperDistance": 6,
+      "DefeatProperGround": 6,
+      "DefeatMotivation": 2
+    },
+    "runMotionSpeedCoef": 1.0499999523162842,
+    "runMotionSpeedMin": 1.100000023841858,
+    "runMotionSpeedMax": 1.399999976158142,
+    "runMotionSpeedBaseHorseSpeed": 18,
+    "runMotionSpeedHorseSpeedRate": 4.5,
+    "runMotionBlendRateMinSpeedOffset": 1.5,
+    "runMotionBlendRateMaxSpeedOffset": 2,
+    "laneMoveRotYThresholdPerSec": 0.5,
+    "laneMoveRotYThresholdRotZ": 10,
+    "laneMoveRotYPerMovedLane": 9,
+    "laneMoveRotYMax": 2.5,
+    "laneMoveRotYRotatePerSec": 2.5,
+    "laneMoveRotYRotatePerSecToZero": 2.5,
+    "laneMoveRotZThresholdPerSec": 0.5,
+    "laneMoveRotZThresholdRotZ": 1,
+    "laneMoveRotZPerMovedLane": 9,
+    "laneMoveRotZMax": 3,
+    "laneMoveRotZRotatePerSec": 3,
+    "laneMoveRotZRotatePerSecToZero": 3,
+    "RunMotionSpeedCoefByRunningType": [
+      1,
+      1,
+      0.800000011920929
+    ],
+    "footDirtBaseEnergy": [
+      0,
+      0.009999999776482582,
+      0.019999999552965164,
+      0.07000000029802322
+    ],
+    "lowerDirtBaseEnergy": [
+      0,
+      0,
+      0.029999999329447746,
+      0.05000000074505806
+    ],
+    "upperDirtBaseEnergy": [
+      0,
+      0,
+      0.019999999552965164,
+      0.03999999910593033
+    ],
+    "dirtDistance": 5,
+    "dirtAngle": 25,
+    "footDirtStep": [
+      0,
+      20,
+      40,
+      60
+    ],
+    "lowerDirtStep": [
+      0,
+      20,
+      40,
+      60,
+      80
+    ],
+    "upperDirtStep": [
+      0,
+      20,
+      40,
+      60,
+      80,
+      100
+    ],
+    "EventCameraIntervalSec": 2,
+    "EventCameraUnPlayableDistanceFromGoal": 75,
+    "SkillCutInEventCameraUnPlayableDistanceFromGoalTeamStadium": 75,
+    "BehindPosCheckDistanceThresholdTop": 12.5,
+    "BehindPosCheckDistanceThreshold": 50,
+    "BehindPosCheckLaneDistanceMeterThreshold": 0.15000000596046448,
+    "Camera": {
+      "GateInDemoPosOffsetLandscape": {
+        "x": 0,
+        "y": 5,
+        "z": 0
+      },
+      "GateInDemoFovOffsetLandscape": -3,
+      "GateInDemoCut2FovLandscape": 30,
+      "GateInDemoCut2FovLandscapeSingle": 3.75
+    },
+    "WaitStartDashSec": 0.07500000298023224,
+    "Jikkyo": {
+      "NearGoalDistance": 25,
+      "NearGoalInterruptDisableDistance": 0,
+      "CommentDisableDistance": 300,
+      "SilentTimeMaxSec": 0.20000000298023224,
+      "ImmidiateSuspendTime": 0.10000000149011612,
+      "NotWinRaceGroup1RaceInstanceIdArray": [
+        100401,
+        100501,
+        100901,
+        101001,
+        101401,
+        101501
+      ],
+      "WaitSecPerChar": 0.15000000596046448,
+      "WaitSecMin": 1,
+      "WaitSecMax": 5,
+      "NoVoiceCharaIdArray": [],
+      "OmitTagTime": 5,
+      "CrossTimeArray": [
+        {
+          "SentenceCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.05999999865889549
+          ],
+          "BeforeHorseNameBanCrossTimeArray": [
+            0,
+            -0.05000000074505806,
+            -0.05000000074505806,
+            -0.009999999776482582
+          ],
+          "BeforeHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "AfterHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "BeforeHorseNameWithPostpositionalCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.029999999329447746
+          ]
+        },
+        {
+          "SentenceCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.05999999865889549
+          ],
+          "BeforeHorseNameBanCrossTimeArray": [
+            0,
+            -0.05000000074505806,
+            -0.05000000074505806,
+            -0.009999999776482582
+          ],
+          "BeforeHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "AfterHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "BeforeHorseNameWithPostpositionalCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.029999999329447746
+          ]
+        },
+        {
+          "SentenceCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.05999999865889549
+          ],
+          "BeforeHorseNameBanCrossTimeArray": [
+            0,
+            -0.05000000074505806,
+            -0.05000000074505806,
+            -0.009999999776482582
+          ],
+          "BeforeHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "AfterHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "BeforeHorseNameWithPostpositionalCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.029999999329447746
+          ]
+        },
+        {
+          "SentenceCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.05999999865889549
+          ],
+          "BeforeHorseNameBanCrossTimeArray": [
+            0,
+            -0.05000000074505806,
+            -0.05000000074505806,
+            -0.009999999776482582
+          ],
+          "BeforeHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "AfterHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "BeforeHorseNameWithPostpositionalCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.029999999329447746
+          ]
+        },
+        {
+          "SentenceCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.05999999865889549
+          ],
+          "BeforeHorseNameBanCrossTimeArray": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "BeforeHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "AfterHorseNameCrossTimeArray": [
+            0,
+            0.009999999776482582,
+            0.009999999776482582,
+            0.009999999776482582
+          ],
+          "BeforeHorseNameWithPostpositionalCrossTimeArray": [
+            0,
+            0.029999999329447746,
+            0.029999999329447746,
+            0.029999999329447746
+          ]
+        }
+      ]
+    },
+    "Sound": {
+      "ResidentCrowdAisacValueArray": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.6499999761581421,
+        0.699999988079071,
+        0.800000011920929,
+        0.8500000238418579,
+        0.8999999761581421
+      ],
+      "ResidentCrowdAisacInterpSecArray": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        8,
+        4.599999904632568,
+        3.5,
+        5,
+        2
+      ],
+      "ResidentCrowdGoalBeforeDistance": 50,
+      "BusDotVerticalThreshold": 0.9700000286102295,
+      "BusFovMiddleThreshold": 10,
+      "BusFovWideThreshold": 30,
+      "BusDistanceMiddleForFovTightThreshold": 16,
+      "BusDistanceFarForFovTightThreshold": 145,
+      "BusDistanceMiddleForFovMiddleThreshold": 16,
+      "BusDistanceFarForFovMiddleThreshold": 50,
+      "BusDistanceMiddleForFovWideThreshold": 16,
+      "BusDistanceFarForFovWideThreshold": 50,
+      "BGMVolumeArray": [
+        0,
+        1,
+        0.8999999761581421
+      ],
+      "BGMVolumeFadeSecArray": [
+        0,
+        1,
+        10
+      ]
+    }
+  }
+}

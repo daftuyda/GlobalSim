@@ -1,0 +1,101 @@
+{
+  "identity": {
+    "engineSha256": "26145ea94ebb09b78271e75b185914856fce0376dafd6ef82a2f465bbf56a854",
+    "templateSha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796"
+  },
+  "scope": "Retrospective accuracy, not independent validation; normalized imported/end-acknowledged mass collection, deduplicated by replay bytes; v69 candidate binary with retail flags; exact skill times rounded to 0.1ms; replay samples use float32 position and wide wire encoding.",
+  "excluded": 0,
+  "groups": {
+    "all": {
+      "races": 767,
+      "errors": 0,
+      "runners": 13150,
+      "winner": 765,
+      "placements": 13105,
+      "finishExact": 760,
+      "skillExact": 763,
+      "frameExact": 760,
+      "officialCasts": 117774,
+      "simulatedCasts": 117767,
+      "exactCasts": 117572,
+      "finishMAE": 0.000950089371249703,
+      "maxFinishError": 0.8511734008789062
+    },
+    "9 runners": {
+      "races": 18,
+      "errors": 0,
+      "runners": 162,
+      "winner": 17,
+      "placements": 158,
+      "finishExact": 17,
+      "skillExact": 17,
+      "frameExact": 17,
+      "officialCasts": 1090,
+      "simulatedCasts": 1087,
+      "exactCasts": 1080,
+      "finishMAE": 0.007580580534758391,
+      "maxFinishError": 0.26459503173828125
+    },
+    "12 runners": {
+      "races": 45,
+      "errors": 0,
+      "runners": 540,
+      "winner": 45,
+      "placements": 540,
+      "finishExact": 45,
+      "skillExact": 45,
+      "frameExact": 45,
+      "officialCasts": 3001,
+      "simulatedCasts": 3001,
+      "exactCasts": 3001,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "14 runners": {
+      "races": 1,
+      "errors": 0,
+      "runners": 14,
+      "winner": 1,
+      "placements": 14,
+      "finishExact": 1,
+      "skillExact": 1,
+      "frameExact": 1,
+      "officialCasts": 152,
+      "simulatedCasts": 152,
+      "exactCasts": 152,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "16 runners": {
+      "races": 110,
+      "errors": 0,
+      "runners": 1760,
+      "winner": 110,
+      "placements": 1760,
+      "finishExact": 110,
+      "skillExact": 110,
+      "frameExact": 110,
+      "officialCasts": 13828,
+      "simulatedCasts": 13828,
+      "exactCasts": 13828,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "18 runners": {
+      "races": 593,
+      "errors": 0,
+      "runners": 10674,
+      "winner": 592,
+      "placements": 10633,
+      "finishExact": 587,
+      "skillExact": 590,
+      "frameExact": 587,
+      "officialCasts": 99703,
+      "simulatedCasts": 99699,
+      "exactCasts": 99511,
+      "finishMAE": 0.0010554263804855475,
+      "maxFinishError": 0.8511734008789062
+    }
+  },
+  "scope_note": "Original scope string has a stale v69 label; engine hash identifies candidate-t packaged as v70."
+}

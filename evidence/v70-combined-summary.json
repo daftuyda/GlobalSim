@@ -1,0 +1,15 @@
+{
+  "races": 13187,
+  "runners": 125215,
+  "winner": 13177,
+  "placements": 125100,
+  "finishExact": 13156,
+  "skillExact": 13163,
+  "frameExact": 13156,
+  "officialCasts": 1376523,
+  "simulatedCasts": 1376508,
+  "exactCasts": 1375471,
+  "errors": 0,
+  "finishMAE": 0.0003878075194064646,
+  "maxFinishError": 1.3089065551757812
+}

@@ -1,0 +1,62 @@
+{
+  "10001": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10002": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10003": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10004": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10005": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10006": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10007": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10008": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10009": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10010": {
+    "initialLaneType": 1,
+    "enableHalfGate": true
+  },
+  "10101": {
+    "initialLaneType": 2,
+    "enableHalfGate": false
+  },
+  "10103": {
+    "initialLaneType": 2,
+    "enableHalfGate": false
+  },
+  "10104": {
+    "initialLaneType": 2,
+    "enableHalfGate": false
+  },
+  "10105": {
+    "initialLaneType": 4,
+    "enableHalfGate": true
+  },
+  "10201": {
+    "initialLaneType": 3,
+    "enableHalfGate": true
+  }
+}
