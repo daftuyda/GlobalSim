@@ -1,5 +1,5 @@
 {
-  "version": "v70",
+  "version": "v71",
   "archive_sha256": "b3959bcc729e32c046096c11344233b1b276a8cfaa896ca40fe27a2a5b22582a",
   "files": [
     {
@@ -888,7 +888,8 @@
       "path": "src/race_field.rs",
       "archive_path": "src/race_field.rs",
       "archive_sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b",
-      "sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b"
+      "sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb",
+      "release_sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb"
     },
     {
       "path": "src/race_field_retail.rs",
@@ -906,7 +907,8 @@
       "path": "src/race_solver.rs",
       "archive_path": "src/race_solver.rs",
       "archive_sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b",
-      "sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b"
+      "sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070",
+      "release_sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070"
     },
     {
       "path": "src/race_solver_builder.rs",
@@ -966,7 +968,8 @@
       "path": "src/retail_position_keep.rs",
       "archive_path": "src/retail_position_keep.rs",
       "archive_sha256": "416a0b7e3fc91b9fe127ccba597c84eefa3e07ce274f24f5e19418442ec9817e",
-      "sha256": "3b2a03d6875044124f2101fdf1e0a6895e84b5ecddc09a55137250a8fd8e55c9"
+      "sha256": "30389dfd520cb67fc1436f001d1c0a4ca9292b774b12471fc96ef40e2c2fb67b",
+      "release_sha256": "d28724c8e1087e2d0f8e88b3a28a35dd9b98b3834142af01ae353ff6cc88d505"
     },
     {
       "path": "src/retail_random.rs",
@@ -1011,5 +1014,5 @@
       "sha256": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
     }
   ],
-  "relocations": "Only include paths and the geometry-test-data directory path changed; physics and test expectations preserved."
+  "relocations": "Local include and geometry-test paths retained; v71 source overlay applied to race_field, race_solver and retail_position_keep."
 }

@@ -78,13 +78,10 @@ pub struct RaceField {
     previous_positions: RefCell<Option<Vec<f64>>>,
     pacemaker_idx: Cell<Option<usize>>,
     pacemaker_valid: Cell<bool>,
-    // Experimental: eligible leader section trigger; server semantics unverified.
+    // Global section-based handover state, validated against captured races.
     section_pacemaker: Cell<Option<(usize, usize)>>,
-    // v17: overall race leader recorded at the previous section refresh
-    // (None for the start-of-race selection).
-    refresh_overall: Cell<Option<usize>>,
-    refresh_overall2: Cell<Option<usize>>,
-    handover_start: Cell<Option<usize>>,
+    pm_count: Cell<usize>,
+    pm_handed: Cell<bool>,
 }
 
 impl RaceField {
@@ -120,9 +117,8 @@ impl RaceField {
             pacemaker_idx: Cell::new(None),
             pacemaker_valid: Cell::new(false),
             section_pacemaker: Cell::new(None),
-            refresh_overall: Cell::new(None),
-            refresh_overall2: Cell::new(None),
-            handover_start: Cell::new(None),
+            pm_count: Cell::new(0),
+            pm_handed: Cell::new(false),
         };
         field.update();
         field
@@ -175,58 +171,7 @@ impl RaceField {
         }
         *self.previous_positions.borrow_mut() = Some(positions);
         if self.retail_block.is_some() {
-            if let Some(leader) = Self::leading_eligible_in(&stale_order, &self.strategies) {
-                // Front-less pacemaker handover (no Front runner present; doc 13.173).
-                let leader = if self.strategies.iter().any(|s| matches!(s, Strategy::Nige | Strategy::Oonige)) {
-                    leader
-                } else {
-                    let section = crate::retail_physics::target_speed_indices(
-                        self.solvers[stale_order[0]].borrow().pos as f32,
-                        self.solvers[leader].borrow().course.distance as f32).0;
-                    let chosen = self.frontless_pacemaker(&stale_order, leader, section);
-                    self.frontless_keep(&stale_order, leader, chosen, section)
-                };
-                let solver = self.solvers[leader].borrow();
-                // v21: the refresh is keyed on the overall leader's course section
-                // (preceding rank pass), not the leading Front-group runner's.
-                // Corpus (501 races): 8 better / 0 worse, first divergence later in 7.
-                let section = crate::retail_physics::target_speed_indices(
-                    self.solvers[stale_order[0]].borrow().pos as f32,
-                    solver.course.distance as f32).0;
-                // Inferred Front/Pace handover; isolated development candidate.
-                let previous = self.section_pacemaker.get();
-                let front = matches!(solver.horse.strategy, Strategy::Nige | Strategy::Oonige);
-                let is_front = |i: usize| matches!(self.solvers[i].borrow().horse.strategy, Strategy::Nige | Strategy::Oonige);
-                // v15: no pacemaker refresh (or undo) once the leader has reached
-                // PositionKeepEndSection; the incumbent keeps serving pace-mode exits.
-                let end_section = solver.retail.as_ref().map_or(f32::INFINITY, |r| r.config.pace.end_section());
-                if previous.is_some() && section as f32 >= end_section {
-                } else if previous.map(|(_, old)| old) != Some(section) {
-                    let overall = stale_order[0];
-                    let previous_overall = self.refresh_overall
-                        .replace(if section >= 1 { Some(overall) } else { None });
-                    self.refresh_overall2.set(previous_overall);
-                    // v6: Senkou lead only matters at opening-section refreshes (0-3).
-                    let senkou_leads = front
-                        && self.solvers[overall].borrow().horse.strategy == Strategy::Senkou;
-                    // v17: the Senkou takes over only when it was also the overall
-                    // leader at the previous refresh; otherwise the incumbent is held
-                    // (no Front re-selection while a Senkou leads).
-                    let pace_challenge = section < 4 && senkou_leads && previous_overall.is_some_and(|i| self.solvers[i].borrow().horse.strategy == Strategy::Senkou);
-                    let selected = match previous {
-                        Some(_) if pace_challenge => overall,
-                        Some((prev, _)) if senkou_leads => prev,
-                        _ => leader,
-                    };
-                    self.section_pacemaker.set(Some((selected, section)));
-                } else if let Some((selected, _)) = previous {
-                    // Restore only after the preceding rank pass puts the Front ahead.
-                    if front && !is_front(selected) && stale_order.iter().position(|&i| i == leader) < stale_order.iter().position(|&i| i == selected) {
-                        // v17: undo to the leading Front (v6 restored the pre-challenge pacer).
-                        self.section_pacemaker.set(Some((leader, section)));
-                    }
-                }
-            }
+            self.update_pacemaker(&stale_order);
         }
 
     }
@@ -662,72 +607,61 @@ impl RaceField {
         result
     }
 
-    /// Front-less handover (development labels from pacemaker-dirt-01/-02,
-    /// pacemaker-validation-02/-04, frontless-handover-dev-03 and shooting-star-type22-01;
-    /// doc 13.169-13.179):
-    /// - From section 1, if the overall leader is >= 10 m ahead of `leader` (the
-    ///   leading most-forward-style runner), pace goes to the leading runner of the
-    ///   most forward style among runners within 10 m of the overall leader.
-    /// - From section 2, while an End Closer leads, or until the section after the
-    ///   handover began, an existing handover to a later style is held. Otherwise pace
-    ///   goes to the frontmost non-End-Closer when an End Closer leads, unless `leader`
-    ///   led overall at the previous refresh; from section 3 the previous refresh must
-    ///   also have been led by an End Closer, or (section 3 only) `leader` led overall
-    ///   two refreshes back.
-    fn frontless_pacemaker(&self, stale_order: &[usize], leader: usize, section: usize) -> usize {
-        if section < 1 {
-            return leader;
-        }
-        let pos = |i: usize| self.solvers[i].borrow().pos;
-        let lead = pos(stale_order[0]);
-        let ten = if lead - pos(leader) >= 10.0 {
-            let near: Vec<usize> = stale_order.iter().copied().filter(|&i| lead - pos(i) < 10.0).collect();
-            Self::leading_eligible_in(&near, &self.strategies).unwrap_or(leader)
-        } else {
-            leader
+    /// Count non-forward-led section checks cumulatively until recalculation.
+    /// A forward-led check alone does not clear the count. After a handover,
+    /// retaking the lead restores the forward group immediately and clears it.
+    /// Use the preceding rank pass and live positions, as in v70.
+    fn update_pacemaker(&self, order: &[usize]) {
+        // Runaway shares the Front Runner group; it does not outrank it.
+        let style = |i: usize| self.strategies[i].base_running_style() as usize;
+        let pos = |i: usize| self.solvers[i].borrow().pos as f32;
+        let active: Vec<_> = order.iter().copied().filter(|&i| {
+            let h=self.solvers[i].borrow(); h.pos < h.course.distance
+        }).collect();
+        let Some(&overall)=active.first() else {return};
+        let forward=active.iter().map(|&i|style(i)).min().unwrap();
+        let leader=*active.iter().find(|&&i|style(i)==forward).unwrap();
+        let distance=self.solvers[overall].borrow().course.distance as f32;
+        let section=crate::retail_physics::target_speed_indices(pos(overall),distance).0;
+        let previous=self.section_pacemaker.get();
+        let (end, range, threshold) = {
+            let solver = self.solvers[overall].borrow();
+            let pace = &solver.retail.as_ref().unwrap().config.pace;
+            (pace.end_section(), pace.pacemaker_forward_range, pace.pacemaker_not_forward_count)
         };
-        // Section 1: unless a most-forward-style runner leads the race, the section-0
-        // pacemaker is kept (doc 13.179).
-        if section == 1 && ten == leader && self.strategies[stale_order[0]] != self.strategies[leader] {
-            if let Some((p, _)) = self.section_pacemaker.get() {
-                return p;
+        let (mut selected, old_section)=previous.unwrap_or((leader,0));
+        // Position-keep exits still consult the incumbent after the selection
+        // window closes. Do not perform a late handover or restoration.
+        if previous.is_some() && section as f32 >= end { return; }
+        if previous.is_none() {self.section_pacemaker.set(Some((leader,0)));}
+        if section>old_section {
+            if style(overall)==forward && (section as f32)<end {selected=leader;}
+            // In a frontless field, a detached forward runner yields to the
+            // most-forward style within range, preserving order within style.
+            if forward > 1 && pos(overall)-pos(leader)>=range {
+                selected=*active.iter().filter(|&&i|pos(overall)-pos(i)<range)
+                    .min_by_key(|&&i|style(i)).unwrap_or(&overall);
             }
+            if style(overall)!=forward {
+                let count=self.pm_count.get()+1;
+                self.pm_count.set(count);
+                let below=count<threshold;
+                if !below || self.pm_handed.get() {
+                    if !below {self.pm_count.set(0);}
+                    let candidate=if style(overall)<3 {overall} else {
+                        active.iter().copied().find(|&i|style(i)<style(overall) && pos(overall)-pos(i)<=range).unwrap_or(overall)
+                    };
+                    if !below || (style(candidate)==forward && forward<=1) {
+                        selected=candidate;
+                        if style(candidate)!=forward {self.pm_count.set(0);self.pm_handed.set(true);}
+                    }
+                }
+            }
+            self.section_pacemaker.set(Some((selected,section)));
         }
-        if section < 2 || ten != leader {
-            return ten;
-        }
-        let handed = self.section_pacemaker.get().map(|(p, _)| p)
-            .filter(|&p| self.strategies[p] != self.strategies[leader]);
-        let closer_leads = self.strategies[stale_order[0]] == Strategy::Oikomi;
-        let hold = self.handover_start.get().map_or(false, |h| section <= h + 1);
-        if !(closer_leads || (hold && handed.is_some())) {
-            return ten;
-        }
-        if let Some(p) = handed {
-            return p;
-        }
-        let previous_overall = self.refresh_overall.get();
-        if previous_overall != Some(leader)
-            && (section == 2
-                || previous_overall.map_or(false, |o| self.strategies[o] == Strategy::Oikomi)
-                || (section == 3 && self.refresh_overall2.get() == Some(leader))) {
-            self.handover_start.set(Some(section));
-            return stale_order.iter().copied().find(|&i| self.strategies[i] != Strategy::Oikomi).unwrap_or(ten);
-        }
-        ten
-    }
-
-    /// Among several most-forward-style runners, a standard choice (`chosen == leader`)
-    /// keeps the previous same-style pacemaker unless a most-forward-style runner leads
-    /// the race; at section 2 the choice is made anyway when no such runner led the
-    /// section-1 refresh (doc 13.179).
-    fn frontless_keep(&self, stale_order: &[usize], leader: usize, chosen: usize, section: usize) -> usize {
-        let deferred = section == 2
-            && self.refresh_overall.get().map_or(true, |o| self.strategies[o] != self.strategies[leader]);
-        match self.section_pacemaker.get().map(|(p, _)| p) {
-            Some(p) if chosen == leader && p != leader && self.strategies[p] == self.strategies[leader]
-                && self.strategies[stale_order[0]] != self.strategies[leader] && !deferred => p,
-            _ => chosen,
+        if (self.pm_handed.get() || self.pm_count.get()>=threshold) && style(overall)==forward {
+            self.section_pacemaker.set(Some((overall,section)));
+            self.pm_count.set(0);self.pm_handed.set(false);
         }
     }
 

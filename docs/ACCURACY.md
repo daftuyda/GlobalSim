@@ -1,29 +1,26 @@
 # Benchmark results and coverage
 
-GlobalSim was evaluated against **13,187 official Global races**, covering
-125,215 runner observations. Every finish time matched exactly in **99.76%**
-of races, with **99.92% winner agreement** and **99.91% exact placement agreement**.
+GlobalSim v71 was evaluated against **13,187 official Global races**, covering
+125,215 runner observations. Every finish time matched exactly in **99.97%**
+of races, with **99.98% winner agreement** and **99.98% exact placement agreement**.
 
 ## Results
 
-| Metric | Collected corpus | Original corpus | Combined |
-|---|---:|---:|---:|
-| Races | 12,420 | 767 | 13,187 |
-| Runner observations | 112,065 | 13,150 | 125,215 |
-| All finish times exact, per race | 12,396/12,420 (99.8068%) | 760/767 (99.0874%) | 13,156/13,187 (99.7649%) |
-| Winner agreement | 12,412/12,420 (99.9356%) | 765/767 (99.7392%) | 13,177/13,187 (99.9242%) |
-| Exact placement agreement | 111,995/112,065 (99.9375%) | 13,105/13,150 (99.6578%) | 125,100/125,215 (99.9082%) |
-| All audited frame samples exact, per race | 12,396/12,420 (99.8068%) | 760/767 (99.0874%) | 13,156/13,187 (99.7649%) |
-| All skill starts exact, per race | 12,400/12,420 (99.8390%) | 763/767 (99.4785%) | 13,163/13,187 (99.8180%) |
-| Matched skill starts | 1,257,899/1,258,749 (99.9325%) | 117,572/117,774 (99.8285%) | 1,375,471/1,376,523 (99.9236%) |
-| Mean absolute finish error | 0.000321828 s | 0.000950089 s | 0.000387808 s |
-| Worst finish error | 1.308906555 s | 0.851173401 s | 1.308906555 s |
+| Metric | Result |
+|---|---:|
+| Races with every finish time exact | 13,183/13,187 (99.9697%) |
+| Winner agreement | 13,185/13,187 (99.9848%) |
+| Exact placement agreement | 125,196/125,215 (99.9848%) |
+| Races with every compared frame sample exact | 13,183/13,187 (99.9697%) |
+| Races with all skill starts exact | 13,183/13,187 (99.9697%) |
+| Matched skill starts | 1,376,407/1,376,523 (99.9916%) |
+| Mean absolute finish-time error | 0.0593 ms |
+| Worst observed finish-time error | 1.045456 s |
 
-Combined means are runner-weighted, not the average of two corpus means.
-See [combined numeric totals](../evidence/v70-combined-summary.json).
-The collected corpus is overwhelmingly nine-runner racing (12,387/12,420).
-These results do not imply equivalent coverage across every course, roster,
-skill combination, career mode or oversized field.
+Time errors are weighted by runner count. The benchmark contains 12,405
+nine-runner races and 782 races with 12, 14, 16 or 18 runners. Coverage is not
+uniform across course, roster or skill combinations. Custom oversized fields
+are outside this benchmark. [Numeric results](../evidence/v71-summary.json).
 
 ## What exact means
 
@@ -44,11 +41,10 @@ skill combination, career mode or oversized field.
 ## Coverage and limitations
 
 These are retrospective measurements, not an independent held-out evaluation
-or a guarantee for every race configuration. The benchmark includes 31 races
-with finish-time differences and ten with a different winner.
+or a guarantee for every race configuration. The benchmark includes four races
+with finish-time differences and two with a different winner.
 
-Remaining differences include pacemaker selection in fields without Front
-Runners and duel-entry timing. Conserve Power fallbacks and optional later
+A small number of pacing and movement differences remain. Conserve Power fallbacks and optional later
 stamina mechanics include approximations. Results also depend on the selected
 runtime settings and course and skill data.
 

@@ -2,6 +2,8 @@
 
 ### High-fidelity race simulation for Umamusume Global
 
+**Version 71**
+
 GlobalSim is a detailed race simulation engine written in Rust, modeling the
 interactions that decide a race—from starting gates and positioning to skill
 activation, stamina management, and the final sprint.
@@ -19,16 +21,23 @@ trajectories, finishing orders, and race events.
 - **Skill simulation:** activation conditions, timing, effect values, duration, cooldowns, and recipients.
 - **Detailed output:** finish times, placements, movement frames, and skill and competition events.
 
+## Improvements in v71
+
+Pacemaker handovers now track section checks consistently and restore the
+forward running-style group when it retakes the lead. Duel entry selects the
+longest-standing eligible nearby partner and starts both participants together
+when an invitation succeeds.
+
 ## Measured fidelity
 
 Results from a retrospective benchmark of **13,187 official Global races**:
 
 | Metric | Result |
 |---|---:|
-| Races with every finish time matching exactly | **99.76%** |
-| Winner agreement | **99.92%** |
-| Exact placement agreement | **99.91%** |
-| Mean absolute finish-time error | **0.388 ms** |
+| Races with every finish time matching exactly | **99.97%** |
+| Winner agreement | **99.98%** |
+| Exact placement agreement | **99.98%** |
+| Mean absolute finish-time error | **0.0593 ms** |
 
 These measurements describe the tested races, not guaranteed accuracy for every
 race configuration. GlobalSim is an unofficial implementation and does not claim
@@ -45,13 +54,13 @@ cargo build --release --locked
 Run the included example on Windows:
 
 ```powershell
-Get-Content examples/v70-race.jsonl | .\target\release\race_engine_rs_v2.exe
+Get-Content examples/v71-race.jsonl | .\target\release\race_engine_rs_v2.exe
 ```
 
 On Linux or macOS:
 
 ```sh
-./target/release/race_engine_rs_v2 < examples/v70-race.jsonl > results.jsonl
+./target/release/race_engine_rs_v2 < examples/v71-race.jsonl > results.jsonl
 ```
 
 The example includes the simulation settings and skill data used by the

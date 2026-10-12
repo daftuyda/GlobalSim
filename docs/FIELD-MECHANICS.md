@@ -48,9 +48,18 @@ In the ordinary path, base minimum/maximum gaps for Senkou, Sasi, Oikomi are
 accelerate to catch up, ease off when too close, or handle front-runner rivalry.
 Reconstructed thresholds and multipliers come from the parameter tables.
 
-Pacemaker choice and state-transition order are important sources of full-race
-divergence. A matching initial gap or finish time does not validate that hidden
-selector. Preserve state, timers and random draw order when changing this code.
+The detailed runtime groups Runaway with Front Runner and selects among active
+runners using the preceding rank pass and current positions. At each new
+section, a lead by a less-forward style increments a counter. A section led by
+the most-forward style does not by itself clear that counter. Recalculation
+uses `PaseMakerChangeTopHorseNotMostForwardStyleCount` and
+`PaseMakerChangeForwardRunningStyleRange` from the parameter table.
+
+In a field without Front Runners, a detached forward-style runner can yield
+to the most-forward style within range of the overall leader. After a handover,
+the forward group retaking the lead restores its pacemaker and clears handover
+state. Selection stops at the configured end section (section 10); the incumbent
+remains available to subsequent position-keep exit checks.
 
 ## Vision, overtaking, blocking and lanes
 
@@ -81,6 +90,13 @@ timer and HP eligibility rules. For example Spot Struggle's normalized lane
 gap is .165, its entry cutoff is section 6 and end cutoff section 9; the duel
 lane gap is .25. Duel proximity must persist and real starts increment the
 duel count used by skill conditions. A finish is not a duel event.
+
+In the detailed runtime, duel entry first selects the longest-standing eligible
+nearby partner, then checks that partner's duel history. A selected partner
+whose earlier duel has ended prevents entry; selection does not fall back to a
+newer partner. A valid invitation activates both runners together, including a
+runner whose own partner search failed. Group membership, eligibility and
+participation counts are updated with the activation.
 
 The later stamina behavior is explicitly gated by
 `experimentalLaterStaminaMechanics`. Its approximations include the flat

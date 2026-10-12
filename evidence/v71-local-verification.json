@@ -1,0 +1,28 @@
+{
+  "version": "v71",
+  "examples": [
+    {
+      "file": "race.jsonl",
+      "runners": 9,
+      "frames": 107,
+      "ok": true
+    },
+    {
+      "file": "retail-race.jsonl",
+      "runners": 9,
+      "frames": 108,
+      "ok": true
+    },
+    {
+      "file": "v71-race.jsonl",
+      "runners": 9,
+      "frames": 1463,
+      "ok": true
+    }
+  ],
+  "unit_tests": {
+    "passed": 69,
+    "failed": 11,
+    "new_failures": []
+  }
+}

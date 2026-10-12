@@ -189,15 +189,15 @@ warning: methods `is_null` and `get_object` are never used
    |            ^^^^^^^^^^
 
 warning: methods `has_character` and `did_overtake` are never used
-   --> src\race_field.rs:312:12
+   --> src\race_field.rs:257:12
     |
- 90 | impl RaceField {
+ 87 | impl RaceField {
     | -------------- methods in this implementation
 ...
-312 |     pub fn has_character(&self, id: i64) -> bool { self.characters.contains(&id) }
+257 |     pub fn has_character(&self, id: i64) -> bool { self.characters.contains(&id) }
     |            ^^^^^^^^^^^^^
 ...
-498 |     pub fn did_overtake(&self, i: usize) -> bool {
+443 |     pub fn did_overtake(&self, i: usize) -> bool {
     |            ^^^^^^^^^^^^
 
 warning: field `order_range` is never read
@@ -237,13 +237,13 @@ warning: methods `has_active_skill`, `is_spot_struggling`, `set_on_skill_activat
  665 |     pub fn is_spot_struggling(&self) -> bool {
      |            ^^^^^^^^^^^^^^^^^^
 ...
-2732 |     pub fn set_on_skill_activate(&mut self, hook: SkillHook) {
+2750 |     pub fn set_on_skill_activate(&mut self, hook: SkillHook) {
      |            ^^^^^^^^^^^^^^^^^^^^^
 ...
-2736 |     pub fn set_on_skill_deactivate(&mut self, hook: SkillHook) {
+2754 |     pub fn set_on_skill_deactivate(&mut self, hook: SkillHook) {
      |            ^^^^^^^^^^^^^^^^^^^^^^^
 ...
-2740 |     pub fn cleanup(&mut self) {
+2758 |     pub fn cleanup(&mut self) {
      |            ^^^^^^^
 
 warning: field `spot_speed_coefficients` is never read

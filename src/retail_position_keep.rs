@@ -1,5 +1,5 @@
 //! Client-order pace control. Field pacemaker selection is deliberately supplied
-//! by the caller: the authoritative selection algorithm is still unresolved.
+//! by the caller; section handovers live in RaceField.
 use crate::json::Value;
 use crate::retail_physics::bounded_stat;
 use crate::retail_random::RandomSource;
@@ -15,6 +15,8 @@ pub enum Mode {
 
 #[derive(Clone)]
 pub struct Parameters {
+    pub pacemaker_forward_range: f32,
+    pub pacemaker_not_forward_count: usize,
     start_section: f32,
     end_section: f32,
     cooldown: f32,
@@ -59,6 +61,8 @@ impl Parameters {
             return Err("Invalid Runaway pace duration".into());
         }
         let result = Self {
+            pacemaker_forward_range: value.get_f64("PaseMakerChangeForwardRunningStyleRange")? as f32,
+            pacemaker_not_forward_count: value.get_f64("PaseMakerChangeTopHorseNotMostForwardStyleCount")? as usize,
             start_section: n("StartSection")?,
             end_section: n("EndSection")?,
             cooldown: n("CoolDownSec")?,

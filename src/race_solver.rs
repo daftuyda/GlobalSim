@@ -2661,7 +2661,7 @@ impl RaceSolver {
             // Retail proximity and speed already use the pre-movement snapshot.
             // Hypothesis: finish eligibility belongs to that same snapshot.
             let peer_finished = other.retail.as_ref().map_or(other.pos >= self.course.distance, |r| r.duel_preupdate_finished);
-            if peer_finished || (other.compete_fight_count > 0 && !other.duel_active) {
+            if peer_finished || (!retail_cache && other.compete_fight_count > 0 && !other.duel_active) {
                 continue;
             }
             let dist_gap = other.pos - pos;
@@ -2694,6 +2694,31 @@ impl RaceSolver {
         if ready.is_empty() {
             return;
         }
+        // Select the longest-standing eligible nearby runner before checking
+        // its duel history. An expired partner blocks entry; do not fall back
+        // to a newer partner merely because the selected runner cannot rejoin.
+        if let Some(j) = self.duel_target_index.filter(|_| retail_cache) {
+            let peer = field.solvers[j].borrow();
+            if peer.compete_fight_count > 0 && !peer.duel_active { return; }
+        }
+        let j = self.duel_target_index.expect("duel activation requires a target");
+        let mut peer = field.solvers[j].borrow_mut();
+        let group = if retail_partner {
+            peer.duel_group.or(self.duel_group).unwrap_or(i.min(j))
+        } else {
+            *peer.duel_group.get_or_insert(i)
+        };
+        self.duel_group.get_or_insert(group);
+        peer.duel_group.get_or_insert(group);
+        self.activate_retail_duel();
+        // Commit both entrants together: an earlier runner may have selected
+        // an expired partner, but can still be invited by this later runner.
+        if retail_partner && !peer.duel_active && peer.compete_fight_count == 0 {
+            peer.activate_retail_duel();
+        }
+    }
+
+    fn activate_retail_duel(&mut self) {
         let guts = self.horse.guts.max(1.0);
         if let Some(retail) = &self.retail {
             let modifier = |coefficients: [f32; 3]| {
@@ -2706,13 +2731,6 @@ impl RaceSolver {
         } else {
             self.duel_target_speed_modifier = (200.0 * guts).powf(0.708) * 0.0001;
             self.duel_accel_modifier = (160.0 * guts).powf(0.59) * 0.0001;
-        }
-        // Reserve a group for an unassigned target; never merge prior groups.
-        if self.duel_group.is_none() {
-            let target_index = self.duel_target_index.expect("duel activation requires a target");
-            let mut target = field.solvers[target_index].borrow_mut();
-            let group = *target.duel_group.get_or_insert(i);
-            self.duel_group = Some(group);
         }
         self.duel_active = true;
         self.compete_fight_count += 1;
