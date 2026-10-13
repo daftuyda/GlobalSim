@@ -1,26 +1,31 @@
 # Benchmark results and coverage
 
-GlobalSim v71 was evaluated against **13,187 official Global races**, covering
-125,215 runner observations. Every finish time matched exactly in **99.97%**
-of races, with **99.98% winner agreement** and **99.98% exact placement agreement**.
+GlobalSim v72 was evaluated against **13,187 official Global races**, covering
+125,215 runner observations. Every tested race matches the recorded finish
+times, winner, placements, skill starts and compared replay samples.
 
 ## Results
 
 | Metric | Result |
 |---|---:|
-| Races with every finish time exact | 13,183/13,187 (99.9697%) |
-| Winner agreement | 13,185/13,187 (99.9848%) |
-| Exact placement agreement | 125,196/125,215 (99.9848%) |
-| Races with every compared frame sample exact | 13,183/13,187 (99.9697%) |
-| Races with all skill starts exact | 13,183/13,187 (99.9697%) |
-| Matched skill starts | 1,376,407/1,376,523 (99.9916%) |
-| Mean absolute finish-time error | 0.0593 ms |
-| Worst observed finish-time error | 1.045456 s |
+| Races with every finish time exact | 13,187/13,187 (100% in this corpus) |
+| Winner agreement | 13,187/13,187 |
+| Exact placement agreement | 125,215/125,215 |
+| Races with every compared frame sample exact | 13,187/13,187 |
+| Races with all skill starts exact | 13,187/13,187 |
+| Matched skill starts | 1,376,523/1,376,523 |
+| Mean absolute finish-time error | 0 ms |
+| Worst observed finish-time error | 0 ms |
 
 Time errors are weighted by runner count. The benchmark contains 12,405
 nine-runner races and 782 races with 12, 14, 16 or 18 runners. Coverage is not
 uniform across course, roster or skill combinations. Custom oversized fields
-are outside this benchmark. [Numeric results](../evidence/v71-summary.json).
+are outside this benchmark. [Numeric results](../evidence/accuracy-validation.json).
+
+The latest corrections address pacemaker restoration, the publication timing
+of healer history, and transitions at shared slope boundaries. They resolve
+the four previously differing races. The other 13,183 races retain identical
+serialized output, with no execution errors or regressions in the full check.
 
 ## What exact means
 
@@ -41,11 +46,12 @@ are outside this benchmark. [Numeric results](../evidence/v71-summary.json).
 ## Coverage and limitations
 
 These are retrospective measurements, not an independent held-out evaluation
-or a guarantee for every race configuration. The benchmark includes four races
-with finish-time differences and two with a different winner.
+or a guarantee for every race configuration. The same corpus informed the
+corrections, so complete agreement here does not establish accuracy on unseen
+courses, rosters or skill combinations.
 
-A small number of pacing and movement differences remain. Conserve Power fallbacks and optional later
-stamina mechanics include approximations. Results also depend on the selected
+Conserve Power fallbacks and optional later stamina mechanics include
+approximations. Results also depend on the selected
 runtime settings and course and skill data.
 
 GlobalSim is an unofficial implementation and does not claim complete 1:1

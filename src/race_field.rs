@@ -31,6 +31,13 @@ struct ExternalEffect {
     effect: SkillEffect, duration: f64,
 }
 
+#[derive(Default)]
+struct RankBuffers {
+    positions: Vec<f64>,
+    indices: Vec<usize>,
+    ranks: Vec<usize>,
+}
+
 /// 1 horse-lane = 1/18 course-width (doc). `lane` fields elsewhere are
 /// stored in course-width units; this converts a horse-lane count into
 /// that unit wherever the doc states a threshold in horse-lanes.
@@ -57,6 +64,8 @@ pub(crate) fn is_skill_demerit(kind: i32, value: f64) -> bool {
 
 pub struct RaceField {
     retail_block: Option<crate::retail_lane::BlockParameters>,
+    retail_tick: RefCell<retail_impl::TickBuffers>,
+    rank_buffers: RefCell<RankBuffers>,
     pub solvers: Vec<RefCell<RaceSolver>>,
     pub n: usize,
     pub player_horse_index: usize,
@@ -68,6 +77,7 @@ pub struct RaceField {
     teams: Vec<i64>,
     characters: Vec<i64>,
     pub heal_history: RefCell<Vec<usize>>,
+    cached_heal_count: Cell<usize>,
     advantage_activations: RefCell<BTreeSet<(usize, i32)>>,
     previous_advantage_activations: RefCell<BTreeSet<(usize, i32)>>,
     overtake_cooldowns: RefCell<BTreeMap<(usize, usize), f64>>,
@@ -101,11 +111,14 @@ impl RaceField {
         assert!(solvers.iter().all(|s|s.retail.is_some()==retail_block.is_some()), "Mixed retail field profiles");
         let field = RaceField {
             retail_block,
+            retail_tick: RefCell::new(retail_impl::TickBuffers::default()),
+            rank_buffers: RefCell::new(RankBuffers::default()),
             solvers: solvers.into_iter().map(RefCell::new).collect(),
             n,
             player_horse_index: 0,
             strategies,
             teams, characters, heal_history: RefCell::new(Vec::new()),
+            cached_heal_count: Cell::new(0),
             advantage_activations: RefCell::new(initial),
             previous_advantage_activations: RefCell::new(BTreeSet::new()),
             overtake_cooldowns: RefCell::new(BTreeMap::new()),
@@ -133,10 +146,15 @@ impl RaceField {
         drop(rank);
         self.pacemaker_valid.set(false);
 
-        let positions: Vec<f64> = self.solvers.iter().map(|s| s.borrow().pos).collect();
-        let mut idx: Vec<usize> = (0..self.n).collect();
+        let mut buffers = self.rank_buffers.borrow_mut();
+        let RankBuffers { positions, indices: idx, ranks: rank_of } = &mut *buffers;
+        positions.clear();
+        positions.extend(self.solvers.iter().map(|s| s.borrow().pos));
+        idx.clear();
+        idx.extend(0..self.n);
         idx.sort_by(|&a, &b| positions[b].partial_cmp(&positions[a]).unwrap());
-        let mut rank_of = vec![0usize; self.n];
+        rank_of.clear();
+        rank_of.resize(self.n, 0);
         for (rank, &i) in idx.iter().enumerate() {
             rank_of[i] = rank + 1;
         }
@@ -147,9 +165,9 @@ impl RaceField {
                 crate::activation_conditions::track_order_bands(&s, r, self.n);
             }
         }
-        *self.rank_of.borrow_mut() = rank_of;
+        std::mem::swap(&mut *self.rank_of.borrow_mut(), rank_of);
         // v9: the section pacemaker is chosen from the preceding rank pass (live positions).
-        let stale_order = std::mem::replace(&mut *self.order.borrow_mut(), idx);
+        let stale_order = std::mem::replace(&mut *self.order.borrow_mut(), std::mem::take(idx));
         if let Some(previous) = self.previous_positions.borrow().as_ref() {
             for i in 0..self.n {
                 let distance = self.solvers[i].borrow().course.distance;
@@ -169,10 +187,14 @@ impl RaceField {
                 solver.record_overtakes(usize::from(event));
             }
         }
-        *self.previous_positions.borrow_mut() = Some(positions);
+        // Keep the previous positions and ordering available until all
+        // observers finish, then recycle those buffers for the next pass.
+        *positions = self.previous_positions.borrow_mut()
+            .replace(std::mem::take(positions)).unwrap_or_default();
         if self.retail_block.is_some() {
             self.update_pacemaker(&stale_order);
         }
+        *idx = stale_order;
 
     }
 
@@ -268,6 +290,7 @@ impl RaceField {
 
     fn cache_skill_activations(&self) {
         // Global CachePrevActivateSkillHorseDict runs after the entire field.
+        self.cached_heal_count.set(self.heal_history.borrow().len());
         std::mem::swap(&mut *self.previous_advantage_activations.borrow_mut(),
                       &mut *self.advantage_activations.borrow_mut());
         self.advantage_activations.borrow_mut().clear();
@@ -330,7 +353,11 @@ impl RaceField {
             22 => order.iter().copied().filter(|&i| self.characters[i] == value as i64).collect(),
             23 => {
                 let mut chosen = Vec::new();
-                for &i in self.heal_history.borrow().iter().rev() {
+                // Healer history is published after the whole field's skill
+                // pass. A heal this tick cannot replace last tick's target.
+                let history = self.heal_history.borrow();
+                let count = if owner.retail.is_some() { self.cached_heal_count.get() } else { history.len() };
+                for &i in history[..count].iter().rev() {
                     if chosen.len() >= limit { break; }
                     if !chosen.contains(&i) { chosen.push(i); }
                 }
@@ -662,8 +689,12 @@ impl RaceField {
             }
             self.section_pacemaker.set(Some((selected,section)));
         }
-        if (self.pm_handed.get() || self.pm_count.get()>=threshold) && style(overall)==forward {
-            self.section_pacemaker.set(Some((overall,section)));
+        // Restore the forward group when its leader passes the incumbent
+        // pacemaker, even if another running style still leads the race.
+        if (self.pm_handed.get() || self.pm_count.get()>=threshold)
+            && (style(overall)==forward || (leader != selected
+                && active.iter().position(|&i|i==leader) < active.iter().position(|&i|i==selected))) {
+            self.section_pacemaker.set(Some((leader,section)));
             self.pm_count.set(0);self.pm_handed.set(false);
         }
     }

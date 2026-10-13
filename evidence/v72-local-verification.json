@@ -1,0 +1,32 @@
+{
+  "version": "v72",
+  "engineSha256": "362121b419c043994937f91802ef15903c450b9b5d953fb337aa8880b180bdcd",
+  "releaseBuild": "passed",
+  "examples": [
+    {
+      "file": "race.jsonl",
+      "runners": 9,
+      "frames": 107,
+      "ok": true
+    },
+    {
+      "file": "retail-race.jsonl",
+      "runners": 9,
+      "frames": 108,
+      "ok": true
+    },
+    {
+      "file": "v72-race.jsonl",
+      "runners": 9,
+      "frames": 1463,
+      "ok": true
+    }
+  ],
+  "unit_tests": {
+    "passed": 85,
+    "failed": 11,
+    "new_failures": [],
+    "report": "accuracy-cargo-test.txt"
+  },
+  "accuracyReport": "accuracy-validation.json"
+}

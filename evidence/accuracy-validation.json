@@ -1,0 +1,213 @@
+{
+  "version": "v72",
+  "scope": "Retrospective 13,187-race corpus used during correction development, not an independent holdout. Inputs and official references were hash-checked against the earlier audit. Official observations were decoded and scored again for every race.",
+  "exactDefinitions": {
+    "finish": "Raw finish-time vector equality without tolerance.",
+    "skillStarts": "Full multiset of runner, skill ID and time rounded to four decimal places (0.1 ms).",
+    "frames": "Official sample times matched at five decimal places; float32 position and wide-wire speed/HP/lane quantization (scales 100, 1, 10000), excluding samples after either finish.",
+    "limitations": "No assertion about unsampled ticks, all hidden state, or all event recipients/values/durations. The four bundled fixtures additionally check recipient masks for the affected healer-targeting skill.",
+    "timeErrorUnit": "seconds"
+  },
+  "identity": {
+    "engineSha256": "362121b419c043994937f91802ef15903c450b9b5d953fb337aa8880b180bdcd",
+    "inventorySha256": "c0ecc610341977ca37ba35844c48aa6d5952a6c673f2547cff9ba7091551274a",
+    "templateSha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796",
+    "archiveSha256": "83a53fe993c22ba9c2134bf20af91c53d3c43f76f402432d285c46dc8e3213e1",
+    "baselineEngineSha256": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27",
+    "fullResultsSha256": "890c72e5619b6226dca627c7b82a92ff161d23ace1acddbc2df97e3b28bb8d0a"
+  },
+  "groups": {
+    "all": {
+      "races": 13187,
+      "errors": 0,
+      "runners": 125215,
+      "winner": 13187,
+      "placements": 125215,
+      "finishExact": 13187,
+      "skillExact": 13187,
+      "frameExact": 13187,
+      "officialCasts": 1376523,
+      "simulatedCasts": 1376523,
+      "exactCasts": 1376523,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "9 runners": {
+      "races": 12405,
+      "errors": 0,
+      "runners": 111645,
+      "winner": 12405,
+      "placements": 111645,
+      "finishExact": 12405,
+      "skillExact": 12405,
+      "frameExact": 12405,
+      "officialCasts": 1253269,
+      "simulatedCasts": 1253269,
+      "exactCasts": 1253269,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "12 runners": {
+      "races": 45,
+      "errors": 0,
+      "runners": 540,
+      "winner": 45,
+      "placements": 540,
+      "finishExact": 45,
+      "skillExact": 45,
+      "frameExact": 45,
+      "officialCasts": 3001,
+      "simulatedCasts": 3001,
+      "exactCasts": 3001,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "14 runners": {
+      "races": 1,
+      "errors": 0,
+      "runners": 14,
+      "winner": 1,
+      "placements": 14,
+      "finishExact": 1,
+      "skillExact": 1,
+      "frameExact": 1,
+      "officialCasts": 152,
+      "simulatedCasts": 152,
+      "exactCasts": 152,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "16 runners": {
+      "races": 116,
+      "errors": 0,
+      "runners": 1856,
+      "winner": 116,
+      "placements": 1856,
+      "finishExact": 116,
+      "skillExact": 116,
+      "frameExact": 116,
+      "officialCasts": 14907,
+      "simulatedCasts": 14907,
+      "exactCasts": 14907,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "18 runners": {
+      "races": 620,
+      "errors": 0,
+      "runners": 11160,
+      "winner": 620,
+      "placements": 11160,
+      "finishExact": 620,
+      "skillExact": 620,
+      "frameExact": 620,
+      "officialCasts": 105194,
+      "simulatedCasts": 105194,
+      "exactCasts": 105194,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    }
+  },
+  "previousMetrics": {
+    "races": 13187,
+    "errors": 0,
+    "runners": 125215,
+    "winner": 13185,
+    "placements": 125196,
+    "finishExact": 13183,
+    "skillExact": 13183,
+    "frameExact": 13183,
+    "officialCasts": 1376523,
+    "simulatedCasts": 1376514,
+    "exactCasts": 1376407,
+    "finishMAE": 5.9302906227850596e-05,
+    "maxFinishError": 1.0454559326171875
+  },
+  "comparison": {
+    "byteIdenticalDenseReplies": 13183,
+    "changedDenseReplies": 4,
+    "previouslyDifferingRacesCorrected": 4,
+    "remainingNonExactRaces": 0,
+    "regressions": 0,
+    "executionErrors": 0
+  },
+  "fixedCases": [
+    {
+      "fixture": "pacemaker-handover",
+      "correction": "Restore the forward-style pacemaker when its leader passes the incumbent.",
+      "referenceSha256": "7b8bd4d1a1c2b9bf1120b81169f7f37126b9333ef17e2d71c44a006c7bed6521",
+      "fixtureSha256": "e5969e461961873eec84f068c0bc48144240d0d96c9807878f6721b12879c263",
+      "runners": 9,
+      "finishExact": true,
+      "skillExact": true,
+      "frameExact": true,
+      "winner": true,
+      "placements": 9
+    },
+    {
+      "fixture": "heal-history-later-caster",
+      "correction": "Use healer history published after the preceding whole-field skill pass.",
+      "referenceSha256": "a5305547c43f80842763152833cdc9e5180e7b5eefe95d73e7d451fe35d36432",
+      "fixtureSha256": "42662660dab0692826cc3d26aed63f1917ed1a48d6631b5942f34b99c4f4deaf",
+      "runners": 9,
+      "finishExact": true,
+      "skillExact": true,
+      "frameExact": true,
+      "winner": true,
+      "placements": 9
+    },
+    {
+      "fixture": "heal-history-earlier-caster",
+      "correction": "Use healer history published after the preceding whole-field skill pass.",
+      "referenceSha256": "677d973dba393e6341d9d33076302d95ed4d2fa6beec7d776cb3d97cdbdeeb66",
+      "fixtureSha256": "c114e6ea5991b856c4ae1295385f3f798006d46fc20aa19385a5e97f1bcf6548",
+      "runners": 9,
+      "finishExact": true,
+      "skillExact": true,
+      "frameExact": true,
+      "winner": true,
+      "placements": 9
+    },
+    {
+      "fixture": "adjoining-slope-boundary",
+      "correction": "Process slope events once, using the first inclusive same-direction region for expiry.",
+      "referenceSha256": "98f3100a6c675394bded830a5b75a96a25cdc00c8e5f1d28fa196fd474be3875",
+      "fixtureSha256": "a8045e22176019a592735ec8554a6294406e1eb2fb2eff70486fa8bf297fdfa2",
+      "runners": 18,
+      "finishExact": true,
+      "skillExact": true,
+      "frameExact": true,
+      "winner": true,
+      "placements": 18
+    }
+  ],
+  "portableRegressionFixtures": {
+    "beforePassed": 0,
+    "afterPassed": 4,
+    "total": 4,
+    "report": "accuracy-regressions.json"
+  },
+  "workerParity": {
+    "matchingReplies": 292,
+    "report": "accuracy-worker-parity.json"
+  },
+  "rustTests": {
+    "passed": 85,
+    "failed": 11,
+    "failureSetUnchanged": true,
+    "failures": [
+      "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+      "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+      "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+      "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+      "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+      "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+      "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+      "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+      "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+      "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+      "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+    ],
+    "report": "accuracy-cargo-test.txt"
+  }
+}

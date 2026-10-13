@@ -68,6 +68,11 @@ selection can itself consume RNG before ability-value randomization.
 `skillTargetEvents` records selections per ability; additional events can have
 a runtime-subset ability index scope rather than the original full array.
 
+Healer-targeting skills select from the most recent distinct healers in the
+history cached after the previous field tick. Healing during the current skill
+pass becomes visible to target selection on the next tick. This matters when
+a runner heals and activates a healer-targeting debuff in the same pass.
+
 Ordinary distance-scaled durations/cooldowns use the course distance in
 kilometres. Special duration usages are evaluated from their runtime inputs,
 including remaining HP and leader distance, rather than always using the

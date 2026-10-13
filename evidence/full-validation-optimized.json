@@ -1,0 +1,150 @@
+{
+  "scope": "Complete 13,187-race captured corpus; dense replay and official metrics recomputed. Previous v71 fast and optimized persistent workers receive identical inputs. Parallel validation timings are not latency benchmarks.",
+  "identity": {
+    "engines": {
+      "original": "ea1fb3a46a4acf075ad91356e9b8f51f763d5173a6013a8fb752abdc302d0a27",
+      "optimized": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb"
+    },
+    "template_sha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796",
+    "inventory_sha256": "c0ecc610341977ca37ba35844c48aa6d5952a6c673f2547cff9ba7091551274a",
+    "archive_sha256": "83a53fe993c22ba9c2134bf20af91c53d3c43f76f402432d285c46dc8e3213e1",
+    "workers": 4,
+    "limit": 0
+  },
+  "races": 13187,
+  "byte_identical": 13187,
+  "archive_input_identical": 13187,
+  "archive_output_identical": 13187,
+  "archive_metrics_identical": 13187,
+  "groups": {
+    "all": {
+      "races": 13187,
+      "errors": 0,
+      "runners": 125215,
+      "winner": 13185,
+      "placements": 125196,
+      "finishExact": 13183,
+      "skillExact": 13183,
+      "frameExact": 13183,
+      "officialCasts": 1376523,
+      "simulatedCasts": 1376514,
+      "exactCasts": 1376407,
+      "finishMAE": 5.9302906227850596e-05,
+      "maxFinishError": 1.0454559326171875
+    },
+    "9 runners": {
+      "races": 12405,
+      "errors": 0,
+      "runners": 111645,
+      "winner": 12403,
+      "placements": 111630,
+      "finishExact": 12402,
+      "skillExact": 12402,
+      "frameExact": 12402,
+      "officialCasts": 1253269,
+      "simulatedCasts": 1253259,
+      "exactCasts": 1253164,
+      "finishMAE": 5.0759169208554455e-05,
+      "maxFinishError": 1.0454559326171875
+    },
+    "12 runners": {
+      "races": 45,
+      "errors": 0,
+      "runners": 540,
+      "winner": 45,
+      "placements": 540,
+      "finishExact": 45,
+      "skillExact": 45,
+      "frameExact": 45,
+      "officialCasts": 3001,
+      "simulatedCasts": 3001,
+      "exactCasts": 3001,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "14 runners": {
+      "races": 1,
+      "errors": 0,
+      "runners": 14,
+      "winner": 1,
+      "placements": 14,
+      "finishExact": 1,
+      "skillExact": 1,
+      "frameExact": 1,
+      "officialCasts": 152,
+      "simulatedCasts": 152,
+      "exactCasts": 152,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "16 runners": {
+      "races": 116,
+      "errors": 0,
+      "runners": 1856,
+      "winner": 116,
+      "placements": 1856,
+      "finishExact": 116,
+      "skillExact": 116,
+      "frameExact": 116,
+      "officialCasts": 14907,
+      "simulatedCasts": 14907,
+      "exactCasts": 14907,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "18 runners": {
+      "races": 620,
+      "errors": 0,
+      "runners": 11160,
+      "winner": 620,
+      "placements": 11156,
+      "finishExact": 619,
+      "skillExact": 619,
+      "frameExact": 619,
+      "officialCasts": 105194,
+      "simulatedCasts": 105195,
+      "exactCasts": 105183,
+      "finishMAE": 0.0001575811789454525,
+      "maxFinishError": 0.4712982177734375
+    }
+  },
+  "errors": [],
+  "nonexact": [
+    {
+      "case": "pacemaker-validation-02/pacemaker-validation-02-0041-c10612__case01",
+      "finishExact": false,
+      "skillExact": false,
+      "frameExact": false
+    },
+    {
+      "case": "pacemaker-validation-07/pacemaker-validation-07-0037-c10406__case01",
+      "finishExact": false,
+      "skillExact": false,
+      "frameExact": false
+    },
+    {
+      "case": "pacemaker-validation-07/pacemaker-validation-07-0042-c10708__case01",
+      "finishExact": false,
+      "skillExact": false,
+      "frameExact": false
+    },
+    {
+      "case": "original-corpus/v20-prospective-20260927__case03",
+      "finishExact": false,
+      "skillExact": false,
+      "frameExact": false
+    }
+  ],
+  "corpus_timing": {
+    "original": {
+      "mean_ms": 59.22695753375703,
+      "median_ms": 53.15900000277907,
+      "sum_seconds": 781.025888997654
+    },
+    "optimized": {
+      "mean_ms": 45.50316557242264,
+      "median_ms": 40.90680001536384,
+      "sum_seconds": 600.0502444035374
+    }
+  }
+}

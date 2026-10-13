@@ -172,9 +172,10 @@ Functions: `default`, `sort_candidates`, `choose`, `default`, `update`, `search_
 
 ## [retail_states.rs](../src/retail_states.rs)
 
-Rushing, downhill and related runtime states.
+Rushing, downhill and slope-event runtime states. `SlopeState::update` handles
+inclusive shared boundaries and expiry without reactivating an old event.
 
-Functions: `number`, `from_value`, `new`, `choose_mode`, `set_forced_end`, `step`, `from_value`, `update`, `new`, `take`, `integer`, `real`, `parameters`, `rushing_boundaries_consumption_and_single_use`, `rushing_float_tick_and_forced_timer_replacement`, `downhill_zero_crossing_and_level_terrain_freeze`, `shared_stream_matches_python_state_transitions_and_float_timers`.
+Functions: `update`, `number`, `from_value`, `new`, `choose_mode`, `set_forced_end`, `step`, `from_value`, `update`, `new`, `take`, `integer`, `real`, `parameters`, `adjoining_uphill_event_uses_first_matching_end_and_does_not_restart`, `rushing_boundaries_consumption_and_single_use`, `rushing_float_tick_and_forced_timer_replacement`, `downhill_zero_crossing_and_level_terrain_freeze`, `shared_stream_matches_python_state_transitions_and_float_timers`.
 
 ## [rushing.rs](../src/rushing.rs)
 

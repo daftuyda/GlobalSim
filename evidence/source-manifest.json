@@ -1,5 +1,5 @@
 {
-  "version": "v71",
+  "version": "v72",
   "archive_sha256": "b3959bcc729e32c046096c11344233b1b276a8cfaa896ca40fe27a2a5b22582a",
   "files": [
     {
@@ -864,7 +864,7 @@
       "path": "src/json.rs",
       "archive_path": "src/json.rs",
       "archive_sha256": "97603c4d6b41a141e1d46607ff492ff9203faca7a39c9089a6b02d84e115ea80",
-      "sha256": "ca48e408074eef3884ed8856fefb13fb9cc167078483a841d02ec745785cd436"
+      "sha256": "6b9bfa8ecf32ed9bef59a3a4f38a58825edd3b02ec19572a289594b6f324cb7d"
     },
     {
       "path": "src/lane_selection.rs",
@@ -876,7 +876,7 @@
       "path": "src/main.rs",
       "archive_path": "src/main.rs",
       "archive_sha256": "c68a44baf8f0a8c66e08ff422ad2b9d8c7ff3e4e2138973f65d65de01f3b72f3",
-      "sha256": "37a6697f5194915f0612eee9b91c9857141c2b5ce538fb77e2f7aa9fb75b63d7"
+      "sha256": "65e29d53f63a73eafa567645f2b6aedb4e62ffa51526108c21c2eafd7392921f"
     },
     {
       "path": "src/overtaking.rs",
@@ -888,14 +888,14 @@
       "path": "src/race_field.rs",
       "archive_path": "src/race_field.rs",
       "archive_sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b",
-      "sha256": "b930ddbadd68569f590449fbacf3af5e7c5538a5d2bca223b7232f8c20f34dd7",
+      "sha256": "9d4c5d3b3cf84a3a8ce6528dece2213aa55c2c4e58b44dc513da98fa1be76967",
       "release_sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb"
     },
     {
       "path": "src/race_field_retail.rs",
       "archive_path": "src/race_field_retail.rs",
       "archive_sha256": "1f74e0e1c0ba0ee60a51ffb52d86864ea35dfd48b317a5bf5238534877bbf89b",
-      "sha256": "3bde785265379112f7d9fe9c6393eb9ee886593aa6289b500a26b343d9f35399"
+      "sha256": "5c28fd84d51b6f9c1f45603842d429cdf2a863f6446841349c28579851fe2dc4"
     },
     {
       "path": "src/race_parameters.rs",
@@ -907,20 +907,20 @@
       "path": "src/race_solver.rs",
       "archive_path": "src/race_solver.rs",
       "archive_sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b",
-      "sha256": "a6280db0c89274b18db44eed497b582aae92a35adf60d32dda3165735e73d41f",
+      "sha256": "92295ad63befc6d9906a9437bad7e0afe683b322e4be04b007154c3f5e596ba4",
       "release_sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070"
     },
     {
       "path": "src/race_solver_builder.rs",
       "archive_path": "src/race_solver_builder.rs",
       "archive_sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690",
-      "sha256": "26121566a5cf3309584bf3707c41de84ae5657ca00752c74375152ee5974b16e"
+      "sha256": "3dc436ef72523778cd5ed1dbe95d90be1c9050f7711d67d59d170a2e2eff7d91"
     },
     {
       "path": "src/race_solver_retail.rs",
       "archive_path": "src/race_solver_retail.rs",
       "archive_sha256": "0b9d4c01c348d9420faec616526a873ce7f8e8ff7c421f7d77e09235d3ade157",
-      "sha256": "b834f57149fa1c073c3753bfeefbcd523e92be80bfe093398bcaf505889bc068"
+      "sha256": "795e8b995d7c8d350133bb65c48e756f945a11b1da0fb5c08903a26cfee2ba78"
     },
     {
       "path": "src/random_gen.rs",
@@ -956,13 +956,13 @@
       "path": "src/retail_lane.rs",
       "archive_path": "src/retail_lane.rs",
       "archive_sha256": "7c26006355c2f99b1d6c97fe65ad2b411233691e0421db69928dd02649e0c11b",
-      "sha256": "e94fda89ea8a3c73b443314ca50d1858a0b10ca3e1a6c847fb7c8553b2d06311"
+      "sha256": "4739151ae84b47dddf6aa535f55e8671efd73c69eb8cc259ff21cbd23e8486ac"
     },
     {
       "path": "src/retail_physics.rs",
       "archive_path": "src/retail_physics.rs",
       "archive_sha256": "2c9846623be395f3cc38806edc2447bfc6297ed3cafd41555c21789f7a230cf5",
-      "sha256": "22139d5589ef4a8442def09ee66be05eb28c176fbdc46e55dbfae56c1f0b7000"
+      "sha256": "8251b94dcf9b4b694055ba6ffd8bc6c264f20c36af8217a8101d7999d3707136"
     },
     {
       "path": "src/retail_position_keep.rs",
@@ -993,7 +993,7 @@
       "path": "src/retail_states.rs",
       "archive_path": "src/retail_states.rs",
       "archive_sha256": "aa93fb7a245269889efdc8e840c866a60d57f9c9a0a64792219f28904ce0442a",
-      "sha256": "51e007693bf5b1fdc89dbb45fc6aef449c915d24d8e23b8039152276c8de37e5"
+      "sha256": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842"
     },
     {
       "path": "src/rushing.rs",
@@ -1005,15 +1005,31 @@
       "path": "src/stadium_score.rs",
       "archive_path": "src/stadium_score.rs",
       "archive_sha256": "d0c49a85965d1eb565ba483623184ccb9605b38039531a3dddc5cefbc200c378",
-      "sha256": "d0c49a85965d1eb565ba483623184ccb9605b38039531a3dddc5cefbc200c378"
+      "sha256": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159"
     },
     {
       "path": "src/starting_grid.rs",
       "archive_path": "src/starting_grid.rs",
       "archive_sha256": "13faf3bc3d017769b08894088a08f507b81eec7271b8ac1f8b8a7b49bf371344",
       "sha256": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
+    },
+    {
+      "path": "tests/fixtures/accuracy/adjoining-slope-boundary.json.gz",
+      "sha256": "a8045e22176019a592735ec8554a6294406e1eb2fb2eff70486fa8bf297fdfa2"
+    },
+    {
+      "path": "tests/fixtures/accuracy/heal-history-earlier-caster.json.gz",
+      "sha256": "c114e6ea5991b856c4ae1295385f3f798006d46fc20aa19385a5e97f1bcf6548"
+    },
+    {
+      "path": "tests/fixtures/accuracy/heal-history-later-caster.json.gz",
+      "sha256": "42662660dab0692826cc3d26aed63f1917ed1a48d6631b5942f34b99c4f4deaf"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-handover.json.gz",
+      "sha256": "e5969e461961873eec84f068c0bc48144240d0d96c9807878f6721b12879c263"
     }
   ],
-  "relocations": "Local include and geometry-test paths retained; v71 source overlay applied to race_field, race_solver and retail_position_keep.",
-  "build_variant": "v71 with immutable input caches, compact replay snapshots, borrowed race parameters, direct ASCII token parsing, reusable tick and lane buffers, and deferred blocker scans"
+  "relocations": "Local include and geometry-test paths retained; current source hashes describe v72.",
+  "build_variant": "v72 with parsed skill-data reuse, direct replay encoding, reusable tick buffers, and corrected pacemaker restoration, healer history timing and slope boundary events"
 }

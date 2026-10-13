@@ -835,6 +835,7 @@ impl RaceSolverBuilder {
                 priority: skills_table().get(&sd.skill_id).map_or(0,|s|s.priority),
                 has_green_tag: skills_table().get(&sd.skill_id).is_some_and(|s| s.has_green_tag),
                 cooldown_key: if sd.cooldown_key.is_empty() { sd.skill_id.clone() } else { sd.cooldown_key },
+                numeric_skill_id: sd.skill_id.parse().ok(),
                 skill_id: sd.skill_id,
                 perspective: sd.perspective,
                 rarity: sd.rarity,

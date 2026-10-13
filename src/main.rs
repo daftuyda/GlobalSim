@@ -1,7 +1,7 @@
 //! Port of race_runner.py -- reads one race spec as JSON on stdin, writes
 //! `{seed, frames, results, skillEvents, dataSignature}` as JSON on stdout.
 //! Persistent newline-delimited worker for race_simulator.py. Skill tables
-//! are replaced from each request's installed data; standalone requests
+//! are reused only when each request's installed data matches exactly; standalone requests
 //! without skillData use the bundled reference table.
 
 mod activation_conditions;
@@ -40,7 +40,7 @@ use std::rc::Rc;
 
 use course_data::{Corner, CourseData, Slope, Straight};
 use horse_types::{Aptitude, Strategy};
-use json::Value;
+use json::{Value, ReplayFrame};
 use race_field::RaceField;
 use race_solver_builder::{HorseSpec, RaceSolverBuilder, SkillAlternative, SkillDef, SkillEffectDef, SkillTable};
 
@@ -667,6 +667,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let mut rushing_scores: Vec<_> = (0..n).map(|_| stadium_score::RushingScore::new()).collect();
     let mut positioning_scores: Vec<_> = (0..n).map(|_| stadium_score::PositioningScore::new()).collect();
     let score_styles: Vec<_> = field.solvers.iter().map(|s| s.borrow().horse.strategy.base_running_style()).collect();
+    let mut style_leaders = stadium_score::StyleLeaders::new(&score_styles);
     let mut finished: Vec<Option<f64>> = vec![None; n];
     let mut finished_step: Vec<Option<f64>> = vec![None; n];
     let mut frames: Vec<ReplayFrame> = Vec::new();
@@ -706,7 +707,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         // the newly committed phase from each horse's Update.
         ranks.clear();
         ranks.extend((0..n).map(|i| field.order_of(i)));
-        let leaders = stadium_score::style_leaders(&score_styles, &ranks);
+        let leaders = style_leaders.update(&ranks);
         field.step_all(dt, visited);
         for &i in visited {
             let s = field.solvers[i].borrow();
@@ -970,22 +971,9 @@ const SPARSE_STRIDE: usize = 16;
 /// is already thinned and must not be thinned again.
 // Keep numeric snapshots until output selection. Most replay frames are never
 // sent; constructing JSON objects for those frames only allocates and discards.
-struct ReplayFrame {
-    t: f64,
-    // position, observed speed, HP, lane, rushing mode, front blocker
-    horses: Vec<[f64; 6]>,
-}
-
 impl ReplayFrame {
     fn into_json(self) -> Value {
-        json::obj(vec![("t", json::num(self.t)), ("horses", json::arr(
-            self.horses.into_iter().map(|h| json::obj(vec![
-                ("pos", json::num(h[0])), ("speed", json::num(h[1])),
-                ("hp", json::num(h[2])), ("lane", json::num(h[3])),
-                ("temptationMode", json::num(h[4])),
-                ("blockFrontHorseIndex", json::num(h[5])),
-            ])).collect()
-        ))])
+        Value::RaceFrame(Box::new(self))
     }
 }
 
@@ -1128,7 +1116,24 @@ fn restore_request_order(result: &mut Value, perm: &[usize]) {
         if let Some(Value::Array(items)) = map.get_mut(key) { reorder(items); }
     }
     if let Some(Value::Array(frames)) = map.get_mut("frames") {
+        let mut ordered = Vec::new();
         for frame in frames.iter_mut() {
+            if let Value::RaceFrame(frame) = frame {
+                for h in &mut frame.horses {
+                    let blocker = h[5];
+                    if blocker >= 0.0 && blocker.fract() == 0.0 && (blocker as usize) < perm.len() {
+                        h[5] = perm[blocker as usize] as f64;
+                    }
+                }
+                if frame.horses.len() == perm.len() {
+                    ordered.resize(perm.len(), [0.; 6]);
+                    for (internal, &horse) in frame.horses.iter().enumerate() {
+                        ordered[perm[internal]] = horse;
+                    }
+                    std::mem::swap(&mut ordered, &mut frame.horses);
+                }
+                continue;
+            }
             if let Value::Object(f) = frame {
                 if let Some(Value::Array(horses)) = f.get_mut("horses") {
                     for h in horses.iter_mut() {
@@ -1182,6 +1187,10 @@ fn run() -> Result<(), String> {
     let stdout = std::io::stdout();
     let mut out = stdout.lock();
     let mut line = String::new();
+    // One entry bounds retained memory. Never trust a caller-supplied signature
+    // as proof that skill definitions are unchanged.
+    let mut last_skill_data: Option<Value> = None;
+    let mut request_parser = json::RequestParser::default();
     loop {
         line.clear();
         if reader.read_line(&mut line).map_err(|e| e.to_string())? == 0 {
@@ -1194,16 +1203,24 @@ fn run() -> Result<(), String> {
         // as a JSON reply and keep serving. The caller treats an "error" key
         // as a failed run and falls back to the Python engine for that race.
         let outcome = (|| -> Result<Value, String> {
-            let spec_json = json::parse(&line)?;
+            let spec_json = request_parser.parse(&line)?;
             // v23: the retail runtime runs the field in gate order (see gate_order).
             let (spec_json, gate_perm) = gate_order(spec_json)?;
-            // Replace the table on every request: the persistent worker must
-            // never retain one client's installed skill definitions for another.
-            let skills = match spec_json.get("skillData") {
-                Some(data) => load_skill_value(data)?,
-                None => load_skill_value(bundled_skills()?)?,
+            let skill_data = match spec_json.get("skillData") {
+                Some(data) => data,
+                None => bundled_skills()?,
             };
-            race_solver_builder::init_skills(skills);
+            let changed = !last_skill_data.as_ref().is_some_and(|old| old.bitwise_eq(skill_data));
+            if changed {
+                // Decode successfully before installing or updating the cache.
+                let skills = load_skill_value(skill_data)?;
+                race_solver_builder::init_skills(skills);
+            }
+            if changed || matches!(skill_data, Value::Shared(_)) {
+                // Adopt equivalent parsed data too, so the next exact-text hit
+                // can use shared identity after a whitespace/key-order change.
+                last_skill_data = Some(skill_data.clone());
+            }
             let spec = parse_race_spec(&spec_json)?;
             let retail_runtime=spec_json.get("experimentalRetailRuntime").and_then(Value::as_bool)==Some(true);
             if spec.trace_conserve_power && !retail_runtime {
@@ -1326,6 +1343,23 @@ mod experimental_grid_tests {
 mod output_cache_tests {
     use super::*;
 
+    #[test]
+    fn compact_frames_restore_runner_order_and_blocker_indices() {
+        let mut output = json::obj(vec![("frames", json::arr(vec![ReplayFrame {
+            t: 1.,
+            horses: vec![
+                [10., 20., 100., 0.1, 0., 1.],
+                [11., 21., 101., 0.2, 1., -1.],
+                [12., 22., 102., 0.3, 0., 0.],
+            ],
+        }.into_json()]))]);
+        restore_request_order(&mut output, &[2, 0, 1]);
+        let decoded = json::parse(&json::to_string(&output)).unwrap();
+        let horses = decoded.get_array("frames").unwrap()[0].get_array("horses").unwrap();
+        assert_eq!(horses.iter().map(|h| h.get_f64("pos").unwrap()).collect::<Vec<_>>(), [11., 12., 10.]);
+        assert_eq!(horses.iter().map(|h| h.get_i64("blockFrontHorseIndex").unwrap()).collect::<Vec<_>>(), [-1, 2, 0]);
+    }
+
     fn frames(start: usize, count: usize) -> Vec<ReplayFrame> {
         (start..start + count).map(|i| ReplayFrame {
             t: i as f64,
@@ -1342,7 +1376,8 @@ mod output_cache_tests {
     #[test]
     fn sparse_frames_keep_cadence_and_unthinned_finish_sample() {
         for start in [0, 1] {
-            let output = encode_frames(result(19.5), frames(start, 35), false);
+            let encoded = encode_frames(result(19.5), frames(start, 35), false);
+            let output = json::parse(&json::to_string(&encoded)).unwrap();
             let times: Vec<_> = output.get_array("frames").unwrap().iter()
                 .map(|f| f.get_f64("t").unwrap() as usize).collect();
             let expected: Vec<_> = (start..start + 35)

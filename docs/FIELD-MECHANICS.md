@@ -35,6 +35,14 @@ exit checks and shared random draws can influence later skill outcomes.
 Downhill acceleration mode likewise has enter/exit checks and timers; being
 on a negative slope does not by itself guarantee the speed/HP benefit.
 
+Slope changes are processed as events, with an active gradient and end point.
+The gradient comes from the event, while its end point comes from the first
+same-direction slope region containing the runner, including both boundaries.
+At the exact shared boundary between two uphill regions, this can select the
+previous region's end point. The new gradient then expires as soon as the runner
+passes that point and stays inactive until another slope event. A position-only
+lookup would incorrectly reactivate it on every tick.
+
 ## Position keeping and pacemaker
 
 [`retail_position_keep.rs`](../src/retail_position_keep.rs) implements a state
@@ -57,8 +65,11 @@ uses `PaseMakerChangeTopHorseNotMostForwardStyleCount` and
 
 In a field without Front Runners, a detached forward-style runner can yield
 to the most-forward style within range of the overall leader. After a handover,
-the forward group retaking the lead restores its pacemaker and clears handover
-state. Selection stops at the configured end section (section 10); the incumbent
+the forward group's leader passing the incumbent pacemaker restores the forward
+pacemaker and clears handover state, even if a different running style still
+leads the race. A change of overall leader alone does not trigger restoration
+while the forward group's leader remains behind the incumbent. Selection stops
+at the configured end section (section 10); the incumbent
 remains available to subsequent position-keep exit checks.
 
 ## Vision, overtaking, blocking and lanes

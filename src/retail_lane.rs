@@ -426,7 +426,7 @@ pub struct MoveState {
     pub continue_direction: i32,
 }
 
-pub struct MoveContext<'a> {
+pub struct MoveContext<M> {
     pub position: f32,
     pub power: f32,
     pub phase: i32,
@@ -434,7 +434,7 @@ pub struct MoveContext<'a> {
     pub first_move_point: f32,
     pub max_lane: f32,
     pub side: SideRoom,
-    pub modifiers: &'a [f32],
+    pub modifiers: M,
 }
 
 fn approximately(a: f32, b: f32) -> bool {
@@ -444,7 +444,7 @@ fn approximately(a: f32, b: f32) -> bool {
 impl MoveState {
     /// The separate field-overlap pass must run after every runner moves.
     /// Returns whether movement occurred; blocked moves may retain momentum.
-    pub fn step(&mut self, context: MoveContext<'_>, dt: f32, p: MoveParameters) -> bool {
+    pub fn step(&mut self, context: MoveContext<impl IntoIterator<Item = f32>>, dt: f32, p: MoveParameters) -> bool {
         use crate::retail_physics::{apply_additive_modifiers, bounded_stat};
         self.target = self.target.clamp(0., context.max_lane);
         if approximately(self.target, self.lane) {
@@ -482,7 +482,7 @@ impl MoveState {
         }
         .max(0.);
         let mut speed =
-            apply_additive_modifiers(self.speed, context.modifiers.iter().copied()).clamp(0., 0.6);
+            apply_additive_modifiers(self.speed, context.modifiers).clamp(0., 0.6);
         if approximately(speed, 0.) {
             return false;
         }
@@ -538,7 +538,23 @@ impl PassingSearch<'_> {
                     && row.lane <= high
             })
         };
-        let mut candidates = Vec::new();
+        let mut best = lane;
+        let mut best_score = f32::INFINITY;
+        let mut consider = |candidate: f32| {
+            let weight = if candidate < lane {
+                if self.phase == 0 { 100. }
+                else if self.phase >= 2 { 1.149999976158142_f32 }
+                else { 1. }
+            } else { 1. };
+            let gap = lane - candidate;
+            let skill = if (self.lane_preference == 1 && gap > 0.)
+                || (self.lane_preference == 2 && gap < 0.) { 1.5 } else { 1. };
+            let cost = ((gap * weight) * skill).abs();
+            if cost < best_score {
+                best = candidate;
+                best_score = cost;
+            }
+        };
         for &index in self.targets {
             for direction in [-1., 1.] {
                 let mut edge = index;
@@ -572,7 +588,7 @@ impl PassingSearch<'_> {
                 let row = self.live[edge];
                 let candidate = row.lane + direction * EDGE;
                 if clear(candidate, row.position + 0.5, None) {
-                    candidates.push(candidate);
+                    consider(candidate);
                 }
             }
         }
@@ -593,32 +609,7 @@ impl PassingSearch<'_> {
             None
         };
         if clear(straight, nearest + 3., bounds) {
-            candidates.push(straight);
-        }
-        let score = |candidate: f32| {
-            let weight = if candidate < lane {
-                if self.phase == 0 {
-                    100.
-                } else if self.phase >= 2 {
-                    1.149999976158142_f32
-                } else {
-                    1.
-                }
-            } else {
-                1.
-            };
-            let gap=lane-candidate;
-            let skill=if (self.lane_preference==1 && gap>0.) || (self.lane_preference==2 && gap<0.) {1.5} else {1.};
-            ((gap*weight)*skill).abs()
-        };
-        let mut best = lane;
-        let mut best_score = f32::INFINITY;
-        for candidate in candidates {
-            let cost = score(candidate);
-            if cost < best_score {
-                best = candidate;
-                best_score = cost;
-            }
+            consider(straight);
         }
         best
     }
@@ -627,9 +618,14 @@ impl PassingSearch<'_> {
 /// Separate manager pass after lateral movement, using the loaded comparison
 /// sort's equal-key permutation. It does not clamp the displacement to a rail.
 pub fn resolve_overlaps(rows: &mut [Row], force_checks: &mut [bool]) {
+    resolve_overlaps_with_order(rows, force_checks, &mut Vec::new());
+}
+
+pub fn resolve_overlaps_with_order(rows: &mut [Row], force_checks: &mut [bool], order: &mut Vec<usize>) {
     assert_eq!(rows.len(), force_checks.len());
-    let mut order: Vec<usize> = (0..rows.len()).collect();
-    comparison_sort(&mut order, |&a, &b| {
+    order.clear();
+    order.extend(0..rows.len());
+    comparison_sort(order, |&a, &b| {
         (rows[a].lane as i32).cmp(&(rows[b].lane as i32))
     });
     if let Some(&first) = order.first() {
@@ -659,7 +655,7 @@ mod tests {
             continue_time: 0., continue_direction: 0 };
         let step = |s: &mut MoveState, allowed| {
             s.step(MoveContext { position: 100., power: 1000., phase: 0,
-                rank: 1, first_move_point: 0., max_lane: 1.3, modifiers: &[],
+                rank: 1, first_move_point: 0., max_lane: 1.3, modifiers: std::iter::empty(),
                 side: SideRoom { can_in: allowed, can_out: allowed,
                     in_space: 1., out_space: 1., inner_blocker: None, inner_blocker_index: None } }, 0.0666, p)
         };
@@ -822,7 +818,7 @@ mod tests {
                 first_move_point: n("first_move"),
                 max_lane: n("max_lane"),
                 side,
-                modifiers: &modifiers,
+                modifiers: modifiers.iter().copied(),
             };
             let moved = state.step(context, n("dt"), p);
             for (channel, (actual, expected)) in [state.lane, state.target, state.speed]

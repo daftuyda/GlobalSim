@@ -4,14 +4,18 @@
 
 [`main.rs`](../src/main.rs) loads the embedded course and skill tables, reads
 one JSON object per line, parses runners, builds a `RaceField`, runs it, and
-serializes observations. Request skill tables are decoded directly from the
-parsed input and replaced for every request, resetting to the bundled table
-when `skillData` is absent. Embedded course and parameter JSON is parsed once,
+serializes observations. The request parser shares the preceding `skillData`
+tree when its incoming text matches exactly. Changed text is parsed normally;
+decoded skill definitions are reused only when the complete parsed table
+matches, including floating-point bits. Changed definitions are decoded before
+installation; absent `skillData` selects the bundled table. Embedded course and parameter JSON is parsed once,
 and immutable course geometry is reused by course identity. Each request has
 its own seed and runner state. ASCII request tokens are read directly from the
 input buffer; Unicode input uses the character-aware parser.
 
-Tick buffers and lane caches reuse their storage. Blocking checks iterate over
+Tick, rank and lane buffers reuse their storage. Running-style scoring groups
+are prepared once, duel proximity entries are updated in place, and candidate
+selection avoids temporary vectors. Blocking checks iterate over
 runner state directly, preserving field order and the distinction between
 cached and live positions. Skill conditions borrow immutable race parameters
 during construction. Overtaking queries defer blocker scans until gap and
@@ -37,7 +41,7 @@ passes through [`race_solver_retail.rs`](../src/race_solver_retail.rs) and
 startup, geometry and section behavior. These are not interchangeable with the
 default solver. The examples deliberately name the selected path.
 
-For the benchmark profile use `examples/v71-race.jsonl`. Its switches do
+For the benchmark profile use `examples/v72-race.jsonl`. Its switches do
 not enable the separate startup option. The reconstructed field tick proceeds in this order:
 
 1. Collect duel proximity, geometry width and lane caches
@@ -50,7 +54,8 @@ not enable the separate startup option. The reconstructed field tick proceeds in
 6. Resolve lateral overlaps, prepare new duel participants, then latch active
    Spot Struggle cutoffs before evaluating field-condition exits.
 7. Update eligible runners' field conditions using their effective elapsed time.
-8. Refresh the field, flush effects and cache activations.
+8. Refresh the field, flush effects and publish activation and healer history
+   for the next tick.
 
 The default field also separates longitudinal, lateral and field-condition
 passes. Do not replace either manager with “fully update runner A, then B”:
@@ -63,8 +68,9 @@ path keeps float32 clock/state behavior; startup may perform a zero-time pass.
 Start delays can leave only part of a tick available for movement. Finish
 crossings are interpolated between adjacent simulation ticks.
 
-`main.rs` records compact numeric snapshots and events. It builds JSON only
-for the selected output frames, while retaining dense finish samples. Normally the
+`main.rs` records compact numeric snapshots and events. Selected frames are
+serialized directly from contiguous numeric runner samples, while retaining
+dense finish samples. Normally the
 first 17 effective frames, every 16th frame and the final frame are retained;
 the effective index accounts for a synthetic gate frame the original server
 may prepend. Per-runner finish samples are preserved separately.

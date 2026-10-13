@@ -305,8 +305,12 @@ impl Parameters {
     }
 
     pub fn target_speed_with_late_terms(&self, input: TargetSpeed, modifiers: &[f32], spot_struggle: f32, bonus: f32) -> f32 {
+        self.target_speed_with_late_terms_iter(input, modifiers.iter().copied(), spot_struggle, bonus)
+    }
+
+    pub fn target_speed_with_late_terms_iter(&self, input: TargetSpeed, modifiers: impl IntoIterator<Item = f32>, spot_struggle: f32, bonus: f32) -> f32 {
         let mut speed = (input.base + input.section) * input.pace + input.force_in;
-        speed = apply_additive_modifiers(speed, modifiers.iter().copied());
+        speed = apply_additive_modifiers(speed, modifiers);
         if input.moving_lane_skill {
             speed += root(bounded_stat(input.power) * 0.0002);
         }
@@ -380,6 +384,10 @@ impl Parameters {
     }
 
     pub fn acceleration(&self, input: Acceleration, modifiers: &[f32]) -> f32 {
+        self.acceleration_iter(input, modifiers.iter().copied())
+    }
+
+    pub fn acceleration_iter(&self, input: Acceleration, modifiers: impl IntoIterator<Item = f32>) -> f32 {
         // v20: the float sqrt is a rounded call result; the product chain is
         // evaluated at double and rounded once. Modifiers and the start-dash
         // addition stay float statements (x87 there is worse).
@@ -388,7 +396,7 @@ impl Parameters {
             * input.ground as f64)
             * input.distance as f64)
             * self.phase_accel[input.strategy - 1][input.phase] as f64) as f32;
-        value = apply_additive_modifiers(value, modifiers.iter().copied());
+        value = apply_additive_modifiers(value, modifiers);
         if input.start_dash {
             value += self.accel[3];
         }

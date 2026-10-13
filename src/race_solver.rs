@@ -312,6 +312,8 @@ pub struct PendingSkill {
     pub detail_index: usize,
     pub priority: i32,
     pub skill_id: String,
+    /// Parsed once; the identifier is immutable while a skill is pending.
+    pub numeric_skill_id: Option<i64>,
     pub has_green_tag: bool,
     pub perspective: Perspective,
     pub rarity: SkillRarity,
@@ -1953,7 +1955,7 @@ impl RaceSolver {
             i -= 1;
             if priority.is_some_and(|p|p!=self.pending_skills[i].priority) {continue;}
             if self.retail.is_some() {
-                if let Ok(id) = self.pending_skills[i].skill_id.parse::<i64>() {
+                if let Some(id) = self.pending_skills[i].numeric_skill_id {
                     self.apply_unapplied_additional(id, field);
                 }
             }
@@ -2650,9 +2652,10 @@ impl RaceSolver {
         }
         let (pos, lane) = (self.pos, self.lane);
         let retail_cache = self.retail.is_some();
-        let mut proximity = if retail_cache { self.duel_proximity.clone() } else { BTreeMap::new() };
-        let mut nearby = Vec::new();
-        let mut eligible = Vec::new();
+        let mut proximity = if retail_cache { std::mem::take(&mut self.duel_proximity) } else { BTreeMap::new() };
+        let mut nearby = None;
+        let mut eligible = None;
+        let mut ready: Option<usize> = None;
         for j in 0..field.n {
             if j == i {
                 continue;
@@ -2668,7 +2671,7 @@ impl RaceSolver {
             let lane_gap = other.lane - lane;
             if if retail_cache { proximity.contains_key(&j) } else { dist_gap.abs() <= 3.0 && lane_gap.abs() <= DUEL_LANE_GAP } {
                 if !retail_cache { proximity.insert(j, (self.duel_proximity.get(&j).copied().unwrap_or(0.0) + dt).min(2.0)); }
-                nearby.push(j);
+                nearby.get_or_insert(j);
                 if self.hp.hp_ratio_remaining() >= 0.15 && other.hp.hp_ratio_remaining() >= 0.15
                     // v34: retail gates on the observed speed (current-speed
                     // effects included), as Hakuraku rust-v1.0.31 case t1 shows.
@@ -2676,22 +2679,20 @@ impl RaceSolver {
                         - self.retail.as_ref().map_or(self.current_speed, |r| r.duel_preupdate_speed as f64)).abs()
                         <= 0.6000000238418579
                     && (top_half || field.order_of(j) <= ((field.n + 1) / 2).max(1)) {
-                    eligible.push(j);
+                    eligible.get_or_insert(j);
+                    if proximity[&j] >= 2.0
+                        && ready.map_or(true, |best| proximity[&j] > proximity[&best]) {
+                        ready = Some(j);
+                    }
                 }
             }
         }
-        if retail_cache { nearby = (0..field.n).filter(|i| proximity.contains_key(i)).collect(); }
-        let ready: Vec<usize> = eligible.iter().copied().filter(|j| proximity[j] >= 2.0).collect();
-        let candidates = if !ready.is_empty() { &ready } else if !eligible.is_empty() { &eligible } else { &nearby };
-        // v6: no target retention -- always the first candidate (ready, else eligible, else nearby).
-        self.duel_target_index = if ready.is_empty() { candidates.first().copied() } else {
-            ready.iter().copied().fold(None, |best: Option<usize>, j| {
-                if best.map_or(true, |b| proximity[&j] > proximity[&b]) { Some(j) } else { best }
-            })
-        };
+        if retail_cache { nearby = proximity.keys().copied().find(|&j| j < field.n); }
+        // Preserve ascending-index ties and longest-standing ready selection.
+        self.duel_target_index = ready.or(eligible).or(nearby);
         self.duel_continuous_timer = self.duel_target_index.map_or(0.0, |j| proximity[&j]);
         self.duel_proximity = proximity;
-        if ready.is_empty() {
+        if ready.is_none() {
             return;
         }
         // Select the longest-standing eligible nearby runner before checking

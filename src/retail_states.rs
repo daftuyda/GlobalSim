@@ -4,6 +4,39 @@ use crate::json::Value;
 use crate::retail_physics::bounded_stat;
 use crate::retail_random::RandomSource;
 
+#[derive(Default)]
+pub struct SlopeState {
+    next_event: usize,
+    end: f32,
+    pub region: Option<usize>,
+    pub value: f32,
+}
+
+impl SlopeState {
+    pub fn update(&mut self, position: f32, slopes: &[crate::course_data::Slope]) {
+        while let Some(event) = slopes.get(self.next_event) {
+            if position < event.start as f32 { break; }
+            self.next_event += 1;
+            // EventSlopeChange takes the event's gradient but the first
+            // same-direction region containing the current position. Both
+            // bounds are inclusive, including a shared slope boundary.
+            self.region = slopes.iter().position(|s| s.slope.signum() == event.slope.signum()
+                && s.start as f32 <= position && position <= s.start as f32 + s.length as f32);
+            if let Some(i) = self.region {
+                self.value = event.slope as f32;
+                self.end = slopes[i].start as f32 + slopes[i].length as f32;
+            } else {
+                self.value = 0.;
+            }
+        }
+        // An event fires once. Expiry must not rediscover the same region.
+        if self.region.is_some() && position > self.end {
+            self.region = None;
+            self.value = 0.;
+        }
+    }
+}
+
 fn number(value: &Value, key: &str) -> Result<f32, String> {
     let result = value.get_f64(key)? as f32;
     if !result.is_finite() {
@@ -210,6 +243,39 @@ impl DownhillState {
 mod tests {
     use super::*;
     use std::collections::VecDeque;
+
+    #[test]
+    fn adjoining_uphill_event_uses_first_matching_end_and_does_not_restart() {
+        use crate::course_data::Slope;
+        let slopes = [
+            Slope { start: 1850., length: 100., slope: 20000. },
+            Slope { start: 1950., length: 225., slope: 10000. },
+            Slope { start: 2175., length: 150., slope: -20000. },
+        ];
+        let mut s = SlopeState::default();
+        s.update(1948.7823486328125, &slopes);
+        assert_eq!(s.value, 20000.);
+        s.update(1950., &slopes);
+        assert_eq!((s.region, s.value), (Some(0), 10000.));
+        s.update(1951.2188720703125, &slopes);
+        assert_eq!((s.region, s.value), (None, 0.));
+        s.update(2100., &slopes);
+        assert_eq!(s.value, 0.);
+        s.update(2175., &slopes);
+        assert_eq!((s.region, s.value), (Some(2), -20000.));
+        s.update(2325., &slopes);
+        assert_eq!(s.value, -20000.);
+        s.update(2325.25, &slopes);
+        assert_eq!((s.region, s.value), (None, 0.));
+        // Crossing the shared boundary without landing on it selects the
+        // new uphill region normally.
+        let mut crossed = SlopeState::default();
+        crossed.update(1949., &slopes);
+        crossed.update(1950.25, &slopes);
+        assert_eq!((crossed.region, crossed.value), (Some(1), 10000.));
+        crossed.update(2100., &slopes);
+        assert_eq!(crossed.value, 10000.);
+    }
 
     struct Rolls {
         values: VecDeque<f32>,

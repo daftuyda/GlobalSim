@@ -3,16 +3,31 @@ use std::collections::BTreeMap;
 // Minimum cached CurOrder among exactly equal RunningStyle values.
 // Inputs are BASE styles: Runaway is Front Runner (1), not extended style 5.
 // Do not substitute rushing modes.
-pub fn style_leaders(styles: &[i32], ranks: &[usize]) -> Vec<bool> {
-    let mut leaders: BTreeMap<i32, usize> = BTreeMap::new();
-    for (i, &style) in styles.iter().enumerate() {
-        if leaders.get(&style).map_or(true, |&old| ranks[i] < ranks[old]) {
-            leaders.insert(style, i);
+pub struct StyleLeaders {
+    groups: Vec<Vec<usize>>,
+    leaders: Vec<bool>,
+}
+
+impl StyleLeaders {
+    pub fn new(styles: &[i32]) -> Self {
+        let mut groups = BTreeMap::<i32, Vec<usize>>::new();
+        for (i, &style) in styles.iter().enumerate() {
+            groups.entry(style).or_default().push(i);
         }
+        Self { groups: groups.into_values().collect(), leaders: vec![false; styles.len()] }
     }
-    let mut result = vec![false; styles.len()];
-    for &i in leaders.values() { result[i] = true; }
-    result
+
+    pub fn update(&mut self, ranks: &[usize]) -> &[bool] {
+        self.leaders.fill(false);
+        for group in &self.groups {
+            let mut leader = group[0];
+            for &i in &group[1..] {
+                if ranks[i] < ranks[leader] { leader = i; }
+            }
+            self.leaders[leader] = true;
+        }
+        &self.leaders
+    }
 }
 
 pub struct PositioningScore {
@@ -60,8 +75,10 @@ mod tests {
         use crate::horse_types::Strategy;
         let styles: Vec<_> = [Strategy::Nige, Strategy::Oonige, Strategy::Senkou,
             Strategy::Senkou, Strategy::Nige].iter().map(|s| s.base_running_style()).collect();
-        assert_eq!(style_leaders(&styles, &[4, 3, 2, 1, 5]),
-                   vec![false, true, false, true, false]);
+        let mut leaders = StyleLeaders::new(&styles);
+        assert_eq!(leaders.update(&[4, 3, 2, 1, 5]), [false, true, false, true, false]);
+        assert_eq!(leaders.update(&[1, 1, 2, 2, 5]), [true, false, true, false, false]);
+        assert_eq!(leaders.update(&[4, 3, 2, 1, 5]), [false, true, false, true, false]);
     }
     #[test]
     fn positioning_is_checked_only_at_phase_change() {

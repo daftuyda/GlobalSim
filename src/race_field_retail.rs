@@ -3,9 +3,22 @@
 use super::*;
 use crate::retail_lane::{self, Row};
 
+#[derive(Default)]
+pub(super) struct TickBuffers {
+    before: Vec<(f32, f32, bool)>,
+    others: Vec<retail_lane::Horse>,
+    advanced: Vec<(usize, f64)>,
+    overlaps: Vec<Row>,
+    flags: Vec<bool>,
+    overlap_order: Vec<usize>,
+}
+
 impl RaceField {
     pub(super) fn step_all_retail(&self, dt: f32, indices: &[usize]) {
-        let rows: Vec<_> = self
+        let mut buffers = self.retail_tick.borrow_mut();
+        let TickBuffers { before: rows, others, advanced, overlaps, flags, overlap_order } = &mut *buffers;
+        rows.clear();
+        rows.extend(self
             .solvers
             .iter()
             .map(|s| {
@@ -19,8 +32,7 @@ impl RaceField {
                         .is_some_and(|r| r.start <= s.pos && s.pos < r.end),
                 )
             })
-            .collect();
-        let mut others = Vec::with_capacity(self.n.saturating_sub(1));
+            );
         for &i in indices {
             let mut s = self.solvers[i].borrow_mut();
             s.collect_retail_duel_proximity(&rows, dt);
@@ -64,7 +76,8 @@ impl RaceField {
                 .map(|(j, gap)| (j, gap as f32));
             s.update_blocking(dt as f64, Some(self));
         }
-        let mut advanced = Vec::with_capacity(indices.len());
+        advanced.clear();
+        advanced.reserve(indices.len());
         for &i in indices {
             let elapsed = self.solvers[i]
                 .borrow_mut()
@@ -78,7 +91,9 @@ impl RaceField {
                 s.overtake_target_no_order_down_time,
             ) = overtake_times;
         }
-        let mut rows: Vec<_> = self
+        let rows = overlaps;
+        rows.clear();
+        rows.extend(self
             .solvers
             .iter()
             .map(|s| {
@@ -88,13 +103,14 @@ impl RaceField {
                     lane: s.lane as f32,
                 }
             })
-            .collect();
-        let mut flags: Vec<_> = self
+            );
+        flags.clear();
+        flags.extend(self
             .solvers
             .iter()
             .map(|s| s.borrow().retail.as_ref().unwrap().lane.force_check)
-            .collect();
-        retail_lane::resolve_overlaps(&mut rows, &mut flags);
+            );
+        retail_lane::resolve_overlaps_with_order(rows, flags, overlap_order);
         for (i, row) in rows.iter().enumerate() {
             let mut s = self.solvers[i].borrow_mut();
             s.lane = row.lane as f64;
@@ -102,15 +118,15 @@ impl RaceField {
         }
         // Isolated hypothesis: commit new duel participants before evaluating
         // exits, so a same-tick join can sustain its existing partners.
-        for &(i, elapsed) in &advanced {
+        for &(i, elapsed) in advanced.iter() {
             if elapsed > 0. {
                 self.solvers[i].borrow_mut().prepare_retail_duel_start(elapsed, self);
             }
         }
-        for &(i, elapsed) in &advanced {
+        for &(i, elapsed) in advanced.iter() {
             if elapsed > 0. { self.solvers[i].borrow_mut().latch_active_spot_cutoff(); }
         }
-        for (i, elapsed) in advanced {
+        for &(i, elapsed) in advanced.iter() {
             if elapsed > 0. {
                 self.solvers[i]
                     .borrow_mut()

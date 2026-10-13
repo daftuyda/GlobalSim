@@ -1,0 +1,54 @@
+{
+  "input_cases": 135,
+  "isolation_cases": 11,
+  "modes": [
+    {
+      "dense": false,
+      "byte_identical_replies": 146,
+      "error_replies": [
+        {
+          "case": "input-123",
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-125",
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "error": "Missing retail initialization field 110261"
+        }
+      ]
+    },
+    {
+      "dense": true,
+      "byte_identical_replies": 146,
+      "error_replies": [
+        {
+          "case": "input-123",
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-125",
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "error": "Missing retail initialization field 110261"
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "engine": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27",
+    "baseline": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb"
+  }
+}

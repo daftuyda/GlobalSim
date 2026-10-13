@@ -1,0 +1,5805 @@
+{
+  "engine": "v71 further optimized",
+  "date": "2026-10-13",
+  "machine": {
+    "cpu": "Intel Core i7-14700K",
+    "physical_cores": 20,
+    "logical_processors": 28,
+    "os": "Windows",
+    "rustc": "1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "method": {
+    "paired": "Persistent workers, alternating engine order, 30 captured races per field-size group, five warmups and five repetitions; caller JSON encode/decode excluded.",
+    "baseline": "The preceding optimized build, not the original v71 executable; identified by before SHA256.",
+    "profile": "Separate instrumented release build after corpus validation. Request phases measured every race; internal field phases sampled every 32 ticks with rotating offsets. Timer-corrected child times normalized within enclosing measured phases.",
+    "worker_total": "After input read through response cleanup. Includes cleanup after the reply can reach the caller; excludes caller input transfer/read and instrumentation report emission.",
+    "allocations": "Separate allocator build, 30 races per group after five warmups; allocation/reallocation call counts and cumulative requested bytes, not peak memory. Allocation timing excluded from performance claims.",
+    "load": "Unrelated CPU-heavy jobs continued during the audit. Paired comparisons avoid attributing run-to-run load changes to the optimization. No audit timing run overlaps the full validation.",
+    "workloads": "30 captured races each at nine and eighteen runners; different distances and skills, not a controlled doubling of field size. Main requests reuse one 730-definition table."
+  },
+  "paired": {
+    "scope": "Persistent workers, alternating engine order, 30 captured races per field-size group, five warmups and five repetitions; caller JSON encode/decode excluded.",
+    "sha256": {
+      "before": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb",
+      "parser_only": "2007a1a521abce219fabb00cc012ef1ecfeba2435f2aa740d5f7bbc40b8bf3cc",
+      "after": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27"
+    },
+    "nine-standard": {
+      "runs": 150,
+      "identical_replies": 150,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 18.897400004789233,
+        "mean_ms": 20.619452665171895,
+        "median_ms": 20.734700025059283,
+        "p95_ms": 27.606400020886213,
+        "races_per_second": 48.49789255992666
+      },
+      "parser_only": {
+        "runs": 150,
+        "first_request_ms": 22.60029996978119,
+        "mean_ms": 16.532438669819385,
+        "median_ms": 16.619800007902086,
+        "p95_ms": 23.39300001040101,
+        "races_per_second": 60.48714409118234
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 15.21299994783476,
+        "mean_ms": 15.553044667079424,
+        "median_ms": 15.773999999510124,
+        "p95_ms": 21.622199972625822,
+        "races_per_second": 64.29609259186816
+      }
+    },
+    "nine-dense": {
+      "runs": 150,
+      "identical_replies": 150,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 34.231800003908575,
+        "mean_ms": 33.24382800337238,
+        "median_ms": 33.966699993470684,
+        "p95_ms": 40.624900022521615,
+        "races_per_second": 30.080771681845913
+      },
+      "parser_only": {
+        "runs": 150,
+        "first_request_ms": 24.322299985215068,
+        "mean_ms": 29.00554533620986,
+        "median_ms": 29.722750012297183,
+        "p95_ms": 37.480900005903095,
+        "races_per_second": 34.476166140259494
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 28.367799997795373,
+        "mean_ms": 27.15508800504419,
+        "median_ms": 27.92154997587204,
+        "p95_ms": 35.07660003378987,
+        "races_per_second": 36.82551129328858
+      }
+    },
+    "eighteen-standard": {
+      "runs": 150,
+      "identical_replies": 150,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 75.09549998212606,
+        "mean_ms": 57.86218066389362,
+        "median_ms": 57.82374998671003,
+        "p95_ms": 81.60699997097254,
+        "races_per_second": 17.282445779372544
+      },
+      "parser_only": {
+        "runs": 150,
+        "first_request_ms": 58.04790003458038,
+        "mean_ms": 53.558374667384975,
+        "median_ms": 51.60549998981878,
+        "p95_ms": 77.42640003561974,
+        "races_per_second": 18.67121633563989
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 54.51359995640814,
+        "mean_ms": 51.5325879996332,
+        "median_ms": 50.73499999707565,
+        "p95_ms": 75.01329999649897,
+        "races_per_second": 19.405196572062668
+      }
+    },
+    "eighteen-dense": {
+      "runs": 150,
+      "identical_replies": 150,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 97.5359000149183,
+        "mean_ms": 85.43510866700672,
+        "median_ms": 84.4391499995254,
+        "p95_ms": 120.79459999222308,
+        "races_per_second": 11.704789934751725
+      },
+      "parser_only": {
+        "runs": 150,
+        "first_request_ms": 94.41640001023188,
+        "mean_ms": 80.31391933560371,
+        "median_ms": 79.35469999210909,
+        "p95_ms": 112.2867000522092,
+        "races_per_second": 12.451141822893122
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 83.79770000465214,
+        "mean_ms": 75.65204400142345,
+        "median_ms": 74.83775002765469,
+        "p95_ms": 107.46000002836809,
+        "races_per_second": 13.218413503555624
+      }
+    }
+  },
+  "cache_workloads": {
+    "scope": "Same 30 nine-runner races; five warmups and five repetitions in persistent workers; engine order alternates; standard frames. Changes to ignored metadata preserve race mechanics.",
+    "sha256": {
+      "before": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb",
+      "after": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27"
+    },
+    "workloads": {
+      "misses": {
+        "description": "Changed definition metadata every request",
+        "runs": 150,
+        "identical_replies": 150,
+        "before": {
+          "runs": 150,
+          "first_request_ms": 29.86749995034188,
+          "mean_ms": 21.17828066771229,
+          "median_ms": 21.441199991386384,
+          "p95_ms": 28.715600026771426,
+          "races_per_second": 47.21818620170461
+        },
+        "after": {
+          "runs": 150,
+          "first_request_ms": 13.23079998837784,
+          "mean_ms": 18.45019600004889,
+          "median_ms": 18.517900025472045,
+          "p95_ms": 25.215999979991466,
+          "races_per_second": 54.199966222437425
+        }
+      },
+      "unicode": {
+        "description": "Unicode request text with repeated definitions",
+        "runs": 150,
+        "identical_replies": 150,
+        "before": {
+          "runs": 150,
+          "first_request_ms": 23.995600000489503,
+          "mean_ms": 20.38705199995699,
+          "median_ms": 20.327549980720505,
+          "p95_ms": 28.143399977125227,
+          "races_per_second": 49.050740636856645
+        },
+        "after": {
+          "runs": 150,
+          "first_request_ms": 16.110099968500435,
+          "mean_ms": 15.768687999419248,
+          "median_ms": 15.552950004348531,
+          "p95_ms": 22.409899975173175,
+          "races_per_second": 63.4168169245805
+        }
+      },
+      "formatting": {
+        "description": "Alternating table whitespace without content changes",
+        "runs": 150,
+        "identical_replies": 150,
+        "before": {
+          "runs": 150,
+          "first_request_ms": 26.527500012889504,
+          "mean_ms": 18.107140000599127,
+          "median_ms": 17.958450014702976,
+          "p95_ms": 25.113500014413148,
+          "races_per_second": 55.22683317005955
+        },
+        "after": {
+          "runs": 150,
+          "first_request_ms": 20.872499968390912,
+          "mean_ms": 17.573247998952866,
+          "median_ms": 17.277699982514605,
+          "p95_ms": 24.925699981395155,
+          "races_per_second": 56.9046769305018
+        }
+      }
+    }
+  },
+  "validation": {
+    "scope": "Complete 13,187-race captured corpus. Dense output and official metrics compared with the preceding optimized v71 build and recorded reference. Concurrent validation timings are not latency benchmarks.",
+    "identity": {
+      "engines": {
+        "original": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb",
+        "optimized": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27"
+      },
+      "template_sha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796",
+      "inventory_sha256": "c0ecc610341977ca37ba35844c48aa6d5952a6c673f2547cff9ba7091551274a",
+      "archive_sha256": "83a53fe993c22ba9c2134bf20af91c53d3c43f76f402432d285c46dc8e3213e1",
+      "workers": 4,
+      "limit": 0
+    },
+    "races": 13187,
+    "byte_identical": 13187,
+    "archive_input_identical": 13187,
+    "archive_output_identical": 13187,
+    "archive_metrics_identical": 13187,
+    "groups": {
+      "all": {
+        "races": 13187,
+        "errors": 0,
+        "runners": 125215,
+        "winner": 13185,
+        "placements": 125196,
+        "finishExact": 13183,
+        "skillExact": 13183,
+        "frameExact": 13183,
+        "officialCasts": 1376523,
+        "simulatedCasts": 1376514,
+        "exactCasts": 1376407,
+        "finishMAE": 5.9302906227850596e-05,
+        "maxFinishError": 1.0454559326171875
+      },
+      "9 runners": {
+        "races": 12405,
+        "errors": 0,
+        "runners": 111645,
+        "winner": 12403,
+        "placements": 111630,
+        "finishExact": 12402,
+        "skillExact": 12402,
+        "frameExact": 12402,
+        "officialCasts": 1253269,
+        "simulatedCasts": 1253259,
+        "exactCasts": 1253164,
+        "finishMAE": 5.0759169208554455e-05,
+        "maxFinishError": 1.0454559326171875
+      },
+      "12 runners": {
+        "races": 45,
+        "errors": 0,
+        "runners": 540,
+        "winner": 45,
+        "placements": 540,
+        "finishExact": 45,
+        "skillExact": 45,
+        "frameExact": 45,
+        "officialCasts": 3001,
+        "simulatedCasts": 3001,
+        "exactCasts": 3001,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "14 runners": {
+        "races": 1,
+        "errors": 0,
+        "runners": 14,
+        "winner": 1,
+        "placements": 14,
+        "finishExact": 1,
+        "skillExact": 1,
+        "frameExact": 1,
+        "officialCasts": 152,
+        "simulatedCasts": 152,
+        "exactCasts": 152,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "16 runners": {
+        "races": 116,
+        "errors": 0,
+        "runners": 1856,
+        "winner": 116,
+        "placements": 1856,
+        "finishExact": 116,
+        "skillExact": 116,
+        "frameExact": 116,
+        "officialCasts": 14907,
+        "simulatedCasts": 14907,
+        "exactCasts": 14907,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "18 runners": {
+        "races": 620,
+        "errors": 0,
+        "runners": 11160,
+        "winner": 620,
+        "placements": 11156,
+        "finishExact": 619,
+        "skillExact": 619,
+        "frameExact": 619,
+        "officialCasts": 105194,
+        "simulatedCasts": 105195,
+        "exactCasts": 105183,
+        "finishMAE": 0.0001575811789454525,
+        "maxFinishError": 0.4712982177734375
+      }
+    },
+    "errors": [],
+    "nonexact": [
+      {
+        "case": "pacemaker-validation-02/pacemaker-validation-02-0041-c10612__case01",
+        "finishExact": false,
+        "skillExact": false,
+        "frameExact": false
+      },
+      {
+        "case": "pacemaker-validation-07/pacemaker-validation-07-0037-c10406__case01",
+        "finishExact": false,
+        "skillExact": false,
+        "frameExact": false
+      },
+      {
+        "case": "pacemaker-validation-07/pacemaker-validation-07-0042-c10708__case01",
+        "finishExact": false,
+        "skillExact": false,
+        "frameExact": false
+      },
+      {
+        "case": "original-corpus/v20-prospective-20260927__case03",
+        "finishExact": false,
+        "skillExact": false,
+        "frameExact": false
+      }
+    ],
+    "corpus_timing": {
+      "original": {
+        "mean_ms": 43.598237802407155,
+        "median_ms": 39.255700015928596,
+        "sum_seconds": 574.9299619003432
+      },
+      "optimized": {
+        "mean_ms": 36.030879563253585,
+        "median_ms": 31.945800001267344,
+        "sum_seconds": 475.13920880062506
+      }
+    }
+  },
+  "worker_parity": {
+    "input_cases": 135,
+    "isolation_cases": 11,
+    "modes": [
+      {
+        "dense": false,
+        "byte_identical_replies": 146,
+        "error_replies": [
+          {
+            "case": "input-123",
+            "error": "Missing retail initialization field 110261"
+          },
+          {
+            "case": "input-125",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 110261"
+          }
+        ]
+      },
+      {
+        "dense": true,
+        "byte_identical_replies": 146,
+        "error_replies": [
+          {
+            "case": "input-123",
+            "error": "Missing retail initialization field 110261"
+          },
+          {
+            "case": "input-125",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 110261"
+          }
+        ]
+      }
+    ],
+    "sha256": {
+      "engine": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27",
+      "baseline": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb"
+    }
+  },
+  "raw_wire_parity": {
+    "scope": "Persistent-worker raw-wire comparison: exact errors, duplicate keys, Unicode, escapes, whitespace, omitted/changed tables and numeric-token boundaries.",
+    "sha256": {
+      "before": "27c4ff79e2c73fddffbab76982c20b55fb4785bd87c7b5f83f95e653165becbb",
+      "after": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27"
+    },
+    "modes": [
+      {
+        "dense": false,
+        "identical_replies": 93,
+        "matching_error_replies": 39
+      },
+      {
+        "dense": true,
+        "identical_replies": 93,
+        "matching_error_replies": 39
+      }
+    ]
+  },
+  "rust_tests": {
+    "passed": 84,
+    "failed": 11,
+    "failure_set_unchanged": true
+  },
+  "timer_calibration_ns": 22.9591,
+  "workloads": {
+    "nine-standard": {
+      "races": 30,
+      "runs": 150,
+      "identical_profile_outputs": 150,
+      "latency_ms": {
+        "mean": 14.114485333333333,
+        "median": 13.22115,
+        "p95": 21.0864,
+        "min": 7.3636,
+        "max": 24.3861
+      },
+      "instrumented_latency_ms": {
+        "mean": 13.88793,
+        "median": 13.51195,
+        "p95": 19.9899,
+        "min": 7.406,
+        "max": 26.1389
+      },
+      "instrumented_difference_percent": -1.6051264214238858,
+      "worker_service_ms": 13.801214666666667,
+      "stage_mean_ms": {
+        "json_parse": 0.11390733333333333,
+        "gate_order": 0.060484,
+        "skill_decode": 0.0006,
+        "request_spec": 0.21470733333333333,
+        "initialization": 0.3454893333333333,
+        "solver_build": 1.2843453333333332,
+        "runtime_setup": 0.08167066666666667,
+        "simulation_total": 10.451891333333334,
+        "results": 0.15635733333333335,
+        "replay_objects": 0.048068,
+        "response_postprocess": 0.00178,
+        "solver_teardown": 0.04217333333333251,
+        "request_cleanup": 0.04801933333333334,
+        "serialize": 0.578328,
+        "write_flush": 0.18660266666666667,
+        "reply_free": 0.18665466666666666
+      },
+      "unassigned_worker_ms": 0.00013599999999946988,
+      "average_workload": {
+        "distance": 1660,
+        "skill_count": 174.43333333333334,
+        "skill_definitions": 730,
+        "frames": 96.73333333333333,
+        "raw_frames": 1284.7666666666667,
+        "input_bytes": 362164.86666666664,
+        "output_bytes": 159884.1
+      },
+      "allocation_mean": {
+        "json_parse": {
+          "allocations": 1167.3,
+          "bytes": 153832.4
+        },
+        "gate_order": {
+          "allocations": 1108.1666666666667,
+          "bytes": 140034.2
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2090.633333333333,
+          "bytes": 520456.5333333333
+        },
+        "initialization": {
+          "allocations": 2993.2,
+          "bytes": 279434
+        },
+        "run_race_total": {
+          "allocations": 27981.5,
+          "bytes": 2651646.2
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 10973.3,
+          "bytes": 962354.9666666667
+        },
+        "runtime_setup": {
+          "allocations": 799.2333333333333,
+          "bytes": 71285.2
+        },
+        "simulation_total": {
+          "allocations": 13478.566666666668,
+          "bytes": 1230037.5
+        },
+        "results": {
+          "allocations": 2569.6666666666665,
+          "bytes": 373420.3
+        },
+        "replay_objects": {
+          "allocations": 160.73333333333332,
+          "bytes": 14548.233333333334
+        },
+        "serialize": {
+          "allocations": 15.033333333333333,
+          "bytes": 406307.2
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 35359.833333333336,
+          "bytes": 4152486.533333333
+        },
+        "tick_bookkeeping": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_total": {
+          "allocations": 369.53333333333336,
+          "bytes": 16703.1
+        },
+        "tick_observers": {
+          "allocations": 1.2,
+          "bytes": 166.76666666666668
+        },
+        "snapshots": {
+          "allocations": 40.3,
+          "bytes": 19470.4
+        },
+        "field_cache": {
+          "allocations": 0.9,
+          "bytes": 83.6
+        },
+        "field_prepare": {
+          "allocations": 197.1,
+          "bytes": 4451.733333333334
+        },
+        "field_skills": {
+          "allocations": 49.53333333333333,
+          "bytes": 3018.3333333333335
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 5.2,
+          "bytes": 487.53333333333336
+        },
+        "field_overlaps": {
+          "allocations": 0.1,
+          "bytes": 5.1
+        },
+        "field_competitions": {
+          "allocations": 1,
+          "bytes": 93.86666666666666
+        },
+        "field_rank_flush": {
+          "allocations": 115.7,
+          "bytes": 8562.933333333332
+        },
+        "movement_total": {
+          "allocations": 5.166666666666667,
+          "bytes": 482.73333333333335
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "previous_allocation_mean": {
+        "json_parse": {
+          "allocations": 26230.3,
+          "bytes": 3139329.4
+        },
+        "gate_order": {
+          "allocations": 1108.1666666666667,
+          "bytes": 140034.2
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2090.633333333333,
+          "bytes": 520456.5333333333
+        },
+        "initialization": {
+          "allocations": 2993.2,
+          "bytes": 279434
+        },
+        "run_race_total": {
+          "allocations": 39195.46666666667,
+          "bytes": 3528534.3666666667
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 10973.3,
+          "bytes": 962354.9666666667
+        },
+        "runtime_setup": {
+          "allocations": 792.8666666666667,
+          "bytes": 70751.13333333333
+        },
+        "simulation_total": {
+          "allocations": 23344.633333333335,
+          "bytes": 1946592.2
+        },
+        "results": {
+          "allocations": 2569.6666666666665,
+          "bytes": 373420.3
+        },
+        "replay_objects": {
+          "allocations": 1515,
+          "bytes": 175415.76666666666
+        },
+        "serialize": {
+          "allocations": 15.033333333333333,
+          "bytes": 406307.2
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 71636.8,
+          "bytes": 8014871.7
+        },
+        "tick_bookkeeping": {
+          "allocations": 80.06666666666666,
+          "bytes": 6125.1
+        },
+        "field_total": {
+          "allocations": 600.4333333333333,
+          "bytes": 33188.3
+        },
+        "tick_observers": {
+          "allocations": 1.2,
+          "bytes": 166.76666666666668
+        },
+        "snapshots": {
+          "allocations": 40.3,
+          "bytes": 19470.4
+        },
+        "field_cache": {
+          "allocations": 54.6,
+          "bytes": 6950.8
+        },
+        "field_prepare": {
+          "allocations": 197.1,
+          "bytes": 4451.733333333334
+        },
+        "field_skills": {
+          "allocations": 49.53333333333333,
+          "bytes": 3018.3333333333335
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 68.26666666666667,
+          "bytes": 1269.2666666666667
+        },
+        "field_overlaps": {
+          "allocations": 40.1,
+          "bytes": 2885.1
+        },
+        "field_competitions": {
+          "allocations": 75.13333333333334,
+          "bytes": 6050.133333333333
+        },
+        "field_rank_flush": {
+          "allocations": 115.7,
+          "bytes": 8562.933333333332
+        },
+        "movement_total": {
+          "allocations": 68.23333333333333,
+          "bytes": 1264.4666666666667
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "estimated_tick_allocations": {
+        "field_skills": 1587.543397340952,
+        "field_movement": 166.29881785938838,
+        "field_cache": 28.531801950219766,
+        "field_prepare": 6320.980644726639,
+        "field_blocking": 0.0,
+        "field_overlaps": 3.1543478260869566,
+        "field_competitions": 31.464761904761904,
+        "field_rank_flush": 3710.3472529184223,
+        "tick_bookkeeping": 0.0,
+        "tick_observers": 38.316023589936634,
+        "snapshots": 1292.3975278743058
+      },
+      "cases": [
+        {
+          "case": 0,
+          "runners": 9,
+          "course": 10812,
+          "distance": 1200,
+          "skill_count": 168,
+          "skill_definitions": 730,
+          "frames": 76,
+          "raw_frames": 948,
+          "input_bytes": 361856,
+          "output_bytes": 128218,
+          "mean_latency_ms": 11.09732,
+          "stage_mean_ms": {
+            "json_parse": 0.11666,
+            "gate_order": 0.07058,
+            "skill_decode": 0.0005,
+            "request_spec": 0.05708,
+            "initialization": 0.393,
+            "solver_build": 1.32832,
+            "runtime_setup": 0.0814,
+            "simulation_total": 7.89456,
+            "results": 0.11038,
+            "replay_objects": 0.03838,
+            "response_postprocess": 0.00156,
+            "request_cleanup": 0.04762,
+            "serialize": 0.53846,
+            "write_flush": 0.16642,
+            "reply_free": 0.05512
+          },
+          "output_sha256": "6d9e8f6fd7b804e239b9ca42063e8dc7a94fad450464ba1b547fe96a1b0e32f7"
+        },
+        {
+          "case": 1,
+          "runners": 9,
+          "course": 10704,
+          "distance": 2000,
+          "skill_count": 163,
+          "skill_definitions": 730,
+          "frames": 107,
+          "raw_frames": 1452,
+          "input_bytes": 361626,
+          "output_bytes": 173602,
+          "mean_latency_ms": 16.60746,
+          "stage_mean_ms": {
+            "json_parse": 0.1031,
+            "gate_order": 0.05392,
+            "skill_decode": 0.00042,
+            "request_spec": 0.05816,
+            "initialization": 0.32264,
+            "solver_build": 1.2918,
+            "runtime_setup": 0.07238,
+            "simulation_total": 11.20942,
+            "results": 0.18102,
+            "replay_objects": 0.0491,
+            "response_postprocess": 0.00136,
+            "request_cleanup": 0.04112,
+            "serialize": 0.53846,
+            "write_flush": 0.18892,
+            "reply_free": 0.25082
+          },
+          "output_sha256": "4f7355fb9db3f14cd1204c8d0c3ce426ef9ce36fa31041c6788ef1b795f55f7e"
+        },
+        {
+          "case": 2,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 98,
+          "raw_frames": 1298,
+          "input_bytes": 362672,
+          "output_bytes": 169263,
+          "mean_latency_ms": 15.6724,
+          "stage_mean_ms": {
+            "json_parse": 0.14282,
+            "gate_order": 0.06522,
+            "skill_decode": 0.00056,
+            "request_spec": 0.06042,
+            "initialization": 0.3695,
+            "solver_build": 1.36736,
+            "runtime_setup": 0.09544,
+            "simulation_total": 13.19178,
+            "results": 0.28314,
+            "replay_objects": 0.06016,
+            "response_postprocess": 0.00164,
+            "request_cleanup": 0.05416,
+            "serialize": 0.67106,
+            "write_flush": 0.21094,
+            "reply_free": 0.22834
+          },
+          "output_sha256": "71bd9442abe82cb639c8b5753b3d497a4a9e899aa2f82f451bf28a556a7c579c"
+        },
+        {
+          "case": 3,
+          "runners": 9,
+          "course": 10612,
+          "distance": 2100,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 118,
+          "raw_frames": 1631,
+          "input_bytes": 361904,
+          "output_bytes": 182994,
+          "mean_latency_ms": 17.6256,
+          "stage_mean_ms": {
+            "json_parse": 0.11002,
+            "gate_order": 0.05586,
+            "skill_decode": 0.00062,
+            "request_spec": 0.06354,
+            "initialization": 0.3754,
+            "solver_build": 1.33118,
+            "runtime_setup": 0.0883,
+            "simulation_total": 14.16574,
+            "results": 0.10812,
+            "replay_objects": 0.06008,
+            "response_postprocess": 0.00172,
+            "request_cleanup": 0.05464,
+            "serialize": 0.7141,
+            "write_flush": 0.18892,
+            "reply_free": 0.17716
+          },
+          "output_sha256": "d9c1473e12c1cea700278c77454805d8618c19db8423bed1de92871908285f62"
+        },
+        {
+          "case": 4,
+          "runners": 9,
+          "course": 10406,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 102,
+          "raw_frames": 1363,
+          "input_bytes": 361902,
+          "output_bytes": 161660,
+          "mean_latency_ms": 16.61038,
+          "stage_mean_ms": {
+            "json_parse": 0.1185,
+            "gate_order": 0.06088,
+            "skill_decode": 0.00056,
+            "request_spec": 0.06384,
+            "initialization": 0.38126,
+            "solver_build": 1.40468,
+            "runtime_setup": 0.08876,
+            "simulation_total": 10.52104,
+            "results": 0.11564,
+            "replay_objects": 0.05702,
+            "response_postprocess": 0.00186,
+            "request_cleanup": 0.04622,
+            "serialize": 0.53974,
+            "write_flush": 0.1847,
+            "reply_free": 0.17226
+          },
+          "output_sha256": "9d9c3ebbdf03cbd91c306abc3fe6ea4ad55e433b47d38d5e943812b9dfb2ad7a"
+        },
+        {
+          "case": 5,
+          "runners": 9,
+          "course": 10812,
+          "distance": 1200,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 76,
+          "raw_frames": 948,
+          "input_bytes": 361904,
+          "output_bytes": 131661,
+          "mean_latency_ms": 10.18416,
+          "stage_mean_ms": {
+            "json_parse": 0.10856,
+            "gate_order": 0.04996,
+            "skill_decode": 0.00068,
+            "request_spec": 0.05592,
+            "initialization": 0.32848,
+            "solver_build": 1.29626,
+            "runtime_setup": 0.0818,
+            "simulation_total": 7.8934,
+            "results": 0.11618,
+            "replay_objects": 0.02774,
+            "response_postprocess": 0.00184,
+            "request_cleanup": 0.03976,
+            "serialize": 0.48662,
+            "write_flush": 0.14496,
+            "reply_free": 0.15134
+          },
+          "output_sha256": "a41235b6095902f85d03c671bd7ebb5a0b39a2d467f27147906e4daab4f187cf"
+        },
+        {
+          "case": 6,
+          "runners": 9,
+          "course": 10311,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 106,
+          "raw_frames": 1430,
+          "input_bytes": 361903,
+          "output_bytes": 165277,
+          "mean_latency_ms": 13.95768,
+          "stage_mean_ms": {
+            "json_parse": 0.12416,
+            "gate_order": 0.05756,
+            "skill_decode": 0.0006,
+            "request_spec": 0.23502,
+            "initialization": 0.36076,
+            "solver_build": 1.32622,
+            "runtime_setup": 0.08246,
+            "simulation_total": 10.01928,
+            "results": 0.11302,
+            "replay_objects": 0.03844,
+            "response_postprocess": 0.00202,
+            "request_cleanup": 0.04346,
+            "serialize": 0.53396,
+            "write_flush": 0.19086,
+            "reply_free": 0.16054
+          },
+          "output_sha256": "270bca50af260b8462d58a78d4c5d045c8b8d81dfbfa161ebab2ae2b05782bfd"
+        },
+        {
+          "case": 7,
+          "runners": 9,
+          "course": 10701,
+          "distance": 1200,
+          "skill_count": 150,
+          "skill_definitions": 730,
+          "frames": 71,
+          "raw_frames": 881,
+          "input_bytes": 360985,
+          "output_bytes": 112670,
+          "mean_latency_ms": 9.92886,
+          "stage_mean_ms": {
+            "json_parse": 0.1008,
+            "gate_order": 0.05248,
+            "skill_decode": 0.00038,
+            "request_spec": 0.66012,
+            "initialization": 0.27678,
+            "solver_build": 1.0424,
+            "runtime_setup": 0.06132,
+            "simulation_total": 5.17696,
+            "results": 0.09722,
+            "replay_objects": 0.0244,
+            "response_postprocess": 0.00104,
+            "request_cleanup": 0.0316,
+            "serialize": 0.33934,
+            "write_flush": 0.13296,
+            "reply_free": 0.0524
+          },
+          "output_sha256": "9d94b998954896928c780fb7bf13273902959461f267a66ca7802b99039c64f1"
+        },
+        {
+          "case": 8,
+          "runners": 9,
+          "course": 10509,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 107,
+          "raw_frames": 1448,
+          "input_bytes": 361900,
+          "output_bytes": 167670,
+          "mean_latency_ms": 15.127199999999998,
+          "stage_mean_ms": {
+            "json_parse": 0.1015,
+            "gate_order": 0.05668,
+            "skill_decode": 0.00056,
+            "request_spec": 0.22268,
+            "initialization": 0.34414,
+            "solver_build": 1.46068,
+            "runtime_setup": 0.07408,
+            "simulation_total": 10.9631,
+            "results": 0.10236,
+            "replay_objects": 0.04412,
+            "response_postprocess": 0.00164,
+            "request_cleanup": 0.04264,
+            "serialize": 0.57804,
+            "write_flush": 0.17734,
+            "reply_free": 0.19482
+          },
+          "output_sha256": "d74d124641a9b8b5cc4ef06c09d2cb8cd6816b20953188f097e0d2779dc8bae8"
+        },
+        {
+          "case": 9,
+          "runners": 9,
+          "course": 10311,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 104,
+          "raw_frames": 1405,
+          "input_bytes": 361905,
+          "output_bytes": 164785,
+          "mean_latency_ms": 13.988760000000001,
+          "stage_mean_ms": {
+            "json_parse": 0.11176,
+            "gate_order": 0.054,
+            "skill_decode": 0.00062,
+            "request_spec": 0.06048,
+            "initialization": 0.35378,
+            "solver_build": 1.24204,
+            "runtime_setup": 0.0815,
+            "simulation_total": 11.69978,
+            "results": 0.10564,
+            "replay_objects": 0.0434,
+            "response_postprocess": 0.00162,
+            "request_cleanup": 0.04524,
+            "serialize": 0.59212,
+            "write_flush": 0.18034,
+            "reply_free": 0.19706
+          },
+          "output_sha256": "f6e18383d14e2872f268f68977dc1e4ea34a310db5cca930cd635ffd7569a413"
+        },
+        {
+          "case": 10,
+          "runners": 9,
+          "course": 10708,
+          "distance": 1800,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 107,
+          "raw_frames": 1445,
+          "input_bytes": 362672,
+          "output_bytes": 178497,
+          "mean_latency_ms": 14.3632,
+          "stage_mean_ms": {
+            "json_parse": 0.12602,
+            "gate_order": 0.06508,
+            "skill_decode": 0.0006,
+            "request_spec": 0.5968,
+            "initialization": 0.35242,
+            "solver_build": 1.24098,
+            "runtime_setup": 0.09156,
+            "simulation_total": 9.74188,
+            "results": 0.16154,
+            "replay_objects": 0.0394,
+            "response_postprocess": 0.00134,
+            "request_cleanup": 0.03944,
+            "serialize": 0.46888,
+            "write_flush": 0.1639,
+            "reply_free": 0.1692
+          },
+          "output_sha256": "e09896c9fb727084a2aca9c02015bcad81bacde9f362a3f7acbf8caf2feb9493"
+        },
+        {
+          "case": 11,
+          "runners": 9,
+          "course": 10903,
+          "distance": 1600,
+          "skill_count": 162,
+          "skill_definitions": 730,
+          "frames": 88,
+          "raw_frames": 1153,
+          "input_bytes": 361576,
+          "output_bytes": 149511,
+          "mean_latency_ms": 12.65126,
+          "stage_mean_ms": {
+            "json_parse": 0.08528,
+            "gate_order": 0.04348,
+            "skill_decode": 0.00038,
+            "request_spec": 0.63828,
+            "initialization": 0.25118,
+            "solver_build": 1.10692,
+            "runtime_setup": 0.06436,
+            "simulation_total": 8.49204,
+            "results": 0.20218,
+            "replay_objects": 0.04702,
+            "response_postprocess": 0.00136,
+            "request_cleanup": 0.04454,
+            "serialize": 0.56418,
+            "write_flush": 0.17252,
+            "reply_free": 0.21332
+          },
+          "output_sha256": "15528d44be2eca22e38fe88568f6389276a35433f01e671c0f92bf433bbabf3d"
+        },
+        {
+          "case": 12,
+          "runners": 9,
+          "course": 10310,
+          "distance": 1200,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 74,
+          "raw_frames": 916,
+          "input_bytes": 362672,
+          "output_bytes": 135117,
+          "mean_latency_ms": 12.18608,
+          "stage_mean_ms": {
+            "json_parse": 0.121,
+            "gate_order": 0.06836,
+            "skill_decode": 0.00046,
+            "request_spec": 0.22544,
+            "initialization": 0.333,
+            "solver_build": 1.27296,
+            "runtime_setup": 0.0812,
+            "simulation_total": 7.5855,
+            "results": 0.18526,
+            "replay_objects": 0.03826,
+            "response_postprocess": 0.00228,
+            "request_cleanup": 0.06372,
+            "serialize": 0.52386,
+            "write_flush": 0.16784,
+            "reply_free": 0.21432
+          },
+          "output_sha256": "12427485ad291c1eb6d8d7bff3e64f55805fa6ef4f93c5ccc16fb249dedba286"
+        },
+        {
+          "case": 13,
+          "runners": 9,
+          "course": 10611,
+          "distance": 1600,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 93,
+          "raw_frames": 1224,
+          "input_bytes": 362673,
+          "output_bytes": 164030,
+          "mean_latency_ms": 12.88442,
+          "stage_mean_ms": {
+            "json_parse": 0.11254,
+            "gate_order": 0.10952,
+            "skill_decode": 0.00044,
+            "request_spec": 0.65528,
+            "initialization": 0.3373,
+            "solver_build": 1.3401,
+            "runtime_setup": 0.10102,
+            "simulation_total": 9.62158,
+            "results": 0.18116,
+            "replay_objects": 0.04914,
+            "response_postprocess": 0.00496,
+            "request_cleanup": 0.04974,
+            "serialize": 0.56672,
+            "write_flush": 0.21452,
+            "reply_free": 0.2482
+          },
+          "output_sha256": "22a9544c0bc528c97e99ae05ad09673b44a16b03705abb578ba79fe1507b077e"
+        },
+        {
+          "case": 14,
+          "runners": 9,
+          "course": 10612,
+          "distance": 2100,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 117,
+          "raw_frames": 1612,
+          "input_bytes": 362673,
+          "output_bytes": 193249,
+          "mean_latency_ms": 16.53546,
+          "stage_mean_ms": {
+            "json_parse": 0.12566,
+            "gate_order": 0.0615,
+            "skill_decode": 0.00044,
+            "request_spec": 0.0543,
+            "initialization": 0.38232,
+            "solver_build": 1.31052,
+            "runtime_setup": 0.09202,
+            "simulation_total": 12.33958,
+            "results": 0.20024,
+            "replay_objects": 0.0456,
+            "response_postprocess": 0.0013,
+            "request_cleanup": 0.04766,
+            "serialize": 0.70866,
+            "write_flush": 0.22366,
+            "reply_free": 0.24588
+          },
+          "output_sha256": "78696865dc9c21ed90a6aaee1e28b75e5d241214680247635c65959fe793f964"
+        },
+        {
+          "case": 15,
+          "runners": 9,
+          "course": 10611,
+          "distance": 1600,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 95,
+          "raw_frames": 1255,
+          "input_bytes": 361899,
+          "output_bytes": 153741,
+          "mean_latency_ms": 12.33848,
+          "stage_mean_ms": {
+            "json_parse": 0.09542,
+            "gate_order": 0.05496,
+            "skill_decode": 0.00048,
+            "request_spec": 0.0517,
+            "initialization": 0.32394,
+            "solver_build": 1.2628,
+            "runtime_setup": 0.06792,
+            "simulation_total": 10.7578,
+            "results": 0.11914,
+            "replay_objects": 0.05022,
+            "response_postprocess": 0.00182,
+            "request_cleanup": 0.05138,
+            "serialize": 0.61312,
+            "write_flush": 0.22188,
+            "reply_free": 0.19716
+          },
+          "output_sha256": "0d8c99d6324c30f71eb4e0c946b7f4d621b124e56085ab43ff41552183ab2185"
+        },
+        {
+          "case": 16,
+          "runners": 9,
+          "course": 10611,
+          "distance": 1600,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 96,
+          "raw_frames": 1275,
+          "input_bytes": 362672,
+          "output_bytes": 162974,
+          "mean_latency_ms": 13.594520000000001,
+          "stage_mean_ms": {
+            "json_parse": 0.13686,
+            "gate_order": 0.0767,
+            "skill_decode": 0.00078,
+            "request_spec": 0.05678,
+            "initialization": 0.38238,
+            "solver_build": 1.27434,
+            "runtime_setup": 0.09448,
+            "simulation_total": 9.76392,
+            "results": 0.20772,
+            "replay_objects": 0.04904,
+            "response_postprocess": 0.0017,
+            "request_cleanup": 0.05672,
+            "serialize": 0.65278,
+            "write_flush": 0.22336,
+            "reply_free": 0.20054
+          },
+          "output_sha256": "be4ed363060ea3c6f1035d6c160bdfb7886a52c1f16209662dfce1fa67999784"
+        },
+        {
+          "case": 17,
+          "runners": 9,
+          "course": 10610,
+          "distance": 1400,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 86,
+          "raw_frames": 1120,
+          "input_bytes": 362672,
+          "output_bytes": 148360,
+          "mean_latency_ms": 12.46722,
+          "stage_mean_ms": {
+            "json_parse": 0.11718,
+            "gate_order": 0.04552,
+            "skill_decode": 0.00044,
+            "request_spec": 0.64634,
+            "initialization": 0.35098,
+            "solver_build": 1.28618,
+            "runtime_setup": 0.08468,
+            "simulation_total": 8.5416,
+            "results": 0.18948,
+            "replay_objects": 0.05384,
+            "response_postprocess": 0.0018,
+            "request_cleanup": 0.05082,
+            "serialize": 0.51084,
+            "write_flush": 0.20422,
+            "reply_free": 0.20642
+          },
+          "output_sha256": "c060ad1b9533d91496ce77f7afb2d9fa2bd586e016ac9645523b28a7a6686e7f"
+        },
+        {
+          "case": 18,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 101,
+          "raw_frames": 1352,
+          "input_bytes": 361901,
+          "output_bytes": 161704,
+          "mean_latency_ms": 15.19038,
+          "stage_mean_ms": {
+            "json_parse": 0.10028,
+            "gate_order": 0.06036,
+            "skill_decode": 0.00054,
+            "request_spec": 0.05664,
+            "initialization": 0.35678,
+            "solver_build": 1.35026,
+            "runtime_setup": 0.07772,
+            "simulation_total": 10.81522,
+            "results": 0.11156,
+            "replay_objects": 0.05082,
+            "response_postprocess": 0.00158,
+            "request_cleanup": 0.04196,
+            "serialize": 0.57042,
+            "write_flush": 0.17422,
+            "reply_free": 0.16106
+          },
+          "output_sha256": "6186bcc93992e474a7fa76f52d260ff7d015e49ff8488b34888033a944c91477"
+        },
+        {
+          "case": 19,
+          "runners": 9,
+          "course": 10207,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 99,
+          "raw_frames": 1315,
+          "input_bytes": 361905,
+          "output_bytes": 159903,
+          "mean_latency_ms": 14.55638,
+          "stage_mean_ms": {
+            "json_parse": 0.095,
+            "gate_order": 0.04536,
+            "skill_decode": 0.0004,
+            "request_spec": 0.21688,
+            "initialization": 0.31406,
+            "solver_build": 1.16434,
+            "runtime_setup": 0.0651,
+            "simulation_total": 11.35012,
+            "results": 0.10426,
+            "replay_objects": 0.05152,
+            "response_postprocess": 0.00192,
+            "request_cleanup": 0.05026,
+            "serialize": 0.5598,
+            "write_flush": 0.1815,
+            "reply_free": 0.16894
+          },
+          "output_sha256": "ed37ee66f81c2ecbd25380bb8ba248a83bb62a5e60aa1ab1a49aa7f09f69ea38"
+        },
+        {
+          "case": 20,
+          "runners": 9,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 171,
+          "skill_definitions": 730,
+          "frames": 128,
+          "raw_frames": 1779,
+          "input_bytes": 362004,
+          "output_bytes": 203181,
+          "mean_latency_ms": 18.53634,
+          "stage_mean_ms": {
+            "json_parse": 0.12336,
+            "gate_order": 0.06418,
+            "skill_decode": 0.00062,
+            "request_spec": 0.24766,
+            "initialization": 0.3615,
+            "solver_build": 1.30198,
+            "runtime_setup": 0.07948,
+            "simulation_total": 14.709,
+            "results": 0.19544,
+            "replay_objects": 0.06938,
+            "response_postprocess": 0.00164,
+            "request_cleanup": 0.04808,
+            "serialize": 0.77004,
+            "write_flush": 0.21152,
+            "reply_free": 0.2651
+          },
+          "output_sha256": "a9fe623e1d7368b0ce1c55edbfd2931584182c1a483ee8b9eb982c81a5f6f4a8"
+        },
+        {
+          "case": 21,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 98,
+          "raw_frames": 1306,
+          "input_bytes": 362675,
+          "output_bytes": 171035,
+          "mean_latency_ms": 15.90948,
+          "stage_mean_ms": {
+            "json_parse": 0.11782,
+            "gate_order": 0.05124,
+            "skill_decode": 0.00048,
+            "request_spec": 0.04968,
+            "initialization": 0.3411,
+            "solver_build": 1.13992,
+            "runtime_setup": 0.07192,
+            "simulation_total": 10.16832,
+            "results": 0.18404,
+            "replay_objects": 0.04546,
+            "response_postprocess": 0.0015,
+            "request_cleanup": 0.04416,
+            "serialize": 0.57926,
+            "write_flush": 0.17644,
+            "reply_free": 0.17322
+          },
+          "output_sha256": "21447a2ac738f932f46b5d3620b70c5e0333ae6e8cd3454b1d87b555c8b59bc1"
+        },
+        {
+          "case": 22,
+          "runners": 9,
+          "course": 10601,
+          "distance": 1400,
+          "skill_count": 182,
+          "skill_definitions": 730,
+          "frames": 81,
+          "raw_frames": 1038,
+          "input_bytes": 362538,
+          "output_bytes": 139490,
+          "mean_latency_ms": 11.55776,
+          "stage_mean_ms": {
+            "json_parse": 0.11894,
+            "gate_order": 0.05316,
+            "skill_decode": 0.00044,
+            "request_spec": 0.21214,
+            "initialization": 0.3436,
+            "solver_build": 1.24266,
+            "runtime_setup": 0.0774,
+            "simulation_total": 8.36074,
+            "results": 0.1315,
+            "replay_objects": 0.02726,
+            "response_postprocess": 0.0013,
+            "request_cleanup": 0.04074,
+            "serialize": 0.48436,
+            "write_flush": 0.13994,
+            "reply_free": 0.16536
+          },
+          "output_sha256": "2299aab89513e60b5d713562c2497a7103307e9a01d842750505451919bfdc99"
+        },
+        {
+          "case": 23,
+          "runners": 9,
+          "course": 10815,
+          "distance": 1900,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 108,
+          "raw_frames": 1464,
+          "input_bytes": 362672,
+          "output_bytes": 182910,
+          "mean_latency_ms": 15.53642,
+          "stage_mean_ms": {
+            "json_parse": 0.10498,
+            "gate_order": 0.04846,
+            "skill_decode": 0.00046,
+            "request_spec": 0.67906,
+            "initialization": 0.326,
+            "solver_build": 1.2698,
+            "runtime_setup": 0.09096,
+            "simulation_total": 13.7198,
+            "results": 0.21116,
+            "replay_objects": 0.05502,
+            "response_postprocess": 0.00134,
+            "request_cleanup": 0.04678,
+            "serialize": 0.62904,
+            "write_flush": 0.219,
+            "reply_free": 0.2609
+          },
+          "output_sha256": "49bbb073edc044374f75c380530a4c57a333efb41b529613d74d9a3e53013a70"
+        },
+        {
+          "case": 24,
+          "runners": 9,
+          "course": 10311,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 106,
+          "raw_frames": 1434,
+          "input_bytes": 361903,
+          "output_bytes": 167610,
+          "mean_latency_ms": 14.16896,
+          "stage_mean_ms": {
+            "json_parse": 0.1182,
+            "gate_order": 0.0717,
+            "skill_decode": 0.00052,
+            "request_spec": 0.05398,
+            "initialization": 0.34902,
+            "solver_build": 1.34512,
+            "runtime_setup": 0.08142,
+            "simulation_total": 13.19222,
+            "results": 0.17934,
+            "replay_objects": 0.08962,
+            "response_postprocess": 0.00252,
+            "request_cleanup": 0.05746,
+            "serialize": 0.6701,
+            "write_flush": 0.20888,
+            "reply_free": 0.15694
+          },
+          "output_sha256": "fa9ff6f76c8c1b9d7499b6707354bb7ad032981a868dc170c7098dd4eb827bec"
+        },
+        {
+          "case": 25,
+          "runners": 9,
+          "course": 10610,
+          "distance": 1400,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 87,
+          "raw_frames": 1136,
+          "input_bytes": 361902,
+          "output_bytes": 141289,
+          "mean_latency_ms": 12.6808,
+          "stage_mean_ms": {
+            "json_parse": 0.12042,
+            "gate_order": 0.05844,
+            "skill_decode": 0.0031,
+            "request_spec": 0.07004,
+            "initialization": 0.38498,
+            "solver_build": 1.44134,
+            "runtime_setup": 0.08982,
+            "simulation_total": 8.84818,
+            "results": 0.10346,
+            "replay_objects": 0.03502,
+            "response_postprocess": 0.00156,
+            "request_cleanup": 0.03898,
+            "serialize": 0.49938,
+            "write_flush": 0.17298,
+            "reply_free": 0.11364
+          },
+          "output_sha256": "5e76a3537fb339f93a391b42ffd478c4644489f532b7362ff8859ca63bd36557"
+        },
+        {
+          "case": 26,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 98,
+          "raw_frames": 1299,
+          "input_bytes": 362670,
+          "output_bytes": 172357,
+          "mean_latency_ms": 14.64274,
+          "stage_mean_ms": {
+            "json_parse": 0.12436,
+            "gate_order": 0.05842,
+            "skill_decode": 0.00056,
+            "request_spec": 0.0597,
+            "initialization": 0.36324,
+            "solver_build": 1.351,
+            "runtime_setup": 0.10062,
+            "simulation_total": 12.21766,
+            "results": 0.21626,
+            "replay_objects": 0.0444,
+            "response_postprocess": 0.00182,
+            "request_cleanup": 0.04868,
+            "serialize": 0.6394,
+            "write_flush": 0.18778,
+            "reply_free": 0.28716
+          },
+          "output_sha256": "17413097e0e3c3c9819c7931167d4b5073c612eec39c8e8a1ef9c20ef4e81325"
+        },
+        {
+          "case": 27,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 101,
+          "raw_frames": 1352,
+          "input_bytes": 361902,
+          "output_bytes": 156811,
+          "mean_latency_ms": 14.2249,
+          "stage_mean_ms": {
+            "json_parse": 0.09618,
+            "gate_order": 0.09054,
+            "skill_decode": 0.00042,
+            "request_spec": 0.05292,
+            "initialization": 0.32512,
+            "solver_build": 1.24364,
+            "runtime_setup": 0.07464,
+            "simulation_total": 10.4682,
+            "results": 0.11562,
+            "replay_objects": 0.0515,
+            "response_postprocess": 0.0017,
+            "request_cleanup": 0.04776,
+            "serialize": 0.5904,
+            "write_flush": 0.18794,
+            "reply_free": 0.14922
+          },
+          "output_sha256": "f185397732e49cd1c6acd4fa7f4e1907895d9e3523decd4e9193241a076b5735"
+        },
+        {
+          "case": 28,
+          "runners": 9,
+          "course": 10501,
+          "distance": 1200,
+          "skill_count": 174,
+          "skill_definitions": 730,
+          "frames": 71,
+          "raw_frames": 881,
+          "input_bytes": 362139,
+          "output_bytes": 120360,
+          "mean_latency_ms": 11.35968,
+          "stage_mean_ms": {
+            "json_parse": 0.12032,
+            "gate_order": 0.05638,
+            "skill_decode": 0.00048,
+            "request_spec": 0.2209,
+            "initialization": 0.32908,
+            "solver_build": 1.21806,
+            "runtime_setup": 0.07522,
+            "simulation_total": 7.62978,
+            "results": 0.1163,
+            "replay_objects": 0.03442,
+            "response_postprocess": 0.00188,
+            "request_cleanup": 0.04948,
+            "serialize": 0.56566,
+            "write_flush": 0.1572,
+            "reply_free": 0.04998
+          },
+          "output_sha256": "454cdc96acb1f6b8daaa0ef0b8e673aef708f48ccaddf84f12374a9435caaf3c"
+        },
+        {
+          "case": 29,
+          "runners": 9,
+          "course": 10509,
+          "distance": 1800,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 103,
+          "raw_frames": 1383,
+          "input_bytes": 362669,
+          "output_bytes": 176594,
+          "mean_latency_ms": 17.25026,
+          "stage_mean_ms": {
+            "json_parse": 0.11952,
+            "gate_order": 0.05402,
+            "skill_decode": 0.00046,
+            "request_spec": 0.05944,
+            "initialization": 0.35094,
+            "solver_build": 1.2765,
+            "runtime_setup": 0.08114,
+            "simulation_total": 12.49854,
+            "results": 0.24234,
+            "replay_objects": 0.07226,
+            "response_postprocess": 0.00178,
+            "request_cleanup": 0.07576,
+            "serialize": 0.65104,
+            "write_flush": 0.22242,
+            "reply_free": 0.31322
+          },
+          "output_sha256": "e9d4f789a7177d57320f02cd0667e4cbb8a4fb85f03848c4ee31cd082d0e14a0"
+        }
+      ],
+      "estimated_tick_ms": {
+        "tick_bookkeeping": 0.06951507019996622,
+        "tick_observers": 0.08314010323165541,
+        "snapshots": 0.27679329010379433,
+        "field_skills": 3.3161851598727914,
+        "field_movement": 3.279234937644765,
+        "field_cache": 0.7416716916867045,
+        "field_prepare": 0.881214989602474,
+        "field_blocking": 0.6320998156810607,
+        "field_overlaps": 0.09593998013691274,
+        "field_competitions": 0.4468075375576954,
+        "field_rank_flush": 0.6292887576155138
+      }
+    },
+    "nine-dense": {
+      "races": 30,
+      "runs": 150,
+      "identical_profile_outputs": 150,
+      "latency_ms": {
+        "mean": 24.770789333333333,
+        "median": 25.42125,
+        "p95": 32.5242,
+        "min": 13.4274,
+        "max": 38.6591
+      },
+      "instrumented_latency_ms": {
+        "mean": 24.803501333333333,
+        "median": 24.6342,
+        "p95": 32.1944,
+        "min": 11.7394,
+        "max": 38.5269
+      },
+      "instrumented_difference_percent": 0.1320587711590715,
+      "worker_service_ms": 24.216668666666667,
+      "stage_mean_ms": {
+        "json_parse": 0.13413133333333335,
+        "gate_order": 0.07028466666666668,
+        "skill_decode": 0.0006346666666666666,
+        "request_spec": 0.13628,
+        "initialization": 0.4064833333333333,
+        "solver_build": 1.4904106666666668,
+        "runtime_setup": 0.09005,
+        "simulation_total": 12.049408666666666,
+        "results": 0.17668066666666665,
+        "replay_objects": 0.039545333333333335,
+        "response_postprocess": 0.0017946666666666668,
+        "solver_teardown": 0.046959333333333575,
+        "request_cleanup": 0.05196733333333334,
+        "serialize": 7.095361333333333,
+        "write_flush": 1.9470726666666667,
+        "reply_free": 0.4793513333333333
+      },
+      "unassigned_worker_ms": 0.0002526666666682331,
+      "average_workload": {
+        "distance": 1660,
+        "skill_count": 174.43333333333334,
+        "skill_definitions": 730,
+        "frames": 1284.7666666666667,
+        "raw_frames": 1284.7666666666667,
+        "input_bytes": 362163.86666666664,
+        "output_bytes": 1735750.6
+      },
+      "allocation_mean": {
+        "json_parse": {
+          "allocations": 1167.3,
+          "bytes": 153832.4
+        },
+        "gate_order": {
+          "allocations": 1108.1666666666667,
+          "bytes": 140034.2
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2090.633333333333,
+          "bytes": 520456.5333333333
+        },
+        "initialization": {
+          "allocations": 2993.2,
+          "bytes": 279434
+        },
+        "run_race_total": {
+          "allocations": 29106.533333333333,
+          "bytes": 2678216.5
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 10973.3,
+          "bytes": 962354.9666666667
+        },
+        "runtime_setup": {
+          "allocations": 799.2333333333333,
+          "bytes": 71285.2
+        },
+        "simulation_total": {
+          "allocations": 13478.566666666668,
+          "bytes": 1230037.5
+        },
+        "results": {
+          "allocations": 2569.6666666666665,
+          "bytes": 373420.3
+        },
+        "replay_objects": {
+          "allocations": 1285.7666666666667,
+          "bytes": 41118.53333333333
+        },
+        "serialize": {
+          "allocations": 18.7,
+          "bytes": 5347721.6
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 36488.53333333333,
+          "bytes": 9120471.233333332
+        },
+        "tick_bookkeeping": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_total": {
+          "allocations": 369.53333333333336,
+          "bytes": 16703.1
+        },
+        "tick_observers": {
+          "allocations": 1.2,
+          "bytes": 166.76666666666668
+        },
+        "snapshots": {
+          "allocations": 40.3,
+          "bytes": 19470.4
+        },
+        "field_cache": {
+          "allocations": 0.9,
+          "bytes": 83.6
+        },
+        "field_prepare": {
+          "allocations": 197.1,
+          "bytes": 4451.733333333334
+        },
+        "field_skills": {
+          "allocations": 49.53333333333333,
+          "bytes": 3018.3333333333335
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 5.2,
+          "bytes": 487.53333333333336
+        },
+        "field_overlaps": {
+          "allocations": 0.1,
+          "bytes": 5.1
+        },
+        "field_competitions": {
+          "allocations": 1,
+          "bytes": 93.86666666666666
+        },
+        "field_rank_flush": {
+          "allocations": 115.7,
+          "bytes": 8562.933333333332
+        },
+        "movement_total": {
+          "allocations": 5.166666666666667,
+          "bytes": 482.73333333333335
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "previous_allocation_mean": {
+        "json_parse": {
+          "allocations": 26230.3,
+          "bytes": 3139329.4
+        },
+        "gate_order": {
+          "allocations": 1108.1666666666667,
+          "bytes": 140034.2
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2090.633333333333,
+          "bytes": 520456.5333333333
+        },
+        "initialization": {
+          "allocations": 2993.2,
+          "bytes": 279434
+        },
+        "run_race_total": {
+          "allocations": 56952.96666666667,
+          "bytes": 5530804.1
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 10973.3,
+          "bytes": 962354.9666666667
+        },
+        "runtime_setup": {
+          "allocations": 792.8666666666667,
+          "bytes": 70751.13333333333
+        },
+        "simulation_total": {
+          "allocations": 23344.633333333335,
+          "bytes": 1946592.2
+        },
+        "results": {
+          "allocations": 2569.6666666666665,
+          "bytes": 373420.3
+        },
+        "replay_objects": {
+          "allocations": 19272.5,
+          "bytes": 2177685.5
+        },
+        "serialize": {
+          "allocations": 18.7,
+          "bytes": 5347721.6
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 89397.96666666666,
+          "bytes": 14958555.833333334
+        },
+        "tick_bookkeeping": {
+          "allocations": 80.06666666666666,
+          "bytes": 6125.1
+        },
+        "field_total": {
+          "allocations": 600.4333333333333,
+          "bytes": 33188.3
+        },
+        "tick_observers": {
+          "allocations": 1.2,
+          "bytes": 166.76666666666668
+        },
+        "snapshots": {
+          "allocations": 40.3,
+          "bytes": 19470.4
+        },
+        "field_cache": {
+          "allocations": 54.6,
+          "bytes": 6950.8
+        },
+        "field_prepare": {
+          "allocations": 197.1,
+          "bytes": 4451.733333333334
+        },
+        "field_skills": {
+          "allocations": 49.53333333333333,
+          "bytes": 3018.3333333333335
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 68.26666666666667,
+          "bytes": 1269.2666666666667
+        },
+        "field_overlaps": {
+          "allocations": 40.1,
+          "bytes": 2885.1
+        },
+        "field_competitions": {
+          "allocations": 75.13333333333334,
+          "bytes": 6050.133333333333
+        },
+        "field_rank_flush": {
+          "allocations": 115.7,
+          "bytes": 8562.933333333332
+        },
+        "movement_total": {
+          "allocations": 68.23333333333333,
+          "bytes": 1264.4666666666667
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "estimated_tick_allocations": {
+        "field_skills": 1587.543397340952,
+        "field_movement": 166.29881785938838,
+        "field_cache": 28.531801950219766,
+        "field_prepare": 6320.980644726639,
+        "field_blocking": 0.0,
+        "field_overlaps": 3.1543478260869566,
+        "field_competitions": 31.464761904761904,
+        "field_rank_flush": 3710.3472529184223,
+        "tick_bookkeeping": 0.0,
+        "tick_observers": 38.316023589936634,
+        "snapshots": 1292.3975278743058
+      },
+      "cases": [
+        {
+          "case": 0,
+          "runners": 9,
+          "course": 10812,
+          "distance": 1200,
+          "skill_count": 168,
+          "skill_definitions": 730,
+          "frames": 948,
+          "raw_frames": 948,
+          "input_bytes": 361855,
+          "output_bytes": 1300556,
+          "mean_latency_ms": 19.33716,
+          "stage_mean_ms": {
+            "json_parse": 0.13244,
+            "gate_order": 0.1038,
+            "skill_decode": 0.00058,
+            "request_spec": 0.0715,
+            "initialization": 0.38908,
+            "solver_build": 1.56866,
+            "runtime_setup": 0.09272,
+            "simulation_total": 8.92448,
+            "results": 0.13396,
+            "replay_objects": 0.03074,
+            "response_postprocess": 0.0016,
+            "request_cleanup": 0.05184,
+            "serialize": 5.96272,
+            "write_flush": 1.2858,
+            "reply_free": 0.32874
+          },
+          "output_sha256": "e0322faa56e3c7a3a84947ab6ac6c03b07a000b707b4467a890d456a7f0bb155"
+        },
+        {
+          "case": 1,
+          "runners": 9,
+          "course": 10704,
+          "distance": 2000,
+          "skill_count": 163,
+          "skill_definitions": 730,
+          "frames": 1452,
+          "raw_frames": 1452,
+          "input_bytes": 361625,
+          "output_bytes": 1951548,
+          "mean_latency_ms": 27.871000000000002,
+          "stage_mean_ms": {
+            "json_parse": 0.14884,
+            "gate_order": 0.0737,
+            "skill_decode": 0.00078,
+            "request_spec": 0.0743,
+            "initialization": 0.41328,
+            "solver_build": 1.56518,
+            "runtime_setup": 0.09364,
+            "simulation_total": 14.03916,
+            "results": 0.24194,
+            "replay_objects": 0.04628,
+            "response_postprocess": 0.0019,
+            "request_cleanup": 0.05028,
+            "serialize": 8.20856,
+            "write_flush": 1.83068,
+            "reply_free": 0.57386
+          },
+          "output_sha256": "02ac113e779f21efc5d8621ed8fddb152dc661911dfb25b8f68465acfacf4d30"
+        },
+        {
+          "case": 2,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1298,
+          "raw_frames": 1298,
+          "input_bytes": 362671,
+          "output_bytes": 1763773,
+          "mean_latency_ms": 28.3486,
+          "stage_mean_ms": {
+            "json_parse": 0.15506,
+            "gate_order": 0.0668,
+            "skill_decode": 0.00058,
+            "request_spec": 0.05858,
+            "initialization": 0.40576,
+            "solver_build": 1.32964,
+            "runtime_setup": 0.08316,
+            "simulation_total": 11.45984,
+            "results": 0.26726,
+            "replay_objects": 0.0392,
+            "response_postprocess": 0.00172,
+            "request_cleanup": 0.06718,
+            "serialize": 7.37984,
+            "write_flush": 2.1369,
+            "reply_free": 0.51908
+          },
+          "output_sha256": "e7367c6ea3a6aa5cc82ad131658caf2668c1f2a07d93635dd22c7be569675d6a"
+        },
+        {
+          "case": 3,
+          "runners": 9,
+          "course": 10612,
+          "distance": 2100,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1631,
+          "raw_frames": 1631,
+          "input_bytes": 361903,
+          "output_bytes": 2194902,
+          "mean_latency_ms": 32.3907,
+          "stage_mean_ms": {
+            "json_parse": 0.12932,
+            "gate_order": 0.06472,
+            "skill_decode": 0.00068,
+            "request_spec": 0.07004,
+            "initialization": 0.43482,
+            "solver_build": 1.63544,
+            "runtime_setup": 0.09538,
+            "simulation_total": 15.8672,
+            "results": 0.12918,
+            "replay_objects": 0.04794,
+            "response_postprocess": 0.00182,
+            "request_cleanup": 0.0492,
+            "serialize": 8.4031,
+            "write_flush": 2.6985,
+            "reply_free": 0.60926
+          },
+          "output_sha256": "1cb5c33cdb84a973b2eb3aeada2c62c2809e6b17c77e832edc7c369c6417f48d"
+        },
+        {
+          "case": 4,
+          "runners": 9,
+          "course": 10406,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1363,
+          "raw_frames": 1363,
+          "input_bytes": 361901,
+          "output_bytes": 1814139,
+          "mean_latency_ms": 28.43956,
+          "stage_mean_ms": {
+            "json_parse": 0.15622,
+            "gate_order": 0.06804,
+            "skill_decode": 0.00066,
+            "request_spec": 0.07036,
+            "initialization": 0.4696,
+            "solver_build": 1.64272,
+            "runtime_setup": 0.08568,
+            "simulation_total": 11.65842,
+            "results": 0.12522,
+            "replay_objects": 0.03246,
+            "response_postprocess": 0.00182,
+            "request_cleanup": 0.04604,
+            "serialize": 8.0907,
+            "write_flush": 2.15758,
+            "reply_free": 0.52476
+          },
+          "output_sha256": "00da6a3a0a9fa973f4fc5a808e659b850f5a6928d0ead0766fc31775bc7e7112"
+        },
+        {
+          "case": 5,
+          "runners": 9,
+          "course": 10812,
+          "distance": 1200,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 948,
+          "raw_frames": 948,
+          "input_bytes": 361903,
+          "output_bytes": 1301717,
+          "mean_latency_ms": 18.41478,
+          "stage_mean_ms": {
+            "json_parse": 0.12726,
+            "gate_order": 0.05876,
+            "skill_decode": 0.00056,
+            "request_spec": 0.06236,
+            "initialization": 0.36354,
+            "solver_build": 1.19854,
+            "runtime_setup": 0.07388,
+            "simulation_total": 7.15532,
+            "results": 0.13906,
+            "replay_objects": 0.02444,
+            "response_postprocess": 0.00184,
+            "request_cleanup": 0.05294,
+            "serialize": 4.81872,
+            "write_flush": 1.46812,
+            "reply_free": 0.2827
+          },
+          "output_sha256": "fac402b1703ed417b9ff017cd01647759cc95a6183e769dc2bbb35b824975550"
+        },
+        {
+          "case": 6,
+          "runners": 9,
+          "course": 10311,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1430,
+          "raw_frames": 1430,
+          "input_bytes": 361902,
+          "output_bytes": 1895350,
+          "mean_latency_ms": 21.99334,
+          "stage_mean_ms": {
+            "json_parse": 0.10414,
+            "gate_order": 0.05258,
+            "skill_decode": 0.00052,
+            "request_spec": 0.20714,
+            "initialization": 0.32988,
+            "solver_build": 1.2684,
+            "runtime_setup": 0.07512,
+            "simulation_total": 10.79422,
+            "results": 0.13658,
+            "replay_objects": 0.0473,
+            "response_postprocess": 0.00156,
+            "request_cleanup": 0.04566,
+            "serialize": 8.09946,
+            "write_flush": 2.15628,
+            "reply_free": 0.37272
+          },
+          "output_sha256": "f247bf5231de004c1a7b1ec76ba7d2432047ae3d910d0cc292b361ec38512ef3"
+        },
+        {
+          "case": 7,
+          "runners": 9,
+          "course": 10701,
+          "distance": 1200,
+          "skill_count": 150,
+          "skill_definitions": 730,
+          "frames": 881,
+          "raw_frames": 881,
+          "input_bytes": 360984,
+          "output_bytes": 1198735,
+          "mean_latency_ms": 16.94442,
+          "stage_mean_ms": {
+            "json_parse": 0.11048,
+            "gate_order": 0.05958,
+            "skill_decode": 0.00054,
+            "request_spec": 0.21114,
+            "initialization": 0.329,
+            "solver_build": 1.29684,
+            "runtime_setup": 0.07516,
+            "simulation_total": 7.33984,
+            "results": 0.07318,
+            "replay_objects": 0.02638,
+            "response_postprocess": 0.0016,
+            "request_cleanup": 0.04174,
+            "serialize": 4.53286,
+            "write_flush": 1.37534,
+            "reply_free": 0.27834
+          },
+          "output_sha256": "096de4b1c3858d0c56ac9aac1afc761ce7f3e6b82252a35e22caec0817b35a3b"
+        },
+        {
+          "case": 8,
+          "runners": 9,
+          "course": 10509,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1448,
+          "raw_frames": 1448,
+          "input_bytes": 361899,
+          "output_bytes": 1924257,
+          "mean_latency_ms": 24.8785,
+          "stage_mean_ms": {
+            "json_parse": 0.17758,
+            "gate_order": 0.09396,
+            "skill_decode": 0.00086,
+            "request_spec": 0.24224,
+            "initialization": 0.48812,
+            "solver_build": 1.71296,
+            "runtime_setup": 0.09438,
+            "simulation_total": 13.39958,
+            "results": 0.14532,
+            "replay_objects": 0.04436,
+            "response_postprocess": 0.002,
+            "request_cleanup": 0.04814,
+            "serialize": 7.3165,
+            "write_flush": 2.07426,
+            "reply_free": 0.48878
+          },
+          "output_sha256": "6a002f525556356dced6d9589fca9ac1c9e7fc4fec8b44ba69de9db3874a4d33"
+        },
+        {
+          "case": 9,
+          "runners": 9,
+          "course": 10311,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1405,
+          "raw_frames": 1405,
+          "input_bytes": 361904,
+          "output_bytes": 1878748,
+          "mean_latency_ms": 25.1144,
+          "stage_mean_ms": {
+            "json_parse": 0.1158,
+            "gate_order": 0.06492,
+            "skill_decode": 0.00052,
+            "request_spec": 0.06308,
+            "initialization": 0.39058,
+            "solver_build": 1.25442,
+            "runtime_setup": 0.0819,
+            "simulation_total": 12.75138,
+            "results": 0.15686,
+            "replay_objects": 0.0444,
+            "response_postprocess": 0.00168,
+            "request_cleanup": 0.05432,
+            "serialize": 8.00434,
+            "write_flush": 2.19058,
+            "reply_free": 0.55302
+          },
+          "output_sha256": "04cee85f704ad7eb8165f9592175bcc177d9e993f69662fdb1f53773b04a4f56"
+        },
+        {
+          "case": 10,
+          "runners": 9,
+          "course": 10708,
+          "distance": 1800,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1445,
+          "raw_frames": 1445,
+          "input_bytes": 362671,
+          "output_bytes": 1950201,
+          "mean_latency_ms": 28.42064,
+          "stage_mean_ms": {
+            "json_parse": 0.13304,
+            "gate_order": 0.07392,
+            "skill_decode": 0.00066,
+            "request_spec": 0.24074,
+            "initialization": 0.43026,
+            "solver_build": 1.4158,
+            "runtime_setup": 0.09148,
+            "simulation_total": 14.12766,
+            "results": 0.21674,
+            "replay_objects": 0.04746,
+            "response_postprocess": 0.0023,
+            "request_cleanup": 0.05956,
+            "serialize": 7.58334,
+            "write_flush": 1.90312,
+            "reply_free": 0.71852
+          },
+          "output_sha256": "3e2f338f89e4f677d867a3b8dbb0d5b36f26a8c46cf423744ab1c3f016d27b71"
+        },
+        {
+          "case": 11,
+          "runners": 9,
+          "course": 10903,
+          "distance": 1600,
+          "skill_count": 162,
+          "skill_definitions": 730,
+          "frames": 1153,
+          "raw_frames": 1153,
+          "input_bytes": 361575,
+          "output_bytes": 1570830,
+          "mean_latency_ms": 21.87944,
+          "stage_mean_ms": {
+            "json_parse": 0.11956,
+            "gate_order": 0.05712,
+            "skill_decode": 0.00058,
+            "request_spec": 0.2297,
+            "initialization": 0.31274,
+            "solver_build": 1.44244,
+            "runtime_setup": 0.09206,
+            "simulation_total": 12.32534,
+            "results": 0.21142,
+            "replay_objects": 0.03818,
+            "response_postprocess": 0.00168,
+            "request_cleanup": 0.05142,
+            "serialize": 6.21972,
+            "write_flush": 2.17098,
+            "reply_free": 0.65436
+          },
+          "output_sha256": "6e30060b68c4a79ea86631858b6bf9134b5fc03c92147c42ca93b340a02089db"
+        },
+        {
+          "case": 12,
+          "runners": 9,
+          "course": 10310,
+          "distance": 1200,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 916,
+          "raw_frames": 916,
+          "input_bytes": 362671,
+          "output_bytes": 1250158,
+          "mean_latency_ms": 18.88638,
+          "stage_mean_ms": {
+            "json_parse": 0.12902,
+            "gate_order": 0.07654,
+            "skill_decode": 0.00064,
+            "request_spec": 0.2492,
+            "initialization": 0.40844,
+            "solver_build": 1.4797,
+            "runtime_setup": 0.0899,
+            "simulation_total": 8.60072,
+            "results": 0.1632,
+            "replay_objects": 0.02754,
+            "response_postprocess": 0.00146,
+            "request_cleanup": 0.04926,
+            "serialize": 5.2892,
+            "write_flush": 1.24472,
+            "reply_free": 0.37278
+          },
+          "output_sha256": "4d1a938ed389eb800062b191803d82a4cae719421d4bd398bbef2f4df2a59d83"
+        },
+        {
+          "case": 13,
+          "runners": 9,
+          "course": 10611,
+          "distance": 1600,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1224,
+          "raw_frames": 1224,
+          "input_bytes": 362672,
+          "output_bytes": 1678883,
+          "mean_latency_ms": 24.54382,
+          "stage_mean_ms": {
+            "json_parse": 0.11388,
+            "gate_order": 0.08124,
+            "skill_decode": 0.00056,
+            "request_spec": 0.21854,
+            "initialization": 0.3538,
+            "solver_build": 1.4377,
+            "runtime_setup": 0.08584,
+            "simulation_total": 12.08512,
+            "results": 0.19442,
+            "replay_objects": 0.03878,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.0542,
+            "serialize": 7.43408,
+            "write_flush": 1.6309,
+            "reply_free": 0.42442
+          },
+          "output_sha256": "8b35ddfe1617915e6d44e3f2888eea0ce73886d466f97f98b811e37bb7755661"
+        },
+        {
+          "case": 14,
+          "runners": 9,
+          "course": 10612,
+          "distance": 2100,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1612,
+          "raw_frames": 1612,
+          "input_bytes": 362672,
+          "output_bytes": 2173354,
+          "mean_latency_ms": 29.10538,
+          "stage_mean_ms": {
+            "json_parse": 0.13552,
+            "gate_order": 0.06168,
+            "skill_decode": 0.00068,
+            "request_spec": 0.06506,
+            "initialization": 0.40862,
+            "solver_build": 1.44494,
+            "runtime_setup": 0.09002,
+            "simulation_total": 14.74638,
+            "results": 0.21032,
+            "replay_objects": 0.04422,
+            "response_postprocess": 0.0017,
+            "request_cleanup": 0.04632,
+            "serialize": 7.4741,
+            "write_flush": 2.47988,
+            "reply_free": 0.58034
+          },
+          "output_sha256": "e6d1c0268e0a1d6cece5dde7686ea9afb6eef0751b3abb4e61beaa240e0b84dd"
+        },
+        {
+          "case": 15,
+          "runners": 9,
+          "course": 10611,
+          "distance": 1600,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1255,
+          "raw_frames": 1255,
+          "input_bytes": 361898,
+          "output_bytes": 1704838,
+          "mean_latency_ms": 21.32492,
+          "stage_mean_ms": {
+            "json_parse": 0.11358,
+            "gate_order": 0.0635,
+            "skill_decode": 0.00056,
+            "request_spec": 0.05846,
+            "initialization": 0.34626,
+            "solver_build": 1.4198,
+            "runtime_setup": 0.08466,
+            "simulation_total": 11.04786,
+            "results": 0.15748,
+            "replay_objects": 0.03922,
+            "response_postprocess": 0.0018,
+            "request_cleanup": 0.04664,
+            "serialize": 7.1377,
+            "write_flush": 1.99602,
+            "reply_free": 0.2833
+          },
+          "output_sha256": "05ab579272f5616d19356a94b34ce3693e812fd2e77d495b7883345ca5abaa2a"
+        },
+        {
+          "case": 16,
+          "runners": 9,
+          "course": 10611,
+          "distance": 1600,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1275,
+          "raw_frames": 1275,
+          "input_bytes": 362671,
+          "output_bytes": 1736983,
+          "mean_latency_ms": 22.59196,
+          "stage_mean_ms": {
+            "json_parse": 0.1438,
+            "gate_order": 0.06352,
+            "skill_decode": 0.00056,
+            "request_spec": 0.06542,
+            "initialization": 0.41584,
+            "solver_build": 1.53852,
+            "runtime_setup": 0.09676,
+            "simulation_total": 11.83846,
+            "results": 0.22904,
+            "replay_objects": 0.04544,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.05552,
+            "serialize": 7.01302,
+            "write_flush": 1.755,
+            "reply_free": 0.50476
+          },
+          "output_sha256": "8dbe9a729ca6a469a5271eae43e41345bd17c789e94ad2e02c1c382990caa5f5"
+        },
+        {
+          "case": 17,
+          "runners": 9,
+          "course": 10610,
+          "distance": 1400,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1120,
+          "raw_frames": 1120,
+          "input_bytes": 362671,
+          "output_bytes": 1533354,
+          "mean_latency_ms": 21.11596,
+          "stage_mean_ms": {
+            "json_parse": 0.12856,
+            "gate_order": 0.06314,
+            "skill_decode": 0.00062,
+            "request_spec": 0.21168,
+            "initialization": 0.3876,
+            "solver_build": 1.3893,
+            "runtime_setup": 0.0915,
+            "simulation_total": 10.62768,
+            "results": 0.15286,
+            "replay_objects": 0.04276,
+            "response_postprocess": 0.0017,
+            "request_cleanup": 0.05958,
+            "serialize": 6.93926,
+            "write_flush": 1.89896,
+            "reply_free": 0.39836
+          },
+          "output_sha256": "b49456321328d0412a22fd3890bebe7c73ebeacbfd4e4d1e7777662afa7711a8"
+        },
+        {
+          "case": 18,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1352,
+          "raw_frames": 1352,
+          "input_bytes": 361900,
+          "output_bytes": 1817988,
+          "mean_latency_ms": 27.02354,
+          "stage_mean_ms": {
+            "json_parse": 0.12372,
+            "gate_order": 0.07232,
+            "skill_decode": 0.00076,
+            "request_spec": 0.067,
+            "initialization": 0.42348,
+            "solver_build": 1.55054,
+            "runtime_setup": 0.08144,
+            "simulation_total": 11.9401,
+            "results": 0.17392,
+            "replay_objects": 0.03638,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.04446,
+            "serialize": 7.85076,
+            "write_flush": 2.02078,
+            "reply_free": 0.53024
+          },
+          "output_sha256": "d3c50ef96564a6d846d87699145e4c763e1d164543570dc93a99cce259ce1102"
+        },
+        {
+          "case": 19,
+          "runners": 9,
+          "course": 10207,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1315,
+          "raw_frames": 1315,
+          "input_bytes": 361904,
+          "output_bytes": 1772268,
+          "mean_latency_ms": 25.86312,
+          "stage_mean_ms": {
+            "json_parse": 0.13474,
+            "gate_order": 0.0674,
+            "skill_decode": 0.00078,
+            "request_spec": 0.23702,
+            "initialization": 0.43386,
+            "solver_build": 1.54866,
+            "runtime_setup": 0.0867,
+            "simulation_total": 13.52478,
+            "results": 0.14098,
+            "replay_objects": 0.0396,
+            "response_postprocess": 0.00164,
+            "request_cleanup": 0.04884,
+            "serialize": 7.32704,
+            "write_flush": 2.14502,
+            "reply_free": 0.46314
+          },
+          "output_sha256": "ef797fedd405a99cb74063c8fb97eaac37b504c261318774b6592a24c7a32c6c"
+        },
+        {
+          "case": 20,
+          "runners": 9,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 171,
+          "skill_definitions": 730,
+          "frames": 1779,
+          "raw_frames": 1779,
+          "input_bytes": 362003,
+          "output_bytes": 2380442,
+          "mean_latency_ms": 35.45252,
+          "stage_mean_ms": {
+            "json_parse": 0.14494,
+            "gate_order": 0.08034,
+            "skill_decode": 0.00068,
+            "request_spec": 0.23604,
+            "initialization": 0.43294,
+            "solver_build": 1.59142,
+            "runtime_setup": 0.09584,
+            "simulation_total": 17.66496,
+            "results": 0.22566,
+            "replay_objects": 0.05502,
+            "response_postprocess": 0.00208,
+            "request_cleanup": 0.0603,
+            "serialize": 9.36482,
+            "write_flush": 2.84488,
+            "reply_free": 0.69838
+          },
+          "output_sha256": "14e85a1836a74e2b532cfa74d117e9ba9deac039f20110298a3975eaf21a7b18"
+        },
+        {
+          "case": 21,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1306,
+          "raw_frames": 1306,
+          "input_bytes": 362674,
+          "output_bytes": 1781237,
+          "mean_latency_ms": 27.03452,
+          "stage_mean_ms": {
+            "json_parse": 0.15814,
+            "gate_order": 0.08096,
+            "skill_decode": 0.00058,
+            "request_spec": 0.07116,
+            "initialization": 0.47316,
+            "solver_build": 1.59228,
+            "runtime_setup": 0.10754,
+            "simulation_total": 12.95156,
+            "results": 0.22748,
+            "replay_objects": 0.04256,
+            "response_postprocess": 0.00192,
+            "request_cleanup": 0.05926,
+            "serialize": 7.5471,
+            "write_flush": 1.969,
+            "reply_free": 0.48484
+          },
+          "output_sha256": "42105cc4c456ddeee5f18979133506dd252f6092dabff6ef2422f2268ee3fc74"
+        },
+        {
+          "case": 22,
+          "runners": 9,
+          "course": 10601,
+          "distance": 1400,
+          "skill_count": 182,
+          "skill_definitions": 730,
+          "frames": 1038,
+          "raw_frames": 1038,
+          "input_bytes": 362537,
+          "output_bytes": 1418702,
+          "mean_latency_ms": 20.54862,
+          "stage_mean_ms": {
+            "json_parse": 0.15666,
+            "gate_order": 0.0746,
+            "skill_decode": 0.0008,
+            "request_spec": 0.22196,
+            "initialization": 0.48904,
+            "solver_build": 1.55414,
+            "runtime_setup": 0.11056,
+            "simulation_total": 9.86964,
+            "results": 0.16244,
+            "replay_objects": 0.02802,
+            "response_postprocess": 0.00146,
+            "request_cleanup": 0.05582,
+            "serialize": 5.5459,
+            "write_flush": 1.35534,
+            "reply_free": 0.36118
+          },
+          "output_sha256": "b81b3e1e244a96ac10b4d4f8b3dc533e02c2693e0f8a103418ef7d462ab912fc"
+        },
+        {
+          "case": 23,
+          "runners": 9,
+          "course": 10815,
+          "distance": 1900,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1464,
+          "raw_frames": 1464,
+          "input_bytes": 362671,
+          "output_bytes": 1986658,
+          "mean_latency_ms": 29.79758,
+          "stage_mean_ms": {
+            "json_parse": 0.15154,
+            "gate_order": 0.07268,
+            "skill_decode": 0.0005,
+            "request_spec": 0.22576,
+            "initialization": 0.45092,
+            "solver_build": 1.52256,
+            "runtime_setup": 0.11026,
+            "simulation_total": 14.74252,
+            "results": 0.2236,
+            "replay_objects": 0.0436,
+            "response_postprocess": 0.00192,
+            "request_cleanup": 0.0523,
+            "serialize": 7.5824,
+            "write_flush": 1.95702,
+            "reply_free": 0.62282
+          },
+          "output_sha256": "3e2ee6c310fa53cf16996789b6ab37c5bb7c85482153b531e01e08688026fc55"
+        },
+        {
+          "case": 24,
+          "runners": 9,
+          "course": 10311,
+          "distance": 1800,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1434,
+          "raw_frames": 1434,
+          "input_bytes": 361902,
+          "output_bytes": 1924463,
+          "mean_latency_ms": 25.962,
+          "stage_mean_ms": {
+            "json_parse": 0.12732,
+            "gate_order": 0.06922,
+            "skill_decode": 0.00066,
+            "request_spec": 0.07242,
+            "initialization": 0.4254,
+            "solver_build": 1.61884,
+            "runtime_setup": 0.08554,
+            "simulation_total": 12.96076,
+            "results": 0.13954,
+            "replay_objects": 0.04218,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.04634,
+            "serialize": 7.72754,
+            "write_flush": 2.29132,
+            "reply_free": 0.53586
+          },
+          "output_sha256": "debe948fc645e28e27c716ea7a6a56ab0caa8e94038a66848d76dd6f3357bff6"
+        },
+        {
+          "case": 25,
+          "runners": 9,
+          "course": 10610,
+          "distance": 1400,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1136,
+          "raw_frames": 1136,
+          "input_bytes": 361901,
+          "output_bytes": 1545867,
+          "mean_latency_ms": 21.06312,
+          "stage_mean_ms": {
+            "json_parse": 0.13884,
+            "gate_order": 0.06734,
+            "skill_decode": 0.00064,
+            "request_spec": 0.08196,
+            "initialization": 0.4347,
+            "solver_build": 1.6127,
+            "runtime_setup": 0.08372,
+            "simulation_total": 10.35584,
+            "results": 0.1345,
+            "replay_objects": 0.0278,
+            "response_postprocess": 0.00188,
+            "request_cleanup": 0.0451,
+            "serialize": 6.23964,
+            "write_flush": 1.79444,
+            "reply_free": 0.29234
+          },
+          "output_sha256": "dc707db75dae09f022c15e5dacc65ad77a6295c062addd4d441344ea08e28fea"
+        },
+        {
+          "case": 26,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1299,
+          "raw_frames": 1299,
+          "input_bytes": 362669,
+          "output_bytes": 1766683,
+          "mean_latency_ms": 26.88286,
+          "stage_mean_ms": {
+            "json_parse": 0.12588,
+            "gate_order": 0.05422,
+            "skill_decode": 0.00058,
+            "request_spec": 0.05544,
+            "initialization": 0.3495,
+            "solver_build": 1.3252,
+            "runtime_setup": 0.08046,
+            "simulation_total": 13.80466,
+            "results": 0.2626,
+            "replay_objects": 0.04218,
+            "response_postprocess": 0.00186,
+            "request_cleanup": 0.06542,
+            "serialize": 6.86242,
+            "write_flush": 2.17202,
+            "reply_free": 0.6713
+          },
+          "output_sha256": "5c34ea58c8006867b75237ea2e866df9f4509db050395523ad83c9ef3bf61d4c"
+        },
+        {
+          "case": 27,
+          "runners": 9,
+          "course": 10107,
+          "distance": 1700,
+          "skill_count": 169,
+          "skill_definitions": 730,
+          "frames": 1352,
+          "raw_frames": 1352,
+          "input_bytes": 361901,
+          "output_bytes": 1789355,
+          "mean_latency_ms": 26.69446,
+          "stage_mean_ms": {
+            "json_parse": 0.1246,
+            "gate_order": 0.09292,
+            "skill_decode": 0.0006,
+            "request_spec": 0.06156,
+            "initialization": 0.40012,
+            "solver_build": 1.67428,
+            "runtime_setup": 0.10134,
+            "simulation_total": 12.0189,
+            "results": 0.13976,
+            "replay_objects": 0.05166,
+            "response_postprocess": 0.0022,
+            "request_cleanup": 0.04792,
+            "serialize": 7.06044,
+            "write_flush": 2.37966,
+            "reply_free": 0.40262
+          },
+          "output_sha256": "e6aa45965f0eb92fb2dfff9d489988d34df7749bc43866cf9866efdf7cac3129"
+        },
+        {
+          "case": 28,
+          "runners": 9,
+          "course": 10501,
+          "distance": 1200,
+          "skill_count": 174,
+          "skill_definitions": 730,
+          "frames": 881,
+          "raw_frames": 881,
+          "input_bytes": 362138,
+          "output_bytes": 1199069,
+          "mean_latency_ms": 18.99094,
+          "stage_mean_ms": {
+            "json_parse": 0.13718,
+            "gate_order": 0.07264,
+            "skill_decode": 0.0006,
+            "request_spec": 0.22346,
+            "initialization": 0.40428,
+            "solver_build": 1.58738,
+            "runtime_setup": 0.09152,
+            "simulation_total": 7.84446,
+            "results": 0.12348,
+            "replay_objects": 0.02878,
+            "response_postprocess": 0.00208,
+            "request_cleanup": 0.05078,
+            "serialize": 5.44256,
+            "write_flush": 1.13942,
+            "reply_free": 0.24464
+          },
+          "output_sha256": "59c82d8ecbf57ef0c02773a3d441e641fe87a0f788c018311cd363cd3d684e82"
+        },
+        {
+          "case": 29,
+          "runners": 9,
+          "course": 10509,
+          "distance": 1800,
+          "skill_count": 185,
+          "skill_definitions": 730,
+          "frames": 1383,
+          "raw_frames": 1383,
+          "input_bytes": 362668,
+          "output_bytes": 1867460,
+          "mean_latency_ms": 26.20944,
+          "stage_mean_ms": {
+            "json_parse": 0.12628,
+            "gate_order": 0.05638,
+            "skill_decode": 0.00072,
+            "request_spec": 0.06508,
+            "initialization": 0.39988,
+            "solver_build": 1.49332,
+            "runtime_setup": 0.09334,
+            "simulation_total": 15.01542,
+            "results": 0.26242,
+            "replay_objects": 0.04148,
+            "response_postprocess": 0.00198,
+            "request_cleanup": 0.05264,
+            "serialize": 8.403,
+            "write_flush": 1.88966,
+            "reply_free": 0.60508
+          },
+          "output_sha256": "a2550885dbd37736b2c755f2b9e753e0dfded135e51fa1643e6a9d30503a452d"
+        }
+      ]
+    },
+    "eighteen-standard": {
+      "races": 30,
+      "runs": 150,
+      "identical_profile_outputs": 150,
+      "latency_ms": {
+        "mean": 49.203168,
+        "median": 50.0059,
+        "p95": 71.5905,
+        "min": 24.4206,
+        "max": 81.0577
+      },
+      "instrumented_latency_ms": {
+        "mean": 50.19519,
+        "median": 51.1648,
+        "p95": 75.3419,
+        "min": 21.2152,
+        "max": 91.3498
+      },
+      "instrumented_difference_percent": 2.0161750560451663,
+      "worker_service_ms": 50.286621333333336,
+      "stage_mean_ms": {
+        "json_parse": 0.19741866666666666,
+        "gate_order": 0.12127133333333333,
+        "skill_decode": 0.0006486666666666666,
+        "request_spec": 0.596204,
+        "initialization": 0.6696926666666666,
+        "solver_build": 3.1802946666666667,
+        "runtime_setup": 0.136152,
+        "simulation_total": 42.474355333333335,
+        "results": 0.3152133333333333,
+        "replay_objects": 0.11472,
+        "response_postprocess": 0.0019526666666666668,
+        "solver_teardown": 0.097297999999995,
+        "request_cleanup": 0.08741933333333334,
+        "serialize": 1.4447373333333333,
+        "write_flush": 0.40046533333333334,
+        "reply_free": 0.4486233333333333
+      },
+      "unassigned_worker_ms": 0.0001546666666740748,
+      "average_workload": {
+        "distance": 2220,
+        "skill_count": 300.8666666666667,
+        "skill_definitions": 730,
+        "frames": 123.13333333333334,
+        "raw_frames": 1706.3666666666666,
+        "input_bytes": 370648.73333333334,
+        "output_bytes": 374131.76666666666
+      },
+      "allocation_mean": {
+        "json_parse": {
+          "allocations": 2057.133333333333,
+          "bytes": 270194.36666666664
+        },
+        "gate_order": {
+          "allocations": 1974.3333333333333,
+          "bytes": 246934.4
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2375.1666666666665,
+          "bytes": 404042
+        },
+        "initialization": {
+          "allocations": 4993.166666666667,
+          "bytes": 465124.13333333336
+        },
+        "run_race_total": {
+          "allocations": 83703.83333333333,
+          "bytes": 10851303.366666667
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 22497.433333333334,
+          "bytes": 1752085.9
+        },
+        "runtime_setup": {
+          "allocations": 1221.0333333333333,
+          "bytes": 126432.7
+        },
+        "simulation_total": {
+          "allocations": 55306.833333333336,
+          "bytes": 8296464.966666667
+        },
+        "results": {
+          "allocations": 4436.4,
+          "bytes": 650904.1666666666
+        },
+        "replay_objects": {
+          "allocations": 242.13333333333333,
+          "bytes": 25415.633333333335
+        },
+        "serialize": {
+          "allocations": 16.3,
+          "bytes": 1022345.6
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 95123.93333333333,
+          "bytes": 13260719.866666667
+        },
+        "tick_bookkeeping": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_total": {
+          "allocations": 1676.6666666666667,
+          "bytes": 208627.86666666667
+        },
+        "tick_observers": {
+          "allocations": 0.43333333333333335,
+          "bytes": 52.233333333333334
+        },
+        "snapshots": {
+          "allocations": 53.6,
+          "bytes": 54752
+        },
+        "field_cache": {
+          "allocations": 2.5,
+          "bytes": 373.06666666666666
+        },
+        "field_prepare": {
+          "allocations": 393.53333333333336,
+          "bytes": 8243.8
+        },
+        "field_skills": {
+          "allocations": 84.53333333333333,
+          "bytes": 5038.6
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 13.633333333333333,
+          "bytes": 1731
+        },
+        "field_overlaps": {
+          "allocations": 0.1,
+          "bytes": 10.2
+        },
+        "field_competitions": {
+          "allocations": 974.2333333333333,
+          "bytes": 168464
+        },
+        "field_rank_flush": {
+          "allocations": 208.13333333333333,
+          "bytes": 24767.2
+        },
+        "movement_total": {
+          "allocations": 13.6,
+          "bytes": 1721.4
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "previous_allocation_mean": {
+        "json_parse": {
+          "allocations": 27120.133333333335,
+          "bytes": 3255691.3666666667
+        },
+        "gate_order": {
+          "allocations": 1974.3333333333333,
+          "bytes": 246934.4
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2375.1666666666665,
+          "bytes": 404042
+        },
+        "initialization": {
+          "allocations": 4993.166666666667,
+          "bytes": 465124.13333333336
+        },
+        "run_race_total": {
+          "allocations": 114530.6,
+          "bytes": 13164906.966666667
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 22497.433333333334,
+          "bytes": 1752085.9
+        },
+        "runtime_setup": {
+          "allocations": 1212.7333333333333,
+          "bytes": 125720.03333333334
+        },
+        "simulation_total": {
+          "allocations": 83432.96666666666,
+          "bytes": 10404040.366666667
+        },
+        "results": {
+          "allocations": 4436.4,
+          "bytes": 650904.1666666666
+        },
+        "replay_objects": {
+          "allocations": 2951.0666666666666,
+          "bytes": 232156.5
+        },
+        "serialize": {
+          "allocations": 16.3,
+          "bytes": 1022345.6
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 151013.7,
+          "bytes": 18559820.466666665
+        },
+        "tick_bookkeeping": {
+          "allocations": 106.53333333333333,
+          "bytes": 8629.2
+        },
+        "field_total": {
+          "allocations": 2449.4,
+          "bytes": 265872.6666666667
+        },
+        "tick_observers": {
+          "allocations": 0.43333333333333335,
+          "bytes": 52.233333333333334
+        },
+        "snapshots": {
+          "allocations": 53.6,
+          "bytes": 54752
+        },
+        "field_cache": {
+          "allocations": 158.4,
+          "bytes": 20302.666666666668
+        },
+        "field_prepare": {
+          "allocations": 393.53333333333336,
+          "bytes": 8243.8
+        },
+        "field_skills": {
+          "allocations": 84.53333333333333,
+          "bytes": 5038.6
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 268.1333333333333,
+          "bytes": 5492.6
+        },
+        "field_overlaps": {
+          "allocations": 53.333333333333336,
+          "bytes": 7675.8
+        },
+        "field_competitions": {
+          "allocations": 1283.3333333333333,
+          "bytes": 194352
+        },
+        "field_rank_flush": {
+          "allocations": 208.13333333333333,
+          "bytes": 24767.2
+        },
+        "movement_total": {
+          "allocations": 268.1,
+          "bytes": 5483
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "estimated_tick_allocations": {
+        "field_skills": 2705.1588082862763,
+        "field_movement": 434.73421775724285,
+        "field_cache": 79.76253647138864,
+        "field_prepare": 12597.839071207078,
+        "field_blocking": 0.0,
+        "field_overlaps": 3.172413793103448,
+        "field_competitions": 31149.780857501857,
+        "field_rank_flush": 6663.5676153067725,
+        "tick_bookkeeping": 0.0,
+        "tick_observers": 13.855530977007337,
+        "snapshots": 1716.1106542983662
+      },
+      "cases": [
+        {
+          "case": 0,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 166,
+          "raw_frames": 2395,
+          "input_bytes": 370650,
+          "output_bytes": 479152,
+          "mean_latency_ms": 62.02696,
+          "stage_mean_ms": {
+            "json_parse": 0.18072,
+            "gate_order": 0.10874,
+            "skill_decode": 0.00056,
+            "request_spec": 0.09698,
+            "initialization": 0.577,
+            "solver_build": 2.70674,
+            "runtime_setup": 0.11698,
+            "simulation_total": 55.10822,
+            "results": 0.25624,
+            "replay_objects": 0.12358,
+            "response_postprocess": 0.0016,
+            "request_cleanup": 0.08136,
+            "serialize": 1.43374,
+            "write_flush": 0.52076,
+            "reply_free": 0.554
+          },
+          "output_sha256": "43e722a13c586312f12524ea8735269a6dfb439a9a60a47bf865ac32b0ff4dbe"
+        },
+        {
+          "case": 1,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 325,
+          "skill_definitions": 730,
+          "frames": 131,
+          "raw_frames": 1841,
+          "input_bytes": 371858,
+          "output_bytes": 413564,
+          "mean_latency_ms": 54.59568,
+          "stage_mean_ms": {
+            "json_parse": 0.19436,
+            "gate_order": 0.12926,
+            "skill_decode": 0.00074,
+            "request_spec": 0.11152,
+            "initialization": 0.6666,
+            "solver_build": 3.15004,
+            "runtime_setup": 0.12486,
+            "simulation_total": 47.57272,
+            "results": 0.45828,
+            "replay_objects": 0.12612,
+            "response_postprocess": 0.00206,
+            "request_cleanup": 0.09852,
+            "serialize": 1.78324,
+            "write_flush": 0.4401,
+            "reply_free": 0.6408
+          },
+          "output_sha256": "056d5c4a79f0e075d7b90c554cde94ca0a146e453a7e1f854fff51f158b13f2d"
+        },
+        {
+          "case": 2,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1671,
+          "input_bytes": 370650,
+          "output_bytes": 369510,
+          "mean_latency_ms": 48.78774,
+          "stage_mean_ms": {
+            "json_parse": 0.2085,
+            "gate_order": 0.12826,
+            "skill_decode": 0.00076,
+            "request_spec": 0.11184,
+            "initialization": 0.65388,
+            "solver_build": 3.20326,
+            "runtime_setup": 0.14048,
+            "simulation_total": 42.52862,
+            "results": 0.35262,
+            "replay_objects": 0.11122,
+            "response_postprocess": 0.00218,
+            "request_cleanup": 0.09002,
+            "serialize": 1.45894,
+            "write_flush": 0.38666,
+            "reply_free": 0.4896
+          },
+          "output_sha256": "edcfb0bbd25d477306dfc9f5465dfdc0e08a8dc96c463949faf005d4cfa60e52"
+        },
+        {
+          "case": 3,
+          "runners": 18,
+          "course": 10807,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 111,
+          "raw_frames": 1513,
+          "input_bytes": 370648,
+          "output_bytes": 340931,
+          "mean_latency_ms": 46.40694,
+          "stage_mean_ms": {
+            "json_parse": 0.17644,
+            "gate_order": 0.11212,
+            "skill_decode": 0.00062,
+            "request_spec": 0.10504,
+            "initialization": 0.62706,
+            "solver_build": 3.01166,
+            "runtime_setup": 0.1348,
+            "simulation_total": 37.71368,
+            "results": 0.29356,
+            "replay_objects": 0.09092,
+            "response_postprocess": 0.0019,
+            "request_cleanup": 0.08572,
+            "serialize": 1.29158,
+            "write_flush": 0.3853,
+            "reply_free": 0.49828
+          },
+          "output_sha256": "09f427480818ce973839f35b3eac84cb264e5b0b4e698a072c0bb209b6a5f714"
+        },
+        {
+          "case": 4,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 133,
+          "raw_frames": 1866,
+          "input_bytes": 370653,
+          "output_bytes": 401026,
+          "mean_latency_ms": 53.52954,
+          "stage_mean_ms": {
+            "json_parse": 0.2649,
+            "gate_order": 0.15034,
+            "skill_decode": 0.00072,
+            "request_spec": 0.11362,
+            "initialization": 0.69502,
+            "solver_build": 2.95388,
+            "runtime_setup": 0.13072,
+            "simulation_total": 45.92602,
+            "results": 0.34592,
+            "replay_objects": 0.11998,
+            "response_postprocess": 0.00188,
+            "request_cleanup": 0.09182,
+            "serialize": 1.69772,
+            "write_flush": 0.38708,
+            "reply_free": 0.54438
+          },
+          "output_sha256": "f227aa28b69cc845a887bf76058015fa3fbb0d8c038e8c452904ea3f59f708e2"
+        },
+        {
+          "case": 5,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1674,
+          "input_bytes": 370652,
+          "output_bytes": 368921,
+          "mean_latency_ms": 49.8222,
+          "stage_mean_ms": {
+            "json_parse": 0.17826,
+            "gate_order": 0.1093,
+            "skill_decode": 0.00066,
+            "request_spec": 3.98058,
+            "initialization": 0.6102,
+            "solver_build": 3.01794,
+            "runtime_setup": 0.12032,
+            "simulation_total": 39.3406,
+            "results": 0.35806,
+            "replay_objects": 0.1074,
+            "response_postprocess": 0.00184,
+            "request_cleanup": 0.08782,
+            "serialize": 1.52488,
+            "write_flush": 0.34206,
+            "reply_free": 0.42136
+          },
+          "output_sha256": "2ae40f79ffc79a47dfe5c6c74df5f3593ea25652c43cc70c74803d10cf1ef7fd"
+        },
+        {
+          "case": 6,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1671,
+          "input_bytes": 370653,
+          "output_bytes": 368201,
+          "mean_latency_ms": 47.3017,
+          "stage_mean_ms": {
+            "json_parse": 0.24118,
+            "gate_order": 0.1575,
+            "skill_decode": 0.00068,
+            "request_spec": 0.12252,
+            "initialization": 0.72356,
+            "solver_build": 3.12066,
+            "runtime_setup": 0.1458,
+            "simulation_total": 41.79238,
+            "results": 0.27242,
+            "replay_objects": 0.16604,
+            "response_postprocess": 0.0021,
+            "request_cleanup": 0.08592,
+            "serialize": 1.361,
+            "write_flush": 0.34416,
+            "reply_free": 0.47854
+          },
+          "output_sha256": "8d9946bdef1c20282e4c4c3ac168c73936f60efcec27ffe927fded7921d14ae9"
+        },
+        {
+          "case": 7,
+          "runners": 18,
+          "course": 10604,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 111,
+          "raw_frames": 1510,
+          "input_bytes": 370650,
+          "output_bytes": 345205,
+          "mean_latency_ms": 46.38672,
+          "stage_mean_ms": {
+            "json_parse": 0.19616,
+            "gate_order": 0.11432,
+            "skill_decode": 0.00058,
+            "request_spec": 0.37792,
+            "initialization": 0.7295,
+            "solver_build": 3.54004,
+            "runtime_setup": 0.14332,
+            "simulation_total": 37.62854,
+            "results": 0.3464,
+            "replay_objects": 0.07668,
+            "response_postprocess": 0.00172,
+            "request_cleanup": 0.07588,
+            "serialize": 1.18912,
+            "write_flush": 0.32572,
+            "reply_free": 0.3738
+          },
+          "output_sha256": "52c89e959b1fb836ba15e5c8e202f6b2530159bba28279d2d605d909113910eb"
+        },
+        {
+          "case": 8,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 167,
+          "raw_frames": 2415,
+          "input_bytes": 370647,
+          "output_bytes": 479574,
+          "mean_latency_ms": 67.21694,
+          "stage_mean_ms": {
+            "json_parse": 0.20922,
+            "gate_order": 0.14144,
+            "skill_decode": 0.00066,
+            "request_spec": 0.12096,
+            "initialization": 0.73656,
+            "solver_build": 3.2694,
+            "runtime_setup": 0.12446,
+            "simulation_total": 65.34284,
+            "results": 0.3169,
+            "replay_objects": 0.13886,
+            "response_postprocess": 0.00232,
+            "request_cleanup": 0.09276,
+            "serialize": 1.85178,
+            "write_flush": 0.52306,
+            "reply_free": 0.45172
+          },
+          "output_sha256": "23fa8f3bc2354f578b0f108027ff53e17dfb09349cbaceb2f2ac98505e2636f4"
+        },
+        {
+          "case": 9,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 122,
+          "raw_frames": 1682,
+          "input_bytes": 370651,
+          "output_bytes": 372580,
+          "mean_latency_ms": 50.87772,
+          "stage_mean_ms": {
+            "json_parse": 0.17628,
+            "gate_order": 0.10776,
+            "skill_decode": 0.0008,
+            "request_spec": 0.0914,
+            "initialization": 0.6545,
+            "solver_build": 3.10748,
+            "runtime_setup": 0.14842,
+            "simulation_total": 42.63106,
+            "results": 0.34866,
+            "replay_objects": 0.1057,
+            "response_postprocess": 0.00196,
+            "request_cleanup": 0.101,
+            "serialize": 1.47748,
+            "write_flush": 0.48862,
+            "reply_free": 0.46412
+          },
+          "output_sha256": "40ae9702541cf263ff72183dd29a0eea1123d0ffa1a8bbc66273e58be9046b87"
+        },
+        {
+          "case": 10,
+          "runners": 18,
+          "course": 10604,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 111,
+          "raw_frames": 1510,
+          "input_bytes": 370650,
+          "output_bytes": 342685,
+          "mean_latency_ms": 47.3209,
+          "stage_mean_ms": {
+            "json_parse": 0.19938,
+            "gate_order": 0.11304,
+            "skill_decode": 0.00058,
+            "request_spec": 0.09302,
+            "initialization": 0.6716,
+            "solver_build": 3.17302,
+            "runtime_setup": 0.15352,
+            "simulation_total": 38.54816,
+            "results": 0.25892,
+            "replay_objects": 0.1037,
+            "response_postprocess": 0.002,
+            "request_cleanup": 0.07978,
+            "serialize": 1.25248,
+            "write_flush": 0.35758,
+            "reply_free": 0.38324
+          },
+          "output_sha256": "9509b8c85692643bdf6463bb1f50db902e4bd00fc8c308489aecf65f5114fdfe"
+        },
+        {
+          "case": 11,
+          "runners": 18,
+          "course": 10805,
+          "distance": 1600,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 91,
+          "raw_frames": 1186,
+          "input_bytes": 370648,
+          "output_bytes": 294124,
+          "mean_latency_ms": 37.5697,
+          "stage_mean_ms": {
+            "json_parse": 0.17474,
+            "gate_order": 0.10382,
+            "skill_decode": 0.00054,
+            "request_spec": 2.63622,
+            "initialization": 0.63308,
+            "solver_build": 3.3338,
+            "runtime_setup": 0.13874,
+            "simulation_total": 30.56482,
+            "results": 0.3202,
+            "replay_objects": 0.07078,
+            "response_postprocess": 0.00164,
+            "request_cleanup": 0.07838,
+            "serialize": 1.20348,
+            "write_flush": 0.31056,
+            "reply_free": 0.39792
+          },
+          "output_sha256": "b01fac3be1526936dac447f4f4f82ca38868e26697d263a88ec309a489f07c86"
+        },
+        {
+          "case": 12,
+          "runners": 18,
+          "course": 10602,
+          "distance": 1600,
+          "skill_count": 334,
+          "skill_definitions": 730,
+          "frames": 91,
+          "raw_frames": 1187,
+          "input_bytes": 372280,
+          "output_bytes": 297375,
+          "mean_latency_ms": 35.488679999999995,
+          "stage_mean_ms": {
+            "json_parse": 0.16182,
+            "gate_order": 0.12454,
+            "skill_decode": 0.0006,
+            "request_spec": 0.25936,
+            "initialization": 0.61518,
+            "solver_build": 3.0167,
+            "runtime_setup": 0.13966,
+            "simulation_total": 30.5952,
+            "results": 0.3273,
+            "replay_objects": 0.07418,
+            "response_postprocess": 0.0025,
+            "request_cleanup": 0.10016,
+            "serialize": 1.31232,
+            "write_flush": 0.30672,
+            "reply_free": 0.3684
+          },
+          "output_sha256": "f25f4151ae460f27287993f8e357fc0cd29f92921f38f1b99c93bd512a7b6c23"
+        },
+        {
+          "case": 13,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1670,
+          "input_bytes": 370654,
+          "output_bytes": 370634,
+          "mean_latency_ms": 46.70448,
+          "stage_mean_ms": {
+            "json_parse": 0.20514,
+            "gate_order": 0.1136,
+            "skill_decode": 0.00062,
+            "request_spec": 0.11266,
+            "initialization": 0.61336,
+            "solver_build": 3.20652,
+            "runtime_setup": 0.12764,
+            "simulation_total": 39.32118,
+            "results": 0.3368,
+            "replay_objects": 0.10664,
+            "response_postprocess": 0.00176,
+            "request_cleanup": 0.08454,
+            "serialize": 1.44046,
+            "write_flush": 0.42114,
+            "reply_free": 0.36078
+          },
+          "output_sha256": "885974629978b56bd7d4917b35e5ad075763b5c6f6d11217e9acf2e1bbd50ee1"
+        },
+        {
+          "case": 14,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1672,
+          "input_bytes": 370672,
+          "output_bytes": 370156,
+          "mean_latency_ms": 45.33148,
+          "stage_mean_ms": {
+            "json_parse": 0.20006,
+            "gate_order": 0.12546,
+            "skill_decode": 0.00064,
+            "request_spec": 0.11706,
+            "initialization": 0.6711,
+            "solver_build": 3.29762,
+            "runtime_setup": 0.15624,
+            "simulation_total": 43.35158,
+            "results": 0.37378,
+            "replay_objects": 0.1067,
+            "response_postprocess": 0.00176,
+            "request_cleanup": 0.08484,
+            "serialize": 1.54006,
+            "write_flush": 0.3985,
+            "reply_free": 0.48284
+          },
+          "output_sha256": "ef76b0666b90c0b2d6dd31a2d9cffc3b20a8a4836a5db624660b2aa14c246a0a"
+        },
+        {
+          "case": 15,
+          "runners": 18,
+          "course": 10807,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 111,
+          "raw_frames": 1511,
+          "input_bytes": 370651,
+          "output_bytes": 343727,
+          "mean_latency_ms": 48.61354,
+          "stage_mean_ms": {
+            "json_parse": 0.17736,
+            "gate_order": 0.10344,
+            "skill_decode": 0.00062,
+            "request_spec": 0.10952,
+            "initialization": 0.6651,
+            "solver_build": 3.23466,
+            "runtime_setup": 0.13814,
+            "simulation_total": 42.41186,
+            "results": 0.32842,
+            "replay_objects": 0.0905,
+            "response_postprocess": 0.00198,
+            "request_cleanup": 0.08188,
+            "serialize": 1.38134,
+            "write_flush": 0.37342,
+            "reply_free": 0.489
+          },
+          "output_sha256": "ac201e8f9a8a8b0fcbc0adfb573e0c02d25502c1279cc5a83d8049fe4ad64485"
+        },
+        {
+          "case": 16,
+          "runners": 18,
+          "course": 10805,
+          "distance": 1600,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 91,
+          "raw_frames": 1187,
+          "input_bytes": 370653,
+          "output_bytes": 295912,
+          "mean_latency_ms": 32.20462,
+          "stage_mean_ms": {
+            "json_parse": 0.19162,
+            "gate_order": 0.12244,
+            "skill_decode": 0.00068,
+            "request_spec": 0.1126,
+            "initialization": 0.65786,
+            "solver_build": 3.3565,
+            "runtime_setup": 0.14192,
+            "simulation_total": 30.17966,
+            "results": 0.31064,
+            "replay_objects": 0.07646,
+            "response_postprocess": 0.0021,
+            "request_cleanup": 0.07932,
+            "serialize": 1.105,
+            "write_flush": 0.31852,
+            "reply_free": 0.47638
+          },
+          "output_sha256": "5688d36f2bdec39788b876f3b843a70caf8d51f150fc1d0a81e76f40221476a5"
+        },
+        {
+          "case": 17,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 120,
+          "raw_frames": 1665,
+          "input_bytes": 370652,
+          "output_bytes": 368865,
+          "mean_latency_ms": 51.87512,
+          "stage_mean_ms": {
+            "json_parse": 0.16568,
+            "gate_order": 0.09422,
+            "skill_decode": 0.00058,
+            "request_spec": 0.09066,
+            "initialization": 0.65322,
+            "solver_build": 3.22444,
+            "runtime_setup": 0.1386,
+            "simulation_total": 41.51212,
+            "results": 0.39728,
+            "replay_objects": 0.1343,
+            "response_postprocess": 0.00224,
+            "request_cleanup": 0.10256,
+            "serialize": 1.4831,
+            "write_flush": 0.41568,
+            "reply_free": 0.35966
+          },
+          "output_sha256": "6c3e122da195c8804756045e15f21d65a26de9ea5f1373d4fdab226b13eb7f05"
+        },
+        {
+          "case": 18,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1673,
+          "input_bytes": 370649,
+          "output_bytes": 371185,
+          "mean_latency_ms": 48.79576,
+          "stage_mean_ms": {
+            "json_parse": 0.21444,
+            "gate_order": 0.131,
+            "skill_decode": 0.00074,
+            "request_spec": 0.1305,
+            "initialization": 0.69892,
+            "solver_build": 3.14678,
+            "runtime_setup": 0.13414,
+            "simulation_total": 40.12932,
+            "results": 0.31778,
+            "replay_objects": 0.08544,
+            "response_postprocess": 0.00184,
+            "request_cleanup": 0.0763,
+            "serialize": 1.355,
+            "write_flush": 0.36734,
+            "reply_free": 0.4621
+          },
+          "output_sha256": "fc94f7401b1f5c3a7f2644ee24b9cea965d545300925aa678eadeb37eada2443"
+        },
+        {
+          "case": 19,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 132,
+          "raw_frames": 1843,
+          "input_bytes": 370674,
+          "output_bytes": 398522,
+          "mean_latency_ms": 57.32978,
+          "stage_mean_ms": {
+            "json_parse": 0.2023,
+            "gate_order": 0.11994,
+            "skill_decode": 0.0009,
+            "request_spec": 0.12252,
+            "initialization": 0.74906,
+            "solver_build": 3.52996,
+            "runtime_setup": 0.14848,
+            "simulation_total": 49.51642,
+            "results": 0.30402,
+            "replay_objects": 0.16118,
+            "response_postprocess": 0.00186,
+            "request_cleanup": 0.1081,
+            "serialize": 1.62864,
+            "write_flush": 0.46628,
+            "reply_free": 0.45616
+          },
+          "output_sha256": "b4dc9573bf88645a25bd81a57c7920d3333c5eeac23159750768885d720e3b09"
+        },
+        {
+          "case": 20,
+          "runners": 18,
+          "course": 10701,
+          "distance": 1200,
+          "skill_count": 240,
+          "skill_definitions": 730,
+          "frames": 71,
+          "raw_frames": 879,
+          "input_bytes": 367676,
+          "output_bytes": 219019,
+          "mean_latency_ms": 27.53622,
+          "stage_mean_ms": {
+            "json_parse": 0.21912,
+            "gate_order": 0.13666,
+            "skill_decode": 0.00092,
+            "request_spec": 0.40908,
+            "initialization": 0.71052,
+            "solver_build": 2.92028,
+            "runtime_setup": 0.13176,
+            "simulation_total": 20.75586,
+            "results": 0.2047,
+            "replay_objects": 0.09072,
+            "response_postprocess": 0.00234,
+            "request_cleanup": 0.08826,
+            "serialize": 0.92638,
+            "write_flush": 0.2685,
+            "reply_free": 0.2593
+          },
+          "output_sha256": "eef3c37e3eb12cef46b96e5c46540b7157717561469fe39a2ce4ffc3a47a2fb2"
+        },
+        {
+          "case": 21,
+          "runners": 18,
+          "course": 10811,
+          "distance": 3200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 178,
+          "raw_frames": 2591,
+          "input_bytes": 370654,
+          "output_bytes": 511682,
+          "mean_latency_ms": 73.1149,
+          "stage_mean_ms": {
+            "json_parse": 0.23216,
+            "gate_order": 0.1235,
+            "skill_decode": 0.00076,
+            "request_spec": 7.59992,
+            "initialization": 0.75682,
+            "solver_build": 3.43522,
+            "runtime_setup": 0.14016,
+            "simulation_total": 61.02702,
+            "results": 0.27926,
+            "replay_objects": 0.14418,
+            "response_postprocess": 0.0017,
+            "request_cleanup": 0.10094,
+            "serialize": 1.79918,
+            "write_flush": 0.56,
+            "reply_free": 0.5518
+          },
+          "output_sha256": "ce98fb888d7a2a7d41884d61221a8116a66e639b337619dfab3115199e6dc0f6"
+        },
+        {
+          "case": 22,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1671,
+          "input_bytes": 370653,
+          "output_bytes": 368315,
+          "mean_latency_ms": 45.03654,
+          "stage_mean_ms": {
+            "json_parse": 0.25336,
+            "gate_order": 0.17176,
+            "skill_decode": 0.00064,
+            "request_spec": 0.12456,
+            "initialization": 0.77626,
+            "solver_build": 3.1013,
+            "runtime_setup": 0.14218,
+            "simulation_total": 42.91168,
+            "results": 0.28578,
+            "replay_objects": 0.09516,
+            "response_postprocess": 0.00214,
+            "request_cleanup": 0.09262,
+            "serialize": 1.56586,
+            "write_flush": 0.39992,
+            "reply_free": 0.33032
+          },
+          "output_sha256": "5d2ae89e1c1b57bbd6696bc81900aab1d634c49ec745922b706dadccebd53fbf"
+        },
+        {
+          "case": 23,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 132,
+          "raw_frames": 1847,
+          "input_bytes": 370671,
+          "output_bytes": 400294,
+          "mean_latency_ms": 47.52558,
+          "stage_mean_ms": {
+            "json_parse": 0.20688,
+            "gate_order": 0.10664,
+            "skill_decode": 0.0005,
+            "request_spec": 0.11028,
+            "initialization": 0.66904,
+            "solver_build": 3.30038,
+            "runtime_setup": 0.1284,
+            "simulation_total": 42.83856,
+            "results": 0.24954,
+            "replay_objects": 0.13758,
+            "response_postprocess": 0.00172,
+            "request_cleanup": 0.07458,
+            "serialize": 1.38382,
+            "write_flush": 0.41282,
+            "reply_free": 0.53296
+          },
+          "output_sha256": "1c572d62f790a31dc2d353008a68c1c743a2420cc1b6c31007f22708cf997b9d"
+        },
+        {
+          "case": 24,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1671,
+          "input_bytes": 370652,
+          "output_bytes": 368232,
+          "mean_latency_ms": 47.11918,
+          "stage_mean_ms": {
+            "json_parse": 0.18798,
+            "gate_order": 0.11734,
+            "skill_decode": 0.00058,
+            "request_spec": 0.09012,
+            "initialization": 0.59926,
+            "solver_build": 3.03852,
+            "runtime_setup": 0.1309,
+            "simulation_total": 39.47498,
+            "results": 0.28242,
+            "replay_objects": 0.1476,
+            "response_postprocess": 0.00162,
+            "request_cleanup": 0.07812,
+            "serialize": 1.40768,
+            "write_flush": 0.3766,
+            "reply_free": 0.51194
+          },
+          "output_sha256": "7bd09a1cdd77f15a6532bfde5830c698dea8d8675144c529efc60976f1ce788e"
+        },
+        {
+          "case": 25,
+          "runners": 18,
+          "course": 10602,
+          "distance": 1600,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 91,
+          "raw_frames": 1188,
+          "input_bytes": 370661,
+          "output_bytes": 294676,
+          "mean_latency_ms": 36.64864,
+          "stage_mean_ms": {
+            "json_parse": 0.19594,
+            "gate_order": 0.1181,
+            "skill_decode": 0.0005,
+            "request_spec": 0.11428,
+            "initialization": 0.65918,
+            "solver_build": 3.31612,
+            "runtime_setup": 0.13828,
+            "simulation_total": 31.3558,
+            "results": 0.2593,
+            "replay_objects": 0.11482,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.07644,
+            "serialize": 1.12052,
+            "write_flush": 0.31114,
+            "reply_free": 0.39106
+          },
+          "output_sha256": "3ced4ec0bf58a7ac8c12913041206a12a99a3801712c45f7c540d8ee0470f673"
+        },
+        {
+          "case": 26,
+          "runners": 18,
+          "course": 10604,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 111,
+          "raw_frames": 1509,
+          "input_bytes": 370647,
+          "output_bytes": 344482,
+          "mean_latency_ms": 44.0533,
+          "stage_mean_ms": {
+            "json_parse": 0.18298,
+            "gate_order": 0.12334,
+            "skill_decode": 0.00054,
+            "request_spec": 0.11222,
+            "initialization": 0.66124,
+            "solver_build": 3.25054,
+            "runtime_setup": 0.12902,
+            "simulation_total": 37.65076,
+            "results": 0.37866,
+            "replay_objects": 0.09176,
+            "response_postprocess": 0.002,
+            "request_cleanup": 0.09208,
+            "serialize": 1.4004,
+            "write_flush": 0.3879,
+            "reply_free": 0.41408
+          },
+          "output_sha256": "02e0fc409f41c29c0f6eed4607ff54ad4d793ad6107a131f256472f22bb85d36"
+        },
+        {
+          "case": 27,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 121,
+          "raw_frames": 1675,
+          "input_bytes": 370652,
+          "output_bytes": 366079,
+          "mean_latency_ms": 47.64978,
+          "stage_mean_ms": {
+            "json_parse": 0.17468,
+            "gate_order": 0.10338,
+            "skill_decode": 0.00068,
+            "request_spec": 0.11,
+            "initialization": 0.6345,
+            "solver_build": 3.28476,
+            "runtime_setup": 0.13852,
+            "simulation_total": 38.4592,
+            "results": 0.27336,
+            "replay_objects": 0.09664,
+            "response_postprocess": 0.00178,
+            "request_cleanup": 0.06762,
+            "serialize": 1.27508,
+            "write_flush": 0.3382,
+            "reply_free": 0.42654
+          },
+          "output_sha256": "f249c103e585e1d23658f9a1df6e641be9c997fdfe189d206644baa6c10a6946"
+        },
+        {
+          "case": 28,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 167,
+          "raw_frames": 2415,
+          "input_bytes": 370650,
+          "output_bytes": 478301,
+          "mean_latency_ms": 66.7315,
+          "stage_mean_ms": {
+            "json_parse": 0.18072,
+            "gate_order": 0.11894,
+            "skill_decode": 0.0006,
+            "request_spec": 0.1023,
+            "initialization": 0.7014,
+            "solver_build": 3.25568,
+            "runtime_setup": 0.13122,
+            "simulation_total": 60.90142,
+            "results": 0.32628,
+            "replay_objects": 0.2003,
+            "response_postprocess": 0.00234,
+            "request_cleanup": 0.10278,
+            "serialize": 1.90406,
+            "write_flush": 0.59574,
+            "reply_free": 0.52014
+          },
+          "output_sha256": "d65d75090a62a3311c69454a87bd8b04a9883399c08d0eaf471ba4edade8a659"
+        },
+        {
+          "case": 29,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 167,
+          "raw_frames": 2403,
+          "input_bytes": 370651,
+          "output_bytes": 481024,
+          "mean_latency_ms": 62.493199999999995,
+          "stage_mean_ms": {
+            "json_parse": 0.17018,
+            "gate_order": 0.10794,
+            "skill_decode": 0.00046,
+            "request_spec": 0.09686,
+            "initialization": 0.6202,
+            "solver_build": 2.90494,
+            "runtime_setup": 0.12688,
+            "simulation_total": 57.14038,
+            "results": 0.2929,
+            "replay_objects": 0.14646,
+            "response_postprocess": 0.00204,
+            "request_cleanup": 0.08246,
+            "serialize": 1.78778,
+            "write_flush": 0.48388,
+            "reply_free": 0.36748
+          },
+          "output_sha256": "dafb0397f8338b66f4c9f0dfca11cd381884a5e118f986552cb18dd9afb7f8a0"
+        }
+      ],
+      "estimated_tick_ms": {
+        "tick_bookkeeping": 0.20942233242428177,
+        "tick_observers": 0.2674771548653001,
+        "snapshots": 0.5916680295462252,
+        "field_skills": 10.755322792169254,
+        "field_movement": 14.605885793938844,
+        "field_cache": 3.7297114079650058,
+        "field_prepare": 2.4797070529382035,
+        "field_blocking": 3.317937522456009,
+        "field_overlaps": 0.36302450005021,
+        "field_competitions": 4.361366683236134,
+        "field_rank_flush": 1.7928320637438686
+      }
+    },
+    "eighteen-dense": {
+      "races": 30,
+      "runs": 150,
+      "identical_profile_outputs": 150,
+      "latency_ms": {
+        "mean": 74.307432,
+        "median": 73.4833,
+        "p95": 111.0215,
+        "min": 33.3559,
+        "max": 119.0779
+      },
+      "instrumented_latency_ms": {
+        "mean": 74.40477266666667,
+        "median": 73.54375,
+        "p95": 111.3584,
+        "min": 38.8156,
+        "max": 116.7903
+      },
+      "instrumented_difference_percent": 0.13099721528078145,
+      "worker_service_ms": 73.12526266666667,
+      "stage_mean_ms": {
+        "json_parse": 0.20697866666666664,
+        "gate_order": 0.12878,
+        "skill_decode": 0.0006506666666666666,
+        "request_spec": 0.14854,
+        "initialization": 0.6825513333333334,
+        "solver_build": 3.2561746666666664,
+        "runtime_setup": 0.147392,
+        "simulation_total": 43.79491,
+        "results": 0.314036,
+        "replay_objects": 0.05709733333333333,
+        "response_postprocess": 0.0017713333333333333,
+        "solver_teardown": 0.08949333333332987,
+        "request_cleanup": 0.086262,
+        "serialize": 17.516938666666668,
+        "write_flush": 5.472113333333333,
+        "reply_free": 1.2212313333333333
+      },
+      "unassigned_worker_ms": 0.00034200000000339514,
+      "average_workload": {
+        "distance": 2220,
+        "skill_count": 300.8666666666667,
+        "skill_definitions": 730,
+        "frames": 1706.3666666666666,
+        "raw_frames": 1706.3666666666666,
+        "input_bytes": 370647.73333333334,
+        "output_bytes": 4494165.566666666
+      },
+      "allocation_mean": {
+        "json_parse": {
+          "allocations": 2057.133333333333,
+          "bytes": 270194.36666666664
+        },
+        "gate_order": {
+          "allocations": 1974.3333333333333,
+          "bytes": 246934.4
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2375.1666666666665,
+          "bytes": 404042
+        },
+        "initialization": {
+          "allocations": 4993.166666666667,
+          "bytes": 465124.13333333336
+        },
+        "run_race_total": {
+          "allocations": 85169.06666666667,
+          "bytes": 10880497.466666667
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 22497.433333333334,
+          "bytes": 1752085.9
+        },
+        "runtime_setup": {
+          "allocations": 1221.0333333333333,
+          "bytes": 126432.7
+        },
+        "simulation_total": {
+          "allocations": 55306.833333333336,
+          "bytes": 8296464.966666667
+        },
+        "results": {
+          "allocations": 4436.4,
+          "bytes": 650904.1666666666
+        },
+        "replay_objects": {
+          "allocations": 1707.3666666666666,
+          "bytes": 54609.73333333333
+        },
+        "serialize": {
+          "allocations": 20,
+          "bytes": 12792611.2
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 96592.86666666667,
+          "bytes": 25060179.566666666
+        },
+        "tick_bookkeeping": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_total": {
+          "allocations": 1676.6666666666667,
+          "bytes": 208627.86666666667
+        },
+        "tick_observers": {
+          "allocations": 0.43333333333333335,
+          "bytes": 52.233333333333334
+        },
+        "snapshots": {
+          "allocations": 53.6,
+          "bytes": 54752
+        },
+        "field_cache": {
+          "allocations": 2.5,
+          "bytes": 373.06666666666666
+        },
+        "field_prepare": {
+          "allocations": 393.53333333333336,
+          "bytes": 8243.8
+        },
+        "field_skills": {
+          "allocations": 84.53333333333333,
+          "bytes": 5038.6
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 13.633333333333333,
+          "bytes": 1731
+        },
+        "field_overlaps": {
+          "allocations": 0.1,
+          "bytes": 10.2
+        },
+        "field_competitions": {
+          "allocations": 974.2333333333333,
+          "bytes": 168464
+        },
+        "field_rank_flush": {
+          "allocations": 208.13333333333333,
+          "bytes": 24767.2
+        },
+        "movement_total": {
+          "allocations": 13.6,
+          "bytes": 1721.4
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "previous_allocation_mean": {
+        "json_parse": {
+          "allocations": 27120.133333333335,
+          "bytes": 3255691.3666666667
+        },
+        "gate_order": {
+          "allocations": 1974.3333333333333,
+          "bytes": 246934.4
+        },
+        "skill_decode": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_spec": {
+          "allocations": 2375.1666666666665,
+          "bytes": 404042
+        },
+        "initialization": {
+          "allocations": 4993.166666666667,
+          "bytes": 465124.13333333336
+        },
+        "run_race_total": {
+          "allocations": 150826.96666666667,
+          "bytes": 15852349.833333334
+        },
+        "response_postprocess": {
+          "allocations": 4,
+          "bytes": 776
+        },
+        "request_cleanup": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "solver_build": {
+          "allocations": 22497.433333333334,
+          "bytes": 1752085.9
+        },
+        "runtime_setup": {
+          "allocations": 1212.7333333333333,
+          "bytes": 125720.03333333334
+        },
+        "simulation_total": {
+          "allocations": 83432.96666666666,
+          "bytes": 10404040.366666667
+        },
+        "results": {
+          "allocations": 4436.4,
+          "bytes": 650904.1666666666
+        },
+        "replay_objects": {
+          "allocations": 39247.433333333334,
+          "bytes": 2919599.3666666667
+        },
+        "serialize": {
+          "allocations": 20,
+          "bytes": 12792611.2
+        },
+        "write_flush": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "reply_free": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "request_total": {
+          "allocations": 187313.76666666666,
+          "bytes": 33017528.933333334
+        },
+        "tick_bookkeeping": {
+          "allocations": 106.53333333333333,
+          "bytes": 8629.2
+        },
+        "field_total": {
+          "allocations": 2449.4,
+          "bytes": 265872.6666666667
+        },
+        "tick_observers": {
+          "allocations": 0.43333333333333335,
+          "bytes": 52.233333333333334
+        },
+        "snapshots": {
+          "allocations": 53.6,
+          "bytes": 54752
+        },
+        "field_cache": {
+          "allocations": 158.4,
+          "bytes": 20302.666666666668
+        },
+        "field_prepare": {
+          "allocations": 393.53333333333336,
+          "bytes": 8243.8
+        },
+        "field_skills": {
+          "allocations": 84.53333333333333,
+          "bytes": 5038.6
+        },
+        "field_blocking": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "field_movement": {
+          "allocations": 268.1333333333333,
+          "bytes": 5492.6
+        },
+        "field_overlaps": {
+          "allocations": 53.333333333333336,
+          "bytes": 7675.8
+        },
+        "field_competitions": {
+          "allocations": 1283.3333333333333,
+          "bytes": 194352
+        },
+        "field_rank_flush": {
+          "allocations": 208.13333333333333,
+          "bytes": 24767.2
+        },
+        "movement_total": {
+          "allocations": 268.1,
+          "bytes": 5483
+        },
+        "overtake": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_start": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_pace": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_live_targets": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_rushing_conserve": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lane_target": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_spurt_downhill": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_target_speed": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_lateral": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_acceleration": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_hp": {
+          "allocations": 0,
+          "bytes": 0
+        },
+        "move_geometry": {
+          "allocations": 0,
+          "bytes": 0
+        }
+      },
+      "estimated_tick_allocations": {
+        "field_skills": 2705.1588082862763,
+        "field_movement": 434.73421775724285,
+        "field_cache": 79.76253647138864,
+        "field_prepare": 12597.839071207078,
+        "field_blocking": 0.0,
+        "field_overlaps": 3.172413793103448,
+        "field_competitions": 31149.780857501857,
+        "field_rank_flush": 6663.5676153067725,
+        "tick_bookkeeping": 0.0,
+        "tick_observers": 13.855530977007337,
+        "snapshots": 1716.1106542983662
+      },
+      "cases": [
+        {
+          "case": 0,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 2395,
+          "raw_frames": 2395,
+          "input_bytes": 370649,
+          "output_bytes": 6213501,
+          "mean_latency_ms": 98.15564,
+          "stage_mean_ms": {
+            "json_parse": 0.2052,
+            "gate_order": 0.1261,
+            "skill_decode": 0.00056,
+            "request_spec": 0.11882,
+            "initialization": 0.69648,
+            "solver_build": 3.39474,
+            "runtime_setup": 0.13966,
+            "simulation_total": 58.91906,
+            "results": 0.25338,
+            "replay_objects": 0.06938,
+            "response_postprocess": 0.00174,
+            "request_cleanup": 0.07222,
+            "serialize": 22.28774,
+            "write_flush": 6.95788,
+            "reply_free": 1.3612
+          },
+          "output_sha256": "0f84f048a19c33db7b2b850e650966cf1cc8ce0e06af13d76280d23382c0690f"
+        },
+        {
+          "case": 1,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 325,
+          "skill_definitions": 730,
+          "frames": 1841,
+          "raw_frames": 1841,
+          "input_bytes": 371857,
+          "output_bytes": 4870145,
+          "mean_latency_ms": 80.79704,
+          "stage_mean_ms": {
+            "json_parse": 0.20604,
+            "gate_order": 0.13962,
+            "skill_decode": 0.0006,
+            "request_spec": 0.12592,
+            "initialization": 0.80608,
+            "solver_build": 3.62958,
+            "runtime_setup": 0.15554,
+            "simulation_total": 52.3867,
+            "results": 0.50906,
+            "replay_objects": 0.0623,
+            "response_postprocess": 0.0022,
+            "request_cleanup": 0.11498,
+            "serialize": 19.86012,
+            "write_flush": 6.07836,
+            "reply_free": 1.1915
+          },
+          "output_sha256": "25c0e6bca7ca6f0053f665bfc958a97feadf5939d92f923a358606cef543ce57"
+        },
+        {
+          "case": 2,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1671,
+          "raw_frames": 1671,
+          "input_bytes": 370649,
+          "output_bytes": 4394493,
+          "mean_latency_ms": 73.20578,
+          "stage_mean_ms": {
+            "json_parse": 0.1856,
+            "gate_order": 0.11376,
+            "skill_decode": 0.00054,
+            "request_spec": 0.11376,
+            "initialization": 0.66494,
+            "solver_build": 2.92248,
+            "runtime_setup": 0.13526,
+            "simulation_total": 41.37208,
+            "results": 0.3334,
+            "replay_objects": 0.05544,
+            "response_postprocess": 0.00192,
+            "request_cleanup": 0.07352,
+            "serialize": 16.51484,
+            "write_flush": 5.5066,
+            "reply_free": 1.4829
+          },
+          "output_sha256": "ad794cee8f8f5ecb8ff2dc4a768ca432909baf5cbbb406df620888ba59f099df"
+        },
+        {
+          "case": 3,
+          "runners": 18,
+          "course": 10807,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1513,
+          "raw_frames": 1513,
+          "input_bytes": 370647,
+          "output_bytes": 4004858,
+          "mean_latency_ms": 66.83994,
+          "stage_mean_ms": {
+            "json_parse": 0.22384,
+            "gate_order": 0.13668,
+            "skill_decode": 0.00066,
+            "request_spec": 0.11952,
+            "initialization": 0.74746,
+            "solver_build": 3.41954,
+            "runtime_setup": 0.15618,
+            "simulation_total": 38.51954,
+            "results": 0.31178,
+            "replay_objects": 0.04272,
+            "response_postprocess": 0.00172,
+            "request_cleanup": 0.08556,
+            "serialize": 14.0766,
+            "write_flush": 4.63676,
+            "reply_free": 1.07232
+          },
+          "output_sha256": "e99a3ed120c9f1256c7d00e6accae53c82fc5fa2fcaa4216f16530a3f1b9aadc"
+        },
+        {
+          "case": 4,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1866,
+          "raw_frames": 1866,
+          "input_bytes": 370652,
+          "output_bytes": 4911364,
+          "mean_latency_ms": 79.49076,
+          "stage_mean_ms": {
+            "json_parse": 0.21488,
+            "gate_order": 0.12836,
+            "skill_decode": 0.00062,
+            "request_spec": 0.12586,
+            "initialization": 0.7168,
+            "solver_build": 3.44228,
+            "runtime_setup": 0.1409,
+            "simulation_total": 45.17308,
+            "results": 0.33312,
+            "replay_objects": 0.0591,
+            "response_postprocess": 0.00172,
+            "request_cleanup": 0.07724,
+            "serialize": 20.03066,
+            "write_flush": 5.82442,
+            "reply_free": 1.28186
+          },
+          "output_sha256": "8236f7e3663099b2f0cb55d0999b3be35e172cb2bd3b613cdf394ffe833176c3"
+        },
+        {
+          "case": 5,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1674,
+          "raw_frames": 1674,
+          "input_bytes": 370651,
+          "output_bytes": 4398869,
+          "mean_latency_ms": 73.38416,
+          "stage_mean_ms": {
+            "json_parse": 0.20974,
+            "gate_order": 0.12734,
+            "skill_decode": 0.0006,
+            "request_spec": 0.27024,
+            "initialization": 0.66658,
+            "solver_build": 3.19648,
+            "runtime_setup": 0.14946,
+            "simulation_total": 47.3412,
+            "results": 0.38456,
+            "replay_objects": 0.06592,
+            "response_postprocess": 0.00168,
+            "request_cleanup": 0.09954,
+            "serialize": 17.26152,
+            "write_flush": 4.89272,
+            "reply_free": 1.27994
+          },
+          "output_sha256": "5aaf573ad7e6d3b1f8ec1ad82037ab020806170c3b2e2bf231beacd9b4f893f7"
+        },
+        {
+          "case": 6,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1671,
+          "raw_frames": 1671,
+          "input_bytes": 370652,
+          "output_bytes": 4395814,
+          "mean_latency_ms": 72.81198,
+          "stage_mean_ms": {
+            "json_parse": 0.19248,
+            "gate_order": 0.11824,
+            "skill_decode": 0.0006,
+            "request_spec": 0.0997,
+            "initialization": 0.63064,
+            "solver_build": 3.05402,
+            "runtime_setup": 0.13332,
+            "simulation_total": 36.6811,
+            "results": 0.24682,
+            "replay_objects": 0.05194,
+            "response_postprocess": 0.00136,
+            "request_cleanup": 0.07928,
+            "serialize": 15.88842,
+            "write_flush": 5.44672,
+            "reply_free": 1.0906
+          },
+          "output_sha256": "e38a7193623ec2ac453aeda027ca23efa84209ceba0594c084779f3644700238"
+        },
+        {
+          "case": 7,
+          "runners": 18,
+          "course": 10604,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1510,
+          "raw_frames": 1510,
+          "input_bytes": 370649,
+          "output_bytes": 4027966,
+          "mean_latency_ms": 64.21024,
+          "stage_mean_ms": {
+            "json_parse": 0.1871,
+            "gate_order": 0.12752,
+            "skill_decode": 0.00068,
+            "request_spec": 0.26644,
+            "initialization": 0.6364,
+            "solver_build": 3.16506,
+            "runtime_setup": 0.13942,
+            "simulation_total": 37.90934,
+            "results": 0.32386,
+            "replay_objects": 0.0408,
+            "response_postprocess": 0.00146,
+            "request_cleanup": 0.07458,
+            "serialize": 14.22866,
+            "write_flush": 4.59568,
+            "reply_free": 1.16188
+          },
+          "output_sha256": "566977ba8f912c63d648d4218b203d75bf29ea9f7ea1145ae13f1477b8d824ce"
+        },
+        {
+          "case": 8,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 2415,
+          "raw_frames": 2415,
+          "input_bytes": 370646,
+          "output_bytes": 6263625,
+          "mean_latency_ms": 104.16578,
+          "stage_mean_ms": {
+            "json_parse": 0.24432,
+            "gate_order": 0.13262,
+            "skill_decode": 0.0007,
+            "request_spec": 0.09916,
+            "initialization": 0.66658,
+            "solver_build": 2.98152,
+            "runtime_setup": 0.12788,
+            "simulation_total": 61.37614,
+            "results": 0.28718,
+            "replay_objects": 0.07774,
+            "response_postprocess": 0.00168,
+            "request_cleanup": 0.07834,
+            "serialize": 21.66968,
+            "write_flush": 7.63824,
+            "reply_free": 1.60594
+          },
+          "output_sha256": "a75a9a5b69123b236b5d347553918d0ef8dfdfe7ad14f33efc828140967292a6"
+        },
+        {
+          "case": 9,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1682,
+          "raw_frames": 1682,
+          "input_bytes": 370650,
+          "output_bytes": 4440245,
+          "mean_latency_ms": 70.7692,
+          "stage_mean_ms": {
+            "json_parse": 0.18812,
+            "gate_order": 0.11338,
+            "skill_decode": 0.0006,
+            "request_spec": 0.09992,
+            "initialization": 0.62736,
+            "solver_build": 3.0668,
+            "runtime_setup": 0.13722,
+            "simulation_total": 42.52002,
+            "results": 0.33154,
+            "replay_objects": 0.05792,
+            "response_postprocess": 0.00158,
+            "request_cleanup": 0.08138,
+            "serialize": 16.34982,
+            "write_flush": 5.69712,
+            "reply_free": 1.21568
+          },
+          "output_sha256": "3ff00aaec06b816501a55ae0fa890cfee0a4ce5290197e07397df52927466287"
+        },
+        {
+          "case": 10,
+          "runners": 18,
+          "course": 10604,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1510,
+          "raw_frames": 1510,
+          "input_bytes": 370649,
+          "output_bytes": 4008783,
+          "mean_latency_ms": 67.02034,
+          "stage_mean_ms": {
+            "json_parse": 0.193,
+            "gate_order": 0.12372,
+            "skill_decode": 0.00084,
+            "request_spec": 0.11264,
+            "initialization": 0.6461,
+            "solver_build": 3.20814,
+            "runtime_setup": 0.14222,
+            "simulation_total": 41.20904,
+            "results": 0.3205,
+            "replay_objects": 0.05422,
+            "response_postprocess": 0.00204,
+            "request_cleanup": 0.08252,
+            "serialize": 16.71038,
+            "write_flush": 4.68664,
+            "reply_free": 1.04318
+          },
+          "output_sha256": "bfbb2ee60724e3b0b054856f9bf61fc6ca19fa232feb3a84a15f80372af0e521"
+        },
+        {
+          "case": 11,
+          "runners": 18,
+          "course": 10805,
+          "distance": 1600,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1186,
+          "raw_frames": 1186,
+          "input_bytes": 370647,
+          "output_bytes": 3167677,
+          "mean_latency_ms": 54.0664,
+          "stage_mean_ms": {
+            "json_parse": 0.19152,
+            "gate_order": 0.11412,
+            "skill_decode": 0.00052,
+            "request_spec": 0.26568,
+            "initialization": 0.65214,
+            "solver_build": 3.09392,
+            "runtime_setup": 0.1303,
+            "simulation_total": 29.02466,
+            "results": 0.2802,
+            "replay_objects": 0.03222,
+            "response_postprocess": 0.00146,
+            "request_cleanup": 0.07156,
+            "serialize": 12.49286,
+            "write_flush": 3.40604,
+            "reply_free": 0.84182
+          },
+          "output_sha256": "c0bbb240837dd2481cb3b025f008475bf29dcf3541cb293cb520eb7e8885e286"
+        },
+        {
+          "case": 12,
+          "runners": 18,
+          "course": 10602,
+          "distance": 1600,
+          "skill_count": 334,
+          "skill_definitions": 730,
+          "frames": 1187,
+          "raw_frames": 1187,
+          "input_bytes": 372279,
+          "output_bytes": 3205354,
+          "mean_latency_ms": 53.11266,
+          "stage_mean_ms": {
+            "json_parse": 0.1935,
+            "gate_order": 0.1337,
+            "skill_decode": 0.00052,
+            "request_spec": 0.27604,
+            "initialization": 0.71652,
+            "solver_build": 3.0882,
+            "runtime_setup": 0.13272,
+            "simulation_total": 27.42592,
+            "results": 0.30636,
+            "replay_objects": 0.04084,
+            "response_postprocess": 0.00184,
+            "request_cleanup": 0.0858,
+            "serialize": 13.79648,
+            "write_flush": 4.07966,
+            "reply_free": 1.15104
+          },
+          "output_sha256": "9ca5b21ecd80d902840781f4bcc556eb2516488dc2f53779d0708c704785423d"
+        },
+        {
+          "case": 13,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1670,
+          "raw_frames": 1670,
+          "input_bytes": 370653,
+          "output_bytes": 4399863,
+          "mean_latency_ms": 66.86132,
+          "stage_mean_ms": {
+            "json_parse": 0.16874,
+            "gate_order": 0.12118,
+            "skill_decode": 0.00064,
+            "request_spec": 0.11194,
+            "initialization": 0.6603,
+            "solver_build": 3.39138,
+            "runtime_setup": 0.15698,
+            "simulation_total": 42.1318,
+            "results": 0.3324,
+            "replay_objects": 0.05788,
+            "response_postprocess": 0.0015,
+            "request_cleanup": 0.08674,
+            "serialize": 16.88378,
+            "write_flush": 5.45642,
+            "reply_free": 1.09488
+          },
+          "output_sha256": "68add2e99a5502a4e96b74126c3aa4e54b7efbc652cc65d57991aae364b4adb6"
+        },
+        {
+          "case": 14,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1672,
+          "raw_frames": 1672,
+          "input_bytes": 370671,
+          "output_bytes": 4403327,
+          "mean_latency_ms": 70.64154,
+          "stage_mean_ms": {
+            "json_parse": 0.2031,
+            "gate_order": 0.14006,
+            "skill_decode": 0.00056,
+            "request_spec": 0.11294,
+            "initialization": 0.69186,
+            "solver_build": 3.25988,
+            "runtime_setup": 0.15088,
+            "simulation_total": 43.84436,
+            "results": 0.32478,
+            "replay_objects": 0.05038,
+            "response_postprocess": 0.00178,
+            "request_cleanup": 0.06942,
+            "serialize": 15.70388,
+            "write_flush": 5.3629,
+            "reply_free": 1.44412
+          },
+          "output_sha256": "3fc179c16368eea4f9e8131c55f3e14497cd47093c22f62dc03bafaad478816c"
+        },
+        {
+          "case": 15,
+          "runners": 18,
+          "course": 10807,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1511,
+          "raw_frames": 1511,
+          "input_bytes": 370650,
+          "output_bytes": 4001657,
+          "mean_latency_ms": 72.17508,
+          "stage_mean_ms": {
+            "json_parse": 0.22366,
+            "gate_order": 0.13006,
+            "skill_decode": 0.00066,
+            "request_spec": 0.11128,
+            "initialization": 0.67992,
+            "solver_build": 2.86256,
+            "runtime_setup": 0.1453,
+            "simulation_total": 41.41704,
+            "results": 0.3457,
+            "replay_objects": 0.05562,
+            "response_postprocess": 0.00154,
+            "request_cleanup": 0.09044,
+            "serialize": 15.79966,
+            "write_flush": 4.83292,
+            "reply_free": 0.99094
+          },
+          "output_sha256": "cb9aeb0136208b97e115f240ac521445ab24b7569c15694815e581bf224e5fae"
+        },
+        {
+          "case": 16,
+          "runners": 18,
+          "course": 10805,
+          "distance": 1600,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1187,
+          "raw_frames": 1187,
+          "input_bytes": 370652,
+          "output_bytes": 3179694,
+          "mean_latency_ms": 58.32826,
+          "stage_mean_ms": {
+            "json_parse": 0.21512,
+            "gate_order": 0.12884,
+            "skill_decode": 0.00078,
+            "request_spec": 0.11226,
+            "initialization": 0.67422,
+            "solver_build": 3.45152,
+            "runtime_setup": 0.20786,
+            "simulation_total": 32.6561,
+            "results": 0.37702,
+            "replay_objects": 0.04602,
+            "response_postprocess": 0.00192,
+            "request_cleanup": 0.115,
+            "serialize": 14.76174,
+            "write_flush": 3.94004,
+            "reply_free": 0.9937
+          },
+          "output_sha256": "4ac3b8dbc4bac81c82ed43204be992f5b20a7fd25b91522359f5276b01e5b435"
+        },
+        {
+          "case": 17,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1665,
+          "raw_frames": 1665,
+          "input_bytes": 370651,
+          "output_bytes": 4403539,
+          "mean_latency_ms": 75.44306,
+          "stage_mean_ms": {
+            "json_parse": 0.21128,
+            "gate_order": 0.1354,
+            "skill_decode": 0.0007,
+            "request_spec": 0.11012,
+            "initialization": 0.67838,
+            "solver_build": 3.31946,
+            "runtime_setup": 0.16744,
+            "simulation_total": 46.92228,
+            "results": 0.33152,
+            "replay_objects": 0.05834,
+            "response_postprocess": 0.0017,
+            "request_cleanup": 0.08308,
+            "serialize": 18.78502,
+            "write_flush": 4.98398,
+            "reply_free": 1.35112
+          },
+          "output_sha256": "c2f16456c97ac93f9d739002b2d7d29af50b48e13bbc49f3276444dde5545864"
+        },
+        {
+          "case": 18,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1673,
+          "raw_frames": 1673,
+          "input_bytes": 370648,
+          "output_bytes": 4415904,
+          "mean_latency_ms": 71.90274,
+          "stage_mean_ms": {
+            "json_parse": 0.21018,
+            "gate_order": 0.12124,
+            "skill_decode": 0.00072,
+            "request_spec": 0.11022,
+            "initialization": 0.65406,
+            "solver_build": 3.2379,
+            "runtime_setup": 0.14228,
+            "simulation_total": 42.06412,
+            "results": 0.37938,
+            "replay_objects": 0.06066,
+            "response_postprocess": 0.0019,
+            "request_cleanup": 0.09132,
+            "serialize": 18.14882,
+            "write_flush": 5.24454,
+            "reply_free": 1.28586
+          },
+          "output_sha256": "c8f5f38467f1e0c5fc89d95a2cdb0cc0fc69dd9dd217b99cbc68d1c7f30d890c"
+        },
+        {
+          "case": 19,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1843,
+          "raw_frames": 1843,
+          "input_bytes": 370673,
+          "output_bytes": 4851906,
+          "mean_latency_ms": 81.54902,
+          "stage_mean_ms": {
+            "json_parse": 0.20518,
+            "gate_order": 0.13406,
+            "skill_decode": 0.0007,
+            "request_spec": 0.11928,
+            "initialization": 0.71014,
+            "solver_build": 3.41486,
+            "runtime_setup": 0.15218,
+            "simulation_total": 50.16136,
+            "results": 0.29346,
+            "replay_objects": 0.0587,
+            "response_postprocess": 0.00194,
+            "request_cleanup": 0.08574,
+            "serialize": 18.47516,
+            "write_flush": 5.92116,
+            "reply_free": 1.3547
+          },
+          "output_sha256": "1c3a8f689b0becde74d9fec3d8a90da77413c3c7b1481f449d14c8abe078b379"
+        },
+        {
+          "case": 20,
+          "runners": 18,
+          "course": 10701,
+          "distance": 1200,
+          "skill_count": 240,
+          "skill_definitions": 730,
+          "frames": 879,
+          "raw_frames": 879,
+          "input_bytes": 367675,
+          "output_bytes": 2361731,
+          "mean_latency_ms": 37.97998,
+          "stage_mean_ms": {
+            "json_parse": 0.16398,
+            "gate_order": 0.09788,
+            "skill_decode": 0.00054,
+            "request_spec": 0.25782,
+            "initialization": 0.5134,
+            "solver_build": 2.78472,
+            "runtime_setup": 0.11722,
+            "simulation_total": 22.18368,
+            "results": 0.17694,
+            "replay_objects": 0.03546,
+            "response_postprocess": 0.00204,
+            "request_cleanup": 0.07714,
+            "serialize": 11.06352,
+            "write_flush": 2.73884,
+            "reply_free": 0.7434
+          },
+          "output_sha256": "3371cac33b6674dc4d16a620c4d5ad66994f2e95931722cdca968419ccbf7dc7"
+        },
+        {
+          "case": 21,
+          "runners": 18,
+          "course": 10811,
+          "distance": 3200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 2591,
+          "raw_frames": 2591,
+          "input_bytes": 370653,
+          "output_bytes": 6718772,
+          "mean_latency_ms": 112.65212,
+          "stage_mean_ms": {
+            "json_parse": 0.18192,
+            "gate_order": 0.1132,
+            "skill_decode": 0.0006,
+            "request_spec": 0.36146,
+            "initialization": 0.6616,
+            "solver_build": 3.21182,
+            "runtime_setup": 0.14692,
+            "simulation_total": 67.90984,
+            "results": 0.3576,
+            "replay_objects": 0.09518,
+            "response_postprocess": 0.002,
+            "request_cleanup": 0.12076,
+            "serialize": 25.44608,
+            "write_flush": 8.2653,
+            "reply_free": 1.59968
+          },
+          "output_sha256": "312f746a85b4c36a9b63f364052f0c48c4369936aa228d40e975c93185c2d5dd"
+        },
+        {
+          "case": 22,
+          "runners": 18,
+          "course": 10906,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1671,
+          "raw_frames": 1671,
+          "input_bytes": 370652,
+          "output_bytes": 4407199,
+          "mean_latency_ms": 72.50944,
+          "stage_mean_ms": {
+            "json_parse": 0.20408,
+            "gate_order": 0.1277,
+            "skill_decode": 0.0008,
+            "request_spec": 0.12152,
+            "initialization": 0.6974,
+            "solver_build": 3.3355,
+            "runtime_setup": 0.16816,
+            "simulation_total": 36.73776,
+            "results": 0.25322,
+            "replay_objects": 0.04998,
+            "response_postprocess": 0.00148,
+            "request_cleanup": 0.08332,
+            "serialize": 17.45984,
+            "write_flush": 5.65952,
+            "reply_free": 1.17294
+          },
+          "output_sha256": "8eb2177331b3c4fa243a09682d99b5f4d783f848e3e22757190b1d85f3f2d3b1"
+        },
+        {
+          "case": 23,
+          "runners": 18,
+          "course": 10606,
+          "distance": 2400,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1847,
+          "raw_frames": 1847,
+          "input_bytes": 370670,
+          "output_bytes": 4886467,
+          "mean_latency_ms": 78.14314,
+          "stage_mean_ms": {
+            "json_parse": 0.24994,
+            "gate_order": 0.14268,
+            "skill_decode": 0.00062,
+            "request_spec": 0.11906,
+            "initialization": 0.7278,
+            "solver_build": 3.32932,
+            "runtime_setup": 0.15408,
+            "simulation_total": 45.6508,
+            "results": 0.28886,
+            "replay_objects": 0.0641,
+            "response_postprocess": 0.00194,
+            "request_cleanup": 0.11146,
+            "serialize": 19.21402,
+            "write_flush": 5.5855,
+            "reply_free": 1.29674
+          },
+          "output_sha256": "aa6c62a92cf4df74f3674c5c9d1768fcdeb3f6c4b2ac7d95f7b555e9e3d76f76"
+        },
+        {
+          "case": 24,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1671,
+          "raw_frames": 1671,
+          "input_bytes": 370651,
+          "output_bytes": 4394900,
+          "mean_latency_ms": 73.28344,
+          "stage_mean_ms": {
+            "json_parse": 0.22692,
+            "gate_order": 0.14954,
+            "skill_decode": 0.00074,
+            "request_spec": 0.12272,
+            "initialization": 0.72484,
+            "solver_build": 3.37054,
+            "runtime_setup": 0.14108,
+            "simulation_total": 43.13452,
+            "results": 0.28176,
+            "replay_objects": 0.06046,
+            "response_postprocess": 0.0018,
+            "request_cleanup": 0.0738,
+            "serialize": 17.1041,
+            "write_flush": 6.03092,
+            "reply_free": 1.34312
+          },
+          "output_sha256": "88902213bcebca8dbec38d7ce131b74c13e850b70d26230e4dcd61c008b3ddbd"
+        },
+        {
+          "case": 25,
+          "runners": 18,
+          "course": 10602,
+          "distance": 1600,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1188,
+          "raw_frames": 1188,
+          "input_bytes": 370660,
+          "output_bytes": 3195801,
+          "mean_latency_ms": 59.05124,
+          "stage_mean_ms": {
+            "json_parse": 0.22406,
+            "gate_order": 0.13158,
+            "skill_decode": 0.00068,
+            "request_spec": 0.11938,
+            "initialization": 0.67816,
+            "solver_build": 3.53508,
+            "runtime_setup": 0.14514,
+            "simulation_total": 34.1879,
+            "results": 0.22816,
+            "replay_objects": 0.0414,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.08362,
+            "serialize": 13.53812,
+            "write_flush": 3.6213,
+            "reply_free": 0.8491
+          },
+          "output_sha256": "22e940177ab8beeef0bfed5fe073a3cf88641f8ac31195c5c5f9993c27836a42"
+        },
+        {
+          "case": 26,
+          "runners": 18,
+          "course": 10604,
+          "distance": 2000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1509,
+          "raw_frames": 1509,
+          "input_bytes": 370646,
+          "output_bytes": 4004189,
+          "mean_latency_ms": 69.40408,
+          "stage_mean_ms": {
+            "json_parse": 0.21492,
+            "gate_order": 0.15024,
+            "skill_decode": 0.00066,
+            "request_spec": 0.12302,
+            "initialization": 0.74058,
+            "solver_build": 3.34564,
+            "runtime_setup": 0.15296,
+            "simulation_total": 42.43452,
+            "results": 0.32828,
+            "replay_objects": 0.05264,
+            "response_postprocess": 0.00186,
+            "request_cleanup": 0.09492,
+            "serialize": 17.49618,
+            "write_flush": 5.68932,
+            "reply_free": 1.17664
+          },
+          "output_sha256": "dbeb3d7bb4935204036a4fd774a3758057d9252dfc4a789011e8c220ca8b1a6d"
+        },
+        {
+          "case": 27,
+          "runners": 18,
+          "course": 10808,
+          "distance": 2200,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 1675,
+          "raw_frames": 1675,
+          "input_bytes": 370651,
+          "output_bytes": 4394685,
+          "mean_latency_ms": 72.4974,
+          "stage_mean_ms": {
+            "json_parse": 0.23658,
+            "gate_order": 0.14218,
+            "skill_decode": 0.00074,
+            "request_spec": 0.12152,
+            "initialization": 0.7236,
+            "solver_build": 3.55486,
+            "runtime_setup": 0.16388,
+            "simulation_total": 39.20592,
+            "results": 0.29212,
+            "replay_objects": 0.0537,
+            "response_postprocess": 0.00176,
+            "request_cleanup": 0.07464,
+            "serialize": 17.5621,
+            "write_flush": 5.69178,
+            "reply_free": 1.18092
+          },
+          "output_sha256": "f5b77fe63b1f46c04c85d4ab60d1b76e5036822649823012b7a82f9807351fff"
+        },
+        {
+          "case": 28,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 2415,
+          "raw_frames": 2415,
+          "input_bytes": 370649,
+          "output_bytes": 6274679,
+          "mean_latency_ms": 102.70164,
+          "stage_mean_ms": {
+            "json_parse": 0.22692,
+            "gate_order": 0.12852,
+            "skill_decode": 0.0007,
+            "request_spec": 0.11168,
+            "initialization": 0.69668,
+            "solver_build": 3.48474,
+            "runtime_setup": 0.15324,
+            "simulation_total": 68.20344,
+            "results": 0.27494,
+            "replay_objects": 0.08258,
+            "response_postprocess": 0.00166,
+            "request_cleanup": 0.08082,
+            "serialize": 24.00392,
+            "write_flush": 7.57404,
+            "reply_free": 1.44092
+          },
+          "output_sha256": "d60bd76f76f7b25d2688d25a894b304f541d059331485b21889237b5cfe8e1dd"
+        },
+        {
+          "case": 29,
+          "runners": 18,
+          "course": 10810,
+          "distance": 3000,
+          "skill_count": 301,
+          "skill_definitions": 730,
+          "frames": 2403,
+          "raw_frames": 2403,
+          "input_bytes": 370650,
+          "output_bytes": 6227960,
+          "mean_latency_ms": 96.06954,
+          "stage_mean_ms": {
+            "json_parse": 0.20744,
+            "gate_order": 0.13388,
+            "skill_decode": 0.00064,
+            "request_spec": 0.11628,
+            "initialization": 0.68952,
+            "solver_build": 3.1327,
+            "runtime_setup": 0.13608,
+            "simulation_total": 55.14398,
+            "results": 0.33318,
+            "replay_objects": 0.07928,
+            "response_postprocess": 0.00226,
+            "request_cleanup": 0.08912,
+            "serialize": 22.89444,
+            "write_flush": 8.11808,
+            "reply_free": 1.5383
+          },
+          "output_sha256": "f32f7c6485dfb65c8027698596732075890a276f79b8bce93454b7d5f9cf72c0"
+        }
+      ]
+    }
+  }
+}

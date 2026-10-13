@@ -11,7 +11,7 @@ use crate::retail_physics::{self, Acceleration, Parameters as Physics, TargetSpe
 use crate::retail_position_keep as pace;
 use crate::retail_random::RetailRandom;
 use crate::retail_spurt::SpurtState;
-use crate::retail_states::{DownhillParameters, DownhillState, RushingParameters, RushingState};
+use crate::retail_states::{DownhillParameters, DownhillState, RushingParameters, RushingState, SlopeState};
 
 pub(crate) struct RetailRuntimeConfig {
     pub physics: Rc<Physics>,
@@ -125,6 +125,7 @@ mod tests {
                     detail_index: 0,
                     priority: x.get_i64("priority").unwrap_or(0) as i32,
                     skill_id: id.clone(),
+                    numeric_skill_id: id.parse().ok(),
                     has_green_tag: false,
                     perspective: Perspective::Self_,
                     rarity: if x.get_i64("rarity").unwrap_or(1)==2 {SkillRarity::Gold} else {SkillRarity::White},
@@ -395,6 +396,7 @@ pub(crate) struct RetailRuntimeState {
     pub config: Rc<RetailRuntimeConfig>,
     pub rushing: RushingState,
     pub downhill: DownhillState,
+    pub slope: SlopeState,
     pub pace: pace::State,
     pub lane: TargetState,
     live_horses: Vec<retail_lane::Horse>,
@@ -434,24 +436,20 @@ impl RaceSolver {
         r.duel_preupdate_finished = position >= self.course.distance as f32 && !crossing;
         r.duel_preupdate_final_straight = straight || crossing;
         let config = &self.retail.as_ref().unwrap().config;
-        self.duel_proximity = rows
-            .iter()
-            .enumerate()
-            .filter_map(|(j, &(other_pos, other_lane, other_straight))| {
-                (j != index
-                    && (other_pos - position).abs() <= config.duel_distance
-                    && (other_lane - lane).abs() <= config.duel_lane
-                    && (straight || other_straight))
-                    .then(|| {
-                        (
-                            j,
-                            self.duel_proximity
-                                .get(&j)
-                                .map_or(0., |v| (*v as f32 + dt) as f64),
-                        )
-                    })
-            })
-            .collect();
+        // Keep surviving entries in place; each timer depends only on its own
+        // preceding value and this immutable pre-movement snapshot.
+        for (j, &(other_pos, other_lane, other_straight)) in rows.iter().enumerate() {
+            if j != index
+                && (other_pos - position).abs() <= config.duel_distance
+                && (other_lane - lane).abs() <= config.duel_lane
+                && (straight || other_straight) {
+                self.duel_proximity.entry(j)
+                    .and_modify(|v| *v = (*v as f32 + dt) as f64)
+                    .or_insert(0.);
+            } else {
+                self.duel_proximity.remove(&j);
+            }
+        }
     }
 
     /// Called once after gate effects and shared section/rushing initialization,
@@ -529,6 +527,7 @@ impl RaceSolver {
             config,
             rushing,
             downhill: Default::default(),
+            slope: Default::default(),
             pace: Default::default(),
             lane: Default::default(),
             live_horses: Vec::new(),
@@ -670,19 +669,11 @@ impl RaceSolver {
             (retail.corner, retail.final_corner) = geometry.corner_state_at(
                 self.pos as f32, retail.course_events_ready);
         }
-        self.hill_idx = self
-            .course
-            .slopes
-            .iter()
-            .rposition(|s| retail.course_events_ready
-                && s.start as f32 <= self.pos as f32
-                && self.pos as f32 <= s.start as f32 + s.length as f32)
-            .map_or(-1, |i| i as i64);
-        self.slope_per = if self.hill_idx >= 0 {
-            self.course.slopes[self.hill_idx as usize].slope
-        } else {
-            0.
-        };
+        if retail.course_events_ready {
+            retail.slope.update(self.pos as f32, &self.course.slopes);
+        }
+        self.hill_idx = retail.slope.region.map_or(-1, |i| i as i64);
+        self.slope_per = retail.slope.value as f64;
         // The opening AI pass precedes the first course-event update.
         // Zero-time UpdateFirstHorse does not run RaceEventManager.Update.
         if dt > 0. {
@@ -758,16 +749,18 @@ impl RaceSolver {
         if self.phase < 2 {
             return;
         }
-        let config = self.retail.as_ref().unwrap().config.clone();
-        let maximum = config.physics.maximum_spurt_speed(
-            self.horse.speed as f32,
-            self.horse.guts as f32,
-            self.horse.strategy as usize,
-            ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
-            self.course.distance as f32,
-        );
         let mut spurt = std::mem::take(&mut self.retail.as_mut().unwrap().spurt);
         let active = spurt.update(self.pos as f32, || {
+            // Stats are sampled when the plan is recalculated. Computing this
+            // value on ticks that keep the existing plan has no effect.
+            let config = &self.retail.as_ref().unwrap().config;
+            let maximum = config.physics.maximum_spurt_speed(
+                self.horse.speed as f32,
+                self.horse.guts as f32,
+                self.horse.strategy as usize,
+                ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+                self.course.distance as f32,
+            );
             self.hp
                 .get_last_spurt_pair(self.pos, maximum as f64, self.base_target_speed[2]);
             match &self.hp {
@@ -937,9 +930,9 @@ impl RaceSolver {
             minimum,
         };
         if !finished {
-            self.target_speed = config.physics.target_speed_with_late_terms(
+            self.target_speed = config.physics.target_speed_with_late_terms_iter(
             target,
-            &self.retail_target_modifiers.values_except_tokens(&[1, 4]).collect::<Vec<_>>(),
+            self.retail_target_modifiers.values_except_tokens(&[1, 4]),
             self.retail_target_modifiers.value(1).unwrap_or(0.),
             self.retail_target_modifiers.value(4).unwrap_or(0.),
             ) as f64;
@@ -962,11 +955,6 @@ impl RaceSolver {
             continue_time: self.move_lane_continue_time,
             continue_direction: self.move_lane_continue_direction,
         };
-        let modifiers = self
-            .active_lane_speed_skills
-            .iter()
-            .map(|s| s.modifier as f32)
-            .collect::<Vec<_>>();
         let retail = self.retail.as_ref().unwrap();
         self.moved_lane_this_tick = movement.step(
             MoveContext {
@@ -979,7 +967,7 @@ impl RaceSolver {
                 first_move_point: retail.config.geometry.as_ref().map_or(self.course.first_move_lane_point as f32, |g|g.first_move_lane_point),
                 max_lane: retail.lane_max,
                 side: retail.lane.side.unwrap(),
-                modifiers: &modifiers,
+                modifiers: self.active_lane_speed_skills.iter().map(|s| s.modifier as f32),
             },
             dt,
             config.movement,
@@ -1004,7 +992,9 @@ impl RaceSolver {
                 PHASE_DECELERATION[self.phase as usize] as f32
             }
         } else {
-            config.physics.acceleration(
+            let cp = self.cp_accel_token.unwrap_or(u64::MAX);
+            let excluded = [cp, 4];
+            config.physics.acceleration_iter(
                 Acceleration {
                     power: self.horse.power as f32,
                     strategy: self.horse.strategy as usize,
@@ -1023,14 +1013,9 @@ impl RaceSolver {
                 },
                 // v69: the Conserve Power release and duel accelerations are summed after
                 // the skill acceleration modifiers, not in activation order (doc 13.188).
-                &{
-                    let cp = self.cp_accel_token.unwrap_or(u64::MAX);
-                    let mut modifiers: Vec<f32> =
-                        self.retail_accel_modifiers.values_except_tokens(&[cp, 4]).collect();
-                    modifiers.extend(self.retail_accel_modifiers.value(cp));
-                    modifiers.extend(self.retail_accel_modifiers.value(4));
-                    modifiers
-                },
+                self.retail_accel_modifiers.values_except_tokens(&excluded)
+                    .chain(self.retail_accel_modifiers.value(cp))
+                    .chain(self.retail_accel_modifiers.value(4)),
             )
         };
         self.accel = acceleration as f64;

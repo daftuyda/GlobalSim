@@ -1,0 +1,92 @@
+{
+  "scope": "Accuracy fixes; persistent workers, alternating engine order, 30 captured races per field-size group, five warmups and five repetitions; caller JSON encode/decode excluded.",
+  "hardware": "Intel Core i7-14700K, Windows, Rust 1.97.1",
+  "sha256": {
+    "before": "eb96c0f97d654bd7299dd84471247513606f081e52afae4333332eca03203f27",
+    "after": "362121b419c043994937f91802ef15903c450b9b5d953fb337aa8880b180bdcd"
+  },
+  "nine-standard": {
+    "runs": 150,
+    "identical_replies": 150,
+    "latency_change_percent": -0.3841502966874466,
+    "before": {
+      "runs": 150,
+      "first_request_ms": 19.249800010584295,
+      "mean_ms": 10.307596664254865,
+      "median_ms": 10.378549981396645,
+      "p95_ms": 13.227399962488562,
+      "races_per_second": 97.01582556754902
+    },
+    "after": {
+      "runs": 150,
+      "first_request_ms": 12.55059998948127,
+      "mean_ms": 10.268000001087785,
+      "median_ms": 10.439449979458004,
+      "p95_ms": 12.868200021330267,
+      "races_per_second": 97.3899493469089
+    }
+  },
+  "nine-dense": {
+    "runs": 150,
+    "identical_replies": 150,
+    "latency_change_percent": -0.27030537444993064,
+    "before": {
+      "runs": 150,
+      "first_request_ms": 24.594199960120022,
+      "mean_ms": 17.33052266878076,
+      "median_ms": 17.46885001193732,
+      "p95_ms": 21.582999965175986,
+      "races_per_second": 57.7016642320547
+    },
+    "after": {
+      "runs": 150,
+      "first_request_ms": 19.092499976977706,
+      "mean_ms": 17.28367733458678,
+      "median_ms": 17.389849992468953,
+      "p95_ms": 21.872100012842566,
+      "races_per_second": 57.85805767149309
+    }
+  },
+  "eighteen-standard": {
+    "runs": 150,
+    "identical_replies": 150,
+    "latency_change_percent": 0.04470197710111368,
+    "before": {
+      "runs": 150,
+      "first_request_ms": 51.82970000896603,
+      "mean_ms": 38.800668670252584,
+      "median_ms": 38.07364997919649,
+      "p95_ms": 58.24460001895204,
+      "races_per_second": 25.772751714628896
+    },
+    "after": {
+      "runs": 150,
+      "first_request_ms": 42.651699972338974,
+      "mean_ms": 38.818013336276636,
+      "median_ms": 39.59374999976717,
+      "p95_ms": 58.38239996228367,
+      "races_per_second": 25.761235932841238
+    }
+  },
+  "eighteen-dense": {
+    "runs": 150,
+    "identical_replies": 150,
+    "latency_change_percent": 1.9868664143431802,
+    "before": {
+      "runs": 150,
+      "first_request_ms": 68.01540002925321,
+      "mean_ms": 51.41526666625092,
+      "median_ms": 48.48904997925274,
+      "p95_ms": 73.97799997124821,
+      "races_per_second": 19.44947609610283
+    },
+    "after": {
+      "runs": 150,
+      "first_request_ms": 74.32950002839789,
+      "mean_ms": 52.43681933148764,
+      "median_ms": 49.658450006973,
+      "p95_ms": 74.89659998100251,
+      "races_per_second": 19.070569358494875
+    }
+  }
+}

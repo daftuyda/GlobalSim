@@ -6,9 +6,10 @@ Run the Rust test suite with:
 cargo test --release --locked
 ```
 
-The most recent recorded run has **79 passing tests and 11 failures**. Failures
+The most recent recorded run has **85 passing tests and 11 failures**. The failure
+set is unchanged from the preceding optimized build. Failures
 cover numerical reference comparisons, geometry, stamina and spurt behavior,
-lateral movement, and duel conditions. See the [test output](../evidence/cargo-test.txt)
+lateral movement, and duel conditions. See the [test output](../evidence/accuracy-cargo-test.txt)
 for individual assertions.
 
 The release build and included example requests run successfully. Test results
@@ -20,25 +21,57 @@ covering the pacing and duel changes alongside previously matching races.
 See [regression results](../evidence/v71-regression-verification.json) and
 [example and unit-test results](../evidence/v71-local-verification.json).
 
-Performance changes also preserve byte-identical output across 122 reference
-races in both replay modes, plus 13 cases covering changed, omitted and invalid
-skill tables, runner ordering, runtime modes and fields of 1–30 runners.
-All 270 replies match both the original v71 build and the preceding optimized
-build, including the expected replies for invalid requests.
-Additional unit tests cover frame cadence, finish samples, dense output,
-course-cache identity, numeric precision, Unicode, escapes, parser errors and
-deferred blocker checks.
-The parser also matches the preceding implementation on 9,258 varied inputs. [Performance checks](../evidence/performance.json).
+The accuracy corrections preserve byte-identical replies for 135
+captured-race and edge cases, plus 11 persistent-worker isolation cases, in both
+replay modes: **292 matching replies**. Coverage includes changed definitions
+under an unchanged signature, omitted/empty/invalid tables and recovery, runner
+ordering, runtime modes and fields of 1–30 runners. Expected invalid-request
+errors are also compared. [Worker parity results](../evidence/accuracy-worker-parity.json).
+
+The preceding parser validation matched **186 raw-wire replies**, including 78 expected errors, covering
+Unicode, whitespace, escaped and duplicate keys, malformed requests, numeric
+token boundaries and recovery. [Raw-wire results](../evidence/next-wire-parity.json).
+
+Passing unit tests cover whole-frame float formatting, blocker-index and
+runner-order restoration, exact nested skill-data comparison, and shared parser
+cache identity, invalidation and error behavior. Lane and scoring checks also
+exercise iterator-based modifiers and repeated rank updates with ties.
+Existing tests cover frame cadence, finish samples, dense output, course-cache
+identity, numeric precision, Unicode, escapes, parser errors and deferred blocker
+checks. The parser changes also have an earlier 9,258-input comparison recorded
+in the [performance checks](../evidence/performance.json).
+
+To compare two persistent workers on your own inputs:
+
+```powershell
+python tools/check_worker_parity.py --engine target/release/race_engine_rs_v2.exe --baseline path/to/previous-engine.exe --inputs examples/v72-race.jsonl
+```
+
+Add `--isolation` when supplying captured inputs with `skillData` and equipped
+speed or acceleration skills. The tool verifies that changed definitions affect
+the chosen race and that restoring the original definitions restores its output.
 
 ## Full captured-race validation
 
-All **13,187 races** produce byte-identical dense output to the recorded v71
-reference outputs. Official replay checks retain **13,183 exact races** and **13,185 correct
-winners**, with the same four non-exact races and no execution errors.
-Checks cover finish times, skill activations and replay samples for every race. This is the existing captured
-corpus, not an independent holdout.
+All **13,187 races** now match official raw finish times, winners, placements,
+skill starts and every compared replay sample, with no execution errors.
+The four previously differing races are corrected; the other **13,183 dense
+replies remain byte-identical**. This is the existing captured corpus, not an
+independent holdout. See [full results](../evidence/accuracy-validation.json)
+and the [comparison definitions](ACCURACY.md).
 
-The simultaneous comparison with the local original executable matched 13,186
-out of 13,187 replies. The remaining case matched in a fresh run and all 100
-repeated checks. Its cause remains undetermined; the optimized reply matched
-the recorded reference throughout. See [full results](../evidence/full-validation.json).
+Four included regression fixtures cover pacemaker restoration, healer-history
+timing for both runner update orders, and an exact shared slope boundary. They
+check finish times, skill starts, healer-targeting recipient masks and sampled
+movement. The engine receives only pre-race inputs; expected official
+observations are checked separately. All four fail on the preceding build and
+pass with the corrections. [Fixture results](../evidence/accuracy-regressions.json).
+
+```powershell
+python tools/check_accuracy_regressions.py --engine target/release/race_engine_rs_v2.exe
+```
+
+The Rust suite also checks slope boundary inclusion, expiry without re-entry,
+and crossing a boundary without landing exactly on it. Parallel corpus timings
+are validation-run timings; use the separate paired [performance measurements](PERFORMANCE.md)
+for latency comparisons.
