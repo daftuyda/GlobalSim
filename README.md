@@ -87,4 +87,5 @@ and error handling.
 - [Input/output reference](docs/INTERFACE.md)
 - [Parameter reference](docs/PARAMETERS.md)
 - [Source reference](docs/SOURCE-INDEX.md)
+- [Performance and benchmarking](docs/PERFORMANCE.md)
 - [Benchmark methodology and coverage](docs/ACCURACY.md)

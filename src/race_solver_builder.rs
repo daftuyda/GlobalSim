@@ -381,7 +381,7 @@ pub fn build_skill_data(
             }
         }
     }
-    let extra = RaceParametersWithSkillId { params: race_params.clone(), skill_id: skill_id.to_string() };
+    let extra = RaceParametersWithSkillId { params: race_params, skill_id: skill_id.to_string() };
 
     let mut triggers: Vec<SkillData> = Vec::new();
     for (alt_index,alt) in def.alternatives.iter().enumerate() {

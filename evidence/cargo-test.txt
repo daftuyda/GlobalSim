@@ -1,32 +1,32 @@
 warning: unnecessary parentheses around assigned value
-   --> src\race_solver_retail.rs:495:13
+   --> src\race_solver_retail.rs:496:13
     |
-495 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
+496 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
     |             ^                                                                                                                ^
     |
     = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
 help: remove these parentheses
     |
-495 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
-495 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32;
+496 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
+496 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32;
     |
 
 warning: unnecessary parentheses around method argument
-   --> src\race_solver_retail.rs:758:13
+   --> src\race_solver_retail.rs:766:13
     |
-758 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+766 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
     |             ^                                                                                                                ^
     |
 help: remove these parentheses
     |
-758 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
-758 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32,
+766 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+766 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32,
     |
 
 warning: function `strategy_id_for_output` is never used
-   --> src\main.rs:294:4
+   --> src\main.rs:329:4
     |
-294 | fn strategy_id_for_output(raw: &str) -> f64 {
+329 | fn strategy_id_for_output(raw: &str) -> f64 {
     |    ^^^^^^^^^^^^^^^^^^^^^^
     |
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
@@ -168,14 +168,11 @@ warning: associated function `from_i32` is never used
 55 |     pub fn from_i32(v: i32) -> Result<Aptitude, String> {
    |            ^^^^^^^^
 
-warning: methods `is_null` and `get_object` are never used
-  --> src\json.rs:60:12
+warning: method `get_object` is never used
+  --> src\json.rs:79:12
    |
 23 | impl Value {
-   | ---------- methods in this implementation
-...
-60 |     pub fn is_null(&self) -> bool {
-   |            ^^^^^^^
+   | ---------- method in this implementation
 ...
 79 |     pub fn get_object<'a>(&'a self, key: &str) -> Result<&'a BTreeMap<String, Value>, String> {
    |            ^^^^^^^^^^
@@ -305,24 +302,26 @@ warning: methods `values` and `values_except` are never used
     |            ^^^^^^^^^^^^^
 
 
-running 80 tests
-.......... 10/80
+running 90 tests
+............ 12/90
 race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules --- FAILED
-...... 17/80
+................ 29/90
 race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival --- FAILED
-........................................ 58/80
+.................................... 66/90
 hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp --- FAILED
+.. 69/90
 retail_geometry::tests::captured_gates_and_per_runner_width_changes --- FAILED
-retail_physics::tests::python_port_vectors_match_every_float32_bit --- FAILED
-.... 65/80
+. 71/90
 retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts --- FAILED
-.. 68/80
-retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits --- FAILED
-. 70/80
+. 73/90
+retail_physics::tests::python_port_vectors_match_every_float32_bit --- FAILED
+.... 78/90
 hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits --- FAILED
-.... 75/80
+. 80/90
+retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits --- FAILED
+..... 86/90
 race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits --- FAILED
-.. 78/80
+. 88/90
 retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses --- FAILED
 race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits --- FAILED
 
@@ -330,76 +329,76 @@ failures:
 
 ---- race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules stdout ----
 
-thread 'race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules' (33120) panicked at src\race_solver.rs:3033:9:
+thread 'race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules' (51588) panicked at src\race_solver.rs:3033:9:
 assertion failed: !field.solvers[0].borrow().duel_active
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 ---- race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival stdout ----
 
-thread 'race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival' (42496) panicked at src\race_solver.rs:2984:9:
+thread 'race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival' (51628) panicked at src\race_solver.rs:2984:9:
 assertion `left == right` failed
   left: Some(1)
  right: Some(2)
 
 ---- hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp stdout ----
 
-thread 'hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp' (53220) panicked at src\hp_policy.rs:107:13:
+thread 'hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp' (41472) panicked at src\hp_policy.rs:107:13:
 assertion `left == right` failed
   left: 4
  right: 8
 
 ---- retail_geometry::tests::captured_gates_and_per_runner_width_changes stdout ----
 
-thread 'retail_geometry::tests::captured_gates_and_per_runner_width_changes' (31248) panicked at src\retail_geometry.rs:440:13:
+thread 'retail_geometry::tests::captured_gates_and_per_runner_width_changes' (37760) panicked at src\retail_geometry.rs:440:13:
 assertion `left == right` failed
   left: 1.1999999
  right: 1.2
 
----- retail_physics::tests::python_port_vectors_match_every_float32_bit stdout ----
-
-thread 'retail_physics::tests::python_port_vectors_match_every_float32_bit' (45956) panicked at src\retail_physics.rs:608:17:
-assertion `left == right` failed: vector 0, maximum_spurt_speed: 21.989582 versus 21.98958
-  left: 1102047914
- right: 1102047913
-
 ---- retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts stdout ----
 
-thread 'retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts' (40876) panicked at src\retail_spurt.rs:230:13:
+thread 'retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts' (3180) panicked at src\retail_spurt.rs:230:13:
 assertion `left == right` failed: result vector 32
   left: 4
  right: 8
 
----- retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits stdout ----
+---- retail_physics::tests::python_port_vectors_match_every_float32_bit stdout ----
 
-thread 'retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits' (14300) panicked at src\retail_lane.rs:823:17:
-assertion `left == right` failed: move case 9 channel 2
-  left: 1023360276
- right: 1023360274
+thread 'retail_physics::tests::python_port_vectors_match_every_float32_bit' (38412) panicked at src\retail_physics.rs:608:17:
+assertion `left == right` failed: vector 0, maximum_spurt_speed: 21.989582 versus 21.98958
+  left: 1102047914
+ right: 1102047913
 
 ---- hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits stdout ----
 
-thread 'hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits' (45392) panicked at src\hp_policy.rs:85:17:
+thread 'hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits' (57164) panicked at src\hp_policy.rs:85:17:
 assertion `left == right` failed
   left: 1090684613
  right: 1090684612
 
+---- retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits stdout ----
+
+thread 'retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits' (26684) panicked at src\retail_lane.rs:833:17:
+assertion `left == right` failed: move case 9 channel 2
+  left: 1023360276
+ right: 1023360274
+
 ---- race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits stdout ----
 
-thread 'race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits' (35868) panicked at src\race_solver_retail.rs:211:13:
+thread 'race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits' (35700) panicked at src\race_solver_retail.rs:211:13:
 assertion `left == right` failed: isolated tick 0 channel 10: 23.22417640686035
   left: 1102695197
  right: 1102695196
 
 ---- retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses stdout ----
 
-thread 'retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses' (36872) panicked at src\retail_geometry.rs:535:21:
+thread 'retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses' (52516) panicked at src\retail_geometry.rs:535:21:
 assertion `left == right` failed: course 10101 position 120.123 lane 1.35 channel 0
   left: 1123332913
  right: 1123332912
 
 ---- race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits stdout ----
 
-thread 'race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits' (43504) panicked at src\race_solver_retail.rs:211:13:
+thread 'race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits' (53780) panicked at src\race_solver_retail.rs:211:13:
 assertion `left == right` failed: race 0 runner 0 tick 0 channel 10: 23.22417640686035
   left: 1102695197
  right: 1102695196
@@ -418,6 +417,6 @@ failures:
     retail_physics::tests::python_port_vectors_match_every_float32_bit
     retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts
 
-test result: FAILED. 69 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+test result: FAILED. 79 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
 
 error: test failed, to rerun pass `--bin race_engine_rs_v2`

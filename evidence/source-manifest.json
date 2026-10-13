@@ -864,7 +864,7 @@
       "path": "src/json.rs",
       "archive_path": "src/json.rs",
       "archive_sha256": "97603c4d6b41a141e1d46607ff492ff9203faca7a39c9089a6b02d84e115ea80",
-      "sha256": "97603c4d6b41a141e1d46607ff492ff9203faca7a39c9089a6b02d84e115ea80"
+      "sha256": "ca48e408074eef3884ed8856fefb13fb9cc167078483a841d02ec745785cd436"
     },
     {
       "path": "src/lane_selection.rs",
@@ -876,51 +876,51 @@
       "path": "src/main.rs",
       "archive_path": "src/main.rs",
       "archive_sha256": "c68a44baf8f0a8c66e08ff422ad2b9d8c7ff3e4e2138973f65d65de01f3b72f3",
-      "sha256": "e70e0dc1ce5a32c9cc941407610d951cc3d8077018c9244caec8ad969afe9f71"
+      "sha256": "37a6697f5194915f0612eee9b91c9857141c2b5ce538fb77e2f7aa9fb75b63d7"
     },
     {
       "path": "src/overtaking.rs",
       "archive_path": "src/overtaking.rs",
       "archive_sha256": "208e0ac49cbcef918b80acc65ecffbce80c9933a6715e33fd92b56ce1838c0e2",
-      "sha256": "208e0ac49cbcef918b80acc65ecffbce80c9933a6715e33fd92b56ce1838c0e2"
+      "sha256": "021876afe3779fc6516ca4669cdbcc810de80c97091e9edb285786951b82fc90"
     },
     {
       "path": "src/race_field.rs",
       "archive_path": "src/race_field.rs",
       "archive_sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b",
-      "sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb",
+      "sha256": "b930ddbadd68569f590449fbacf3af5e7c5538a5d2bca223b7232f8c20f34dd7",
       "release_sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb"
     },
     {
       "path": "src/race_field_retail.rs",
       "archive_path": "src/race_field_retail.rs",
       "archive_sha256": "1f74e0e1c0ba0ee60a51ffb52d86864ea35dfd48b317a5bf5238534877bbf89b",
-      "sha256": "1f74e0e1c0ba0ee60a51ffb52d86864ea35dfd48b317a5bf5238534877bbf89b"
+      "sha256": "3bde785265379112f7d9fe9c6393eb9ee886593aa6289b500a26b343d9f35399"
     },
     {
       "path": "src/race_parameters.rs",
       "archive_path": "src/race_parameters.rs",
       "archive_sha256": "192018df7429ee5d21d1b3115fb6eca2239a69ec8416c8dcc9c5556fb5932b11",
-      "sha256": "192018df7429ee5d21d1b3115fb6eca2239a69ec8416c8dcc9c5556fb5932b11"
+      "sha256": "6f335fc8b3edb6bc87ca6a49572c1fdec43e12069a85661f0209633e234abc8e"
     },
     {
       "path": "src/race_solver.rs",
       "archive_path": "src/race_solver.rs",
       "archive_sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b",
-      "sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070",
+      "sha256": "a6280db0c89274b18db44eed497b582aae92a35adf60d32dda3165735e73d41f",
       "release_sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070"
     },
     {
       "path": "src/race_solver_builder.rs",
       "archive_path": "src/race_solver_builder.rs",
       "archive_sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690",
-      "sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690"
+      "sha256": "26121566a5cf3309584bf3707c41de84ae5657ca00752c74375152ee5974b16e"
     },
     {
       "path": "src/race_solver_retail.rs",
       "archive_path": "src/race_solver_retail.rs",
       "archive_sha256": "0b9d4c01c348d9420faec616526a873ce7f8e8ff7c421f7d77e09235d3ade157",
-      "sha256": "9589a24b011eb1aa9843b30e40b54224b7495126c02581d8f4e9a5174bb0e4c9"
+      "sha256": "b834f57149fa1c073c3753bfeefbcd523e92be80bfe093398bcaf505889bc068"
     },
     {
       "path": "src/random_gen.rs",
@@ -956,7 +956,7 @@
       "path": "src/retail_lane.rs",
       "archive_path": "src/retail_lane.rs",
       "archive_sha256": "7c26006355c2f99b1d6c97fe65ad2b411233691e0421db69928dd02649e0c11b",
-      "sha256": "3027488fc1496c4b6d5f32f44ad3aa4fff4b04edea424107c6f9bae71e069272"
+      "sha256": "e94fda89ea8a3c73b443314ca50d1858a0b10ca3e1a6c847fb7c8553b2d06311"
     },
     {
       "path": "src/retail_physics.rs",
@@ -1014,5 +1014,6 @@
       "sha256": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
     }
   ],
-  "relocations": "Local include and geometry-test paths retained; v71 source overlay applied to race_field, race_solver and retail_position_keep."
+  "relocations": "Local include and geometry-test paths retained; v71 source overlay applied to race_field, race_solver and retail_position_keep.",
+  "build_variant": "v71 with immutable input caches, compact replay snapshots, borrowed race parameters, direct ASCII token parsing, reusable tick and lane buffers, and deferred blocker scans"
 }

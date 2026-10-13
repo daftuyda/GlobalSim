@@ -20,6 +20,7 @@ impl RaceField {
                 )
             })
             .collect();
+        let mut others = Vec::with_capacity(self.n.saturating_sub(1));
         for &i in indices {
             let mut s = self.solvers[i].borrow_mut();
             s.collect_retail_duel_proximity(&rows, dt);
@@ -29,12 +30,17 @@ impl RaceField {
                 r.lane_max = geometry.lane_max_at(position);
             }
             let context = s.retail_lane_context();
-            let mut others = s.retail_other_horses(Some(self));
-            // The pre-update cache stores raw target speed; the later live
-            // passing query includes current-speed receivers.
-            for (other, j) in others.iter_mut().zip((0..self.n).filter(|&j| j != i)) {
-                other.target = self.solvers[j].borrow().target_speed as f32;
-            }
+            // The pre-update cache stores raw target speed. Sample it directly;
+            // current-speed receivers are only needed by the later live query.
+            others.clear();
+            others.extend(self.solvers.iter().enumerate().filter(|(j, _)| *j != i).map(|(_, cell)| {
+                let other = cell.borrow();
+                retail_lane::Horse {
+                    point: Row { position: other.pos as f32, lane: other.lane as f32 },
+                    speed: other.retail.as_ref().map_or(other.current_speed as f32, |r| r.observed_speed),
+                    target: other.target_speed as f32,
+                }
+            }));
             let r = s.retail.as_mut().unwrap();
             r.lane.collect(&context, &others, r.config.lane);
         }

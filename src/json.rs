@@ -84,29 +84,60 @@ impl Value {
 // ---------------------------------------------------------------------------
 // Parsing
 
+// ASCII requests can borrow token text directly. The character-backed path
+// retains the existing Unicode whitespace, escape and diagnostic behavior.
+trait Input {
+    fn len(&self) -> usize;
+    fn at(&self, index: usize) -> char;
+    fn text(&self, start: usize, end: usize) -> std::borrow::Cow<'_, str>;
+}
+
+impl Input for str {
+    fn len(&self) -> usize { str::len(self) }
+    fn at(&self, index: usize) -> char { self.as_bytes()[index] as char }
+    fn text(&self, start: usize, end: usize) -> std::borrow::Cow<'_, str> {
+        std::borrow::Cow::Borrowed(&self[start..end])
+    }
+}
+
+impl Input for [char] {
+    fn len(&self) -> usize { <[char]>::len(self) }
+    fn at(&self, index: usize) -> char { self[index] }
+    fn text(&self, start: usize, end: usize) -> std::borrow::Cow<'_, str> {
+        std::borrow::Cow::Owned(self[start..end].iter().collect())
+    }
+}
+
 pub fn parse(s: &str) -> Result<Value, String> {
-    let chars: Vec<char> = s.chars().collect();
+    if s.is_ascii() {
+        parse_input(s)
+    } else {
+        parse_input(s.chars().collect::<Vec<_>>().as_slice())
+    }
+}
+
+fn parse_input<I: Input + ?Sized>(chars: &I) -> Result<Value, String> {
     let mut pos = 0usize;
-    let v = parse_value(&chars, &mut pos)?;
-    skip_ws(&chars, &mut pos);
+    let v = parse_value(chars, &mut pos)?;
+    skip_ws(chars, &mut pos);
     if pos != chars.len() {
         return Err(format!("trailing data at byte {pos}"));
     }
     Ok(v)
 }
 
-fn skip_ws(chars: &[char], pos: &mut usize) {
-    while *pos < chars.len() && chars[*pos].is_whitespace() {
+fn skip_ws<I: Input + ?Sized>(chars: &I, pos: &mut usize) {
+    while *pos < chars.len() && chars.at(*pos).is_whitespace() {
         *pos += 1;
     }
 }
 
-fn parse_value(chars: &[char], pos: &mut usize) -> Result<Value, String> {
+fn parse_value<I: Input + ?Sized>(chars: &I, pos: &mut usize) -> Result<Value, String> {
     skip_ws(chars, pos);
     if *pos >= chars.len() {
         return Err("unexpected end of input".to_string());
     }
-    match chars[*pos] {
+    match chars.at(*pos) {
         '{' => parse_object(chars, pos),
         '[' => parse_array(chars, pos),
         '"' => Ok(Value::String(parse_string(chars, pos)?)),
@@ -127,9 +158,9 @@ fn parse_value(chars: &[char], pos: &mut usize) -> Result<Value, String> {
     }
 }
 
-fn expect_literal(chars: &[char], pos: &mut usize, lit: &str) -> Result<(), String> {
+fn expect_literal<I: Input + ?Sized>(chars: &I, pos: &mut usize, lit: &str) -> Result<(), String> {
     for c in lit.chars() {
-        if *pos >= chars.len() || chars[*pos] != c {
+        if *pos >= chars.len() || chars.at(*pos) != c {
             return Err(format!("expected literal {lit:?} at byte {pos}"));
         }
         *pos += 1;
@@ -137,22 +168,22 @@ fn expect_literal(chars: &[char], pos: &mut usize, lit: &str) -> Result<(), Stri
     Ok(())
 }
 
-fn parse_object(chars: &[char], pos: &mut usize) -> Result<Value, String> {
+fn parse_object<I: Input + ?Sized>(chars: &I, pos: &mut usize) -> Result<Value, String> {
     *pos += 1; // '{'
     let mut map = BTreeMap::new();
     skip_ws(chars, pos);
-    if *pos < chars.len() && chars[*pos] == '}' {
+    if *pos < chars.len() && chars.at(*pos) == '}' {
         *pos += 1;
         return Ok(Value::Object(map));
     }
     loop {
         skip_ws(chars, pos);
-        if *pos >= chars.len() || chars[*pos] != '"' {
+        if *pos >= chars.len() || chars.at(*pos) != '"' {
             return Err(format!("expected object key at byte {pos}"));
         }
         let key = parse_string(chars, pos)?;
         skip_ws(chars, pos);
-        if *pos >= chars.len() || chars[*pos] != ':' {
+        if *pos >= chars.len() || chars.at(*pos) != ':' {
             return Err(format!("expected ':' at byte {pos}"));
         }
         *pos += 1;
@@ -162,7 +193,7 @@ fn parse_object(chars: &[char], pos: &mut usize) -> Result<Value, String> {
         if *pos >= chars.len() {
             return Err("unexpected end of input in object".to_string());
         }
-        match chars[*pos] {
+        match chars.at(*pos) {
             ',' => {
                 *pos += 1;
             }
@@ -176,11 +207,11 @@ fn parse_object(chars: &[char], pos: &mut usize) -> Result<Value, String> {
     Ok(Value::Object(map))
 }
 
-fn parse_array(chars: &[char], pos: &mut usize) -> Result<Value, String> {
+fn parse_array<I: Input + ?Sized>(chars: &I, pos: &mut usize) -> Result<Value, String> {
     *pos += 1; // '['
     let mut arr = Vec::new();
     skip_ws(chars, pos);
-    if *pos < chars.len() && chars[*pos] == ']' {
+    if *pos < chars.len() && chars.at(*pos) == ']' {
         *pos += 1;
         return Ok(Value::Array(arr));
     }
@@ -191,7 +222,7 @@ fn parse_array(chars: &[char], pos: &mut usize) -> Result<Value, String> {
         if *pos >= chars.len() {
             return Err("unexpected end of input in array".to_string());
         }
-        match chars[*pos] {
+        match chars.at(*pos) {
             ',' => {
                 *pos += 1;
             }
@@ -205,14 +236,26 @@ fn parse_array(chars: &[char], pos: &mut usize) -> Result<Value, String> {
     Ok(Value::Array(arr))
 }
 
-fn parse_string(chars: &[char], pos: &mut usize) -> Result<String, String> {
+fn parse_string<I: Input + ?Sized>(chars: &I, pos: &mut usize) -> Result<String, String> {
     *pos += 1; // opening quote
-    let mut out = String::new();
+    let start = *pos;
+    while *pos < chars.len() {
+        match chars.at(*pos) {
+            '"' => {
+                let text = chars.text(start, *pos).into_owned();
+                *pos += 1;
+                return Ok(text);
+            }
+            '\\' => break,
+            _ => *pos += 1,
+        }
+    }
+    let mut out = chars.text(start, *pos).into_owned();
     loop {
         if *pos >= chars.len() {
             return Err("unterminated string".to_string());
         }
-        let c = chars[*pos];
+        let c = chars.at(*pos);
         *pos += 1;
         match c {
             '"' => break,
@@ -220,7 +263,7 @@ fn parse_string(chars: &[char], pos: &mut usize) -> Result<String, String> {
                 if *pos >= chars.len() {
                     return Err("unterminated escape".to_string());
                 }
-                let esc = chars[*pos];
+                let esc = chars.at(*pos);
                 *pos += 1;
                 match esc {
                     '"' => out.push('"'),
@@ -235,7 +278,7 @@ fn parse_string(chars: &[char], pos: &mut usize) -> Result<String, String> {
                         if *pos + 4 > chars.len() {
                             return Err("truncated \\u escape".to_string());
                         }
-                        let hex: String = chars[*pos..*pos + 4].iter().collect();
+                        let hex = chars.text(*pos, *pos + 4);
                         let code = u32::from_str_radix(&hex, 16).map_err(|_| "invalid \\u escape".to_string())?;
                         *pos += 4;
                         if let Some(ch) = char::from_u32(code) {
@@ -251,30 +294,30 @@ fn parse_string(chars: &[char], pos: &mut usize) -> Result<String, String> {
     Ok(out)
 }
 
-fn parse_number(chars: &[char], pos: &mut usize) -> Result<Value, String> {
+fn parse_number<I: Input + ?Sized>(chars: &I, pos: &mut usize) -> Result<Value, String> {
     let start = *pos;
-    if chars[*pos] == '-' {
+    if chars.at(*pos) == '-' {
         *pos += 1;
     }
-    while *pos < chars.len() && chars[*pos].is_ascii_digit() {
+    while *pos < chars.len() && chars.at(*pos).is_ascii_digit() {
         *pos += 1;
     }
-    if *pos < chars.len() && chars[*pos] == '.' {
+    if *pos < chars.len() && chars.at(*pos) == '.' {
         *pos += 1;
-        while *pos < chars.len() && chars[*pos].is_ascii_digit() {
+        while *pos < chars.len() && chars.at(*pos).is_ascii_digit() {
             *pos += 1;
         }
     }
-    if *pos < chars.len() && (chars[*pos] == 'e' || chars[*pos] == 'E') {
+    if *pos < chars.len() && (chars.at(*pos) == 'e' || chars.at(*pos) == 'E') {
         *pos += 1;
-        if *pos < chars.len() && (chars[*pos] == '+' || chars[*pos] == '-') {
+        if *pos < chars.len() && (chars.at(*pos) == '+' || chars.at(*pos) == '-') {
             *pos += 1;
         }
-        while *pos < chars.len() && chars[*pos].is_ascii_digit() {
+        while *pos < chars.len() && chars.at(*pos).is_ascii_digit() {
             *pos += 1;
         }
     }
-    let text: String = chars[start..*pos].iter().collect();
+    let text = chars.text(start, *pos);
     text.parse::<f64>().map(Value::Number).map_err(|_| format!("invalid number {text:?}"))
 }
 
@@ -333,6 +376,11 @@ fn write_number(out: &mut String, n: f64) {
 
 fn write_string(out: &mut String, s: &str) {
     out.push('"');
+    if !s.bytes().any(|b| b == b'"' || b == b'\\' || b < 0x20) {
+        out.push_str(s);
+        out.push('"');
+        return;
+    }
     for c in s.chars() {
         match c {
             '"' => out.push_str("\\\""),
@@ -361,4 +409,51 @@ pub fn num(n: f64) -> Value {
 
 pub fn arr(items: Vec<Value>) -> Value {
     Value::Array(items)
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn ascii_and_character_paths_agree_on_tokens_and_errors() {
+        for input in [
+            r#"{"name":"horse","values":[1,-0,1.25,2e-3,true,false,null]}"#,
+            r#"{"escaped":"\"\\\/\n\t\r\b\f\u65e5"}"#,
+            r#""\ud83d\udc0e""#, r#""\uZZZZ""#, r#""\u12""#,
+            r#""\q""#, r#""unterminated"#, r#"{"x":1,}"#,
+            "", "[1,]", "null extra", "1e+", "-", "[", "true\u{b}",
+        ] {
+            let chars: Vec<char> = input.chars().collect();
+            assert_eq!(format!("{:?}", parse(input)),
+                format!("{:?}", parse_input(chars.as_slice())), "{input:?}");
+        }
+        assert_eq!(parse("[1,]").unwrap_err(), "unexpected character ']' at byte 3");
+    }
+
+    #[test]
+    fn numeric_tokens_keep_float_bits() {
+        for input in ["-0", "-0.0", "0", "9007199254740993", "18446744073709551615",
+            "1.2345678901234567", "5e-324", "1e-9999", "1e9999", "-2.2250738585072014e-308"] {
+            assert_eq!(parse(input).unwrap().as_f64().unwrap().to_bits(),
+                input.parse::<f64>().unwrap().to_bits(), "{input}");
+        }
+    }
+
+    #[test]
+    fn unicode_input_retains_whitespace_and_character_offsets() {
+        let value = parse("\u{2003}{\"名前\":\"馬🏇\"}\u{a0}").unwrap();
+        assert_eq!(value.get_str("名前").unwrap(), "馬🏇");
+        assert_eq!(parse("[\"馬\",]").unwrap_err(), "unexpected character ']' at byte 5");
+    }
+
+    #[test]
+    fn string_serialization_preserves_escapes_and_unicode() {
+        for input in ["plain", "名前🏇", "quote\"slash\\", "\n\r\t\u{8}\u{c}\0"] {
+            let encoded = to_string(&Value::String(input.into()));
+            assert_eq!(parse(&encoded).unwrap().as_str(), Some(input));
+        }
+        assert_eq!(to_string(&Value::String("a\0\"\\\n".into())), r#""a\u0000\"\\\n""#);
+    }
 }

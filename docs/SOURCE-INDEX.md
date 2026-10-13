@@ -61,7 +61,7 @@ Functions: `visible`, `collect_targets`, `passing_lane`.
 
 Request handling, simulation configuration and result serialization.
 
-Functions: `opt_array`, `load_course_table`, `load_skill_table`, `skill_id_and_level`, `experimental_grid_enabled`, `starting_coordinates`, `parse_race_spec`, `strategy_id_for_output`, `new_builder`, `is_usable`, `run_race`, `downsample_result`, `gate_order`, `restore_request_order`, `run`, `main`, `grid_requires_exact_contract_and_hundred_horses`, `grid_has_five_separate_rows_and_twenty_ordinary_stalls`.
+Functions: `bundled_courses`, `bundled_skills`, `bundled_parameters`, `bundled_geometry`, `opt_array`, `load_course_table`, `load_skill_table`, `load_skill_value`, `skill_id_and_level`, `experimental_grid_enabled`, `starting_coordinates`, `parse_race_spec`, `strategy_id_for_output`, `new_builder`, `is_usable`, `run_race`, `into_json`, `encode_frames`, `gate_order`, `restore_request_order`, `run`, `main`, `grid_requires_exact_contract_and_hundred_horses`, `grid_has_five_separate_rows_and_twenty_ordinary_stalls`, `frames`, `result`, `sparse_frames_keep_cadence_and_unthinned_finish_sample`, `finish_sample_includes_equal_tick_and_handles_missing_prior_frame`, `dense_output_has_all_frames_without_sparse_metadata`, `geometry_cache_shares_only_matching_course_identity`.
 
 ## [overtaking.rs](../src/overtaking.rs)
 

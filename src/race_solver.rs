@@ -3082,7 +3082,7 @@ mod movement_tests {
         let conditions = build_conditions();
         let condition = &conditions["compete_fight_count"];
         assert!(matches!(condition.sample_policy, SamplePolicy::Immediate));
-        let extra = RaceParametersWithSkillId { params: RaceParameters::default(), skill_id: "duel-test".into() };
+        let extra = RaceParametersWithSkillId { params: &RaceParameters::default(), skill_id: "duel-test".into() };
         let mut s = field.solvers[0].borrow_mut();
         let (regions, check) = (condition.filter_gt)(&[Region::new(0.0, 2400.0)], 0.0, s.course, &s.horse, &extra).unwrap();
         assert_eq!((regions[0].start, regions[0].end), (0.0, 2400.0));

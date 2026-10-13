@@ -87,6 +87,8 @@ pub struct TargetContext {
 pub struct TargetState {
     pub targets: Vec<usize>,
     pub cached: Vec<Horse>,
+    live_points: Vec<Row>,
+    cached_points: Vec<Row>,
     pub visible: Vec<usize>,
     pub side: Option<SideRoom>,
     pub cooldown: f32,
@@ -97,10 +99,11 @@ pub struct TargetState {
 
 impl TargetState {
     pub fn collect(&mut self, c: &TargetContext, others: &[Horse], p: TargetParameters) {
-        self.cached = others.to_vec();
-        let points: Vec<_> = others.iter().map(|r| r.point).collect();
-        self.side = Some(side_room(c.owner.point, c.max_lane, &points, p.block));
-        self.visible = others
+        self.cached.clear();
+        self.cached.extend_from_slice(others);
+        self.side = Some(side_room_iter(c.owner.point, c.max_lane, others.iter().map(|r| r.point), p.block));
+        self.visible.clear();
+        self.visible.extend(others
             .iter()
             .enumerate()
             .filter(|(_, r)| {
@@ -110,8 +113,7 @@ impl TargetState {
                     c.vision,
                 )
             })
-            .map(|(i, _)| i)
-            .collect();
+            .map(|(i, _)| i));
         self.force_in = c.empty_in_move
             && c.phase < 1
             && c.owner.point.lane >= p.force_in_threshold
@@ -131,20 +133,18 @@ impl TargetState {
         p: TargetParameters,
     ) {
         assert_eq!(live.len(), self.cached.len());
-        let mut points: Vec<_> = self.cached.iter().map(|r| r.point).collect();
-        let front = front_index(c.owner.point, &points, p.block);
-        points.push(c.owner.point);
+        let front = front_index_iter(c.owner.point, self.cached.iter().map(|r| r.point), p.block);
         let eligible = |i: usize| {
             let row = self.cached[i];
-            let blocked = front_index(row.point, &points, p.block).is_some();
-            crate::overtaking::is_target(
+            crate::overtaking::is_target_with_block_check(
                 (row.point.position - c.owner.point.position) as f64,
                 (c.owner.speed - row.speed) as f64,
                 c.owner.target as f64,
                 live[i].target as f64,
                 live[i].speed as f64,
                 front == Some(i),
-                blocked,
+                || front_index_iter(row.point, self.cached.iter().map(|r| r.point)
+                    .chain(std::iter::once(c.owner.point)), p.block).is_some(),
             )
         };
         self.targets.retain(|&i| i < self.cached.len());
@@ -208,15 +208,17 @@ impl TargetState {
                 || !(c.first_move_point - 200. <= c.owner.point.position
                     && c.owner.point.position <= c.first_move_point));
         if passing {
-            let live: Vec<_> = live.iter().map(|r| r.point).collect();
-            let cached: Vec<_> = self.cached.iter().map(|r| r.point).collect();
+            self.live_points.clear();
+            self.live_points.extend(live.iter().map(|r| r.point));
+            self.cached_points.clear();
+            self.cached_points.extend(self.cached.iter().map(|r| r.point));
             let mut target = PassingSearch {
                 lane_preference: c.lane_preference,
                 owner: c.owner.point,
                 phase: c.phase,
                 max_lane: c.max_lane,
-                live: &live,
-                cached: &cached,
+                live: &self.live_points,
+                cached: &self.cached_points,
                 visible: &self.visible,
                 targets: &self.targets,
                 side,
@@ -315,9 +317,13 @@ pub fn is_visible(gap: f32, lane_gap: f32, vision: f32) -> bool {
 }
 
 pub fn front_index(owner: Row, rows: &[Row], p: BlockParameters) -> Option<usize> {
+    front_index_iter(owner, rows.iter().copied(), p)
+}
+
+pub(crate) fn front_index_iter(owner: Row, rows: impl Iterator<Item = Row>, p: BlockParameters) -> Option<usize> {
     let mut found = None;
     let mut nearest = f32::INFINITY;
-    for (i, row) in rows.iter().enumerate() {
+    for (i, row) in rows.enumerate() {
         let gap = row.position - owner.position;
         let width = (1. - (gap / p.front_distance) * 0.6) * p.front_lane;
         if gap > 0.
@@ -333,6 +339,10 @@ pub fn front_index(owner: Row, rows: &[Row], p: BlockParameters) -> Option<usize
 }
 
 pub fn side_room(owner: Row, max_lane: f32, rows: &[Row], p: BlockParameters) -> SideRoom {
+    side_room_iter(owner, max_lane, rows.iter().copied(), p)
+}
+
+fn side_room_iter(owner: Row, max_lane: f32, rows: impl Iterator<Item = Row>, p: BlockParameters) -> SideRoom {
     let mut result = SideRoom {
         can_in: owner.lane > 0.0001,
         can_out: owner.lane < max_lane,
@@ -341,7 +351,7 @@ pub fn side_room(owner: Row, max_lane: f32, rows: &[Row], p: BlockParameters) ->
         inner_blocker: None,
         inner_blocker_index: None,
     };
-    for (index, row) in rows.iter().enumerate() {
+    for (index, row) in rows.enumerate() {
         if (row.position - owner.position).abs() >= p.side_distance {
             continue;
         }

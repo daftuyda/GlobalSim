@@ -449,13 +449,16 @@ impl RaceField {
     /// distance-gap qualifying horse wins. Returns (other_index, dist_gap).
     pub fn front_blocker(&self, i: usize, pos: f64, lane: f64) -> Option<(usize, f64)> {
         if let Some(parameters) = self.retail_block {
-            use crate::retail_lane::{Row, front_index};
-            let peers:Vec<_> = (0..self.n).filter(|&j|j!=i).collect();
-            let rows:Vec<_> = peers.iter().map(|&j| {
-                let s=self.solvers[j].borrow();Row{position:s.pos as f32,lane:s.lane as f32}
-            }).collect();
-            return front_index(Row{position:pos as f32,lane:lane as f32},&rows,parameters)
-                .map(|at|(peers[at],(rows[at].position-pos as f32) as f64));
+            use crate::retail_lane::{Row, front_index_iter};
+            let rows = (0..self.n).filter(|&j| j != i).map(|j| {
+                let s = self.solvers[j].borrow();
+                Row { position: s.pos as f32, lane: s.lane as f32 }
+            });
+            return front_index_iter(Row { position: pos as f32, lane: lane as f32 }, rows, parameters)
+                .map(|at| {
+                    let j = if at < i { at } else { at + 1 };
+                    (j, (self.solvers[j].borrow().pos as f32 - pos as f32) as f64)
+                });
         }
         let mut best: Option<(usize, f64)> = None;
         for j in 0..self.n {

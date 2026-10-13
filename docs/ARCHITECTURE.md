@@ -4,9 +4,18 @@
 
 [`main.rs`](../src/main.rs) loads the embedded course and skill tables, reads
 one JSON object per line, parses runners, builds a `RaceField`, runs it, and
-serializes observations. Skill data is replaced for every request, including
-resetting to the bundled table when `skillData` is absent. Course definitions
-are loaded once. Each request has its own seed and runner state.
+serializes observations. Request skill tables are decoded directly from the
+parsed input and replaced for every request, resetting to the bundled table
+when `skillData` is absent. Embedded course and parameter JSON is parsed once,
+and immutable course geometry is reused by course identity. Each request has
+its own seed and runner state. ASCII request tokens are read directly from the
+input buffer; Unicode input uses the character-aware parser.
+
+Tick buffers and lane caches reuse their storage. Blocking checks iterate over
+runner state directly, preserving field order and the distinction between
+cached and live positions. Skill conditions borrow immutable race parameters
+during construction. Overtaking queries defer blocker scans until gap and
+speed checks establish that blocker state can affect the decision.
 
 [`race_solver_builder.rs`](../src/race_solver_builder.rs) converts raw stats,
 race conditions and skill definitions into one solver per runner.
@@ -54,7 +63,8 @@ path keeps float32 clock/state behavior; startup may perform a zero-time pass.
 Start delays can leave only part of a tick available for movement. Finish
 crossings are interpolated between adjacent simulation ticks.
 
-`main.rs` builds frames and events before thinning the output. Normally the
+`main.rs` records compact numeric snapshots and events. It builds JSON only
+for the selected output frames, while retaining dense finish samples. Normally the
 first 17 effective frames, every 16th frame and the final frame are retained;
 the effective index accounts for a synthetic gate frame the original server
 may prepend. Per-runner finish samples are preserved separately.

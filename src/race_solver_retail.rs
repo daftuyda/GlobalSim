@@ -284,7 +284,7 @@ mod tests {
         let mut s = solver(&fixture.get_array("traces").unwrap()[0], course, config(1));
         let table = Box::leak(Box::new(crate::activation_conditions::build_conditions()));
         let extra = RaceParametersWithSkillId {
-            params: RaceParameters::default(),
+            params: &RaceParameters::default(),
             skill_id: "probe".into(),
         };
         let expressions = [
@@ -397,6 +397,7 @@ pub(crate) struct RetailRuntimeState {
     pub downhill: DownhillState,
     pub pace: pace::State,
     pub lane: TargetState,
+    live_horses: Vec<retail_lane::Horse>,
     pub spurt: SpurtState,
     pub force_in_coefficient: f32,
     pub observed_speed: f32,
@@ -530,6 +531,7 @@ impl RaceSolver {
             downhill: Default::default(),
             pace: Default::default(),
             lane: Default::default(),
+            live_horses: Vec::new(),
             spurt: Default::default(),
             force_in_coefficient: row.force_in_move_coefficient,
             observed_speed: self.current_speed as f32,
@@ -612,8 +614,15 @@ impl RaceSolver {
     }
 
     pub(crate) fn retail_other_horses(&self, field: Option<&RaceField>) -> Vec<retail_lane::Horse> {
-        field.map_or_else(Vec::new, |field| {
-            field
+        let mut others = Vec::new();
+        self.fill_retail_other_horses(field, &mut others);
+        others
+    }
+
+    fn fill_retail_other_horses(&self, field: Option<&RaceField>, others: &mut Vec<retail_lane::Horse>) {
+        others.clear();
+        if let Some(field) = field {
+            others.extend(field
                 .solvers
                 .iter()
                 .enumerate()
@@ -633,9 +642,8 @@ impl RaceSolver {
                             .map_or(s.current_speed as f32, |r| r.observed_speed),
                         target: s.retail_target_speed_with_current_skills(),
                     })
-                })
-                .collect()
-        })
+                }));
+        }
     }
 
     pub(crate) fn prepare_retail_tick(
@@ -832,7 +840,8 @@ impl RaceSolver {
         if !finished {
             self.update_retail_pace(dt, field);
         }
-        let others = self.retail_other_horses(field);
+        let mut others = std::mem::take(&mut self.retail.as_mut().unwrap().live_horses);
+        self.fill_retail_other_horses(field, &mut others);
         let context = self.retail_lane_context();
         self.retail
             .as_mut()
@@ -873,6 +882,7 @@ impl RaceSolver {
             &mut *config.random.borrow_mut(),
             ) as f64;
         }
+        self.retail.as_mut().unwrap().live_horses = others;
         let was_spurting = self.is_last_spurt;
         self.update_retail_spurt();
         if !was_spurting && self.is_last_spurt {

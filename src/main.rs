@@ -50,6 +50,38 @@ const MAX_RACE_SECONDS: f64 = 400.0;
 const COURSE_DATA_JSON: &str = include_str!("../data/course_data.json");
 const SKILL_DATA_JSON: &str = include_str!("../data/skill_data.json");
 
+// Embedded data is immutable across requests. Cache successful parses and
+// preserve parse errors without retaining any request-specific skill table.
+fn bundled_courses() -> Result<&'static Value, String> {
+    static DATA: std::sync::OnceLock<Result<Value, String>> = std::sync::OnceLock::new();
+    DATA.get_or_init(|| json::parse(COURSE_DATA_JSON)).as_ref().map_err(Clone::clone)
+}
+
+fn bundled_skills() -> Result<&'static Value, String> {
+    static DATA: std::sync::OnceLock<Result<Value, String>> = std::sync::OnceLock::new();
+    DATA.get_or_init(|| json::parse(SKILL_DATA_JSON)).as_ref().map_err(Clone::clone)
+}
+
+fn bundled_parameters() -> Result<&'static Value, String> {
+    static DATA: std::sync::OnceLock<Result<Value, String>> = std::sync::OnceLock::new();
+    DATA.get_or_init(|| json::parse(include_str!("../data/global_parameters.json")))
+        .as_ref().map_err(Clone::clone)
+}
+
+fn bundled_geometry(course_id: i32, distance: f32) -> Result<Rc<retail_geometry::CourseGeometry>, String> {
+    thread_local! {
+        static GEOMETRY: RefCell<BTreeMap<(i32, u32), Rc<retail_geometry::CourseGeometry>>> =
+            RefCell::new(BTreeMap::new());
+    }
+    GEOMETRY.with(|cache| {
+        let key = (course_id, distance.to_bits());
+        if let Some(value) = cache.borrow().get(&key) { return Ok(value.clone()); }
+        let value = Rc::new(retail_geometry::CourseGeometry::bundled(course_id, distance)?);
+        cache.borrow_mut().insert(key, value.clone());
+        Ok(value)
+    })
+}
+
 fn opt_array(v: &Value, key: &str) -> Vec<Value> {
     v.get(key).and_then(Value::as_array).cloned().unwrap_or_default()
 }
@@ -102,7 +134,10 @@ fn load_course_table(text: &str) -> Result<BTreeMap<i32, CourseData>, String> {
 }
 
 fn load_skill_table(text: &str) -> Result<SkillTable, String> {
-    let root = json::parse(text)?;
+    load_skill_value(&json::parse(text)?)
+}
+
+fn load_skill_value(root: &Value) -> Result<SkillTable, String> {
     let obj = root.as_object().ok_or("skill_data.json root must be an object")?;
     let mut out = BTreeMap::new();
     for (skill_id, raw) in obj {
@@ -405,7 +440,7 @@ fn is_usable(
 fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_conditions::Condition>,
             retail: Option<&retail_initialization::Initialization>, retail_sections:bool,
             retail_runtime:bool, world_geometry:Option<Rc<retail_geometry::CourseGeometry>>,
-            startup_pass:bool) -> Result<Value, String> {
+            startup_pass:bool, retain_all_frames:bool) -> Result<Value, String> {
     let course = course_data::get_course(spec.course_id);
     let dt=if retail_runtime {0.0666_f32 as f64} else {DT};
 
@@ -574,8 +609,8 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
 
     if retail_sections || retail_runtime {
         let mut init=retail.ok_or("Retail sections require initialization")?.clone();
-        let courses=json::parse(COURSE_DATA_JSON)?;
-        let parameters=json::parse(include_str!("../data/global_parameters.json"))?;
+        let courses=bundled_courses()?;
+        let parameters=bundled_parameters()?;
         let horses:Vec<_>=solvers.iter().map(|s|(s.horse.wisdom as f32,(s.modifiers_kakari_chance*100.0) as f32)).collect();
         retail_initialization::initialize_sections_and_rushing(&mut init,&horses,
             courses.get(&spec.course_id.to_string()).ok_or("Missing retail course")?,
@@ -584,7 +619,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
             let raw=courses.get(&spec.course_id.to_string()).ok_or("Missing retail course")?;
             let event_geometry = match &world_geometry {
                 Some(g) => g.clone(),
-                None => Rc::new(retail_geometry::CourseGeometry::bundled(spec.course_id, course.distance as f32)?),
+                None => bundled_geometry(spec.course_id, course.distance as f32)?,
             };
             let mut config = race_solver::RetailRuntimeConfig::new(parameters.get("parameters").unwrap(),
                 Rc::new(RefCell::new(init.rng.clone())),world_geometry,
@@ -634,7 +669,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let score_styles: Vec<_> = field.solvers.iter().map(|s| s.borrow().horse.strategy.base_running_style()).collect();
     let mut finished: Vec<Option<f64>> = vec![None; n];
     let mut finished_step: Vec<Option<f64>> = vec![None; n];
-    let mut frames: Vec<Value> = Vec::new();
+    let mut frames: Vec<ReplayFrame> = Vec::new();
     let mut competition_events: Vec<Value> = Vec::new();
     let mut duel_counts: Vec<i32> = field.solvers.iter().map(|s| s.borrow().compete_fight_count).collect();
     let mut spot_started: Vec<bool> = field.solvers.iter().map(|s| s.borrow().spot_struggle_started).collect();
@@ -645,34 +680,35 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
 
     // Serialize the actual initialized retail state before advancing the first tick.
     if retail_runtime {
-        let initial: Vec<Value> = (0..n).map(|i| {
+        let initial: Vec<[f64; 6]> = (0..n).map(|i| {
             let s = field.solvers[i].borrow();
             let blocker = s.retail.as_ref().and_then(|r| r.front_blocker)
                 .map_or(-1, |(j, _)| j as i32);
-            json::obj(vec![
-                ("pos", json::num(s.pos)),
-                ("lane", json::num(s.lane)),
-                ("speed", json::num(s.retail.as_ref().map_or(s.current_speed, |r| r.observed_speed as f64))),
-                ("hp", json::num(s.hp.hp_value().map(|v| v.max(0.0)).unwrap_or(0.0))),
-                ("temptationMode", json::num(s.rushing_mode as f64)),
-                ("blockFrontHorseIndex", json::num(blocker as f64)),
-            ])
+            [s.pos, s.retail.as_ref().map_or(s.current_speed, |r| r.observed_speed as f64),
+             s.hp.hp_value().map(|v| v.max(0.0)).unwrap_or(0.0), s.lane,
+             s.rushing_mode as f64, blocker as f64]
         }).collect();
-        frames.push(json::obj(vec![("t", json::num(0.)), ("horses", json::arr(initial))]));
+        frames.push(ReplayFrame { t: 0., horses: initial });
     }
 
     let mut t = 0.0f64;
+    let all_indices: Vec<usize> = (0..n).collect();
+    let mut active = Vec::with_capacity(n);
+    let mut prev_pos = vec![0.0; n];
+    let mut ranks = Vec::with_capacity(n);
 
     while finished.iter().any(|f| f.is_none()) && t < MAX_RACE_SECONDS {
-        let active: Vec<usize> = (0..n).filter(|&i| finished[i].is_none()).collect();
-        let prev_pos: BTreeMap<usize, f64> = active.iter().map(|&i| (i, field.solvers[i].borrow().pos)).collect();
-        let visited = if retail_runtime { (0..n).collect::<Vec<_>>() } else { active.clone() };
+        active.clear();
+        active.extend((0..n).filter(|&i| finished[i].is_none()));
+        for &i in &active { prev_pos[i] = field.solvers[i].borrow().pos; }
+        let visited = if retail_runtime { &all_indices } else { &active };
         // Score observers see the cached ranks before CalcHorseOrder, and
         // the newly committed phase from each horse's Update.
-        let ranks: Vec<_> = (0..n).map(|i| field.order_of(i)).collect();
+        ranks.clear();
+        ranks.extend((0..n).map(|i| field.order_of(i)));
         let leaders = stadium_score::style_leaders(&score_styles, &ranks);
-        field.step_all(dt, &visited);
-        for &i in &visited {
+        field.step_all(dt, visited);
+        for &i in visited {
             let s = field.solvers[i].borrow();
             rushing_scores[i].update(s.is_kakari, dt);
             positioning_scores[i].update(s.retail.as_ref().map_or(s.phase, |r| r.phase as i32), Some(leaders[i]));
@@ -691,7 +727,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         // Hypothesis companion: a runner may start a duel on its goal-crossing
         // snapshot, after its finish is recorded; emit real count increments
         // for every visited runner.
-        for &i in &visited {
+        for &i in visited {
             let count = field.solvers[i].borrow().compete_fight_count;
             for _ in duel_counts[i]..count {
                 competition_events.push(json::obj(vec![
@@ -711,10 +747,10 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
                     let end = t as f32 + dt as f32;
                     finished_step[i] = Some(end as f64);
                     finished[i] = Some(retail_physics::finish_time(end, dt as f32,
-                        prev_pos[&i] as f32, pos as f32, course.distance as f32) as f64);
+                        prev_pos[i] as f32, pos as f32, course.distance as f32) as f64);
                 } else {
-                    let span = pos - prev_pos[&i];
-                    let frac = if span > 0.0 { (course.distance - prev_pos[&i]) / span } else { 0.0 };
+                    let span = pos - prev_pos[i];
+                    let frac = if span > 0.0 { (course.distance - prev_pos[i]) / span } else { 0.0 };
                     finished[i] = Some(t + dt * frac);
                     finished_step[i] = Some(t + dt);
                 }
@@ -730,7 +766,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         // here left late finishers' frames stuck mid-track while their
         // results still reported the later time, producing a warp/speed-
         // burst right at the line (matches race_runner.py's fix).
-        let horses: Vec<Value> = (0..n)
+        let horses: Vec<[f64; 6]> = (0..n)
             .map(|i| {
                 let s = field.solvers[i].borrow();
                 let hp_val = s.hp.hp_value().map(|v| v.max(0.0)).unwrap_or(0.0);
@@ -738,13 +774,13 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
                     if let Some(r)=&s.retail {r.front_blocker.map_or(-1,|(j,_)|j as i32)}
                     else {field.front_blocker(i, s.pos, s.lane).map(|(j, _)| j as i32).unwrap_or(-1)}
                 } else { -1 };
-                json::obj(vec![("pos", json::num(s.pos)), ("speed", json::num(s.retail.as_ref().map_or(s.current_speed,|r|r.observed_speed as f64))),
-                    ("hp", json::num(hp_val)), ("lane", json::num(s.lane)),
-                    ("temptationMode", json::num(if retail_runtime || finished[i].is_none() { s.rushing_mode as f64 } else { 0.0 })),
-                    ("blockFrontHorseIndex", json::num(blocker as f64))])
+                [s.pos, s.retail.as_ref().map_or(s.current_speed, |r| r.observed_speed as f64),
+                 hp_val, s.lane,
+                 if retail_runtime || finished[i].is_none() { s.rushing_mode as f64 } else { 0.0 },
+                 blocker as f64]
             })
             .collect();
-        frames.push(json::obj(vec![("t", json::num(t)), ("horses", json::arr(horses))]));
+        frames.push(ReplayFrame { t, horses });
     }
 
     for i in 0..n {
@@ -846,7 +882,6 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         ("skillEventVersion", json::num(1.0)),
         ("skillValueVersion", json::num(4.0)),
         ("rosterConditionVersion", json::num(2.0)),
-        ("frames", json::arr(frames)),
         ("results", json::arr(results)),
         ("skillEvents", json::arr(skill_events_out)),
         ("skillDetailObservationVersion", json::num(1.0)),
@@ -909,7 +944,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
             map.insert("experimentalGridVersion".to_string(), json::num(1.0));
         }
     }
-    Ok(result)
+    Ok(encode_frames(result, frames, retain_all_frames))
 }
 
 // Frame cadence -- MUST stay identical to race_simulator.py's
@@ -933,25 +968,37 @@ const SPARSE_STRIDE: usize = 16;
 /// initialized frame. `gateFrameNeeded`
 /// tells Python whether to add it; `framesDownsampled` tells Python the list
 /// is already thinned and must not be thinned again.
-fn downsample_result(result: Value) -> Value {
+// Keep numeric snapshots until output selection. Most replay frames are never
+// sent; constructing JSON objects for those frames only allocates and discards.
+struct ReplayFrame {
+    t: f64,
+    // position, observed speed, HP, lane, rushing mode, front blocker
+    horses: Vec<[f64; 6]>,
+}
+
+impl ReplayFrame {
+    fn into_json(self) -> Value {
+        json::obj(vec![("t", json::num(self.t)), ("horses", json::arr(
+            self.horses.into_iter().map(|h| json::obj(vec![
+                ("pos", json::num(h[0])), ("speed", json::num(h[1])),
+                ("hp", json::num(h[2])), ("lane", json::num(h[3])),
+                ("temptationMode", json::num(h[4])),
+                ("blockFrontHorseIndex", json::num(h[5])),
+            ])).collect()
+        ))])
+    }
+}
+
+fn encode_frames(result: Value, frames: Vec<ReplayFrame>, retain_all: bool) -> Value {
     let mut map = match result {
         Value::Object(m) => m,
         other => return other,
     };
-    let frames = match map.remove("frames") {
-        Some(Value::Array(f)) => f,
-        Some(other) => {
-            map.insert("frames".to_string(), other);
-            return Value::Object(map);
-        }
-        None => return Value::Object(map),
-    };
-
-    let gate_needed = frames
-        .first()
-        .and_then(|f| f.get("t"))
-        .and_then(Value::as_f64)
-        .map_or(false, |t| t > 0.0);
+    if retain_all {
+        map.insert("frames".into(), json::arr(frames.into_iter().map(ReplayFrame::into_json).collect()));
+        return Value::Object(map);
+    }
+    let gate_needed = frames.first().is_some_and(|f| f.t > 0.0);
     let off = if gate_needed { 1 } else { 0 };
     let eff_len = frames.len() + off;
 
@@ -984,27 +1031,18 @@ fn downsample_result(result: Value) -> Value {
                 .get("finishTimeRaw")
                 .and_then(Value::as_f64)
                 .unwrap_or(f64::INFINITY);
-            let mut best: Option<&Value> = None;
+            let mut best: Option<&ReplayFrame> = None;
             for f in frames.iter() {
-                let t = f.get("t").and_then(Value::as_f64).unwrap_or(0.0);
+                let t = f.t;
                 if t <= finish_t {
                     best = Some(f);
                 } else {
                     break;
                 }
             }
-            let entry = match best
-                .and_then(|f| f.get("horses"))
-                .and_then(Value::as_array)
-                .and_then(|hs| hs.get(hi))
-            {
-                Some(h) => json::obj(vec![
-                    ("pos", h.get("pos").cloned().unwrap_or(Value::Null)),
-                    ("speed", h.get("speed").cloned().unwrap_or(Value::Null)),
-                    (
-                        "t",
-                        best.and_then(|f| f.get("t")).cloned().unwrap_or(Value::Null),
-                    ),
+            let entry = match best.and_then(|f| f.horses.get(hi).map(|h| (f.t, h))) {
+                Some((t, h)) => json::obj(vec![
+                    ("pos", json::num(h[0])), ("speed", json::num(h[1])), ("t", json::num(t)),
                 ]),
                 None => Value::Null,
             };
@@ -1017,7 +1055,7 @@ fn downsample_result(result: Value) -> Value {
         .into_iter()
         .enumerate()
         .filter(|(i, _)| keep[i + off])
-        .map(|(_, f)| f)
+        .map(|(_, f)| f.into_json())
         .collect();
 
     map.insert("frames".to_string(), Value::Array(kept));
@@ -1162,8 +1200,8 @@ fn run() -> Result<(), String> {
             // Replace the table on every request: the persistent worker must
             // never retain one client's installed skill definitions for another.
             let skills = match spec_json.get("skillData") {
-                Some(data) => load_skill_table(&json::to_string(data))?,
-                None => load_skill_table(SKILL_DATA_JSON)?,
+                Some(data) => load_skill_value(data)?,
+                None => load_skill_value(bundled_skills()?)?,
             };
             race_solver_builder::init_skills(skills);
             let spec = parse_race_spec(&spec_json)?;
@@ -1182,8 +1220,8 @@ fn run() -> Result<(), String> {
                 if !retail_runtime || spec.experimental_grid {
                     return Err("World geometry requires the experimental runtime and standard starting grid".into());
                 }
-                Some(Rc::new(retail_geometry::CourseGeometry::bundled(spec.course_id,
-                    course_data::get_course(spec.course_id).distance as f32)?))
+                Some(bundled_geometry(spec.course_id,
+                    course_data::get_course(spec.course_id).distance as f32)?)
             } else {None};
             let retail_sections=spec_json.get("experimentalRetailSections").and_then(Value::as_bool)==Some(true);
             let retail=if spec_json.get("experimentalRetailInitialization").and_then(Value::as_bool)==Some(true) || retail_sections || retail_runtime {
@@ -1199,18 +1237,19 @@ fn run() -> Result<(), String> {
                     // Runner force-in coefficient and its random draw (doc 13.190).
                     ("running_style",json::num(Strategy::parse_str(&horse.strategy_str).unwrap().base_running_style() as f64))
                 ])).collect();
-                let raw_courses=json::parse(COURSE_DATA_JSON)?;
-                let raw_skills=spec_json.get("skillData").cloned().unwrap_or(json::parse(SKILL_DATA_JSON)?);
-                let parameters=json::parse(include_str!("../data/global_parameters.json"))?;
+                let raw_courses=bundled_courses()?;
+                let raw_skills=match spec_json.get("skillData") {
+                    Some(value) => value,
+                    None => bundled_skills()?,
+                };
+                let parameters=bundled_parameters()?;
                 let seed=i32::try_from(spec.seed).map_err(|_|"Retail seed must be a signed 32-bit integer")?;
                 Some(retail_initialization::initialize(seed,&input_horses,
-                    raw_courses.get(&spec.course_id.to_string()).ok_or("Missing retail course")?,&raw_skills,
+                    raw_courses.get(&spec.course_id.to_string()).ok_or("Missing retail course")?,raw_skills,
                     parameters.get("parameters").ok_or("Missing retail parameters")?)?)
             } else {None};
-            let raw_result=run_race(&spec, conditions,retail.as_ref(),retail_sections,retail_runtime,world_geometry,startup_pass)?;
-            let mut result = if spec_json.get("retainAllFrames").and_then(Value::as_bool)==Some(true) {
-                raw_result
-            } else {downsample_result(raw_result)};
+            let retain_all_frames = spec_json.get("retainAllFrames").and_then(Value::as_bool)==Some(true);
+            let mut result=run_race(&spec, conditions,retail.as_ref(),retail_sections,retail_runtime,world_geometry,startup_pass,retain_all_frames)?;
             if let Value::Object(map)=&mut result {
                 map.insert("experimentalRetailInitialization".into(),Value::Bool(retail.is_some()));
             }
@@ -1280,5 +1319,69 @@ mod experimental_grid_tests {
         }
         // Ordinary 24-runner lineups must not wrap into the experimental grid.
         assert_eq!(starting_coordinates(23, false), (0.0, 23.6 / 18.0));
+    }
+}
+
+#[cfg(test)]
+mod output_cache_tests {
+    use super::*;
+
+    fn frames(start: usize, count: usize) -> Vec<ReplayFrame> {
+        (start..start + count).map(|i| ReplayFrame {
+            t: i as f64,
+            horses: vec![[i as f64 * 2., 20., 100., 0.5, 0., -1.]],
+        }).collect()
+    }
+
+    fn result(finish: f64) -> Value {
+        json::obj(vec![("results", json::arr(vec![json::obj(vec![
+            ("finishTimeRaw", json::num(finish))
+        ])]))])
+    }
+
+    #[test]
+    fn sparse_frames_keep_cadence_and_unthinned_finish_sample() {
+        for start in [0, 1] {
+            let output = encode_frames(result(19.5), frames(start, 35), false);
+            let times: Vec<_> = output.get_array("frames").unwrap().iter()
+                .map(|f| f.get_f64("t").unwrap() as usize).collect();
+            let expected: Vec<_> = (start..start + 35)
+                .filter(|&i| i < 17 || i % 16 == 0 || i == start + 34).collect();
+            assert_eq!(times, expected);
+            let finish = &output.get_array("finishFrames").unwrap()[0];
+            assert_eq!(finish.get_f64("t").unwrap(), 19.);
+            assert_eq!(finish.get_f64("pos").unwrap(), 38.);
+            assert_eq!(output.get_bool("gateFrameNeeded").unwrap(), start == 1);
+            assert_eq!(output.get_i64("rawFrameCount").unwrap(), 35);
+        }
+    }
+
+    #[test]
+    fn finish_sample_includes_equal_tick_and_handles_missing_prior_frame() {
+        for (finish, expected) in [(0.5, None), (1., Some(1.)), (2., Some(2.))] {
+            let output = encode_frames(result(finish), frames(1, 2), false);
+            let sample = &output.get_array("finishFrames").unwrap()[0];
+            assert_eq!(sample.get("t").and_then(Value::as_f64), expected);
+            assert_eq!(sample.is_null(), expected.is_none());
+        }
+    }
+
+    #[test]
+    fn dense_output_has_all_frames_without_sparse_metadata() {
+        let output = encode_frames(result(19.5), frames(0, 35), true);
+        assert_eq!(output.get_array("frames").unwrap().len(), 35);
+        for key in ["finishFrames", "rawFrameCount", "framesDownsampled", "gateFrameNeeded"] {
+            assert!(output.get(key).is_none());
+        }
+    }
+
+    #[test]
+    fn geometry_cache_shares_only_matching_course_identity() {
+        let distance = bundled_courses().unwrap().get("10504").unwrap()
+            .get_f64("distance").unwrap() as f32;
+        let first = bundled_geometry(10504, distance).unwrap();
+        assert!(Rc::ptr_eq(&first, &bundled_geometry(10504, distance).unwrap()));
+        assert!(bundled_geometry(10504, distance + 1.).is_err());
+        assert!(Rc::ptr_eq(&first, &bundled_geometry(10504, distance).unwrap()));
     }
 }

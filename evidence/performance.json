@@ -1,0 +1,121 @@
+{
+  "scope": "Local Windows persistent workers; 30 nine-runner captured races, five repetitions after five warmups. Alternate engine order each request. Includes worker parsing, simulation, serialization and pipe transfer; excludes caller input construction and reply parsing. Absolute timings depend on machine load.",
+  "standard": {
+    "input_races": 30,
+    "full_frames": false,
+    "engine": {
+      "runs": 150,
+      "first_request_ms": 17.89200003258884,
+      "mean_ms": 15.296793334030857,
+      "median_ms": 15.352199989138171,
+      "p95_ms": 19.367200031410903,
+      "races_per_second": 65.3731784278797
+    },
+    "previous": {
+      "runs": 150,
+      "first_request_ms": 14.939800021238625,
+      "mean_ms": 16.48295333608985,
+      "median_ms": 16.506750020198524,
+      "p95_ms": 20.342900010291487,
+      "races_per_second": 60.66873937029685
+    },
+    "baseline": {
+      "runs": 150,
+      "first_request_ms": 40.66599998623133,
+      "mean_ms": 40.91727466594117,
+      "median_ms": 41.00969998398796,
+      "p95_ms": 48.68409998016432,
+      "races_per_second": 24.439555375186867
+    },
+    "identical_outputs": 150,
+    "speedup_vs_previous": 1.0775430494586167,
+    "speedup_vs_original": 2.674892297519134
+  },
+  "dense": {
+    "input_races": 30,
+    "full_frames": true,
+    "engine": {
+      "runs": 150,
+      "first_request_ms": 28.007500048261136,
+      "mean_ms": 26.959978665302817,
+      "median_ms": 27.063249988714233,
+      "p95_ms": 34.74830003688112,
+      "races_per_second": 37.09201748319588
+    },
+    "previous": {
+      "runs": 150,
+      "first_request_ms": 24.325600010342896,
+      "mean_ms": 28.27629799876983,
+      "median_ms": 28.693699976429343,
+      "p95_ms": 36.51679999893531,
+      "races_per_second": 35.365308430527406
+    },
+    "baseline": {
+      "runs": 150,
+      "first_request_ms": 42.921299987938255,
+      "mean_ms": 48.43440666639557,
+      "median_ms": 48.39029998402111,
+      "p95_ms": 58.17100004060194,
+      "races_per_second": 20.6464798234808
+    },
+    "identical_outputs": 150,
+    "speedup_vs_previous": 1.0488249397304272,
+    "speedup_vs_original": 1.7965298588581635
+  },
+  "parity": {
+    "captured_races": 122,
+    "additional_cases": 13,
+    "modes": [
+      {
+        "dense": false,
+        "byte_identical_replies": 135,
+        "error_replies": [
+          {
+            "case": "empty-skills",
+            "error": "Missing retail initialization field 110261"
+          },
+          {
+            "case": "invalid-skills",
+            "error": "skill_data.json root must be an object"
+          }
+        ]
+      },
+      {
+        "dense": true,
+        "byte_identical_replies": 135,
+        "error_replies": [
+          {
+            "case": "empty-skills",
+            "error": "Missing retail initialization field 110261"
+          },
+          {
+            "case": "invalid-skills",
+            "error": "skill_data.json root must be an object"
+          }
+        ]
+      }
+    ],
+    "sha256": {
+      "original": "1860ae5844903add09cd2edd40f0933c461751d5126ff920bfbb16eaa3de9528",
+      "previous": "9070d26223d782daa3701d7f527d1fd784241e34a9b349c43a0150de4c2c4dfa",
+      "optimized": "ea1fb3a46a4acf075ad91356e9b8f51f763d5173a6013a8fb752abdc302d0a27"
+    }
+  },
+  "parser_parity": {
+    "cases": 9258,
+    "identical_results": 9258,
+    "covers": "ASCII, Unicode, escapes, negative zero, large floats and integers, malformed and truncated input, full race requests"
+  },
+  "unit_tests": {
+    "passed": 79,
+    "failed": 11,
+    "new_failures": 0
+  },
+  "machine": {
+    "cpu": "Intel Core i7-14700K",
+    "physical_cores": 20,
+    "logical_processors": 28,
+    "os": "Windows"
+  },
+  "full_validation": "full-validation.json"
+}

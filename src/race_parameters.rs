@@ -154,7 +154,7 @@ impl Default for RaceParameters {
 /// currently-being-built skill's own id (self-referential conditions like
 /// is_activate_other_skill_detail).
 #[derive(Clone, Debug)]
-pub struct RaceParametersWithSkillId {
-    pub params: RaceParameters,
+pub struct RaceParametersWithSkillId<'a> {
+    pub params: &'a RaceParameters,
     pub skill_id: String,
 }
