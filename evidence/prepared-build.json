@@ -1,0 +1,150 @@
+{
+  "pgo": {
+    "host": "x86_64-pc-windows-msvc",
+    "native": false,
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+    "features": "fast-alloc",
+    "trained_binary": true,
+    "trained_native": true,
+    "replay_worker": "0",
+    "common_rustflags": [],
+    "inputs": [
+      {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\speed-pgo-inputs.jsonl",
+        "sha256": "1a9acb57b34957124f04a42eafed2605768cd00f1504e326a1b32919263a6bb6"
+      }
+    ],
+    "training_requests_per_format": 247,
+    "training_requests": 1235,
+    "instrumented_sha256": "53d4f03a002e9d0d7d024ef963c4d4f9b47becf3ff033bedb879d9814b612579",
+    "profile_sha256": "561ce70603d9ff9a1b8355914cdaef4cb430f885c170dc8b080d478fea8f28a6",
+    "engine_sha256": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+    "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\pgo-fo85cdd4\\build\\x86_64-pc-windows-msvc\\release\\race_engine_rs_v2.exe",
+    "output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.exe",
+    "library": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\pgo-fo85cdd4\\build\\x86_64-pc-windows-msvc\\release\\globalsim.dll",
+    "library_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.dll",
+    "library_sha256": "4f73bb0870a77cb595a9e96290a7c229a1dd2adf1a902f6671801c7a96808e17"
+  },
+  "engines": {
+    "baseline": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+      "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+      "replay_worker": false,
+      "binary": false,
+      "native": false
+    },
+    "generic": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\default\\release\\race_engine_rs_v2.exe",
+      "sha256": "83943d2937fb3ed2f05652f02e1c2d5eafa05493b29a543121aae6f2ae0fd9b4",
+      "replay_worker": false,
+      "binary": false,
+      "native": false
+    },
+    "pgo": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.exe",
+      "sha256": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+      "replay_worker": false,
+      "binary": false,
+      "native": false
+    },
+    "pipeline": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.exe",
+      "sha256": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+      "replay_worker": true,
+      "binary": false,
+      "native": false
+    },
+    "binary": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.exe",
+      "sha256": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+      "replay_worker": false,
+      "binary": true,
+      "native": false
+    },
+    "native": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.dll",
+      "sha256": "4f73bb0870a77cb595a9e96290a7c229a1dd2adf1a902f6671801c7a96808e17",
+      "replay_worker": false,
+      "binary": true,
+      "native": true
+    }
+  },
+  "source_sha256": {
+    "src/activation_conditions.rs": "370fa07bf8bfdf2852f3be8ec6a5930ee96c51832b9e6f56ef4a9ba22605e1ee",
+    "src/activation_sample_policy.rs": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+    "src/api.rs": "f71456075056bb064a770ed79646081b186c2f96837905716f84d41c85c99f19",
+    "src/binary_replay.rs": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e",
+    "src/condition_parser.rs": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+    "src/conserve_power.rs": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+    "src/course_data.rs": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+    "src/ffi.rs": "eaa607d39527d8427f93d1c631bb5a6caa2d3f6ca739995f64a06b1844c7f1e2",
+    "src/horse_types.rs": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+    "src/hp_policy.rs": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade",
+    "src/json.rs": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26",
+    "src/lane_selection.rs": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+    "src/lib.rs": "b94183ccca366786c0242b9a632639116d43b5fbd11720adc1c72e718fd6f165",
+    "src/main.rs": "401000b4d06b8129d600b6feef929fb64b8c7df73d83d0e4719bf0c3cf68189d",
+    "src/overtaking.rs": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+    "src/race_field.rs": "eb1bd5f23957d834cb8e75019f8217db2909997e6d0909114dba35c4a9b3796e",
+    "src/race_field_retail.rs": "7551007ff467848b517656b334faa24bb90619c049996bed3c8891dcbec12c24",
+    "src/race_parameters.rs": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106",
+    "src/race_solver.rs": "fb1048efb757955b0a972ea444e184259165fff7723b2cf14ea583f3a74d2324",
+    "src/race_solver_builder.rs": "1f5f1ff9195599fa8441375ff604d7aae59b466d857c398ddc92ecb6a86d057e",
+    "src/race_solver_retail.rs": "c9dacbf53e7f536fb1889b0c77e1a0f63cb87b574dbcb17a1b34798fbf95e790",
+    "src/random_gen.rs": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+    "src/region.rs": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+    "src/replay_frames.rs": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac",
+    "src/replay_worker.rs": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d",
+    "src/retail_geometry.rs": "fdb4033b35a038cfc05588ec587d9d9c5536edcce1f1f025cffb5b7fadb4a380",
+    "src/retail_geometry_assets.rs": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+    "src/retail_initialization.rs": "a4106979ac52a84c30cfba253943d9921cb9ddc6f66657c4d916c5101e6020d4",
+    "src/retail_lane.rs": "86f8669462a5c489a9047fad80c5b15fbfed67996141764e3ba78a4ecbbfd1b1",
+    "src/retail_physics.rs": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976",
+    "src/retail_position_keep.rs": "30389dfd520cb67fc1436f001d1c0a4ca9292b774b12471fc96ef40e2c2fb67b",
+    "src/retail_random.rs": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+    "src/retail_sort.rs": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+    "src/retail_spurt.rs": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+    "src/retail_states.rs": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+    "src/rushing.rs": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+    "src/stadium_score.rs": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+    "src/starting_grid.rs": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830",
+    "Cargo.toml": "2724218301608cca6d3e657ec2bcaf5ef678d1d2f80394dd668e56d0bf6eeb73",
+    "Cargo.lock": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+    "VERSION": "ed334323d791ec6df20baf68c10083cdca604c67efdb3b6fd4d94d7ccea2d780"
+  },
+  "rust_tests": {
+    "configurations": [
+      "default",
+      "fast-alloc"
+    ],
+    "passed_per_configuration": 114,
+    "unchanged_failures": [
+      "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+      "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+      "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+      "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+      "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+      "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+      "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+      "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+      "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+      "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+      "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+    ]
+  },
+  "tool_sha256": {
+    "tools/native_engine.py": "cd5fdc23690b3c6e25516101069c0f54e3ad5b75a5a319c487d6b40e4e7b4b13",
+    "tools/check_native_parity.py": "b6a99c488ba92f71a77e0eb73b33d4bd00d4b74eb56de7dcf2a16eb0c81bbe26",
+    "tools/benchmark_native.py": "9a3d8cbdc0a2feec51c7057bd93677cf35404442c4c032624a12200504d265cd",
+    "tools/train_native.py": "4d18364cc94fb54370b27179a3a80086a717b9bbc749684b8ccc27021a1fd976",
+    "tools/build_pgo.py": "7ef6c73dbc7f4ffc5742fefda8a30ddabcab3606876f17bbf7226827d0d41230",
+    "include/globalsim.h": "2d1a11abd637d779525c917ccf932476627ad5b328d4415b64056a19720b886f",
+    "examples/prepared_race.rs": "05cc84a31056433c14d5559f6f0d70c0a45bac77d265f8c6923a4efe4fef9f9e",
+    "examples/benchmark_prepared.rs": "9fc62f07177e228525fdd19d895c320d52791b936cc6cebd9f24f2c1a3c615c6"
+  },
+  "harness_sha256": {
+    "target/reuse-benchmark.py": "695aa173b24c5e68f3b65a1d653d5de0bfc10b2f30fb1b57fa3c57c921492d02",
+    "target/reuse-full-audit.py": "912b3b8032a459c8f5ac59558aac812def7c9d35791e7ac715f8362f62351b24",
+    "target/reuse-native-bench.rs": "9fc62f07177e228525fdd19d895c320d52791b936cc6cebd9f24f2c1a3c615c6"
+  }
+}

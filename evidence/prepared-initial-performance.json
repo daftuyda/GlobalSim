@@ -1,0 +1,40 @@
+{
+  "scope": "All frames, full binary packet returned. Native includes copying reply into Python-owned bytes; preparation and caller decode excluded. Worker includes request parse and pipe transfer. Serial paired order rotates and reverses.",
+  "sha256": {
+    "baseline": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+    "candidate": "2829b1bcd2652b8bc56ff21a3532d9b70ab599a546e591c4e4934102962bd0b2",
+    "library": "57753af0fe5aa1082caf39aee06b386d84234485ef7998b934ed0586aa9fa4e5"
+  },
+  "repeats": 3,
+  "warmup": 5,
+  "groups": {
+    "nine-monte-carlo": {
+      "preparations": 1,
+      "preparation_ms": [
+        9.1305
+      ],
+      "mean_reply_bytes": 540281.7666666667,
+      "distinct_replies": 30,
+      "timings": {
+        "before": {
+          "runs": 90,
+          "mean_ms": 5.702137777777778,
+          "median_ms": 5.68525,
+          "p95_ms": 6.0887
+        },
+        "worker": {
+          "runs": 90,
+          "mean_ms": 6.54945,
+          "median_ms": 6.524699999999999,
+          "p95_ms": 6.9578
+        },
+        "native": {
+          "runs": 90,
+          "mean_ms": 5.978854444444444,
+          "median_ms": 5.9670000000000005,
+          "p95_ms": 6.3169
+        }
+      }
+    }
+  }
+}

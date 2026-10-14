@@ -1,0 +1,1072 @@
+{
+  "pgo": {
+    "host": "x86_64-pc-windows-msvc",
+    "native": false,
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+    "features": "fast-alloc",
+    "trained_binary": true,
+    "replay_worker": "0",
+    "common_rustflags": [],
+    "inputs": [
+      {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\speed-pgo-inputs.jsonl",
+        "sha256": "1a9acb57b34957124f04a42eafed2605768cd00f1504e326a1b32919263a6bb6"
+      }
+    ],
+    "training_requests": 247,
+    "instrumented_sha256": "2179f4f58110c2586db1631fde5b6199c7747f9c069042a50dae44e25dd9491f",
+    "profile_sha256": "c73973ad80b25efacdd240e9ef36f3179b4ccb7a5f7afac8f63bf22f446936a8",
+    "engine_sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+    "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final\\target\\pgo-tp68a73g\\build\\x86_64-pc-windows-msvc\\release\\race_engine_rs_v2.exe",
+    "output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe"
+  },
+  "engines": {
+    "baseline": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-pgo.exe",
+      "sha256": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+      "replay_worker": false,
+      "binary": false
+    },
+    "generic": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-generic.exe",
+      "sha256": "d42225858c141dee8e122f00188cf2ceabfebb6f56d16e754f8981a8793adfff",
+      "replay_worker": false,
+      "binary": false
+    },
+    "pgo": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+      "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+      "replay_worker": false,
+      "binary": false
+    },
+    "pipeline": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+      "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+      "replay_worker": true,
+      "binary": false
+    },
+    "binary": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+      "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+      "replay_worker": false,
+      "binary": true
+    }
+  },
+  "source": [
+    {
+      "path": "src/activation_conditions.rs",
+      "build_source_sha256": "370fa07bf8bfdf2852f3be8ec6a5930ee96c51832b9e6f56ef4a9ba22605e1ee",
+      "working_source_sha256": "370fa07bf8bfdf2852f3be8ec6a5930ee96c51832b9e6f56ef4a9ba22605e1ee",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/activation_sample_policy.rs",
+      "build_source_sha256": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+      "working_source_sha256": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/binary_replay.rs",
+      "build_source_sha256": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e",
+      "working_source_sha256": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/condition_parser.rs",
+      "build_source_sha256": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+      "working_source_sha256": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/conserve_power.rs",
+      "build_source_sha256": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+      "working_source_sha256": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/course_data.rs",
+      "build_source_sha256": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+      "working_source_sha256": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/horse_types.rs",
+      "build_source_sha256": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+      "working_source_sha256": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/hp_policy.rs",
+      "build_source_sha256": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade",
+      "working_source_sha256": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/json.rs",
+      "build_source_sha256": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26",
+      "working_source_sha256": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/lane_selection.rs",
+      "build_source_sha256": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+      "working_source_sha256": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/main.rs",
+      "build_source_sha256": "03fec28f109c145831447770e2613b618a15747d0128ea0124f606b239ea5ce9",
+      "working_source_sha256": "548f2aeaa3c42bc41fff270a7dc596e0e61d3b01c02dabb90e1b04e97ef1c6bc",
+      "only_line_endings_differ": true
+    },
+    {
+      "path": "src/overtaking.rs",
+      "build_source_sha256": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+      "working_source_sha256": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/race_field.rs",
+      "build_source_sha256": "eb1bd5f23957d834cb8e75019f8217db2909997e6d0909114dba35c4a9b3796e",
+      "working_source_sha256": "eb1bd5f23957d834cb8e75019f8217db2909997e6d0909114dba35c4a9b3796e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/race_field_retail.rs",
+      "build_source_sha256": "7551007ff467848b517656b334faa24bb90619c049996bed3c8891dcbec12c24",
+      "working_source_sha256": "7551007ff467848b517656b334faa24bb90619c049996bed3c8891dcbec12c24",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/race_parameters.rs",
+      "build_source_sha256": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106",
+      "working_source_sha256": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/race_solver.rs",
+      "build_source_sha256": "fb1048efb757955b0a972ea444e184259165fff7723b2cf14ea583f3a74d2324",
+      "working_source_sha256": "fb1048efb757955b0a972ea444e184259165fff7723b2cf14ea583f3a74d2324",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/race_solver_builder.rs",
+      "build_source_sha256": "6bc5f47f6917f60540d6c2cf0f87f621b19ec2e8ffe30ddf50c442887b92227e",
+      "working_source_sha256": "6bc5f47f6917f60540d6c2cf0f87f621b19ec2e8ffe30ddf50c442887b92227e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/race_solver_retail.rs",
+      "build_source_sha256": "c9dacbf53e7f536fb1889b0c77e1a0f63cb87b574dbcb17a1b34798fbf95e790",
+      "working_source_sha256": "c9dacbf53e7f536fb1889b0c77e1a0f63cb87b574dbcb17a1b34798fbf95e790",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/random_gen.rs",
+      "build_source_sha256": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+      "working_source_sha256": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/region.rs",
+      "build_source_sha256": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+      "working_source_sha256": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/replay_frames.rs",
+      "build_source_sha256": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac",
+      "working_source_sha256": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/replay_worker.rs",
+      "build_source_sha256": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d",
+      "working_source_sha256": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_geometry.rs",
+      "build_source_sha256": "fdb4033b35a038cfc05588ec587d9d9c5536edcce1f1f025cffb5b7fadb4a380",
+      "working_source_sha256": "fdb4033b35a038cfc05588ec587d9d9c5536edcce1f1f025cffb5b7fadb4a380",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_geometry_assets.rs",
+      "build_source_sha256": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+      "working_source_sha256": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_initialization.rs",
+      "build_source_sha256": "8e3b05622eb71091f5e57d134898f4d04124be68b2b72c6ff554d50804c5a4e3",
+      "working_source_sha256": "8e3b05622eb71091f5e57d134898f4d04124be68b2b72c6ff554d50804c5a4e3",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_lane.rs",
+      "build_source_sha256": "86f8669462a5c489a9047fad80c5b15fbfed67996141764e3ba78a4ecbbfd1b1",
+      "working_source_sha256": "86f8669462a5c489a9047fad80c5b15fbfed67996141764e3ba78a4ecbbfd1b1",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_physics.rs",
+      "build_source_sha256": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976",
+      "working_source_sha256": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_position_keep.rs",
+      "build_source_sha256": "30389dfd520cb67fc1436f001d1c0a4ca9292b774b12471fc96ef40e2c2fb67b",
+      "working_source_sha256": "30389dfd520cb67fc1436f001d1c0a4ca9292b774b12471fc96ef40e2c2fb67b",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_random.rs",
+      "build_source_sha256": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+      "working_source_sha256": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_sort.rs",
+      "build_source_sha256": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+      "working_source_sha256": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_spurt.rs",
+      "build_source_sha256": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+      "working_source_sha256": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/retail_states.rs",
+      "build_source_sha256": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+      "working_source_sha256": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/rushing.rs",
+      "build_source_sha256": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+      "working_source_sha256": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/stadium_score.rs",
+      "build_source_sha256": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+      "working_source_sha256": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "src/starting_grid.rs",
+      "build_source_sha256": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830",
+      "working_source_sha256": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_data.json",
+      "build_source_sha256": "812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98",
+      "working_source_sha256": "812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/global_parameters.json",
+      "build_source_sha256": "4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1",
+      "working_source_sha256": "4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/skill_data.json",
+      "build_source_sha256": "a6ff8655cf64558334a0f1293da4212094f47519cb34dc93fa875d7ffe24b046",
+      "working_source_sha256": "a6ff8655cf64558334a0f1293da4212094f47519cb34dc93fa875d7ffe24b046",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/starting_grids.json",
+      "build_source_sha256": "e477d5b0356abaa80705c2a4a43e73b1f4976ce2950246dada5bd302998720c2",
+      "working_source_sha256": "e477d5b0356abaa80705c2a4a43e73b1f4976ce2950246dada5bd302998720c2",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/v70-skill-data.json",
+      "build_source_sha256": "e1a713c38d4cfb1478144b9e641e82e5c996dd777af0b375351fa6bd21bc5a84",
+      "working_source_sha256": "e1a713c38d4cfb1478144b9e641e82e5c996dd777af0b375351fa6bd21bc5a84",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10101.json",
+      "build_source_sha256": "ae75a726bd10e7270d8cb236e952bfce4c92bbb142e2eaffd5019ce8d4f183e1",
+      "working_source_sha256": "ae75a726bd10e7270d8cb236e952bfce4c92bbb142e2eaffd5019ce8d4f183e1",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10102.json",
+      "build_source_sha256": "a662da2b246ce59f62f18d4972f69f8afa198e2799ede0a8be556fa1e7bd9238",
+      "working_source_sha256": "a662da2b246ce59f62f18d4972f69f8afa198e2799ede0a8be556fa1e7bd9238",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10103.json",
+      "build_source_sha256": "50310185b8f49eeb65b92627185128c4127db7b1658684d3ce8f43ca23d6a6f8",
+      "working_source_sha256": "50310185b8f49eeb65b92627185128c4127db7b1658684d3ce8f43ca23d6a6f8",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10104.json",
+      "build_source_sha256": "2bc8bdd761d65641555b780ec0e461c6b721ccced6ac12deb3a0d334353c0611",
+      "working_source_sha256": "2bc8bdd761d65641555b780ec0e461c6b721ccced6ac12deb3a0d334353c0611",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10105.json",
+      "build_source_sha256": "dd8c0d607ecedb14f8ac72f5a436c0d8c06f82f72978cddd7d6e51cb2278db5a",
+      "working_source_sha256": "dd8c0d607ecedb14f8ac72f5a436c0d8c06f82f72978cddd7d6e51cb2278db5a",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10106.json",
+      "build_source_sha256": "376080649d28ca5a3a33d8885e72312a90d94a732f8c9770398ec55a89c4bbaf",
+      "working_source_sha256": "376080649d28ca5a3a33d8885e72312a90d94a732f8c9770398ec55a89c4bbaf",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10107.json",
+      "build_source_sha256": "b7946af6d59cedf7240392cb8e54d3925583d7ea132254822b3bb458801fc460",
+      "working_source_sha256": "b7946af6d59cedf7240392cb8e54d3925583d7ea132254822b3bb458801fc460",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10108.json",
+      "build_source_sha256": "3c31ab830743f5dd4da9ed430d74efa26c0a511cf74bd9153730e0e53f548774",
+      "working_source_sha256": "3c31ab830743f5dd4da9ed430d74efa26c0a511cf74bd9153730e0e53f548774",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10201.json",
+      "build_source_sha256": "af31c96a195f3690c56cbcb370d07557ba60ef612f9bc12756fedd379daa50a6",
+      "working_source_sha256": "af31c96a195f3690c56cbcb370d07557ba60ef612f9bc12756fedd379daa50a6",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10202.json",
+      "build_source_sha256": "4b4acad7f46413beddb169e1c8400a00e513d49dff1ae054aeba37e2684703a5",
+      "working_source_sha256": "4b4acad7f46413beddb169e1c8400a00e513d49dff1ae054aeba37e2684703a5",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10203.json",
+      "build_source_sha256": "71fc72a3bd166074ed24fd6c2be60e37a67a2bea917dda6ed3755e386fbc450e",
+      "working_source_sha256": "71fc72a3bd166074ed24fd6c2be60e37a67a2bea917dda6ed3755e386fbc450e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10204.json",
+      "build_source_sha256": "ef44246fc58ceecf5d2ba0c8af097b66822f17e08f672de033e1f9f82f5ef84e",
+      "working_source_sha256": "ef44246fc58ceecf5d2ba0c8af097b66822f17e08f672de033e1f9f82f5ef84e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10205.json",
+      "build_source_sha256": "4de60e843a72ef0114573052880787361e37db717cec7e155ba2b53b3fa02ff7",
+      "working_source_sha256": "4de60e843a72ef0114573052880787361e37db717cec7e155ba2b53b3fa02ff7",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10206.json",
+      "build_source_sha256": "f764ea2dc787b47ac3cb959d45d35a1da72073b799184456389bb52e3241839c",
+      "working_source_sha256": "f764ea2dc787b47ac3cb959d45d35a1da72073b799184456389bb52e3241839c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10207.json",
+      "build_source_sha256": "63a1a4cb5e2f4ed1a4519c59323b4aed39db431ed7b765972eecddafd67e8edb",
+      "working_source_sha256": "63a1a4cb5e2f4ed1a4519c59323b4aed39db431ed7b765972eecddafd67e8edb",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10208.json",
+      "build_source_sha256": "f846223a0faddae089e01e7296af89f63e1dc2470c5316786eff88741cec120d",
+      "working_source_sha256": "f846223a0faddae089e01e7296af89f63e1dc2470c5316786eff88741cec120d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10301.json",
+      "build_source_sha256": "d52c87be11bc77611758e5a2980231cec62a7784c2714174142b1399eb3dd100",
+      "working_source_sha256": "d52c87be11bc77611758e5a2980231cec62a7784c2714174142b1399eb3dd100",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10302.json",
+      "build_source_sha256": "86dd9ebd52c2a1b29bceb3b72d1425c14a2c58ea0a2340ddecb7858bf95e9ada",
+      "working_source_sha256": "86dd9ebd52c2a1b29bceb3b72d1425c14a2c58ea0a2340ddecb7858bf95e9ada",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10303.json",
+      "build_source_sha256": "70008dcfe56452f1fcc38bb65e4afc7ec5eb33aed3ddecd8b65052a6effc2f5f",
+      "working_source_sha256": "70008dcfe56452f1fcc38bb65e4afc7ec5eb33aed3ddecd8b65052a6effc2f5f",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10304.json",
+      "build_source_sha256": "c091e1d7347d4562ae337ea6ac77adbb9ae58278c9d036458168e12549d59a47",
+      "working_source_sha256": "c091e1d7347d4562ae337ea6ac77adbb9ae58278c9d036458168e12549d59a47",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10305.json",
+      "build_source_sha256": "8905f46c7b762a1c0c15e2b3454479c982830ca45c40f37decf1d1213aea8c9c",
+      "working_source_sha256": "8905f46c7b762a1c0c15e2b3454479c982830ca45c40f37decf1d1213aea8c9c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10306.json",
+      "build_source_sha256": "41ae650ef69ffe632d461f7cb712efc00d39ab6aba9fb15032e0322ffb9d69ac",
+      "working_source_sha256": "41ae650ef69ffe632d461f7cb712efc00d39ab6aba9fb15032e0322ffb9d69ac",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10307.json",
+      "build_source_sha256": "edd031a6ca66247bc2182d90b7cb28bdfbe742d1a21f5d947d62a2ef51029076",
+      "working_source_sha256": "edd031a6ca66247bc2182d90b7cb28bdfbe742d1a21f5d947d62a2ef51029076",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10308.json",
+      "build_source_sha256": "b4407ef848696f5d6a7f5d2fc3b3e9bc7d5e3708ebe9dcfc6066669705ea679d",
+      "working_source_sha256": "b4407ef848696f5d6a7f5d2fc3b3e9bc7d5e3708ebe9dcfc6066669705ea679d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10309.json",
+      "build_source_sha256": "9a5f76040b08ab95c4a15a63b53a8b36123b7cb4c9921f7637ab40ddf1744478",
+      "working_source_sha256": "9a5f76040b08ab95c4a15a63b53a8b36123b7cb4c9921f7637ab40ddf1744478",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10310.json",
+      "build_source_sha256": "7d2fc10bd60b8701e74cc135b6b73041285865c999d367d0bec7d21004a03202",
+      "working_source_sha256": "7d2fc10bd60b8701e74cc135b6b73041285865c999d367d0bec7d21004a03202",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10311.json",
+      "build_source_sha256": "65a7c21405f1c20c8bdebbc710c748d53ed433a404149f135487956c627fb482",
+      "working_source_sha256": "65a7c21405f1c20c8bdebbc710c748d53ed433a404149f135487956c627fb482",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10312.json",
+      "build_source_sha256": "600277aec519139fba15c0d053e4ccb849ac830d935aef7fd67164c9c4edda04",
+      "working_source_sha256": "600277aec519139fba15c0d053e4ccb849ac830d935aef7fd67164c9c4edda04",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10401.json",
+      "build_source_sha256": "b83235e94dc46f37566cbe5f328c6244290f3dead919bcf4cf6bfd805ad66e32",
+      "working_source_sha256": "b83235e94dc46f37566cbe5f328c6244290f3dead919bcf4cf6bfd805ad66e32",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10402.json",
+      "build_source_sha256": "131a27e870a45b39bdca9d08b5f08e38ae48dbe5dc28df1179f3069a0ea8083f",
+      "working_source_sha256": "131a27e870a45b39bdca9d08b5f08e38ae48dbe5dc28df1179f3069a0ea8083f",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10403.json",
+      "build_source_sha256": "e336911fca2c4e3cc85871abe70aa73ac634352e3e40ee70fc59b1be478ded14",
+      "working_source_sha256": "e336911fca2c4e3cc85871abe70aa73ac634352e3e40ee70fc59b1be478ded14",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10404.json",
+      "build_source_sha256": "4679cac10ad07eb477370329543484fca580befff1b3642f7f783cf94bdfd6ba",
+      "working_source_sha256": "4679cac10ad07eb477370329543484fca580befff1b3642f7f783cf94bdfd6ba",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10405.json",
+      "build_source_sha256": "2ffaa06a2d122afb22e4d59682b2a8780abcddaeacf74c8b4b61b354678b5135",
+      "working_source_sha256": "2ffaa06a2d122afb22e4d59682b2a8780abcddaeacf74c8b4b61b354678b5135",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10406.json",
+      "build_source_sha256": "98c1f5192dc3b6c515910ecddf8ec540a350796e0d51c67a83591b2f9c25a877",
+      "working_source_sha256": "98c1f5192dc3b6c515910ecddf8ec540a350796e0d51c67a83591b2f9c25a877",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10407.json",
+      "build_source_sha256": "cc803e208c29a477acc83441a170a669bc1cf27db965ed76005986e6ef8a0ec9",
+      "working_source_sha256": "cc803e208c29a477acc83441a170a669bc1cf27db965ed76005986e6ef8a0ec9",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10501.json",
+      "build_source_sha256": "cf99f3ddb112713c64de05829d3e8e34e79930604d52a3457807be56b39acc88",
+      "working_source_sha256": "cf99f3ddb112713c64de05829d3e8e34e79930604d52a3457807be56b39acc88",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10502.json",
+      "build_source_sha256": "7355d15a1aab6c1682b4b7b97d3249a3ace843197ec97722693ac9e3e46d8fb7",
+      "working_source_sha256": "7355d15a1aab6c1682b4b7b97d3249a3ace843197ec97722693ac9e3e46d8fb7",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10503.json",
+      "build_source_sha256": "a4bd4d5b41672ee39c525613c0e0ee258fbdeac5e8c5f7d85aa4ed6cebe463d1",
+      "working_source_sha256": "a4bd4d5b41672ee39c525613c0e0ee258fbdeac5e8c5f7d85aa4ed6cebe463d1",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10504.json",
+      "build_source_sha256": "968bb01168db6f645094b8baf67ad134e58ac60f0c21931c75b495551fb158b0",
+      "working_source_sha256": "968bb01168db6f645094b8baf67ad134e58ac60f0c21931c75b495551fb158b0",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10505.json",
+      "build_source_sha256": "4f8551aad3f9e33c2746a63e5988e361200c943e5fab287a4e87aed54a7324d2",
+      "working_source_sha256": "4f8551aad3f9e33c2746a63e5988e361200c943e5fab287a4e87aed54a7324d2",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10506.json",
+      "build_source_sha256": "628b4020fcbf0fa5c80d5c9bf0801b39d9096dd94b14fc8db588fc7c95a2806b",
+      "working_source_sha256": "628b4020fcbf0fa5c80d5c9bf0801b39d9096dd94b14fc8db588fc7c95a2806b",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10507.json",
+      "build_source_sha256": "9a8ffd8209a7b17c2affa158af32e6355d546aea0a2e0ca8d0800a86de3edf31",
+      "working_source_sha256": "9a8ffd8209a7b17c2affa158af32e6355d546aea0a2e0ca8d0800a86de3edf31",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10508.json",
+      "build_source_sha256": "cdeae64ae5c758723a80acdd1f8a9ee5db69f84b0276392da1c8ed68e7e76950",
+      "working_source_sha256": "cdeae64ae5c758723a80acdd1f8a9ee5db69f84b0276392da1c8ed68e7e76950",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10509.json",
+      "build_source_sha256": "519667a2106e802a048c0cb4ad0c902b66a9dd71f080e034e93e7f2f846b7ae1",
+      "working_source_sha256": "519667a2106e802a048c0cb4ad0c902b66a9dd71f080e034e93e7f2f846b7ae1",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10510.json",
+      "build_source_sha256": "0edd56f93db6e03b7da867c5dd909982518b7899a9a0845b66738ae3d7e48870",
+      "working_source_sha256": "0edd56f93db6e03b7da867c5dd909982518b7899a9a0845b66738ae3d7e48870",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10511.json",
+      "build_source_sha256": "914f17d95c9116e90f836241cfa8c823d1a05073299661151eef93bb8fd2ed37",
+      "working_source_sha256": "914f17d95c9116e90f836241cfa8c823d1a05073299661151eef93bb8fd2ed37",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10601.json",
+      "build_source_sha256": "f8d2304ac0f912957b27edbd36468aa362e59d7f4cab56a1e2747048e65b82f4",
+      "working_source_sha256": "f8d2304ac0f912957b27edbd36468aa362e59d7f4cab56a1e2747048e65b82f4",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10602.json",
+      "build_source_sha256": "07f02685c113bcff18b3cc41751a85725939c24416609e719eff8449f8255e47",
+      "working_source_sha256": "07f02685c113bcff18b3cc41751a85725939c24416609e719eff8449f8255e47",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10603.json",
+      "build_source_sha256": "0404f614be9faa12c851fca6d39471e0021fa7ed2c24fac5539b21b239e04ec6",
+      "working_source_sha256": "0404f614be9faa12c851fca6d39471e0021fa7ed2c24fac5539b21b239e04ec6",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10604.json",
+      "build_source_sha256": "c39f7c3146b76c5f27e788460dd30459fef6d7743b232deca161da7d95beb346",
+      "working_source_sha256": "c39f7c3146b76c5f27e788460dd30459fef6d7743b232deca161da7d95beb346",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10605.json",
+      "build_source_sha256": "7e6c6b4ec1df140afee11076256796405965d9360dc6568212c25c1d398ac0de",
+      "working_source_sha256": "7e6c6b4ec1df140afee11076256796405965d9360dc6568212c25c1d398ac0de",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10606.json",
+      "build_source_sha256": "0eed113cd5d9b11fa8c0e916b0a99ad5c3a739492d25eec21c5de7097e3a19b0",
+      "working_source_sha256": "0eed113cd5d9b11fa8c0e916b0a99ad5c3a739492d25eec21c5de7097e3a19b0",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10607.json",
+      "build_source_sha256": "08843030c0ef0204c38fd8e684ed29de262e68063cb2d2ce7fc233048c07b407",
+      "working_source_sha256": "08843030c0ef0204c38fd8e684ed29de262e68063cb2d2ce7fc233048c07b407",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10608.json",
+      "build_source_sha256": "1334b7714298d0ea973b0aaddd7876ab51332eb441a17387c1dd2e74ab50ceab",
+      "working_source_sha256": "1334b7714298d0ea973b0aaddd7876ab51332eb441a17387c1dd2e74ab50ceab",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10609.json",
+      "build_source_sha256": "7d548b2326c6a220f3205aaf6d8dcfd753ad5b67fdf24f4b856ae11e6b5fdc4e",
+      "working_source_sha256": "7d548b2326c6a220f3205aaf6d8dcfd753ad5b67fdf24f4b856ae11e6b5fdc4e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10610.json",
+      "build_source_sha256": "daaac9f22192472fb364bac5b7ae26bfbc649f0a7236b94d20ee42e683db3f25",
+      "working_source_sha256": "daaac9f22192472fb364bac5b7ae26bfbc649f0a7236b94d20ee42e683db3f25",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10611.json",
+      "build_source_sha256": "4b069a63cd4d716131eac08fb799b00d9ca580930aebf0b1fb7fcdff775bdde6",
+      "working_source_sha256": "4b069a63cd4d716131eac08fb799b00d9ca580930aebf0b1fb7fcdff775bdde6",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10612.json",
+      "build_source_sha256": "cf9d3ea697c4b9c43f19348e630037b86ed88eb6c00f65aedc8ea269a2ff48d7",
+      "working_source_sha256": "cf9d3ea697c4b9c43f19348e630037b86ed88eb6c00f65aedc8ea269a2ff48d7",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10613.json",
+      "build_source_sha256": "184c0143f816c840fa75d61e15c5af162e3eb9fe1f891012b1890a1abbe77416",
+      "working_source_sha256": "184c0143f816c840fa75d61e15c5af162e3eb9fe1f891012b1890a1abbe77416",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10701.json",
+      "build_source_sha256": "4d0231e7a6b3643e329a41167ee6b224ffe3af60e022bcb6a8435eb8ecc69058",
+      "working_source_sha256": "4d0231e7a6b3643e329a41167ee6b224ffe3af60e022bcb6a8435eb8ecc69058",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10702.json",
+      "build_source_sha256": "f40d89a800e9ad5df75a184eabe1cc204a0522ea586f517e8af24f7ccedb7483",
+      "working_source_sha256": "f40d89a800e9ad5df75a184eabe1cc204a0522ea586f517e8af24f7ccedb7483",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10703.json",
+      "build_source_sha256": "2d2b4328b83215ecbfd0c6b7dd3ba97c91f683d5a57ee3a5cbe6016e5c1d7814",
+      "working_source_sha256": "2d2b4328b83215ecbfd0c6b7dd3ba97c91f683d5a57ee3a5cbe6016e5c1d7814",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10704.json",
+      "build_source_sha256": "d7ee0c51f47c16ee46b60fa4a4b1b6de84ddd5de6ab688a5139301bca7f30a5a",
+      "working_source_sha256": "d7ee0c51f47c16ee46b60fa4a4b1b6de84ddd5de6ab688a5139301bca7f30a5a",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10705.json",
+      "build_source_sha256": "d15ff96bf0bb8686f6201236d0a81f9896d02a5acd6bb05519c9f0fbbbc05ee3",
+      "working_source_sha256": "d15ff96bf0bb8686f6201236d0a81f9896d02a5acd6bb05519c9f0fbbbc05ee3",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10706.json",
+      "build_source_sha256": "0f89881f7075dcb7cf9fac7503e8a217e1f01b635ead26b92be3d36ab7902218",
+      "working_source_sha256": "0f89881f7075dcb7cf9fac7503e8a217e1f01b635ead26b92be3d36ab7902218",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10707.json",
+      "build_source_sha256": "42d406ddd8620403c8f18956311f356c12bbe85457cae93a04a380c2fdf26092",
+      "working_source_sha256": "42d406ddd8620403c8f18956311f356c12bbe85457cae93a04a380c2fdf26092",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10708.json",
+      "build_source_sha256": "5b54a029c179229f3e817e94ce18d364e137d39621987e0dd5eac5e18c8c6cf8",
+      "working_source_sha256": "5b54a029c179229f3e817e94ce18d364e137d39621987e0dd5eac5e18c8c6cf8",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10709.json",
+      "build_source_sha256": "e151dcfdbc2ea35b0d7c87a64aaecf4feae596c0aef9268a2bbe6f71403ecbcd",
+      "working_source_sha256": "e151dcfdbc2ea35b0d7c87a64aaecf4feae596c0aef9268a2bbe6f71403ecbcd",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10801.json",
+      "build_source_sha256": "7330ada4f2292694b7f740ad8108c3e569048ec7ecf96384d2bc4fb8b0295a12",
+      "working_source_sha256": "7330ada4f2292694b7f740ad8108c3e569048ec7ecf96384d2bc4fb8b0295a12",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10802.json",
+      "build_source_sha256": "2226a69cd0c4a67fa7898c459b22ef017546f192654bf3456ce6745308663814",
+      "working_source_sha256": "2226a69cd0c4a67fa7898c459b22ef017546f192654bf3456ce6745308663814",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10803.json",
+      "build_source_sha256": "d1d7b65e5a527b424e4f41eb1f7c2c19d9e7f8ec0df1c1bda97d9e859589c421",
+      "working_source_sha256": "d1d7b65e5a527b424e4f41eb1f7c2c19d9e7f8ec0df1c1bda97d9e859589c421",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10804.json",
+      "build_source_sha256": "15950ac590a1d779d6991f75feccc2a82af653ea2007d30a4f154b0d6f517b2c",
+      "working_source_sha256": "15950ac590a1d779d6991f75feccc2a82af653ea2007d30a4f154b0d6f517b2c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10805.json",
+      "build_source_sha256": "f0e37545d660ccb453f24e52cb919901df74293bfa547baf89046a6686062729",
+      "working_source_sha256": "f0e37545d660ccb453f24e52cb919901df74293bfa547baf89046a6686062729",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10806.json",
+      "build_source_sha256": "85ccf91b9fb8afb96d698d16eb6e79737ddc4d336e56909998bbfd1ba1d570bd",
+      "working_source_sha256": "85ccf91b9fb8afb96d698d16eb6e79737ddc4d336e56909998bbfd1ba1d570bd",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10807.json",
+      "build_source_sha256": "912198e8adce6f719ea11c4e4b9a5abe14c00059ee32103e8541839cbb94766d",
+      "working_source_sha256": "912198e8adce6f719ea11c4e4b9a5abe14c00059ee32103e8541839cbb94766d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10808.json",
+      "build_source_sha256": "9ee5e4addadd2375406fe43030816c32fb0748004d9b6045be0c5d1af551047c",
+      "working_source_sha256": "9ee5e4addadd2375406fe43030816c32fb0748004d9b6045be0c5d1af551047c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10809.json",
+      "build_source_sha256": "7c39ed67950b0a73291c7a979168b1d7f3e58b96b9af37dd697f739c04e2581a",
+      "working_source_sha256": "7c39ed67950b0a73291c7a979168b1d7f3e58b96b9af37dd697f739c04e2581a",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10810.json",
+      "build_source_sha256": "8ed34e28383ad40e38a1d7a46f94019292c7c493fc694df88f1ad04f840766a4",
+      "working_source_sha256": "8ed34e28383ad40e38a1d7a46f94019292c7c493fc694df88f1ad04f840766a4",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10811.json",
+      "build_source_sha256": "ae3a267eccc5db137d8bd6917be5aac4815e102120635430bd5f4eb833731efa",
+      "working_source_sha256": "ae3a267eccc5db137d8bd6917be5aac4815e102120635430bd5f4eb833731efa",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10812.json",
+      "build_source_sha256": "79e56266072a45d251c94988dee7d9833e9dd304fd8e5bac11dd1ba328b7605d",
+      "working_source_sha256": "79e56266072a45d251c94988dee7d9833e9dd304fd8e5bac11dd1ba328b7605d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10813.json",
+      "build_source_sha256": "2ce253106e337c72ef61e076b1b24f8a46fb61a7485e0f26da66988ffcf6b325",
+      "working_source_sha256": "2ce253106e337c72ef61e076b1b24f8a46fb61a7485e0f26da66988ffcf6b325",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10814.json",
+      "build_source_sha256": "e4577fdfc1b9957cde80209c2a079c99d2bc4d254bdca95302283b30a3985ac2",
+      "working_source_sha256": "e4577fdfc1b9957cde80209c2a079c99d2bc4d254bdca95302283b30a3985ac2",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10815.json",
+      "build_source_sha256": "f62d461f8a709225ad17aa3fdcfd37157682fc345288db8ee5f816b3b3b43f6e",
+      "working_source_sha256": "f62d461f8a709225ad17aa3fdcfd37157682fc345288db8ee5f816b3b3b43f6e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10901.json",
+      "build_source_sha256": "34253ee424feef467f47c6d0b46b826cb4bf46f9db5efc53ec56f3e4389da04c",
+      "working_source_sha256": "34253ee424feef467f47c6d0b46b826cb4bf46f9db5efc53ec56f3e4389da04c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10902.json",
+      "build_source_sha256": "008a025830a0b43d9497390a1041d9f4db6443f036d64afd45327d8a28d07828",
+      "working_source_sha256": "008a025830a0b43d9497390a1041d9f4db6443f036d64afd45327d8a28d07828",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10903.json",
+      "build_source_sha256": "9d0dd49189d4e309208fcaaf9d12c6245e911a7382753bbccb190608a5dd0a3d",
+      "working_source_sha256": "9d0dd49189d4e309208fcaaf9d12c6245e911a7382753bbccb190608a5dd0a3d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10904.json",
+      "build_source_sha256": "3020a02d7810d3f9708f4868b3aae6b732b1d26f6fe94d24361f87b208fa3962",
+      "working_source_sha256": "3020a02d7810d3f9708f4868b3aae6b732b1d26f6fe94d24361f87b208fa3962",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10905.json",
+      "build_source_sha256": "81d7833c748a59a97278b7051a0f1e1960c962e7c6fdd7a83165bd04e6199d0c",
+      "working_source_sha256": "81d7833c748a59a97278b7051a0f1e1960c962e7c6fdd7a83165bd04e6199d0c",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10906.json",
+      "build_source_sha256": "29e0a6651155d386bfee337c9b3ffb40b1b71b785d10b5b92fb0dc5252baa9fe",
+      "working_source_sha256": "29e0a6651155d386bfee337c9b3ffb40b1b71b785d10b5b92fb0dc5252baa9fe",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10907.json",
+      "build_source_sha256": "d73e323b8fa9041705a415989b727b270a01653f17c02847a4a205839ee24c90",
+      "working_source_sha256": "d73e323b8fa9041705a415989b727b270a01653f17c02847a4a205839ee24c90",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10908.json",
+      "build_source_sha256": "42694cb84f59f9bb5a49bb7a5871303a60b8f1b8e0619cee1df6be802996a814",
+      "working_source_sha256": "42694cb84f59f9bb5a49bb7a5871303a60b8f1b8e0619cee1df6be802996a814",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10909.json",
+      "build_source_sha256": "aac1b5597fd5f483c3d055310ef717c5d2545b3cf2ae8703a4701057172308a2",
+      "working_source_sha256": "aac1b5597fd5f483c3d055310ef717c5d2545b3cf2ae8703a4701057172308a2",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10910.json",
+      "build_source_sha256": "0e4559b644817cbeaa474d443dd0aa99141f1ed1497482d983fb46ce4dbfdc2b",
+      "working_source_sha256": "0e4559b644817cbeaa474d443dd0aa99141f1ed1497482d983fb46ce4dbfdc2b",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10911.json",
+      "build_source_sha256": "8d2bf8baa7b63f8c562532459d0446cbf16ff6b438699f442515c01079e87b24",
+      "working_source_sha256": "8d2bf8baa7b63f8c562532459d0446cbf16ff6b438699f442515c01079e87b24",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10912.json",
+      "build_source_sha256": "e2f8d087796c3bdc82ec95086ed3026491cb475581f67d65112f557c25a2f617",
+      "working_source_sha256": "e2f8d087796c3bdc82ec95086ed3026491cb475581f67d65112f557c25a2f617",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10913.json",
+      "build_source_sha256": "9a3bfce8ec420ff0213daa83ff7f418088ab97f05a67fb022969067877a6a0cd",
+      "working_source_sha256": "9a3bfce8ec420ff0213daa83ff7f418088ab97f05a67fb022969067877a6a0cd",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/10914.json",
+      "build_source_sha256": "ddf9f3fb6f4a1bb6e8d0c51390c8fedf34d2443b35dc1164100a8515104527fc",
+      "working_source_sha256": "ddf9f3fb6f4a1bb6e8d0c51390c8fedf34d2443b35dc1164100a8515104527fc",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11001.json",
+      "build_source_sha256": "46768ca277b8f6bb671d51a7bb6221116bd908b4e91d378795c20355b37ea8e7",
+      "working_source_sha256": "46768ca277b8f6bb671d51a7bb6221116bd908b4e91d378795c20355b37ea8e7",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11002.json",
+      "build_source_sha256": "d49278696af378f45e3d904cd4594586be0c389bd626c1f9fac4be6cf3712cde",
+      "working_source_sha256": "d49278696af378f45e3d904cd4594586be0c389bd626c1f9fac4be6cf3712cde",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11003.json",
+      "build_source_sha256": "4abad45c68351c00ebd650c395c95a4515608ec157fc634e97a63620417fccf7",
+      "working_source_sha256": "4abad45c68351c00ebd650c395c95a4515608ec157fc634e97a63620417fccf7",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11004.json",
+      "build_source_sha256": "d99607e5d0d91496511d370c3ff96309a289b66699c849f500b5d33e1db41b56",
+      "working_source_sha256": "d99607e5d0d91496511d370c3ff96309a289b66699c849f500b5d33e1db41b56",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11005.json",
+      "build_source_sha256": "85ab318670ef3964f250f581e10ae657262a8223edfb7074838a245912b19dcd",
+      "working_source_sha256": "85ab318670ef3964f250f581e10ae657262a8223edfb7074838a245912b19dcd",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11006.json",
+      "build_source_sha256": "5c73f7cddd7d9a5f7d484ca41ffd9364a1f55e284e4cf5b253043e4ab58e7237",
+      "working_source_sha256": "5c73f7cddd7d9a5f7d484ca41ffd9364a1f55e284e4cf5b253043e4ab58e7237",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11007.json",
+      "build_source_sha256": "07e2330cecfbcfaa754380d89d6454ab38de4fc1da55b7cc00039b2d316ffd51",
+      "working_source_sha256": "07e2330cecfbcfaa754380d89d6454ab38de4fc1da55b7cc00039b2d316ffd51",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11101.json",
+      "build_source_sha256": "2e49a1033c7cc656f8e378b2a1b4cf6be3104e0caca499010703c62d280a265b",
+      "working_source_sha256": "2e49a1033c7cc656f8e378b2a1b4cf6be3104e0caca499010703c62d280a265b",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11102.json",
+      "build_source_sha256": "d77bebd95a7e4f1985af3ed2945b7de066b4b9bc7c785dcaa6d6d6315a10824d",
+      "working_source_sha256": "d77bebd95a7e4f1985af3ed2945b7de066b4b9bc7c785dcaa6d6d6315a10824d",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11103.json",
+      "build_source_sha256": "a7048cc7a20011397c371c3902c228cefbedea3dd9fb3740c532433d53fe9ba8",
+      "working_source_sha256": "a7048cc7a20011397c371c3902c228cefbedea3dd9fb3740c532433d53fe9ba8",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11203.json",
+      "build_source_sha256": "0c40ef272a0b73c5bac9b4e75d72d8a2078ce674528f4a96eb23a6df089e8dd9",
+      "working_source_sha256": "0c40ef272a0b73c5bac9b4e75d72d8a2078ce674528f4a96eb23a6df089e8dd9",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11301.json",
+      "build_source_sha256": "843b813baa555bf6694d675e0c71f7ef931a082cd317832953e8be09a6f005f6",
+      "working_source_sha256": "843b813baa555bf6694d675e0c71f7ef931a082cd317832953e8be09a6f005f6",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11302.json",
+      "build_source_sha256": "13b808eadc121524d0855fb71c89464747dbb8fd913251623fdc3a59522365de",
+      "working_source_sha256": "13b808eadc121524d0855fb71c89464747dbb8fd913251623fdc3a59522365de",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11303.json",
+      "build_source_sha256": "228e2ed04d6b59684220bea7e51123ed62d2994e527f28abd1df21f1bf89dfe1",
+      "working_source_sha256": "228e2ed04d6b59684220bea7e51123ed62d2994e527f28abd1df21f1bf89dfe1",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11401.json",
+      "build_source_sha256": "80a1537b155a2583952ffcd854091fde18981f81f46af7d0796a095971a0b9b5",
+      "working_source_sha256": "80a1537b155a2583952ffcd854091fde18981f81f46af7d0796a095971a0b9b5",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11402.json",
+      "build_source_sha256": "92529d13d3f4ce67c94422ef559ee124ea156a8a4f7e79b720e5d0f87e04ec16",
+      "working_source_sha256": "92529d13d3f4ce67c94422ef559ee124ea156a8a4f7e79b720e5d0f87e04ec16",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11403.json",
+      "build_source_sha256": "40818de71232e91d84b04c9ba8440341f9214be0d25d6e95fd1b0ac4c4ff5ac2",
+      "working_source_sha256": "40818de71232e91d84b04c9ba8440341f9214be0d25d6e95fd1b0ac4c4ff5ac2",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11404.json",
+      "build_source_sha256": "bb1f2e4a8b9238f077bb03c2453be3c48b9396ff1948165bf3d0247ed4ce6249",
+      "working_source_sha256": "bb1f2e4a8b9238f077bb03c2453be3c48b9396ff1948165bf3d0247ed4ce6249",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11501.json",
+      "build_source_sha256": "29f379601a60a13705b0be79554774d40326d060ea45ed595f564240305b1ffb",
+      "working_source_sha256": "29f379601a60a13705b0be79554774d40326d060ea45ed595f564240305b1ffb",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11502.json",
+      "build_source_sha256": "c811845e6a08bf89320a410f08c0f82df424a395c25efdb3cd5e36ac5b86fa7e",
+      "working_source_sha256": "c811845e6a08bf89320a410f08c0f82df424a395c25efdb3cd5e36ac5b86fa7e",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11503.json",
+      "build_source_sha256": "cb0c3620fc07ee6a09b369a72eef4e4900d51e7bb324c7cd30674e37d29c1d57",
+      "working_source_sha256": "cb0c3620fc07ee6a09b369a72eef4e4900d51e7bb324c7cd30674e37d29c1d57",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/11504.json",
+      "build_source_sha256": "1bb3130cd9000d82b155fc249d0fa014d85f2b987daf8e11fd2129803d88ba2f",
+      "working_source_sha256": "1bb3130cd9000d82b155fc249d0fa014d85f2b987daf8e11fd2129803d88ba2f",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "data/course_geometry/catalog.json",
+      "build_source_sha256": "65b55bc8c528aaed29e1c548acf5dd735e1cf8037164d9a23a52abe4c4635f6a",
+      "working_source_sha256": "65b55bc8c528aaed29e1c548acf5dd735e1cf8037164d9a23a52abe4c4635f6a",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "Cargo.toml",
+      "build_source_sha256": "3d09fbeeb80227b7c5b7a89e5602d2f8ea681355ce366e359165edcb087dd727",
+      "working_source_sha256": "3d09fbeeb80227b7c5b7a89e5602d2f8ea681355ce366e359165edcb087dd727",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "Cargo.lock",
+      "build_source_sha256": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+      "working_source_sha256": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+      "only_line_endings_differ": false
+    },
+    {
+      "path": "VERSION",
+      "build_source_sha256": "ed334323d791ec6df20baf68c10083cdca604c67efdb3b6fd4d94d7ccea2d780",
+      "working_source_sha256": "ed334323d791ec6df20baf68c10083cdca604c67efdb3b6fd4d94d7ccea2d780",
+      "only_line_endings_differ": false
+    }
+  ],
+  "training_requests_by_format": {
+    "json": 247,
+    "binary-v1": 247
+  },
+  "total_training_requests": 494,
+  "source_note": "The working main.rs preserves its original mixed line endings. Its normalized Rust source equals the fully validated build source.",
+  "rust_tests": {
+    "configurations": [
+      "default",
+      "fast-alloc"
+    ],
+    "passed_per_configuration": 112,
+    "unchanged_failures": [
+      "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+      "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+      "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+      "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+      "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+      "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+      "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+      "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+      "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+      "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+      "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+    ]
+  },
+  "python_protocol_tests": {
+    "passed": 2
+  },
+  "harness_sha256": {
+    "target/architecture-benchmark.py": "cbf0c1ca3145551b5f171b7fd792409b25800a2f922f24bafed0857498885a4e",
+    "target/architecture-full-audit.py": "90af083ee874a24e8172055c1644885029dd83201362925d7534b2a8b6b692f0",
+    "tools/benchmark_replay.py": "fda0d19e28add974d2c57729bc5cad29b29c44f2110f15767a55a1b9d7066a9d",
+    "tools/benchmark_throughput.py": "3a9e52802defaae5efb5145726f6993b542aa96234d8d61d9dcdb8b4c8ad967d",
+    "tools/replay_protocol.py": "ad09c1be70a4a3f25bc282428774f1a37b025a3e660df93caa1c755b50d3426c",
+    "tools/check_replay_protocol.py": "85b60167d8f45cc3e3fcd9cfe80564e2de383fac2989347a9562f15364b68240"
+  }
+}

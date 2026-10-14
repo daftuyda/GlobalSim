@@ -1,0 +1,36 @@
+{
+  "host": "x86_64-pc-windows-msvc",
+  "native": false,
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+  "features": "fast-alloc",
+  "trained_binary": true,
+  "trained_native": true,
+  "replay_worker": "0",
+  "common_rustflags": [],
+  "inputs": [
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\speed-pgo-inputs.jsonl",
+      "sha256": "1a9acb57b34957124f04a42eafed2605768cd00f1504e326a1b32919263a6bb6"
+    }
+  ],
+  "training_requests_per_format": 247,
+  "training_requests": 1235,
+  "instrumented_sha256": "8311e027cf4c89cbb2d57a790edf2af34fedf18b7315603d440e7021bc8dc73b",
+  "profile_sha256": "fb1d0041ecf288312dfd3cab1266cc80acb2d63b74cc779ea3ab6bb13114b09d",
+  "engine_sha256": "51955e7fc2cdb5febee7fb3ca6e3cffa1fbda7c25a057a4db448ce50149e11df",
+  "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\pgo-r183jd8u\\build\\x86_64-pc-windows-msvc\\release\\race_engine_rs_v2.exe",
+  "output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\parity-complete-pgo.exe",
+  "library": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\pgo-r183jd8u\\build\\x86_64-pc-windows-msvc\\release\\globalsim.dll",
+  "library_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\parity-complete-pgo.dll",
+  "library_sha256": "f81b434c38507a46c7502997d7f9b90621227c34f4edd25c04451e25bd2a194d",
+  "benchmark_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\parity-complete-rust-bench.exe",
+  "version": "v73",
+  "genericEngineSha256": "ea309039e445d3a2b664dc7a4db4586bc5483ceda3f4ada28f85b59631d3d2f9",
+  "scoredEngineSha256": "965466fe27f2871bb68e96fe7a503eb03ea3951cde10534f5a2681ec0bf9a408",
+  "benchmarkExecutableSha256": "1413799b19667b1a41dae637b9f02718dd002ee11d31593983cc4a4242ba0494",
+  "sourceSha256": {
+    "src/race_solver.rs": "fdf1847c6fd189b90420dc5c6b132fbdd4cc9402face2cee2c8d1d04419a68c7",
+    "src/retail_lane.rs": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8",
+    "src/race_field_retail.rs": "9cb1189aafc28aceacc613444e8230bc37bfe0b15fb42883215112c768f6d0a1"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "engineSha256": "66260cce5a703f77f294615f819c324c615a5d2b87e4e90a06428fedb3cc745d",
+  "passed": 16,
+  "total": 16,
+  "cases": [
+    {
+      "case": "adjoining-slope-boundary",
+      "passed": true,
+      "runnerSamples": 3982
+    },
+    {
+      "case": "duel-invites-finished-partner-second-roster",
+      "passed": true,
+      "runnerSamples": 918
+    },
+    {
+      "case": "duel-invites-finished-partner",
+      "passed": true,
+      "runnerSamples": 948
+    },
+    {
+      "case": "duel-joins-finished-group-01",
+      "passed": true,
+      "runnerSamples": 933
+    },
+    {
+      "case": "duel-joins-finished-group-02",
+      "passed": true,
+      "runnerSamples": 891
+    },
+    {
+      "case": "duel-joins-finished-group-03",
+      "passed": true,
+      "runnerSamples": 977
+    },
+    {
+      "case": "duel-joins-finished-group-04",
+      "passed": true,
+      "runnerSamples": 860
+    },
+    {
+      "case": "duel-joins-finished-group-05",
+      "passed": true,
+      "runnerSamples": 922
+    },
+    {
+      "case": "front-runner-cached-leader-distance-gate-second-course",
+      "passed": true,
+      "runnerSamples": 926
+    },
+    {
+      "case": "front-runner-cached-leader-distance-gate",
+      "passed": true,
+      "runnerSamples": 813
+    },
+    {
+      "case": "front-runner-ignores-runaways",
+      "passed": true,
+      "runnerSamples": 964
+    },
+    {
+      "case": "front-runner-no-eligible-lead",
+      "passed": true,
+      "runnerSamples": 959
+    },
+    {
+      "case": "front-runner-waits-for-lead",
+      "passed": true,
+      "runnerSamples": 935
+    },
+    {
+      "case": "heal-history-earlier-caster",
+      "passed": true,
+      "runnerSamples": 1047
+    },
+    {
+      "case": "heal-history-later-caster",
+      "passed": true,
+      "runnerSamples": 932
+    },
+    {
+      "case": "pacemaker-handover",
+      "passed": true,
+      "runnerSamples": 1181
+    }
+  ]
+}

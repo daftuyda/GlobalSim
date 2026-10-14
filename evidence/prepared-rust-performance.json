@@ -1,0 +1,83 @@
+{
+  "scope": "Direct Rust calls with one reusable preparation. Both modes retain every frame; frames mode includes result cleanup and binary mode also includes complete packet encoding. Preparation, process transport and consumer analysis excluded.",
+  "hardware": "Intel Core i7-14700K, Windows, Rust 1.97.1",
+  "seeds": {
+    "count": 30,
+    "first": 100003,
+    "step": 7919
+  },
+  "warmups_per_trial": 5,
+  "input_sha256": "66c2d7192623a37d36916c27d00c8e67731fa460932fd280c826f3be5eca80b1",
+  "benchmark_source_sha256": "9fc62f07177e228525fdd19d895c320d52791b936cc6cebd9f24f2c1a3c615c6",
+  "benchmark_exe_sha256": "64c4c6a340b5d95f194d99eb0ec7b6384b048f982840a1013ac7b6bd0f34a331",
+  "rlib_sha256": "15e4965e2ddcad651a93ae438160c8dc8eaa79de2c93257e1e638e4e0b1e1f98",
+  "pgo_build": {
+    "host": "x86_64-pc-windows-msvc",
+    "native": false,
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+    "features": "fast-alloc",
+    "trained_binary": true,
+    "trained_native": true,
+    "replay_worker": "0",
+    "common_rustflags": [],
+    "inputs": [
+      {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\speed-pgo-inputs.jsonl",
+        "sha256": "1a9acb57b34957124f04a42eafed2605768cd00f1504e326a1b32919263a6bb6"
+      }
+    ],
+    "training_requests_per_format": 247,
+    "training_requests": 1235,
+    "instrumented_sha256": "53d4f03a002e9d0d7d024ef963c4d4f9b47becf3ff033bedb879d9814b612579",
+    "profile_sha256": "561ce70603d9ff9a1b8355914cdaef4cb430f885c170dc8b080d478fea8f28a6",
+    "engine_sha256": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+    "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\pgo-fo85cdd4\\build\\x86_64-pc-windows-msvc\\release\\race_engine_rs_v2.exe",
+    "output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.exe",
+    "library": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\pgo-fo85cdd4\\build\\x86_64-pc-windows-msvc\\release\\globalsim.dll",
+    "library_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-pgo.dll",
+    "library_sha256": "4f73bb0870a77cb595a9e96290a7c229a1dd2adf1a902f6671801c7a96808e17"
+  },
+  "compile": "rustc --edition=2021 -Copt-level=3 -Cpanic=abort target/reuse-native-bench.rs --extern globalsim=<profiled libglobalsim.rlib> -L dependency=<profiled deps> -o target/reuse-native-bench.exe",
+  "trials": [
+    {
+      "mode": "frames",
+      "runs": 300,
+      "preparation_ms": 4.7571,
+      "mean_ms": 4.730496333333336,
+      "median_ms": 4.7073,
+      "p95_ms": 4.9798,
+      "total_frames": 351994
+    },
+    {
+      "mode": "binary",
+      "runs": 300,
+      "preparation_ms": 4.8267,
+      "mean_ms": 4.868800333333331,
+      "median_ms": 4.8522,
+      "p95_ms": 5.098,
+      "total_frames": 351994
+    },
+    {
+      "mode": "binary",
+      "runs": 300,
+      "preparation_ms": 4.947100000000001,
+      "mean_ms": 5.023548333333329,
+      "median_ms": 4.8354,
+      "p95_ms": 6.946400000000001,
+      "total_frames": 351994
+    },
+    {
+      "mode": "frames",
+      "runs": 300,
+      "preparation_ms": 4.7516,
+      "mean_ms": 4.721583333333329,
+      "median_ms": 4.712,
+      "p95_ms": 4.9096,
+      "total_frames": 351994
+    }
+  ],
+  "mean_ms": {
+    "frames": 4.726039833333332,
+    "binary": 4.94617433333333
+  }
+}

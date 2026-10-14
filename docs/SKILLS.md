@@ -67,6 +67,8 @@ with team/ally exclusions and target immunity checks where implemented. Target
 selection can itself consume RNG before ability-value randomization.
 `skillTargetEvents` records selections per ability; additional events can have
 a runtime-subset ability index scope rather than the original full array.
+The official replay's visual recipient mask represents the first ability's
+selected targets. It does not describe the union of all gameplay recipients.
 
 Healer-targeting skills select from the most recent distinct healers in the
 history cached after the previous field tick. Healing during the current skill
@@ -80,6 +82,22 @@ nominal base duration. Negative duration is permanent. Expiration removes its
 receiver, and cooldown bookkeeping can begin on expiry according to the
 branch. Repeated corner windows and second-stage cooldowns are not identical
 to a once-per-race flag.
+
+Leader-gap duration scaling uses `min(1.6f, 0.8f + max(0, gap) / 62.5f)`.
+The detailed runtime rounds the normalized gap and the resulting coefficient
+to float32 before multiplying the distance-scaled base duration. Keeping the
+division wider can change the recorded duration at a wire-unit boundary.
+
+Queued additional activations are applied during the running skill's ordered
+turn, before that detail stops. A bonus triggered on its final active tick
+therefore still applies on the following update, even though the original
+effect receiver has expired. Only the queued bonus receives its remaining
+duration; the original effect is not extended. Activation caps still apply,
+and a new trigger after expiry cannot add another bonus.
+
+Recorded durations and effect lifetimes are separate. The observed server
+recording converts a float32 duration to 0.1 ms units using a wider product
+followed by truncation; time-zero skill events use the sentinel `-1`.
 
 Ordered float32 modifiers are recalculated from surviving receivers after
 expiry. Removing an effect by subtracting its old value from an accumulated
@@ -95,8 +113,9 @@ total can round differently. Preserve source order for faithful reproduction.
    events together with positions and HP.
 
 A successful unit test shows that the tested implementation behavior works.
-It does not prove the official game handles every branch the same way. The benchmark compares skill starts rounded to 0.1 ms, not all effect values,
-recipients or durations.
+It does not prove the official game handles every branch the same way. The
+benchmark compares recorded starts, details, durations and visual recipients;
+it cannot observe every gameplay effect value or secondary recipient.
 
 ## Order-up extension
 

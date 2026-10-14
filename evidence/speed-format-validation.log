@@ -1,0 +1,20 @@
+exponent=131 tested=8388608 elapsed=0.65
+exponent=132 tested=16777216 elapsed=1.12
+exponent=133 tested=25165824 elapsed=1.90
+exponent=134 tested=33554432 elapsed=3.04
+exponent=135 tested=41943040 elapsed=3.59
+exponent=136 tested=50331648 elapsed=5.43
+exponent=137 tested=58720256 elapsed=5.97
+exponent=138 tested=67108864 elapsed=6.49
+exponent=139 tested=75497472 elapsed=7.01
+exponent=140 tested=83886080 elapsed=7.49
+exponent=141 tested=92274688 elapsed=8.03
+exponent=142 tested=100663296 elapsed=8.56
+exponent=143 tested=109051904 elapsed=9.08
+exponent=144 tested=117440512 elapsed=9.57
+exponent=145 tested=125829120 elapsed=9.94
+exponent=146 tested=134217728 elapsed=10.33
+exponent=147 tested=142606336 elapsed=10.69
+exponent=148 tested=150994944 elapsed=11.01
+exponent=149 tested=159383552 elapsed=11.31
+PASS 162383552 values in 11.81s

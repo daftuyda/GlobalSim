@@ -266,10 +266,16 @@ pub struct SkillEffect {
 }
 
 impl SkillEffect {
-    fn duration_coefficient(&self, remaining_hp: Option<f64>, leader_gap: Option<f64>) -> f64 {
+    fn duration_coefficient(&self, remaining_hp: Option<f64>, leader_gap: Option<f64>, retail: bool) -> f64 {
         // Extracted Global Skill duration parameters; compare with strict <.
         if self.duration_usage == 2 {
             if let Some(gap) = leader_gap {
+                if retail {
+                    // Round the normalized gap before adding the minimum.
+                    // Keeping the division wide can change the recorded duration.
+                    let ratio = gap.max(0.0) as f32 / 62.5_f32;
+                    return (0.8_f32 + ratio).min(1.6_f32) as f64;
+                }
                 return (0.800000011920929 + gap.max(0.0) / 62.5).min(1.600000023841858);
             }
         }
@@ -342,6 +348,7 @@ struct RandomSkillReservation {
 struct RunningSkill {
     detail_index: usize,
     skill_id: String,
+    numeric_skill_id: i64,
     perspective: Perspective,
     rarity: SkillRarity,
     timer: Timer,
@@ -364,6 +371,27 @@ struct ActiveSkill {
 }
 
 pub type SkillHook = Box<dyn FnMut(&mut RaceSolver, &str, Perspective)>;
+
+#[derive(Default)]
+struct SkillScanIndex {
+    pending_len: usize,
+    prerequisites: Vec<usize>,
+    priority_zero: Vec<usize>,
+    priority_one: Vec<usize>,
+    windows: Vec<SkillScanWindow>,
+}
+
+/// Small, immutable fields needed to dismiss an inactive retail detail. Keep
+/// the full record (strings, closures, effects and vectors) off that hot path.
+#[derive(Clone, Copy)]
+struct SkillScanWindow {
+    start: f64,
+    end: f64,
+    numeric_id: i64,
+    priority: i32,
+    retained: bool,
+    observed: bool,
+}
 
 fn noop_hook() -> SkillHook {
     Box::new(|_s, _id, _p| {})
@@ -397,6 +425,7 @@ pub struct RaceSolver {
     pub initial_ability_activations: Vec<(i32, f64)>,
 
     pub pending_skills: Vec<PendingSkill>,
+    skill_scan: SkillScanIndex,
     pub pending_removal: BTreeSet<String>,
     random_any_request: f64,
     random_gold_request: f64,
@@ -480,6 +509,7 @@ pub struct RaceSolver {
     pub activated_ids_this_tick: Vec<i64>,
     /// v74: highest skill id whose turn in this tick's skill pass has been taken.
     additional_turn_floor: i64,
+    unapplied_running_skills: usize,
 
     on_skill_activate: SkillHook,
     on_skill_deactivate: SkillHook,
@@ -709,6 +739,7 @@ impl RaceSolver {
             race_context: Default::default(),
 
             pending_skills: skills,
+            skill_scan: SkillScanIndex::default(),
             pending_removal: BTreeSet::new(),
             random_any_request: 0.0,
             random_gold_request: 0.0,
@@ -761,6 +792,7 @@ impl RaceSolver {
             activated_ids_previous_tick: Vec::new(),
             activated_ids_this_tick: Vec::new(),
             additional_turn_floor: i64::MIN,
+            unapplied_running_skills: 0,
 
             on_skill_activate: on_skill_activate.unwrap_or_else(noop_hook),
             on_skill_deactivate: on_skill_deactivate.unwrap_or_else(noop_hook),
@@ -964,10 +996,11 @@ impl RaceSolver {
         solver.temptation_count = 0;
 
         solver.section_modifier = Vec::with_capacity(25);
+        let max_v = solver.horse.wisdom / 5500.0 * (solver.horse.wisdom * 0.1).log10();
+        let section_base_speed = base_speed(solver.course);
         for _ in 0..24 {
-            let max_v = solver.horse.wisdom / 5500.0 * (solver.horse.wisdom * 0.1).log10();
             let factor = (max_v - 0.65 + solver.rng.random() * 0.65) / 100.0;
-            solver.section_modifier.push(base_speed(solver.course) * factor);
+            solver.section_modifier.push(section_base_speed * factor);
         }
         solver.section_modifier.push(0.0); // tick after race is done / one uma runs off the end
 
@@ -1170,6 +1203,15 @@ impl RaceSolver {
         self.blocked_side_timer.set(if side_blocked { self.blocked_side_timer.get() + dt } else { 0.0 });
         let all_blocked = blocker.is_some() && side_blocked;
         self.blocked_all_timer.set(if all_blocked { self.blocked_all_timer.get() + dt } else { 0.0 });
+    }
+
+    /// The retail field has just sampled its front blocker. No movement or
+    /// callbacks intervene before these counters, so reuse that exact sample.
+    pub(crate) fn update_retail_blocking(&mut self, dt: f64, side: bool) {
+        let front = self.retail.as_ref().unwrap().front_blocker.is_some();
+        self.blocked_front_timer.set(if front { self.blocked_front_timer.get() + dt } else { 0. });
+        self.blocked_side_timer.set(if side { self.blocked_side_timer.get() + dt } else { 0. });
+        self.blocked_all_timer.set(if front && side { self.blocked_all_timer.get() + dt } else { 0. });
     }
 
     fn update_lane_target(&mut self, field: &RaceField, others: &[crate::lane_selection::Row]) {
@@ -1671,12 +1713,7 @@ impl RaceSolver {
                 self.extend_running_skills_on_overtake();
             }
         }
-        for i in (0..self.running_skills.len()).rev() {
-            if self.running_skills[i].timer.get() >= 0.0 {
-                let runtime = self.running_skills.remove(i);
-                self.release_timer(&runtime.timer);
-            }
-        }
+        self.retire_finished_running_skills();
         for _ in 0..self.pending_overtakes {
             if !extend_first {
                 self.extend_running_skills_on_overtake();
@@ -1684,6 +1721,24 @@ impl RaceSolver {
             self.additional_skill_event(1, None, field);
         }
         self.pending_overtakes = 0;
+    }
+
+    // Receivers expire in PreUpdate, but SkillDetail.UpdateSkill handles
+    // queued additional activations before stopping the running detail.
+    // Keep that detail through its final ordered turn; do not extend its
+    // original receivers or allow fresh activations after its expiry.
+    fn retire_finished_running_skills(&mut self) -> bool {
+        let mut retired = false;
+        for i in (0..self.running_skills.len()).rev() {
+            if self.running_skills[i].timer.get() >= 0.0
+                && !(self.retail.is_some() && self.running_skills[i].unapplied > 0) {
+                let runtime = self.running_skills.remove(i);
+                if runtime.unapplied > 0 { self.unapplied_running_skills -= 1; }
+                self.release_timer(&runtime.timer);
+                retired = true;
+            }
+        }
+        retired
     }
 
     fn extend_running_skills_on_overtake(&mut self) {
@@ -1712,6 +1767,7 @@ impl RaceSolver {
             for runtime in &mut self.running_skills {
                 if Some(runtime.skill_id.as_str()) == exclude || runtime.timer.get() >= 0.0 { continue; }
                 if runtime.delayed.iter().any(|(e, _)| matches!(e.additional_activate, 2 | 3)) {
+                    if runtime.unapplied == 0 { self.unapplied_running_skills += 1; }
                     runtime.unapplied += 1;
                 }
             }
@@ -1768,13 +1824,13 @@ impl RaceSolver {
         let floor = self.additional_turn_floor;
         if upto <= floor { return; }
         self.additional_turn_floor = upto;
-        if !self.running_skills.iter().any(|r| r.unapplied > 0) { return; }
+        if self.unapplied_running_skills == 0 { return; }
         let mut applications = Vec::new();
         for runtime in &mut self.running_skills {
-            let id = runtime.skill_id.parse::<i64>().unwrap_or(i64::MAX);
+            let id = runtime.numeric_skill_id;
             if runtime.unapplied == 0 || id <= floor || id > upto { continue; }
             let n = std::mem::take(&mut runtime.unapplied);
-            if runtime.timer.get() >= 0.0 { continue; }
+            self.unapplied_running_skills -= 1;
             for (effect, count) in &mut runtime.delayed {
                 let kind = effect.additional_activate;
                 if !matches!(kind, 2 | 3) { continue; }
@@ -1791,6 +1847,9 @@ impl RaceSolver {
             if perspective == Perspective::Self_ && id.parse::<u32>().is_ok() {
                 self.additional_target_events.push((id, detail, self.accumulatetime.get(), targets));
             }
+        }
+        if self.retire_finished_running_skills() {
+            self.start_expired_skill_cooldowns();
         }
     }
 
@@ -1853,16 +1912,54 @@ impl RaceSolver {
         }
     }
 
+    fn refresh_skill_scan(&mut self) {
+        // Pending records retain their priority/prerequisite for their lifetime.
+        // All runtime edits remove entries; rebuild before the next skill pass.
+        if self.skill_scan.pending_len == self.pending_skills.len() { return; }
+        let index = &mut self.skill_scan;
+        index.pending_len = self.pending_skills.len();
+        index.prerequisites.clear();
+        index.priority_zero.clear();
+        index.priority_one.clear();
+        index.windows.clear();
+        for (i, skill) in self.pending_skills.iter().enumerate() {
+            index.windows.push(SkillScanWindow {
+                start: skill.trigger.start,
+                end: skill.trigger.end,
+                numeric_id: skill.numeric_skill_id.unwrap_or(i64::MIN),
+                priority: skill.priority,
+                retained: skill.detail_index == 0
+                    && matches!(skill.rarity, SkillRarity::White | SkillRarity::Gold | SkillRarity::Evolution),
+                observed: !skill.anyskill_nodes.is_empty(),
+            });
+            if skill.prerequisite.is_some() && !skill.prerequisite_satisfied {
+                index.prerequisites.push(i);
+            }
+            match skill.priority {
+                0 => index.priority_zero.push(i),
+                1 => index.priority_one.push(i),
+                _ => {}
+            }
+        }
+    }
+
     pub(crate) fn process_skill_priority(&mut self, priority:Option<i32>,field:Option<&RaceField>) {
+        self.refresh_skill_scan();
+        // Priority zero must still publish additional activations/reservations
+        // with an empty list. Priority one has no such end-of-pass work.
+        if priority == Some(1) && self.skill_scan.priority_one.is_empty() { return; }
         // Watch prerequisites before their main trigger is armed. Skill records
         // belong to this solver, so each runner/alternative has its own latch.
-        for i in 0..self.pending_skills.len() {
+        for at in 0..self.skill_scan.prerequisites.len() {
+            let i = self.skill_scan.prerequisites[at];
             let sk = &self.pending_skills[i];
             if priority.is_some_and(|p|p!=sk.priority) {continue;}
             let satisfied = !sk.prerequisite_satisfied
                 && sk.prerequisite.as_ref().is_some_and(|check| check(self, field));
             if satisfied { self.pending_skills[i].prerequisite_satisfied = true; }
         }
+        let pending = &self.pending_skills;
+        self.skill_scan.prerequisites.retain(|&i| !pending[i].prerequisite_satisfied);
         if self.armed_scan && priority.is_none()
             && !(self.retail.is_some() && self.pending_skills.iter().any(|sk| !sk.anyskill_nodes.is_empty())) {
             self.process_pending_armed(self.pos, field);
@@ -1950,9 +2047,35 @@ impl RaceSolver {
         if self.retail.is_some() && priority.map_or(true, |p| p == 0) {
             self.additional_turn_floor = i64::MIN;
         }
-        let mut i = self.pending_skills.len();
-        while i > 0 {
-            i -= 1;
+        let mut remaining = match priority {
+            Some(0) => self.skill_scan.priority_zero.len(),
+            Some(1) => self.skill_scan.priority_one.len(),
+            _ => self.pending_skills.len(),
+        };
+        while remaining > 0 {
+            remaining -= 1;
+            // Removing the current record cannot move any lower index, which
+            // is why the original descending order also permits this index.
+            let i = match priority {
+                Some(0) => self.skill_scan.priority_zero[remaining],
+                Some(1) => self.skill_scan.priority_one[remaining],
+                _ => remaining,
+            };
+            if self.retail.is_some() {
+                if let Some(window) = self.skill_scan.windows.get(i) {
+                    if priority.is_some_and(|p| p != window.priority) { continue; }
+                    if !(pos >= window.start && pos < window.end)
+                        && (window.retained || !(pos >= window.end))
+                        && !window.observed && self.unapplied_running_skills == 0
+                        && self.pending_removal.is_empty() && self.random_gold_reservations.is_empty()
+                    {
+                        // Even an inactive detail takes its turn in the ordered
+                        // additional-effect pass. Later activations must see it.
+                        self.additional_turn_floor = self.additional_turn_floor.max(window.numeric_id);
+                        continue;
+                    }
+                }
+            }
             if priority.is_some_and(|p|p!=self.pending_skills[i].priority) {continue;}
             if self.retail.is_some() {
                 if let Some(id) = self.pending_skills[i].numeric_skill_id {
@@ -2047,8 +2170,9 @@ impl RaceSolver {
 
     fn start_expired_skill_cooldowns(&mut self) {
         let expired: Vec<_> = self.waiting_skill_cooldowns.iter().filter(|(_, (sid, detail, _))| {
-            !self.random_active_details.get(&(sid.clone(), *detail)).is_some_and(|t| t.get() < 0.0)
-                && !self.running_skills.iter().any(|r| r.skill_id == *sid && r.detail_index == *detail)
+            !self.running_skills.iter().any(|r| r.skill_id == *sid && r.detail_index == *detail)
+                && (self.random_active_details.is_empty()
+                    || !self.random_active_details.get(&(sid.clone(), *detail)).is_some_and(|t| t.get() < 0.0))
         }).map(|(key,(_,_,duration))|(key.clone(),*duration)).collect();
         for (key,duration) in expired {
             self.start_skill_cooldown(key.clone(),duration);
@@ -2122,7 +2246,7 @@ impl RaceSolver {
                 let count = self.late_corner_overtakes;
                 modifier *= if count < 2 { 1.0 } else if count < 3 { 1.100000023841858 } else if count < 4 { 1.2000000476837158 } else { 1.25 };
             }
-            let coefficient=ef.duration_coefficient(remaining_hp, leader_gap);
+            let coefficient=ef.duration_coefficient(remaining_hp, leader_gap, self.retail.is_some());
             let evolution=if rarity == SkillRarity::Evolution { self.modifiers_special_skill_duration_scaling } else { 1.0 };
             let scaled_duration = if self.retail.is_some() {
                 (((ef.base_duration as f32)*(self.course.distance as f32/1000.))*(coefficient as f32)*(evolution as f32)) as f64
@@ -2271,7 +2395,7 @@ impl RaceSolver {
         let extend_on_overtake = effects.iter().any(|ef| ef.duration_usage == 4);
         if runtime_duration > 0.0 && (!delayed.is_empty() || extend_on_overtake) {
             let timer = self.new_timer(-runtime_duration);
-            self.running_skills.push(RunningSkill { skill_id: skill_id.to_string(), perspective, rarity, detail_index,
+            self.running_skills.push(RunningSkill { skill_id: skill_id.to_string(), numeric_skill_id: skill_id.parse().unwrap_or(i64::MAX), perspective, rarity, detail_index,
                 timer, delayed, extend_on_overtake, extensions: 0, unapplied: 0 });
         }
         // Synthetic charge/stamina effects are not learned skill activations.
@@ -2439,7 +2563,8 @@ impl RaceSolver {
         // element on ties; `Iterator::max_by` would return the *last*, so
         // this scans manually with a strict `>` to match Python exactly.
         let mut group = Vec::new();
-        let mut race_front = self.pos;
+        let mut race_front = f64::NEG_INFINITY;
+        let mut eligible_front_rank = usize::MAX;
         let mut front_idx: Option<usize> = None;
         let mut front_pos = f64::NEG_INFINITY;
         for j in 0..field.n {
@@ -2452,7 +2577,12 @@ impl RaceSolver {
                 let s = field.solvers[j].borrow();
                 (s.horse.strategy, s.pos, s.lane, s.spot_struggle_started)
             };
-            race_front = race_front.max(j_pos);
+            // The distance gate follows the cached overall leader's live position.
+            // A pass during this tick takes effect after the next rank update.
+            if field.order_of(j) == 1 { race_front = j_pos; }
+            if strategy == Strategy::Oonige || j_strategy != Strategy::Oonige {
+                eligible_front_rank = eligible_front_rank.min(field.order_of(j));
+            }
             if j_strategy == strategy {
                 if started { return; }
                 group.push((j, j_pos, j_lane));
@@ -2468,10 +2598,10 @@ impl RaceSolver {
             return;
         }
         let front_idx = front_idx.unwrap();
-        // v25: a Runaway (Oonige) group's lead fight starts only once its front runner leads the race
-        // (cached order). Two Runaways (Oonige) behind a Nige leader started 20 ticks later,
-        // when the leading Runaway took first place (v24-prospective case 5, Hanshin 3200).
-        if strategy == Strategy::Oonige && field.order_of(front_idx) != 1 {
+        // A group's front runner must lead the eligible field in cached order.
+        // Ordinary front-runners ignore Runaways for this check, but must lead
+        // every other style. Runaways must lead the entire field.
+        if field.order_of(front_idx) != eligible_front_rank {
             return;
         }
         let front_lane = group.iter().find(|s| s.0 == front_idx).unwrap().2;
@@ -2630,7 +2760,9 @@ impl RaceSolver {
                     && (retail_partner || other.pos < self.course.distance)
                     && (other.pos - self.pos).abs() <= 5.0
             });
-            if !in_final_straight || self.hp.hp_ratio_remaining() < 0.05 || !nearby_participant {
+            // Retail duels survive the finish line. A nearby entrant can still
+            // join that group during its entry window; HP and separation end it.
+            if (!retail_partner && !in_final_straight) || self.hp.hp_ratio_remaining() < 0.05 || !nearby_participant {
                 self.duel_active = false;
                 self.duel_continuous_timer = 0.0;
                 self.duel_target_index = None;
@@ -2661,10 +2793,11 @@ impl RaceSolver {
                 continue;
             }
             let other = field.solvers[j].borrow();
-            // Retail proximity and speed already use the pre-movement snapshot.
-            // Hypothesis: finish eligibility belongs to that same snapshot.
-            let peer_finished = other.retail.as_ref().map_or(other.pos >= self.course.distance, |r| r.duel_preupdate_finished);
-            if peer_finished || (!retail_cache && other.compete_fight_count > 0 && !other.duel_active) {
+            // Retail runners can invite a finished partner while their own
+            // entry window is open. Proximity, speed, HP and duel history still
+            // apply; finishing alone does not disqualify the selected partner.
+            if !retail_cache && (other.pos >= self.course.distance
+                    || (other.compete_fight_count > 0 && !other.duel_active)) {
                 continue;
             }
             let dist_gap = other.pos - pos;
@@ -2833,6 +2966,298 @@ mod movement_tests {
         }
     }
 
+    #[test]
+    fn cooldown_keeps_stateful_checks_and_prerequisite_observations() {
+        let mut s = solver(100.0, 0.0);
+        let table = Box::leak(Box::new(build_conditions()));
+        let op = crate::condition_parser::parse(table, "is_activate_any_skill==1").unwrap();
+        let params = RaceParameters::default();
+        let extra = RaceParametersWithSkillId { params: &params, skill_id: "999903".into() };
+        crate::activation_conditions::take_anyskill_nodes();
+        let (_, check) = op.apply(&[Region::new(0.0, 2400.0)], s.course, &s.horse, &extra).unwrap();
+        let nodes = crate::activation_conditions::take_anyskill_nodes();
+        let node = nodes[0];
+        s.pending_skills.push(PendingSkill {
+            random_activation_order: None, detail_index: 0, priority: 0,
+            skill_id: "999903".into(), numeric_skill_id: Some(999903), has_green_tag: false,
+            perspective: Perspective::Self_, rarity: SkillRarity::White,
+            trigger: Region::new(0.0, 2400.0), extra_condition: check.unwrap(),
+            prerequisite: Some(Box::new(|s, _| s.phase == 0)), prerequisite_satisfied: false,
+            cooldown: 1.0, cooldown_key: "999903".into(),
+            windows: vec![Region::new(0.0, 2400.0)], effects: vec![], anyskill_nodes: nodes,
+        });
+        s.skill_cooldowns.insert("999903".into(), f64::INFINITY);
+        s.activate_count[0] = 1;
+        s.process_skill_priority(Some(0), None);
+        assert!(s.pending_skills[0].prerequisite_satisfied);
+        assert_eq!(s.skill_activation_observers.borrow().get(&node), Some(&(1, 1)));
+        assert!(!s.used_skills.contains("999903"));
+        // The prior observation must remain consumed after cooldown ends.
+        s.skill_cooldowns.remove("999903");
+        s.process_skill_priority(Some(0), None);
+        assert!(!s.used_skills.contains("999903"));
+        assert_eq!(s.skill_activation_observers.borrow().get(&node), Some(&(0, 1)));
+    }
+
+    fn enable_retail_for_skill_test(s: &mut RaceSolver) {
+        let parameters = crate::json::parse(include_str!("../data/global_parameters.json")).unwrap();
+        let config = RetailRuntimeConfig::new(
+            parameters.get("parameters").unwrap(),
+            Rc::new(RefCell::new(crate::retail_random::RetailRandom::new(1))), None, true,
+        ).unwrap();
+        let row = crate::retail_initialization::HorseInitialization {
+            section_modifiers: vec![0.0; 24], ..Default::default()
+        };
+        s.enable_retail_runtime(config, &row, 1).unwrap();
+    }
+
+    #[test]
+    fn sparse_skill_pass_matches_full_scan_observers_after_removals() {
+        fn fixture() -> (RaceSolver, Rc<RefCell<Vec<(char, usize)>>>) {
+            let mut s = solver(100.0, 0.0);
+            enable_retail_for_skill_test(&mut s);
+            let trace = Rc::new(RefCell::new(Vec::new()));
+            for (i, priority) in [0, 1, 0, 1, 0, 7].into_iter().enumerate() {
+                let before = trace.clone();
+                let check = trace.clone();
+                let id = (999910 + i).to_string();
+                s.pending_skills.push(PendingSkill {
+                    random_activation_order: None, detail_index: 0, priority,
+                    numeric_skill_id: id.parse().ok(), skill_id: id.clone(),
+                    has_green_tag: false, perspective: Perspective::Self_, rarity: SkillRarity::Unique,
+                    trigger: Region::new(0.0, if i == 3 { 150.0 } else { 2400.0 }),
+                    extra_condition: Box::new(move |_, _| {
+                        check.borrow_mut().push(('c', i));
+                        matches!(i, 1 | 4)
+                    }),
+                    prerequisite: Some(Box::new(move |s, _| {
+                        before.borrow_mut().push(('p', i));
+                        i != 4 || s.phase > 0
+                    })),
+                    prerequisite_satisfied: false, cooldown: 0.0, cooldown_key: id,
+                    windows: vec![Region::new(0.0, 2400.0)], effects: vec![], anyskill_nodes: vec![100 + i],
+                });
+            }
+            s.activate_count[0] = 1;
+            (s, trace)
+        }
+        let (mut sparse, sparse_trace) = fixture();
+        let (mut full, full_trace) = fixture();
+        let passes = [
+            (Some(1), 0, 100.0), (Some(0), 0, 100.0), (Some(0), 1, 100.0),
+            (Some(1), 1, 200.0), (Some(1), 1, 200.0), (Some(0), 1, 200.0),
+            (Some(7), 1, 200.0), (None, 1, 200.0),
+        ];
+        for (pass, (priority, phase, pos)) in passes.into_iter().enumerate() {
+            sparse.phase = phase;
+            full.phase = phase;
+            sparse.pos = pos;
+            full.pos = pos;
+            sparse_trace.borrow_mut().clear();
+            full_trace.borrow_mut().clear();
+            // Include every entry to reproduce the former full traversal and
+            // priority filtering while using the same activation implementation.
+            let all: Vec<_> = (0..full.pending_skills.len()).collect();
+            full.skill_scan = SkillScanIndex {
+                pending_len: all.len(), prerequisites: all.clone(),
+                priority_zero: all.clone(), priority_one: all,
+                windows: Vec::new(),
+            };
+            full.process_skill_priority(priority, None);
+            sparse.process_skill_priority(priority, None);
+            assert_eq!(*sparse_trace.borrow(), *full_trace.borrow(), "pass {pass}");
+            if pass == 0 {
+                assert_eq!(*sparse_trace.borrow(), vec![('p', 1), ('p', 3), ('c', 3), ('c', 1)]);
+            } else if pass == 1 {
+                assert_eq!(*sparse_trace.borrow(), vec![('p', 0), ('p', 2), ('p', 4), ('c', 2), ('c', 0)]);
+            } else if pass == 2 {
+                assert_eq!(*sparse_trace.borrow(), vec![('p', 4), ('c', 4), ('c', 2), ('c', 0)]);
+            }
+            let pending = |s: &RaceSolver| s.pending_skills.iter()
+                .map(|sk| (sk.skill_id.clone(), sk.prerequisite_satisfied)).collect::<Vec<_>>();
+            assert_eq!(pending(&sparse), pending(&full));
+            assert_eq!(*sparse.anyskill_observer.borrow(), *full.anyskill_observer.borrow());
+            assert_eq!(*sparse.anyskill_result.borrow(), *full.anyskill_result.borrow());
+            assert_eq!(sparse.activate_count, full.activate_count);
+            assert_eq!(sparse.activate_count_last_frame, full.activate_count_last_frame);
+            assert_eq!(sparse.skill_detail_events, full.skill_detail_events);
+            assert_eq!(sparse.skill_cooldowns, full.skill_cooldowns);
+            assert_eq!(sparse.used_skills, full.used_skills);
+            assert_eq!((sparse.rng.lo, sparse.rng.hi), (full.rng.lo, full.rng.hi));
+        }
+    }
+
+    #[test]
+    fn inactive_skill_windows_match_full_visits_with_stateful_exceptions() {
+        fn fixture() -> (RaceSolver, Rc<RefCell<Vec<usize>>>) {
+            let mut s = solver(0., 0.);
+            enable_retail_for_skill_test(&mut s);
+            let trace = Rc::new(RefCell::new(Vec::new()));
+            for (i, (start, end)) in [(100., 300.), (0., 50.), (200., 100.),
+                (f64::NAN, 300.), (0., f64::NAN), (f64::NEG_INFINITY, f64::INFINITY),
+                (0., 500.), (300., 500.)].into_iter().enumerate()
+            {
+                let check = trace.clone();
+                let id = (999910 + i).to_string();
+                s.pending_skills.push(PendingSkill {
+                    random_activation_order: None, detail_index: usize::from(i == 2), priority: 1,
+                    numeric_skill_id: id.parse().ok(), skill_id: id.clone(),
+                    has_green_tag: false, perspective: Perspective::Self_,
+                    rarity: if i % 2 == 0 { SkillRarity::White } else { SkillRarity::Unique },
+                    trigger: Region::new(start, end), windows: vec![Region::new(start, end)],
+                    extra_condition: Box::new(move |_, _| { check.borrow_mut().push(i); i % 3 == 0 }),
+                    prerequisite: None, prerequisite_satisfied: false,
+                    cooldown: 0., cooldown_key: id, effects: vec![],
+                    anyskill_nodes: if matches!(i, 1 | 3) { vec![i] } else { vec![] },
+                });
+            }
+            s.activate_count[0] = 2;
+            (s, trace)
+        }
+        for exception in 0..4 {
+            let (mut indexed, indexed_trace) = fixture();
+            let (mut full, full_trace) = fixture();
+            for s in [&mut indexed, &mut full] {
+                if exception == 1 { s.pending_removal.insert("999917".into()); }
+                if exception == 2 { s.random_gold_reservations.insert("999917".into()); }
+                if exception == 3 {
+                    let timer = s.new_timer(-10.);
+                    s.running_skills.push(RunningSkill {
+                        skill_id: "999912".into(), numeric_skill_id: 999912, detail_index: 0,
+                        perspective: Perspective::Self_, rarity: SkillRarity::Unique, timer,
+                        delayed: vec![(SkillEffect {
+                            effect_type: SkillType::TargetSpeed, base_duration: 10., modifier: 0.2,
+                            value_usage: 1, duration_usage: 1, additional_activate: 2,
+                            target: 1, target_value: 0, target_is_debuff: false,
+                        }, 0)], extend_on_overtake: false, extensions: 0, unapplied: 1,
+                    });
+                    s.unapplied_running_skills = 1;
+                }
+            }
+            for pos in [f64::NAN, f64::NEG_INFINITY, 0., 100., 300., f64::INFINITY] {
+                for s in [&mut indexed, &mut full] {
+                    s.pos = pos;
+                    s.additional_turn_floor = i64::MIN;
+                    s.refresh_skill_scan();
+                }
+                full.skill_scan.windows.clear(); // Reference visits every detail.
+                indexed.process_skill_priority(Some(1), None);
+                full.process_skill_priority(Some(1), None);
+                assert_eq!(*indexed_trace.borrow(), *full_trace.borrow());
+                let ids = |s: &RaceSolver| s.pending_skills.iter().map(|sk| &sk.skill_id)
+                    .cloned().collect::<Vec<_>>();
+                assert_eq!(ids(&indexed), ids(&full));
+                assert_eq!(indexed.additional_turn_floor, full.additional_turn_floor);
+                assert_eq!(indexed.unapplied_running_skills, full.unapplied_running_skills);
+                assert_eq!(indexed.retail_target_modifiers.apply(0.), full.retail_target_modifiers.apply(0.));
+                assert_eq!(*indexed.anyskill_observer.borrow(), *full.anyskill_observer.borrow());
+                assert_eq!(*indexed.anyskill_result.borrow(), *full.anyskill_result.borrow());
+                assert_eq!(indexed.activate_count, full.activate_count);
+                assert_eq!(indexed.skill_detail_events, full.skill_detail_events);
+                assert_eq!(indexed.skill_cooldowns, full.skill_cooldowns);
+                assert_eq!((indexed.rng.lo, indexed.rng.hi), (full.rng.lo, full.rng.hi));
+            }
+        }
+    }
+
+    #[test]
+    fn empty_priority_zero_still_flushes_additional_activations_and_reservations() {
+        let mut s = solver(100.0, 0.0);
+        enable_retail_for_skill_test(&mut s);
+        let effect = SkillEffect {
+            effect_type: SkillType::TargetSpeed, base_duration: 10.0, modifier: 0.2,
+            value_usage: 1, duration_usage: 1, additional_activate: 2,
+            target: 1, target_value: 0, target_is_debuff: false,
+        };
+        let timer = s.new_timer(-10.0);
+        s.running_skills.push(RunningSkill {
+            skill_id: "999910".into(), numeric_skill_id: 999910, detail_index: 0,
+            perspective: Perspective::Self_, rarity: SkillRarity::Unique, timer,
+            delayed: vec![(effect, 0)], extend_on_overtake: false, extensions: 0, unapplied: 1,
+        });
+        s.unapplied_running_skills = 1;
+        s.additional_turn_floor = 42;
+        s.random_any_request = 1.0;
+        s.random_gold_request = 1.0;
+        s.random_gold_reservations.insert("999911".into());
+        s.activate_count_last_frame = 3;
+        s.process_skill_priority(Some(1), None);
+        assert_eq!(s.additional_turn_floor, 42);
+        assert_eq!(s.unapplied_running_skills, 1);
+        assert_eq!(s.random_gold_reservations.len(), 1);
+        assert_eq!((s.random_any_request, s.random_gold_request), (1.0, 1.0));
+        s.process_skill_priority(Some(0), None);
+        assert_eq!(s.additional_turn_floor, i64::MAX);
+        assert_eq!(s.unapplied_running_skills, 0);
+        assert_eq!(s.running_skills[0].delayed[0].1, 1);
+        assert_eq!(s.additional_target_events.len(), 1);
+        assert!(s.random_gold_reservations.is_empty());
+        assert_eq!((s.random_any_request, s.random_gold_request), (0.0, 0.0));
+        assert_eq!(s.activate_count_last_frame, 3);
+    }
+
+    #[test]
+    fn leader_gap_duration_preserves_recorded_boundary_and_clamps() {
+        let effect = SkillEffect {
+            effect_type: SkillType::TargetSpeed, base_duration: 3.0, modifier: 0.05,
+            value_usage: 1, duration_usage: 2, additional_activate: 0,
+            target: 1, target_value: 0, target_is_debuff: false,
+        };
+        // Captured 2200 m activation: widening the gap division produces
+        // 73758 units instead of the observed 73759 units.
+        let coefficient = effect.duration_coefficient(None, Some(19.8475341796875), true);
+        let duration = (3.0_f32 * (2200.0_f32 / 1000.0)) * coefficient as f32;
+        assert_eq!((duration as f64 * 10000.0) as i32, 73759);
+        assert_eq!(effect.duration_coefficient(None, Some(-1.0), true), 0.8_f32 as f64);
+        assert_eq!(effect.duration_coefficient(None, Some(50.0), true), 1.6_f32 as f64);
+        assert_eq!(effect.duration_coefficient(None, Some(100.0), true), 1.6_f32 as f64);
+        assert_eq!(effect.duration_coefficient(None, None, true), 1.0);
+    }
+
+    #[test]
+    fn queued_bonus_survives_final_turn_without_extending_original_effect() {
+        for (queued, count, expected) in [(0, 0, 0), (1, 0, 1), (1, 2, 0)] {
+            let mut s = solver(100., 0.);
+            enable_retail_for_skill_test(&mut s);
+            let effect = SkillEffect {
+                effect_type: SkillType::TargetSpeed, base_duration: 0.01, modifier: 0.02675,
+                value_usage: 1, duration_usage: 1, additional_activate: 3,
+                target: 1, target_value: 0, target_is_debuff: false,
+            };
+            // The duration crossed zero during PreUpdate; a bonus recorded
+            // on the preceding skill pass still belongs to this final turn.
+            let timer = s.new_timer(0.05);
+            s.running_skills.push(RunningSkill {
+                skill_id: "110211".into(), numeric_skill_id: 110211, detail_index: 0,
+                perspective: Perspective::Self_, rarity: SkillRarity::Unique, timer,
+                delayed: vec![(effect, count)], extend_on_overtake: false,
+                extensions: 0, unapplied: queued,
+            });
+            s.unapplied_running_skills = usize::from(queued > 0);
+            s.waiting_skill_cooldowns.insert("110211".into(), ("110211".into(), 0, 30.));
+            s.process_skill_history(None);
+            s.start_expired_skill_cooldowns();
+            // A new activation after expiry must not add another bonus.
+            s.additional_skill_event(2, None, None);
+            s.apply_unapplied_additional(i64::MAX, None);
+            assert!(s.running_skills.is_empty());
+            assert_eq!(s.unapplied_running_skills, 0);
+            assert_eq!(s.active_target_speed_skills.len(), expected);
+            assert_eq!(s.additional_target_events.len(), expected);
+            assert!(!s.waiting_skill_cooldowns.contains_key("110211"));
+            assert!(s.retail.as_ref().unwrap().skill_cooldowns.contains_key("110211"));
+            if expected > 0 {
+                let bonus = &s.active_target_speed_skills[0];
+                assert_eq!(bonus.modifier, 0.02675);
+                assert!(bonus.duration_timer.get() < 0.);
+                assert!(bonus.duration_timer.get() > -0.0666);
+                bonus.duration_timer.set(0.);
+                s.expire_skill_effects(None);
+                assert!(s.active_target_speed_skills.is_empty());
+            }
+        }
+    }
+
     fn force_lane(s: &mut RaceSolver, target: f64) {
         s.active_aux_skills.push(ActiveSkill {
             token: 0, skill_id: "test-lane".into(), perspective: Perspective::Self_,
@@ -2994,6 +3419,71 @@ mod movement_tests {
     }
 
     #[test]
+    fn retail_duel_remains_active_past_the_finish_line() {
+        for retail in [false, true] {
+            let mut solvers = vec![solver(2401.0, 0.0), solver(2400.5, 0.1)];
+            for s in &mut solvers {
+                if retail { enable_retail_for_skill_test(s); }
+                s.duel_group = Some(0);
+                s.activate_retail_duel();
+            }
+            let field = RaceField::new(solvers);
+            field.solvers[0].borrow_mut().update_dueling(0.0666, &field);
+            assert_eq!(field.solvers[0].borrow().duel_active, retail);
+            assert_eq!(field.solvers[0].borrow().compete_fight_count, 1);
+        }
+    }
+
+    #[test]
+    fn retail_duel_after_finish_still_ends_for_low_hp_or_separation() {
+        for low_hp in [false, true] {
+            let mut solvers = vec![solver(2405.0, 0.0), solver(2400.0, 0.1)];
+            for s in &mut solvers {
+                enable_retail_for_skill_test(s);
+                s.duel_group = Some(0);
+                s.activate_retail_duel();
+            }
+            let field = RaceField::new(solvers);
+            field.solvers[0].borrow_mut().update_dueling(0.0666, &field);
+            assert!(field.solvers[0].borrow().duel_active); // Exactly 5 m still holds.
+            if low_hp {
+                if let HpPolicy::Game(hp) = &mut field.solvers[0].borrow_mut().hp {
+                    hp.hp = hp.max_hp * 0.04;
+                }
+            } else {
+                field.solvers[0].borrow_mut().pos = 2405.001;
+            }
+            field.solvers[0].borrow_mut().update_dueling(0.0666, &field);
+            assert!(!field.solvers[0].borrow().duel_active);
+            assert_eq!(field.solvers[0].borrow().compete_fight_count, 1);
+        }
+    }
+
+    #[test]
+    fn retail_duel_can_invite_a_finished_partner_with_ready_proximity() {
+        for retail in [false, true] {
+            let mut solvers = vec![solver(2399.0, 0.0), solver(2401.0, 0.1)];
+            if retail {
+                for s in &mut solvers {
+                    enable_retail_for_skill_test(s);
+                }
+            }
+            let field = RaceField::new(solvers);
+            if retail {
+                let snapshot = [(2399.0, 0.0, true), (2401.0, 0.1, false)];
+                for cell in &field.solvers {
+                    cell.borrow_mut().collect_retail_duel_proximity(&snapshot, 0.0666);
+                }
+                field.solvers[0].borrow_mut().duel_proximity.insert(1, 2.0);
+            }
+            field.solvers[0].borrow_mut().update_dueling(2.0, &field);
+            assert_eq!(field.solvers[0].borrow().duel_active, retail);
+            assert_eq!(field.solvers[1].borrow().duel_active, retail);
+            assert_eq!(field.solvers[0].borrow().compete_fight_count, if retail { 1 } else { 0 });
+        }
+    }
+
+    #[test]
     fn finished_runner_is_not_a_duel_target() {
         let field = RaceField::new(vec![solver(2398.0, 0.0), solver(2400.0, 0.1), solver(2300.0, 0.0), solver(2290.0, 0.0)]);
         let mut s = field.solvers[0].borrow_mut();
@@ -3036,6 +3526,88 @@ mod movement_tests {
         field.solvers[0].borrow_mut().update_dueling(3.0, &field);
         assert_eq!(field.solvers[0].borrow().compete_fight_count, 1);
         assert!(!field.solvers[0].borrow().duel_active);
+    }
+
+    #[test]
+    fn spot_struggle_distance_gate_waits_for_cached_overall_leader() {
+        let mut runaway = solver(148.56, 0.0);
+        runaway.horse.strategy = Strategy::Oonige;
+        let field = RaceField::new(vec![solver(148.62, 0.0), solver(148.0, 0.1), runaway]);
+        field.solvers[0].borrow_mut().pos = 149.99;
+        field.solvers[1].borrow_mut().pos = 149.4;
+        field.solvers[2].borrow_mut().pos = 150.02;
+        // The new live leader has crossed 150 m, but the published leader has not.
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(!field.solvers[0].borrow().spot_struggle_started);
+        assert!(!field.solvers[1].borrow().spot_struggle_started);
+        // Publishing the new leader opens the distance gate for the regular group.
+        field.update();
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(field.solvers[0].borrow().spot_struggle_started);
+        assert!(field.solvers[1].borrow().spot_struggle_started);
+        assert!(!field.solvers[2].borrow().spot_struggle_started);
+    }
+
+    #[test]
+    fn spot_struggle_distance_gate_reads_live_position_at_exact_boundary() {
+        let field = RaceField::new(vec![solver(149.0, 0.0), solver(148.0, 0.1)]);
+        field.solvers[0].borrow_mut().pos = 149.999;
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(!field.solvers[0].borrow().spot_struggle_started);
+        field.solvers[0].borrow_mut().pos = 150.0;
+        // A rank refresh is unnecessary when the leader's identity is unchanged.
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(field.solvers[0].borrow().spot_struggle_started);
+        assert!(field.solvers[1].borrow().spot_struggle_started);
+    }
+
+    #[test]
+    fn spot_struggle_waits_for_cached_lead_over_other_styles() {
+        let mut leader = solver(201.0, 0.3);
+        leader.horse.strategy = Strategy::Senkou;
+        let field = RaceField::new(vec![solver(200.0, 0.0), solver(199.0, 0.1), leader]);
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(!field.solvers[0].borrow().spot_struggle_started);
+        field.solvers[0].borrow_mut().pos = 202.0;
+        field.solvers[1].borrow_mut().pos = 201.5;
+        // Live positions have crossed; eligibility waits for rank publication.
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(!field.solvers[0].borrow().spot_struggle_started);
+        field.update();
+        field.solvers[0].borrow_mut().update_spot_struggle(&field);
+        assert!(field.solvers[0].borrow().spot_struggle_started);
+        assert!(field.solvers[1].borrow().spot_struggle_started);
+        assert!(!field.solvers[2].borrow().spot_struggle_started);
+    }
+
+    #[test]
+    fn spot_struggle_ignores_only_runaways_in_regular_front_runner_ranks() {
+        for other_style_leads in [false, true] {
+            let mut runaway = solver(220.0, 0.0);
+            runaway.horse.strategy = Strategy::Oonige;
+            let mut other = solver(if other_style_leads { 201.0 } else { 180.0 }, 0.3);
+            other.horse.strategy = Strategy::Senkou;
+            let field = RaceField::new(vec![runaway, solver(200.0, 0.0), solver(199.0, 0.1), other]);
+            field.solvers[1].borrow_mut().update_spot_struggle(&field);
+            assert_eq!(field.solvers[1].borrow().spot_struggle_started, !other_style_leads);
+            assert_eq!(field.solvers[2].borrow().spot_struggle_started, !other_style_leads);
+            assert!(!field.solvers[0].borrow().spot_struggle_started);
+        }
+    }
+
+    #[test]
+    fn spot_struggle_runaways_must_lead_the_entire_field() {
+        let mut solvers = vec![solver(201.0, 0.3), solver(200.0, 0.0), solver(199.0, 0.1)];
+        solvers[1].horse.strategy = Strategy::Oonige;
+        solvers[2].horse.strategy = Strategy::Oonige;
+        let field = RaceField::new(solvers);
+        field.solvers[1].borrow_mut().update_spot_struggle(&field);
+        assert!(!field.solvers[1].borrow().spot_struggle_started);
+        field.solvers[0].borrow_mut().pos = 198.0;
+        field.update();
+        field.solvers[1].borrow_mut().update_spot_struggle(&field);
+        assert!(field.solvers[1].borrow().spot_struggle_started);
+        assert!(field.solvers[2].borrow().spot_struggle_started);
     }
 
     #[test]

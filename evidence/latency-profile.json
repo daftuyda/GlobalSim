@@ -1,0 +1,329 @@
+{
+  "scope": "Current portable PGO with coarse request timing and sampled field timers. Default single-thread mode; sampled field shares are approximate and are not independently additive full-race costs.",
+  "profiles": {
+    "eighteen-dense-level1": {
+      "workload": "eighteen",
+      "dense": true,
+      "level": 1,
+      "repeats": 3,
+      "runs": 90,
+      "identical_outputs": 90,
+      "baseline_ms": {
+        "mean": 28.218955555555556,
+        "median": 27.12195,
+        "p95": 39.4035,
+        "min": 13.7833,
+        "max": 46.071
+      },
+      "instrumented_ms": {
+        "mean": 27.922077777777776,
+        "median": 27.194899999999997,
+        "p95": 38.4128,
+        "min": 13.0757,
+        "max": 42.2913
+      },
+      "sha256": {
+        "pgo": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "instrumented": "759eb247a1ec7c2576dae9307389a502efb45e854d78860564352e1b1e68188a"
+      },
+      "phases_ms": {
+        "json_parse": 0.13511666666666666,
+        "gate_order": 0.0024633333333333334,
+        "skill_decode": 0.0010366666666666666,
+        "request_spec": 0.13661222222222222,
+        "initialization": 0.46897222222222223,
+        "solver_build": 1.1577544444444445,
+        "runtime_setup": 0.09949222222222222,
+        "simulation_total": 17.765567777777775,
+        "results": 0.21921444444444443,
+        "replay_objects": 0.04081333333333333,
+        "response_postprocess": 0.0011133333333333334,
+        "request_cleanup": 0.055515555555555554,
+        "serialize": 2.5362266666666664,
+        "write_flush": 3.5175966666666665,
+        "reply_free": 0.5670544444444445
+      },
+      "sampled_field_share_percent": {
+        "field_cache": 9.863488616606768,
+        "field_prepare": 6.592266301994929,
+        "field_skills": 19.60895140840715,
+        "field_blocking": 5.3290291989362215,
+        "field_movement": 41.08518475250655,
+        "field_overlaps": 1.5022093334890978,
+        "field_competitions": 12.30183000158055,
+        "field_rank_flush": 3.717040386478742
+      },
+      "source_report_sha256": "afffe5a4571010fc57459a4ca52e5cdc39cf942f3462bbafad113126488c025d"
+    },
+    "eighteen-standard-level1": {
+      "workload": "eighteen",
+      "dense": false,
+      "level": 1,
+      "repeats": 3,
+      "runs": 90,
+      "identical_outputs": 90,
+      "baseline_ms": {
+        "mean": 20.119967777777777,
+        "median": 19.31015,
+        "p95": 28.312,
+        "min": 9.8945,
+        "max": 37.3004
+      },
+      "instrumented_ms": {
+        "mean": 20.26463111111111,
+        "median": 19.400550000000003,
+        "p95": 28.1523,
+        "min": 9.9539,
+        "max": 39.5852
+      },
+      "sha256": {
+        "pgo": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "instrumented": "759eb247a1ec7c2576dae9307389a502efb45e854d78860564352e1b1e68188a"
+      },
+      "phases_ms": {
+        "json_parse": 0.1257477777777778,
+        "gate_order": 0.0024966666666666666,
+        "skill_decode": 0.0008788888888888889,
+        "request_spec": 0.13703222222222222,
+        "initialization": 0.44538222222222223,
+        "solver_build": 1.1168066666666667,
+        "runtime_setup": 0.09797555555555557,
+        "simulation_total": 17.03383,
+        "results": 0.20711444444444443,
+        "replay_objects": 0.06954444444444444,
+        "response_postprocess": 0.0011733333333333333,
+        "request_cleanup": 0.055517777777777784,
+        "serialize": 0.3219988888888889,
+        "write_flush": 0.31987,
+        "reply_free": 0.26715
+      },
+      "sampled_field_share_percent": {
+        "field_cache": 9.838568818546637,
+        "field_prepare": 6.566011047829278,
+        "field_skills": 19.702319401209795,
+        "field_blocking": 5.356214805805736,
+        "field_movement": 41.35435028369668,
+        "field_overlaps": 1.4017848691530532,
+        "field_competitions": 12.05188514972434,
+        "field_rank_flush": 3.7288656240344755
+      },
+      "source_report_sha256": "ce6490a707da505affcd26baf6f42b6890723fae1c465f30d897f679f6d9dcf4"
+    },
+    "mc-dense-level1": {
+      "workload": "mc",
+      "dense": true,
+      "level": 1,
+      "repeats": 3,
+      "runs": 90,
+      "identical_outputs": 90,
+      "baseline_ms": {
+        "mean": 8.260576666666667,
+        "median": 8.1456,
+        "p95": 9.1309,
+        "min": 7.3825,
+        "max": 10.8196
+      },
+      "instrumented_ms": {
+        "mean": 8.357094444444444,
+        "median": 8.22155,
+        "p95": 9.5124,
+        "min": 7.3263,
+        "max": 11.7309
+      },
+      "sha256": {
+        "pgo": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "instrumented": "759eb247a1ec7c2576dae9307389a502efb45e854d78860564352e1b1e68188a"
+      },
+      "phases_ms": {
+        "json_parse": 0.08439222222222222,
+        "gate_order": 0.001748888888888889,
+        "skill_decode": 0.0009622222222222222,
+        "request_spec": 0.04414666666666667,
+        "initialization": 0.25926333333333335,
+        "solver_build": 0.6199066666666666,
+        "runtime_setup": 0.06467222222222221,
+        "simulation_total": 4.669845555555556,
+        "results": 0.11145222222222222,
+        "replay_objects": 0.02791,
+        "response_postprocess": 0.0010033333333333333,
+        "request_cleanup": 0.03025,
+        "serialize": 0.8438888888888889,
+        "write_flush": 0.9719433333333334,
+        "reply_free": 0.17209666666666665
+      },
+      "sampled_field_share_percent": {
+        "field_cache": 8.655320646572312,
+        "field_prepare": 10.053671535232159,
+        "field_skills": 22.965006661806477,
+        "field_blocking": 5.184896553457854,
+        "field_movement": 42.24213781140802,
+        "field_overlaps": 1.6308856431785617,
+        "field_competitions": 4.577163830161643,
+        "field_rank_flush": 4.69091731818296
+      },
+      "source_report_sha256": "15d6c273e342f71e74e0c35009a90fae97f99f0d90dfa2a784853cce47896b6a"
+    },
+    "mc-standard-level1": {
+      "workload": "mc",
+      "dense": false,
+      "level": 1,
+      "repeats": 3,
+      "runs": 90,
+      "identical_outputs": 90,
+      "baseline_ms": {
+        "mean": 6.275484444444444,
+        "median": 6.2653,
+        "p95": 6.6747,
+        "min": 5.7842,
+        "max": 7.4858
+      },
+      "instrumented_ms": {
+        "mean": 6.3652033333333335,
+        "median": 6.35605,
+        "p95": 6.8311,
+        "min": 5.9685,
+        "max": 7.0294
+      },
+      "sha256": {
+        "pgo": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "instrumented": "759eb247a1ec7c2576dae9307389a502efb45e854d78860564352e1b1e68188a"
+      },
+      "phases_ms": {
+        "json_parse": 0.08048222222222222,
+        "gate_order": 0.0017877777777777779,
+        "skill_decode": 0.0008011111111111111,
+        "request_spec": 0.04474555555555555,
+        "initialization": 0.2534944444444444,
+        "solver_build": 0.5866633333333334,
+        "runtime_setup": 0.06157,
+        "simulation_total": 4.628611111111111,
+        "results": 0.13122333333333333,
+        "replay_objects": 0.02914,
+        "response_postprocess": 0.0010722222222222222,
+        "request_cleanup": 0.02846888888888889,
+        "serialize": 0.13982777777777777,
+        "write_flush": 0.13780444444444445,
+        "reply_free": 0.14339333333333334
+      },
+      "sampled_field_share_percent": {
+        "field_cache": 8.62977978263766,
+        "field_prepare": 9.969102317643403,
+        "field_skills": 22.622559749265626,
+        "field_blocking": 5.266563885875255,
+        "field_movement": 42.443391258557135,
+        "field_overlaps": 1.6235558347132608,
+        "field_competitions": 4.658126978688847,
+        "field_rank_flush": 4.786920192618817
+      },
+      "source_report_sha256": "3bdddf71551512ad92cb5ee3d88f3d7d56e0c7a59169aada6e259e3fbebe329f"
+    },
+    "nine-dense-level1": {
+      "workload": "nine",
+      "dense": true,
+      "level": 1,
+      "repeats": 3,
+      "runs": 90,
+      "identical_outputs": 90,
+      "baseline_ms": {
+        "mean": 9.566022222222223,
+        "median": 9.606349999999999,
+        "p95": 12.1625,
+        "min": 5.9904,
+        "max": 13.1675
+      },
+      "instrumented_ms": {
+        "mean": 9.559995555555556,
+        "median": 9.61475,
+        "p95": 12.3477,
+        "min": 6.0007,
+        "max": 13.1233
+      },
+      "sha256": {
+        "pgo": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "instrumented": "759eb247a1ec7c2576dae9307389a502efb45e854d78860564352e1b1e68188a"
+      },
+      "phases_ms": {
+        "json_parse": 0.09077,
+        "gate_order": 0.0018266666666666668,
+        "skill_decode": 0.0009855555555555555,
+        "request_spec": 0.1667188888888889,
+        "initialization": 0.28776111111111113,
+        "solver_build": 0.6116955555555555,
+        "runtime_setup": 0.07026777777777778,
+        "simulation_total": 4.942656666666667,
+        "results": 0.10594,
+        "replay_objects": 0.028864444444444446,
+        "response_postprocess": 0.0011788888888888888,
+        "request_cleanup": 0.03299666666666667,
+        "serialize": 0.9464777777777778,
+        "write_flush": 1.478508888888889,
+        "reply_free": 0.16059222222222222
+      },
+      "sampled_field_share_percent": {
+        "field_cache": 7.945015077271014,
+        "field_prepare": 9.863244440256313,
+        "field_skills": 24.274995288352805,
+        "field_blocking": 4.897168300037693,
+        "field_movement": 42.22165944214097,
+        "field_overlaps": 1.5984263098379194,
+        "field_competitions": 4.402445344892574,
+        "field_rank_flush": 4.797045797210705
+      },
+      "source_report_sha256": "560d23333232dbb724e5729c6aa0b8a56fdd4262eb027c28fe972a4e5f33316e"
+    },
+    "nine-standard-level1": {
+      "workload": "nine",
+      "dense": false,
+      "level": 1,
+      "repeats": 3,
+      "runs": 90,
+      "identical_outputs": 90,
+      "baseline_ms": {
+        "mean": 6.615585555555556,
+        "median": 6.59755,
+        "p95": 8.3629,
+        "min": 4.5342,
+        "max": 9.6381
+      },
+      "instrumented_ms": {
+        "mean": 6.792921111111111,
+        "median": 6.8770500000000006,
+        "p95": 8.6094,
+        "min": 4.4928,
+        "max": 9.96
+      },
+      "sha256": {
+        "pgo": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "instrumented": "759eb247a1ec7c2576dae9307389a502efb45e854d78860564352e1b1e68188a"
+      },
+      "phases_ms": {
+        "json_parse": 0.08885555555555556,
+        "gate_order": 0.0017655555555555556,
+        "skill_decode": 0.0008311111111111111,
+        "request_spec": 0.18087777777777778,
+        "initialization": 0.26663555555555557,
+        "solver_build": 0.5952355555555555,
+        "runtime_setup": 0.07288333333333333,
+        "simulation_total": 4.958611111111111,
+        "results": 0.10948,
+        "replay_objects": 0.02632333333333333,
+        "response_postprocess": 0.0008722222222222221,
+        "request_cleanup": 0.03061888888888889,
+        "serialize": 0.14521888888888887,
+        "write_flush": 0.11035666666666667,
+        "reply_free": 0.12414888888888889
+      },
+      "sampled_field_share_percent": {
+        "field_cache": 7.843022335792946,
+        "field_prepare": 9.746048305328122,
+        "field_skills": 24.808495923761743,
+        "field_blocking": 4.91785984304578,
+        "field_movement": 41.977341858952194,
+        "field_overlaps": 1.6052935419023227,
+        "field_competitions": 4.305398451556942,
+        "field_rank_flush": 4.796539739659952
+      },
+      "source_report_sha256": "1020cb9884b6e03ac20e0ef9f85b30a4fbe926b79bd14512bb9c063b7854b33b"
+    }
+  }
+}

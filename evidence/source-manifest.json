@@ -1,18 +1,18 @@
 {
-  "version": "v72",
+  "version": "v73",
   "archive_sha256": "b3959bcc729e32c046096c11344233b1b276a8cfaa896ca40fe27a2a5b22582a",
   "files": [
     {
       "path": "Cargo.lock",
       "archive_path": "Cargo.lock",
       "archive_sha256": "b5167b819ffc84f07f42b614a24fbaa50668b50b3892d4b53f6cf07b8be05356",
-      "sha256": "b5167b819ffc84f07f42b614a24fbaa50668b50b3892d4b53f6cf07b8be05356"
+      "sha256": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b"
     },
     {
       "path": "Cargo.toml",
       "archive_path": "Cargo.toml",
       "archive_sha256": "4d32fc3e31527f8b26324d3dab7f08e2654aac5955dd7d679418fc6d335f2322",
-      "sha256": "4d32fc3e31527f8b26324d3dab7f08e2654aac5955dd7d679418fc6d335f2322"
+      "sha256": "2724218301608cca6d3e657ec2bcaf5ef678d1d2f80394dd668e56d0bf6eeb73"
     },
     {
       "path": "data/course_geometry/10902.json",
@@ -822,7 +822,7 @@
       "path": "src/activation_conditions.rs",
       "archive_path": "src/activation_conditions.rs",
       "archive_sha256": "38da21e2e840ebb7a5ff0c5bc9380e9809721f9795483e205e5b437addcc7a7a",
-      "sha256": "38da21e2e840ebb7a5ff0c5bc9380e9809721f9795483e205e5b437addcc7a7a"
+      "sha256": "370fa07bf8bfdf2852f3be8ec6a5930ee96c51832b9e6f56ef4a9ba22605e1ee"
     },
     {
       "path": "src/activation_sample_policy.rs",
@@ -834,7 +834,7 @@
       "path": "src/condition_parser.rs",
       "archive_path": "src/condition_parser.rs",
       "archive_sha256": "28b52708da250c1db85edb5bcd416d3e47bc3a0e72a0e1da4b4a40a7db461040",
-      "sha256": "28b52708da250c1db85edb5bcd416d3e47bc3a0e72a0e1da4b4a40a7db461040"
+      "sha256": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69"
     },
     {
       "path": "src/conserve_power.rs",
@@ -858,13 +858,13 @@
       "path": "src/hp_policy.rs",
       "archive_path": "src/hp_policy.rs",
       "archive_sha256": "c1d2f96d5dae2c117454ce02c1f88fab9dd22cc7bea1d073d0d62e4263d104e8",
-      "sha256": "d55a2f25a185cb8fbdb2db24ea6f5c9c6fab90e0c4a943fbc05d91d03d62ffab"
+      "sha256": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade"
     },
     {
       "path": "src/json.rs",
       "archive_path": "src/json.rs",
       "archive_sha256": "97603c4d6b41a141e1d46607ff492ff9203faca7a39c9089a6b02d84e115ea80",
-      "sha256": "6b9bfa8ecf32ed9bef59a3a4f38a58825edd3b02ec19572a289594b6f324cb7d"
+      "sha256": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26"
     },
     {
       "path": "src/lane_selection.rs",
@@ -876,51 +876,51 @@
       "path": "src/main.rs",
       "archive_path": "src/main.rs",
       "archive_sha256": "c68a44baf8f0a8c66e08ff422ad2b9d8c7ff3e4e2138973f65d65de01f3b72f3",
-      "sha256": "65e29d53f63a73eafa567645f2b6aedb4e62ffa51526108c21c2eafd7392921f"
+      "sha256": "401000b4d06b8129d600b6feef929fb64b8c7df73d83d0e4719bf0c3cf68189d"
     },
     {
       "path": "src/overtaking.rs",
       "archive_path": "src/overtaking.rs",
       "archive_sha256": "208e0ac49cbcef918b80acc65ecffbce80c9933a6715e33fd92b56ce1838c0e2",
-      "sha256": "021876afe3779fc6516ca4669cdbcc810de80c97091e9edb285786951b82fc90"
+      "sha256": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5"
     },
     {
       "path": "src/race_field.rs",
       "archive_path": "src/race_field.rs",
       "archive_sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b",
-      "sha256": "9d4c5d3b3cf84a3a8ce6528dece2213aa55c2c4e58b44dc513da98fa1be76967",
+      "sha256": "eb1bd5f23957d834cb8e75019f8217db2909997e6d0909114dba35c4a9b3796e",
       "release_sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb"
     },
     {
       "path": "src/race_field_retail.rs",
       "archive_path": "src/race_field_retail.rs",
       "archive_sha256": "1f74e0e1c0ba0ee60a51ffb52d86864ea35dfd48b317a5bf5238534877bbf89b",
-      "sha256": "5c28fd84d51b6f9c1f45603842d429cdf2a863f6446841349c28579851fe2dc4"
+      "sha256": "9cb1189aafc28aceacc613444e8230bc37bfe0b15fb42883215112c768f6d0a1"
     },
     {
       "path": "src/race_parameters.rs",
       "archive_path": "src/race_parameters.rs",
       "archive_sha256": "192018df7429ee5d21d1b3115fb6eca2239a69ec8416c8dcc9c5556fb5932b11",
-      "sha256": "6f335fc8b3edb6bc87ca6a49572c1fdec43e12069a85661f0209633e234abc8e"
+      "sha256": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106"
     },
     {
       "path": "src/race_solver.rs",
       "archive_path": "src/race_solver.rs",
       "archive_sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b",
-      "sha256": "92295ad63befc6d9906a9437bad7e0afe683b322e4be04b007154c3f5e596ba4",
+      "sha256": "fdf1847c6fd189b90420dc5c6b132fbdd4cc9402face2cee2c8d1d04419a68c7",
       "release_sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070"
     },
     {
       "path": "src/race_solver_builder.rs",
       "archive_path": "src/race_solver_builder.rs",
       "archive_sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690",
-      "sha256": "3dc436ef72523778cd5ed1dbe95d90be1c9050f7711d67d59d170a2e2eff7d91"
+      "sha256": "1f5f1ff9195599fa8441375ff604d7aae59b466d857c398ddc92ecb6a86d057e"
     },
     {
       "path": "src/race_solver_retail.rs",
       "archive_path": "src/race_solver_retail.rs",
       "archive_sha256": "0b9d4c01c348d9420faec616526a873ce7f8e8ff7c421f7d77e09235d3ade157",
-      "sha256": "795e8b995d7c8d350133bb65c48e756f945a11b1da0fb5c08903a26cfee2ba78"
+      "sha256": "c9dacbf53e7f536fb1889b0c77e1a0f63cb87b574dbcb17a1b34798fbf95e790"
     },
     {
       "path": "src/random_gen.rs",
@@ -938,7 +938,7 @@
       "path": "src/retail_geometry.rs",
       "archive_path": "src/retail_geometry.rs",
       "archive_sha256": "2773a11ecfff60f4ebcc023840e135c5c4345f8be0fabed77e9fdb2a38449310",
-      "sha256": "2ae174ab1f214005e74357ee71f21f4920f61413e5feb579dfe9509d7629b6d2"
+      "sha256": "fdb4033b35a038cfc05588ec587d9d9c5536edcce1f1f025cffb5b7fadb4a380"
     },
     {
       "path": "src/retail_geometry_assets.rs",
@@ -950,19 +950,19 @@
       "path": "src/retail_initialization.rs",
       "archive_path": "src/retail_initialization.rs",
       "archive_sha256": "e9ca4ec8b50370082836f332cb06d84101b83babcc97e99cd67779771760df22",
-      "sha256": "8e3b05622eb71091f5e57d134898f4d04124be68b2b72c6ff554d50804c5a4e3"
+      "sha256": "a4106979ac52a84c30cfba253943d9921cb9ddc6f66657c4d916c5101e6020d4"
     },
     {
       "path": "src/retail_lane.rs",
       "archive_path": "src/retail_lane.rs",
       "archive_sha256": "7c26006355c2f99b1d6c97fe65ad2b411233691e0421db69928dd02649e0c11b",
-      "sha256": "4739151ae84b47dddf6aa535f55e8671efd73c69eb8cc259ff21cbd23e8486ac"
+      "sha256": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8"
     },
     {
       "path": "src/retail_physics.rs",
       "archive_path": "src/retail_physics.rs",
       "archive_sha256": "2c9846623be395f3cc38806edc2447bfc6297ed3cafd41555c21789f7a230cf5",
-      "sha256": "8251b94dcf9b4b694055ba6ffd8bc6c264f20c36af8217a8101d7999d3707136"
+      "sha256": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976"
     },
     {
       "path": "src/retail_position_keep.rs",
@@ -1028,8 +1028,184 @@
     {
       "path": "tests/fixtures/accuracy/pacemaker-handover.json.gz",
       "sha256": "e5969e461961873eec84f068c0bc48144240d0d96c9807878f6721b12879c263"
+    },
+    {
+      "path": "tools/build_pgo.py",
+      "sha256": "7ef6c73dbc7f4ffc5742fefda8a30ddabcab3606876f17bbf7226827d0d41230"
+    },
+    {
+      "path": "src/replay_worker.rs",
+      "sha256": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d"
+    },
+    {
+      "path": "src/replay_frames.rs",
+      "sha256": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac"
+    },
+    {
+      "path": "src/binary_replay.rs",
+      "sha256": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e"
+    },
+    {
+      "path": "tools/replay_protocol.py",
+      "sha256": "ad09c1be70a4a3f25bc282428774f1a37b025a3e660df93caa1c755b50d3426c"
+    },
+    {
+      "path": "tools/check_replay_protocol.py",
+      "sha256": "85b60167d8f45cc3e3fcd9cfe80564e2de383fac2989347a9562f15364b68240"
+    },
+    {
+      "path": "tools/benchmark_replay.py",
+      "sha256": "fda0d19e28add974d2c57729bc5cad29b29c44f2110f15767a55a1b9d7066a9d"
+    },
+    {
+      "path": "tools/benchmark_throughput.py",
+      "sha256": "3a9e52802defaae5efb5145726f6993b542aa96234d8d61d9dcdb8b4c8ad967d"
+    },
+    {
+      "path": "tests/test_replay_protocol.py",
+      "sha256": "49dd9eaa4518803abce5890a156682f9c36714e122517b178b27a28893c95c37"
+    },
+    {
+      "path": "licenses/mimalloc.txt",
+      "sha256": "82ade5d7d9b029044b5fbbc326207fc47c2d44ee4dd71e8a559c36d728217de9"
+    },
+    {
+      "path": "licenses/mimalloc-rust.txt",
+      "sha256": "a08554fab028af3af047e8588d32d019662c1b1bf07959a195a2f75fe340726b"
+    },
+    {
+      "path": "src/lib.rs",
+      "sha256": "b94183ccca366786c0242b9a632639116d43b5fbd11720adc1c72e718fd6f165"
+    },
+    {
+      "path": "src/api.rs",
+      "sha256": "f71456075056bb064a770ed79646081b186c2f96837905716f84d41c85c99f19"
+    },
+    {
+      "path": "src/ffi.rs",
+      "sha256": "eaa607d39527d8427f93d1c631bb5a6caa2d3f6ca739995f64a06b1844c7f1e2"
+    },
+    {
+      "path": "tools/native_engine.py",
+      "sha256": "cd5fdc23690b3c6e25516101069c0f54e3ad5b75a5a319c487d6b40e4e7b4b13"
+    },
+    {
+      "path": "tools/check_native_parity.py",
+      "sha256": "b6a99c488ba92f71a77e0eb73b33d4bd00d4b74eb56de7dcf2a16eb0c81bbe26"
+    },
+    {
+      "path": "tools/benchmark_native.py",
+      "sha256": "9a3d8cbdc0a2feec51c7057bd93677cf35404442c4c032624a12200504d265cd"
+    },
+    {
+      "path": "tools/train_native.py",
+      "sha256": "4d18364cc94fb54370b27179a3a80086a717b9bbc749684b8ccc27021a1fd976"
+    },
+    {
+      "path": "include/globalsim.h",
+      "sha256": "2d1a11abd637d779525c917ccf932476627ad5b328d4415b64056a19720b886f"
+    },
+    {
+      "path": "examples/prepared_race.rs",
+      "sha256": "05cc84a31056433c14d5559f6f0d70c0a45bac77d265f8c6923a4efe4fef9f9e"
+    },
+    {
+      "path": "examples/benchmark_prepared.rs",
+      "sha256": "9fc62f07177e228525fdd19d895c320d52791b936cc6cebd9f24f2c1a3c615c6"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-invites-finished-partner-second-roster.json.gz",
+      "sha256": "1e348238396bf5147d78c184d5eb0f04b1f493080fca1ed86b7debdfbfebed37"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-invites-finished-partner.json.gz",
+      "sha256": "dcf0756091616d1d71862dcf9c2a254672a92dab031cf908560df11514a058a5"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-runner-ignores-runaways.json.gz",
+      "sha256": "a8c3fd459c3116017ef345a5629c33ca8d4a375c5b0e899232134abef3da975a"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-runner-no-eligible-lead.json.gz",
+      "sha256": "351403b483542eca8cf8aa8990e6095d7bdfc8be530b414ef9a8898321416232"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-runner-waits-for-lead.json.gz",
+      "sha256": "ba20186fd9d1079dc9db681ac6e230b1961f0135daf5e0cb17fc403d9b7599d1"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-runner-cached-leader-distance-gate.json.gz",
+      "sha256": "30d5d21c984b3ef42056dc44026261644720dfc71f752cb7e4a64b9df05e5e1c"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-runner-cached-leader-distance-gate-second-course.json.gz",
+      "sha256": "f8ce7b7f1dc45f460597fe71c6e0bd9b64955e5aa3521a80ebcbcbe322d77550"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-joins-finished-group-01.json.gz",
+      "sha256": "1fe4ef68fdbb1e743e907b40b11eb0250ae599fdc6412d51815f83b52834ea47"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-joins-finished-group-02.json.gz",
+      "sha256": "450ad6a27542c9662f6796ece886645af9b6a89dc167723bb8c99f903a911e0d"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-joins-finished-group-03.json.gz",
+      "sha256": "ad8c988547ee9244c9a470963e63e578d0aa63a8620042b99fd58eb3f49879e3"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-joins-finished-group-04.json.gz",
+      "sha256": "23fe573707139303629672310b5114d3dc4205e707fc0262d3265d912a285f95"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-joins-finished-group-05.json.gz",
+      "sha256": "0f39fb2b242c5bcc9235f9fe73a96cb128d3e1888c1da0a75b1182b36607a734"
+    },
+    {
+      "path": "tests/fixtures/accuracy/additional-bonus-on-final-skill-tick.json.gz",
+      "sha256": "be69b983d018184c1abc635a55e4edbb20b0e6cbecdbb8a6908e4a37dbc42e91"
+    },
+    {
+      "path": "tests/fixtures/accuracy/additional-bonus-preserves-overtake-target.json.gz",
+      "sha256": "d5b1df798dc8e93efa1093ad3a6d9be56eb2ec95ac0012e29c27c3fe9370c957"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-block-excludes-rounded-boundary.json.gz",
+      "sha256": "71f555c072dfcac45ad8e8ae77bd55cf6ed4138248942522b3a7b53438b0917c"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-block-inclusive-precision-boundary.json.gz",
+      "sha256": "e02d5f8b67963e41d808f369bdff5bb9a42a24798c144e7ff0904b8041de2e77"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-block-retains-close-boundary.json.gz",
+      "sha256": "03136c5a9189b59b51e9a5e9c21891c9df6707fd81dbb660eef13a5ccf4ec297"
+    },
+    {
+      "path": "tests/fixtures/accuracy/front-block-retains-far-boundary.json.gz",
+      "sha256": "c878c02f51982c4f25b49e53dd079dc11f171a0bd3557635922e02231aedf9da"
+    },
+    {
+      "path": "tests/fixtures/accuracy/leader-gap-duration-rounding.json.gz",
+      "sha256": "b0bab0a121c53cd5f0fe37755f6621c6f528c4918753e58275599dfcd41fd708"
+    },
+    {
+      "path": "tools/check_accuracy_regressions.py",
+      "sha256": "a9049afb97d20244e8a127a42ddefe755e4c890e47f01b1b6dea71d271746da1"
+    },
+    {
+      "path": "VERSION",
+      "sha256": "eff48ec1c8587a89746101c616cb6375700712400d5a77a3dd802598a80cb147"
+    },
+    {
+      "path": "examples/v73-race.jsonl",
+      "sha256": "525d4b31d54120a8ea7cfae334480b7a723d094ce55d765c4c2914067d39f980"
+    },
+    {
+      "path": "examples/v73-settings.json",
+      "sha256": "793d74406f14dcf1f4720bdd4378a1ef52287e39105a76724da037c1398eeecb"
     }
   ],
-  "relocations": "Local include and geometry-test paths retained; current source hashes describe v72.",
-  "build_variant": "v72 with parsed skill-data reuse, direct replay encoding, reusable tick buffers, and corrected pacemaker restoration, healer history timing and slope boundary events"
+  "relocations": "Local include and geometry-test paths retained; current source hashes describe v73.",
+  "build_variant": "v73 with prepared Rust/C API, final-turn skill bonuses, captured front-block rounding, leader-gap duration precision, optional fast allocator and profile-guided builds"
 }

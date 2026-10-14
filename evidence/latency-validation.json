@@ -1,0 +1,183 @@
+{
+  "scope": "Dense captured-race corpus. All selected ordinary, portable PGO, CPU-specific PGO and replay-helper configurations match the preceding optimized PGO reference byte for byte. Official finish, placement, skill-start and compared replay-frame metrics are independently recomputed for the ordinary release candidate. Parallel validation time is not a latency benchmark.",
+  "identity": {
+    "schema": 1,
+    "engines": {
+      "baseline": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\five-ms-final-pgo.exe",
+        "sha256": "caa74392f24bcccf363c398d18c910b046d5d0a00d70cf61557263f4301380cf",
+        "replay_worker": false
+      },
+      "generic": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-generic.exe",
+        "sha256": "4de05135bfb1643e527e88fa191086cae1001eb58d9f3b79d15b312df267247a",
+        "replay_worker": false
+      },
+      "pgo": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-pgo.exe",
+        "sha256": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "replay_worker": false
+      },
+      "pipeline": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-pgo.exe",
+        "sha256": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "replay_worker": true
+      },
+      "native": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-native.exe",
+        "sha256": "39ba5b97fa9fec000f1c29e48a5c5ca2ec41c413195dc448e00399789ec20f1c",
+        "replay_worker": false
+      },
+      "native-helper": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-native.exe",
+        "sha256": "39ba5b97fa9fec000f1c29e48a5c5ca2ec41c413195dc448e00399789ec20f1c",
+        "replay_worker": true
+      }
+    },
+    "scoreEngine": "generic",
+    "template": "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\.local\\deploy-v70-20261008\\template.json",
+    "templateSha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796",
+    "inventorySha256": "c0ecc610341977ca37ba35844c48aa6d5952a6c673f2547cff9ba7091551274a",
+    "archiveSha256": "83a53fe993c22ba9c2134bf20af91c53d3c43f76f402432d285c46dc8e3213e1",
+    "inputManifestSha256": "d88b2d736c5df430796b731c1c9005bc9ada2ca4888eff09a3b213aee071f7ce",
+    "selectedRaces": 13187,
+    "inventoryRaces": 13187,
+    "localSourceSha256": {
+      "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-full-audit.py": "e4f39bfb75fb02df09b2e27acf3599ee230b42c03f6f52791bfef4f05eaff0a0",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\scenario_format.py": "4a10a2a65eee9a2e2092622521ec8628459f9efa14b86e52ecbd6e20daa0934d",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\__init__.py": "4e83b259b80700fd8dae26fecffddaebe2b8cadf092451039064617c32e3c103",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\random_gen.py": "9bf3c8addcc54d711b4869b6b8360854a655ea047f192384f583486b95b35362",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\region.py": "ac74d8f16c71064a31d38ce758dabe29803e0751239221093ba2e4c458f72c39",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\retail_random.py": "27a43a4bd196852414fca5c45b1656d485a1e745b856e21f7a6d5ca14821c741",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\activation_sample_policy.py": "3b607f241b2877712c5893e259621766e999425d3db1eeaee829e4b1b69795b1",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\course_data.py": "8aa9ea2f5edeafa075c153c29baa22b2f3a99effa294a129802a36f43ae0f037",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\horse_types.py": "b9d4eda4aaacb4dc3f24df1a12cbf576280e09db110b84778bfa1cbd726ecd7e",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\activation_conditions.py": "c84b88860f0307a776bca6ced4389b54cb26c308054c17b873a23caef8993744",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\race_accuracy.py": "f47dfed71d4ed7384de40a236c848e631bf173624d61be34703a07d00eb05ee8",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\race_frame_divergence.py": "2f8c2694f2478ed5ee2aedc85c821f5291a6e442111947f3d06018d7add67784",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\compare_horseact.py": "c1b03a9263c799c04a6af033d9fe442d13497844d357bf71106ae138af445f5d",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\audit_collected_races.py": "3c69ac8778006229521b46423731c4eb0f99b581070bcae1c1245ee4e722d25e"
+    },
+    "python": "3.13.6",
+    "workers": 6,
+    "limit": 0
+  },
+  "identitySha256": "87fc0765660c887087c1f1e316f5984b2703738a6822cbdde61c391faff81590",
+  "races": 13187,
+  "uniqueRaces": 13187,
+  "inputsVerified": 13187,
+  "passed": true,
+  "byteIdentical": {
+    "generic": 13187,
+    "pgo": 13187,
+    "pipeline": 13187,
+    "native": 13187,
+    "native-helper": 13187
+  },
+  "groups": {
+    "all": {
+      "races": 13187,
+      "errors": 0,
+      "runners": 125215,
+      "winner": 13187,
+      "placements": 125215,
+      "finishExact": 13187,
+      "skillExact": 13187,
+      "frameExact": 13187,
+      "officialCasts": 1376523,
+      "simulatedCasts": 1376523,
+      "exactCasts": 1376523,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "9 runners": {
+      "races": 12405,
+      "errors": 0,
+      "runners": 111645,
+      "winner": 12405,
+      "placements": 111645,
+      "finishExact": 12405,
+      "skillExact": 12405,
+      "frameExact": 12405,
+      "officialCasts": 1253269,
+      "simulatedCasts": 1253269,
+      "exactCasts": 1253269,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "12 runners": {
+      "races": 45,
+      "errors": 0,
+      "runners": 540,
+      "winner": 45,
+      "placements": 540,
+      "finishExact": 45,
+      "skillExact": 45,
+      "frameExact": 45,
+      "officialCasts": 3001,
+      "simulatedCasts": 3001,
+      "exactCasts": 3001,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "14 runners": {
+      "races": 1,
+      "errors": 0,
+      "runners": 14,
+      "winner": 1,
+      "placements": 14,
+      "finishExact": 1,
+      "skillExact": 1,
+      "frameExact": 1,
+      "officialCasts": 152,
+      "simulatedCasts": 152,
+      "exactCasts": 152,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "16 runners": {
+      "races": 116,
+      "errors": 0,
+      "runners": 1856,
+      "winner": 116,
+      "placements": 1856,
+      "finishExact": 116,
+      "skillExact": 116,
+      "frameExact": 116,
+      "officialCasts": 14907,
+      "simulatedCasts": 14907,
+      "exactCasts": 14907,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "18 runners": {
+      "races": 620,
+      "errors": 0,
+      "runners": 11160,
+      "winner": 620,
+      "placements": 11160,
+      "finishExact": 620,
+      "skillExact": 620,
+      "frameExact": 620,
+      "officialCasts": 105194,
+      "simulatedCasts": 105194,
+      "exactCasts": 105194,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    }
+  },
+  "errors": [],
+  "mismatches": [],
+  "nonexact": [],
+  "postErrors": [],
+  "verification": {
+    "initial_summary_sha256": "703536c7bff04ace5c42a5facb6c6463fe1e07f2d4ff908ef6f1ffad0d113e74",
+    "initial_audit_decoder_exceptions": 1,
+    "fresh_repeats_per_case": 5,
+    "original_saved_replies_decode": true,
+    "all_fresh_replies_match_original_hashes": true,
+    "retry_report_sha256": "d50e6810a6eef0759efa2be3de94a291596c5a13a47d0e33ef7d2f14819cab0a"
+  }
+}

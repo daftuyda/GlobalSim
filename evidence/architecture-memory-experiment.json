@@ -1,0 +1,127 @@
+{
+  "scope": "Serial persistent workers; parse, simulate, capture every frame, encode, transfer. Caller decode excluded. All selected frame values and all metadata compared.",
+  "sha256": {
+    "before": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+    "json": "65137de79f18681958a11d010ca8a82f9a61e7881b900abc9788fc1f25ecbc29",
+    "binary": "65137de79f18681958a11d010ca8a82f9a61e7881b900abc9788fc1f25ecbc29",
+    "binary-before": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2"
+  },
+  "affinity_masks": {
+    "before": null,
+    "json": null,
+    "binary": null,
+    "binary-before": null
+  },
+  "repeats": 7,
+  "warmups": 5,
+  "groups": {
+    "nine-monte-carlo": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 8.079132857142858,
+        "median_ms": 7.652,
+        "p95_ms": 10.8766,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 7.912362380952381,
+        "median_ms": 7.5154499999999995,
+        "p95_ms": 10.6897,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 6.041181428571429,
+        "median_ms": 5.75065,
+        "p95_ms": 8.5211,
+        "mean_bytes": 540281.7666666667,
+        "reply_sequence_sha256": "73126c91d53662137a7ba0f05266a3cb4461fd1861aa82f53d9c4683c579000c"
+      },
+      "binary-before": {
+        "runs": 210,
+        "mean_ms": 6.036209047619048,
+        "median_ms": 5.6972000000000005,
+        "p95_ms": 8.3574,
+        "mean_bytes": 540281.7666666667,
+        "reply_sequence_sha256": "73126c91d53662137a7ba0f05266a3cb4461fd1861aa82f53d9c4683c579000c"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "a34d4224cf8917d38f0e41e439702f4b5062159adaedb1a5fd946f4a31260d50"
+    },
+    "nine": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 8.64787619047619,
+        "median_ms": 8.533750000000001,
+        "p95_ms": 11.8262,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 8.657175238095238,
+        "median_ms": 8.51855,
+        "p95_ms": 11.9943,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 6.550932857142858,
+        "median_ms": 6.47575,
+        "p95_ms": 9.0274,
+        "mean_bytes": 596309.2666666667,
+        "reply_sequence_sha256": "1c1bc87fc5142177e83963f51f6a42c9f142b96b25c317d510e891417b797d90"
+      },
+      "binary-before": {
+        "runs": 210,
+        "mean_ms": 6.6040319047619045,
+        "median_ms": 6.36035,
+        "p95_ms": 9.7421,
+        "mean_bytes": 596309.2666666667,
+        "reply_sequence_sha256": "1c1bc87fc5142177e83963f51f6a42c9f142b96b25c317d510e891417b797d90"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "4d10b75a68eb4409186dc6721595012f6c6e5812000dbbbcb117a155401d966b"
+    },
+    "eighteen": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 25.510300476190476,
+        "median_ms": 24.1672,
+        "p95_ms": 37.2932,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 25.06767380952381,
+        "median_ms": 23.787300000000002,
+        "p95_ms": 35.5661,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 19.94864,
+        "median_ms": 18.361800000000002,
+        "p95_ms": 30.9862,
+        "mean_bytes": 1540242.6333333333,
+        "reply_sequence_sha256": "c28525a5ebf973fac79cb20fd46cd41c10440da336c23dfe6a321ef0c827b0ce"
+      },
+      "binary-before": {
+        "runs": 210,
+        "mean_ms": 20.427415714285715,
+        "median_ms": 19.03315,
+        "p95_ms": 30.3783,
+        "mean_bytes": 1540242.6333333333,
+        "reply_sequence_sha256": "c28525a5ebf973fac79cb20fd46cd41c10440da336c23dfe6a321ef0c827b0ce"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "d0064d7b8c0add88d8a51c4e8a71caed12bcb23d30f18bdb04a05b861dc6fb30"
+    }
+  }
+}

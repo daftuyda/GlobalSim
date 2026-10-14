@@ -1,0 +1,664 @@
+   Compiling race_engine_rs v0.1.0 (C:\Users\Administrator\Documents\GitHub\GlobalSim)
+warning: unnecessary parentheses around assigned value
+   --> src\race_solver_retail.rs:626:13
+    |
+626 |             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
+    |             ^                                                                                                                ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+626 -             ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32);
+626 +             [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32;
+    |
+
+warning: unnecessary parentheses around method argument
+   --> src\race_solver_retail.rs:907:17
+    |
+907 |                 ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+    |                 ^                                                                                                                ^
+    |
+help: remove these parentheses
+    |
+907 -                 ([10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32),
+907 +                 [10500u32, 10000, 9000, 8000, 6000, 4000, 2000, 1000][self.horse.distance_aptitude as usize] as f32 * 0.0001_f32,
+    |
+
+warning: function `strategy_id_for_output` is never used
+   --> src\lib.rs:340:4
+    |
+340 | fn strategy_id_for_output(raw: &str) -> f64 {
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `into_json` is never used
+    --> src\lib.rs:1091:8
+     |
+1090 | impl ReplayFrame {
+     | ---------------- method in this implementation
+1091 |     fn into_json(self) -> Value {
+     |        ^^^^^^^^^
+
+warning: function `noop_random` is never used
+   --> src\activation_conditions.rs:218:4
+    |
+218 | fn noop_random() -> Condition {
+    |    ^^^^^^^^^^^
+
+warning: function `noop_erlang_random` is never used
+   --> src\activation_conditions.rs:221:4
+    |
+221 | fn noop_erlang_random(k: i32, lam: f64) -> Condition {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `live_with_static` is never used
+   --> src\activation_conditions.rs:340:4
+    |
+340 | fn live_with_static<V>(get_value: V, static_filter: StaticFilterFn) -> Condition
+    |    ^^^^^^^^^^^^^^^^
+
+warning: function `section_random` is never used
+   --> src\activation_conditions.rs:442:4
+    |
+442 | fn section_random(start: f64, end: f64) -> Condition {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `change_order_up_end_after_static` is never used
+    --> src\activation_conditions.rs:1141:4
+     |
+1141 | fn change_order_up_end_after_static(regions: &[Region], _a: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParametersWit...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `change_order_up_finalcorner_after_static` is never used
+    --> src\activation_conditions.rs:1146:4
+     |
+1146 | fn change_order_up_finalcorner_after_static(regions: &[Region], _a: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParam...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `change_order_up_middle_static` is never used
+    --> src\activation_conditions.rs:1155:4
+     |
+1155 | fn change_order_up_middle_static(regions: &[Region], _a: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSk...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `activate_count_all_random_filter_gte` is never used
+    --> src\activation_conditions.rs:1673:4
+     |
+1673 | fn activate_count_all_random_filter_gte(regions: &[Region], n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParameters...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `activate_count_all_random_filter_lte` is never used
+    --> src\activation_conditions.rs:1684:4
+     |
+1684 | fn activate_count_all_random_filter_lte(_regions: &[Region], _n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWi...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_end_after_filter_gte` is never used
+    --> src\activation_conditions.rs:1688:4
+     |
+1688 | fn acr_activate_count_end_after_filter_gte(regions: &[Region], _n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParame...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_later_half_filter_gte` is never used
+    --> src\activation_conditions.rs:1693:4
+     |
+1693 | fn acr_activate_count_later_half_filter_gte(regions: &[Region], _n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParam...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_middle_filter_gte` is never used
+    --> src\activation_conditions.rs:1698:4
+     |
+1698 | fn acr_activate_count_middle_filter_gte(regions: &[Region], n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParameters...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `acr_activate_count_start_filter_gte` is never used
+    --> src\activation_conditions.rs:1705:4
+     |
+1705 | fn acr_activate_count_start_filter_gte(regions: &[Region], _n: f64, course: &CourseData, _h: &HorseParameters, _e: &RaceParameters...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `build_conditions_with_activate_counts_as_random` is never used
+    --> src\activation_conditions.rs:1713:8
+     |
+1713 | pub fn build_conditions_with_activate_counts_as_random() -> BTreeMap<String, Condition> {
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variants `Uniform`, `LogNormal`, and `Erlang` are never constructed
+  --> src\activation_sample_policy.rs:22:5
+   |
+19 | pub enum SamplePolicy {
+   |          ------------ variants in this enum
+...
+22 |     Uniform,
+   |     ^^^^^^^
+23 |     LogNormal(f64, f64),
+   |     ^^^^^^^^^
+24 |     Erlang(i32, f64),
+   |     ^^^^^^
+   |
+   = note: `SamplePolicy` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `union_regions` is never used
+   --> src\activation_sample_policy.rs:244:8
+    |
+244 | pub fn union_regions(a: &[Region], b: &[Region]) -> Vec<Region> {
+    |        ^^^^^^^^^^^^^
+
+warning: function `parse` is never used
+   --> src\condition_parser.rs:214:8
+    |
+214 | pub fn parse(conditions: &'static BTreeMap<String, Condition>, s: &str) -> CondResult<Op> {
+    |        ^^^^^
+
+warning: function `parse_with_retail` is never used
+   --> src\condition_parser.rs:218:8
+    |
+218 | pub fn parse_with_retail(conditions: &'static BTreeMap<String, Condition>, s: &str,
+    |        ^^^^^^^^^^^^^^^^^
+
+warning: constant `SURFACE_TURF` is never used
+ --> src\course_data.rs:6:11
+  |
+6 | pub const SURFACE_TURF: i32 = 1;
+  |           ^^^^^^^^^^^^
+
+warning: constant `SURFACE_DIRT` is never used
+ --> src\course_data.rs:7:11
+  |
+7 | pub const SURFACE_DIRT: i32 = 2;
+  |           ^^^^^^^^^^^^
+
+warning: associated function `from_i32` is never used
+  --> src\horse_types.rs:55:12
+   |
+54 | impl Aptitude {
+   | ------------- associated function in this implementation
+55 |     pub fn from_i32(v: i32) -> Result<Aptitude, String> {
+   |            ^^^^^^^^
+
+warning: variant `Noop` is never constructed
+   --> src\hp_policy.rs:340:5
+    |
+339 | pub enum HpPolicy {
+    |          -------- variant in this enum
+340 |     Noop,
+    |     ^^^^
+
+warning: variant `RaceFrame` is never constructed
+  --> src\json.rs:38:5
+   |
+32 | pub enum Value {
+   |          ----- variant in this enum
+...
+38 |     RaceFrame(Box<ReplayFrame>),
+   |     ^^^^^^^^^
+   |
+   = note: `Value` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: methods `is_null` and `get_object` are never used
+   --> src\json.rs:117:12
+    |
+ 48 | impl Value {
+    | ---------- methods in this implementation
+...
+117 |     pub fn is_null(&self) -> bool {
+    |            ^^^^^^^
+...
+136 |     pub fn get_object<'a>(&'a self, key: &str) -> Result<&'a BTreeMap<String, Value>, String> {
+    |            ^^^^^^^^^^
+
+warning: function `to_string` is never used
+   --> src\json.rs:455:8
+    |
+455 | pub fn to_string(v: &Value) -> String {
+    |        ^^^^^^^^^
+
+warning: methods `has_character` and `did_overtake` are never used
+   --> src\race_field.rs:281:12
+    |
+ 98 | impl RaceField {
+    | -------------- methods in this implementation
+...
+281 |     pub fn has_character(&self, id: i64) -> bool { self.characters.contains(&id) }
+    |            ^^^^^^^^^^^^^
+...
+472 |     pub fn did_overtake(&self, i: usize) -> bool {
+    |            ^^^^^^^^^^^^
+
+warning: field `order_range` is never read
+   --> src\race_parameters.rs:122:9
+    |
+113 | pub struct RaceParameters {
+    |            -------------- field in this struct
+...
+122 |     pub order_range: Option<(i32, i32)>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `RaceParameters` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `pos_keep_min_threshold`, `pos_keep_max_threshold`, and `cp_activating` are never read
+   --> src\race_solver.rs:513:5
+    |
+403 | pub struct RaceSolver {
+    |            ---------- fields in this struct
+...
+513 |     pos_keep_min_threshold: f64,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+514 |     pos_keep_max_threshold: f64,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+...
+564 |     pub(crate) cp_activating: bool,
+    |                ^^^^^^^^^^^^^
+
+warning: methods `has_active_skill`, `is_spot_struggling`, `set_on_skill_activate`, `set_on_skill_deactivate`, and `cleanup` are never used
+    --> src\race_solver.rs:666:12
+     |
+ 638 | impl RaceSolver {
+     | --------------- methods in this implementation
+...
+ 666 |     pub fn has_active_skill(&self, skill_id: &str, perspective: Perspective) -> bool {
+     |            ^^^^^^^^^^^^^^^^
+...
+ 691 |     pub fn is_spot_struggling(&self) -> bool {
+     |            ^^^^^^^^^^^^^^^^^^
+...
+2860 |     pub fn set_on_skill_activate(&mut self, hook: SkillHook) {
+     |            ^^^^^^^^^^^^^^^^^^^^^
+...
+2864 |     pub fn set_on_skill_deactivate(&mut self, hook: SkillHook) {
+     |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2868 |     pub fn cleanup(&mut self) {
+     |            ^^^^^^^
+
+warning: field `spot_speed_coefficients` is never read
+  --> src\race_solver_retail.rs:31:9
+   |
+16 | pub(crate) struct RetailRuntimeConfig {
+   |                   ------------------- field in this struct
+...
+31 |     pub spot_speed_coefficients: [f32; 3],
+   |         ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `STRATEGY_PROFICIENCY_MODIFIER` is never used
+   --> src\race_solver_builder.rs:137:7
+    |
+137 | const STRATEGY_PROFICIENCY_MODIFIER: [f64; 8] = [1.1, 1.0, 0.85, 0.75, 0.6, 0.4, 0.2, 0.1];
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `ASITAME_BASE_MODIFIER` is never used
+   --> src\race_solver_builder.rs:146:7
+    |
+146 | const ASITAME_BASE_MODIFIER: f64 = 0.00875;
+    |       ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `asitame_calc_approximate_modifier` is never used
+   --> src\race_solver_builder.rs:163:15
+    |
+163 | pub(crate) fn asitame_calc_approximate_modifier(power: f64, strategy: Strategy, distance_type: i32) -> f64 {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `build_adjusted_stats` is never used
+   --> src\race_solver_builder.rs:254:8
+    |
+254 | pub fn build_adjusted_stats(base: &HorseParameters, course: &CourseData, ground: GroundCondition) -> HorseParameters {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: method `seed` is never used
+   --> src\race_solver_builder.rs:612:12
+    |
+590 | impl RaceSolverBuilder {
+    | ---------------------- method in this implementation
+...
+612 |     pub fn seed(&mut self, lo: u32, hi: u32) -> &mut Self {
+    |            ^^^^
+
+warning: fields `draw_start` and `draw_end` are never read
+  --> src\retail_initialization.rs:43:9
+   |
+36 | pub struct Trigger {
+   |            ------- fields in this struct
+...
+43 |     pub draw_start: usize,
+   |         ^^^^^^^^^^
+44 |     pub draw_end: usize,
+   |         ^^^^^^^^
+   |
+   = note: `Trigger` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: methods `target_speed`, `target_speed_with_late_terms`, `hp_per_second`, `acceleration`, and `acceleration_iter` are never used
+   --> src\retail_physics.rs:303:12
+    |
+121 | impl Parameters {
+    | --------------- methods in this implementation
+...
+303 |     pub fn target_speed(&self, input: TargetSpeed, modifiers: &[f32]) -> f32 {
+    |            ^^^^^^^^^^^^
+...
+307 |     pub fn target_speed_with_late_terms(&self, input: TargetSpeed, modifiers: &[f32], spot_struggle: f32, bonus: f32) -> f32 {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+365 |     pub fn hp_per_second(
+    |            ^^^^^^^^^^^^^
+...
+393 |     pub fn acceleration(&self, input: Acceleration, modifiers: &[f32]) -> f32 {
+    |            ^^^^^^^^^^^^
+...
+397 |     pub fn acceleration_iter(&self, input: Acceleration, modifiers: impl IntoIterator<Item = f32>) -> f32 {
+    |            ^^^^^^^^^^^^^^^^^
+
+warning: field `start_dash` is never read
+   --> src\retail_physics.rs:455:9
+    |
+448 | pub struct Acceleration {
+    |            ------------ field in this struct
+...
+455 |     pub start_dash: bool,
+    |         ^^^^^^^^^^
+    |
+    = note: `Acceleration` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: methods `values` and `values_except` are never used
+   --> src\retail_physics.rs:473:12
+    |
+472 | impl AdditiveReceiver {
+    | --------------------- methods in this implementation
+473 |     pub fn values(&self) -> impl Iterator<Item = f32> + '_ {
+    |            ^^^^^^
+...
+479 |     pub fn values_except(&self, token: u64) -> impl Iterator<Item = f32> + '_ {
+    |            ^^^^^^^^^^^^^
+
+warning: field `course_id` is never read
+   --> src\retail_geometry.rs:166:9
+    |
+165 | pub struct CourseGeometry {
+    |            -------------- field in this struct
+166 |     pub course_id: i32,
+    |         ^^^^^^^^^
+    |
+    = note: `CourseGeometry` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: associated function `load` is never used
+   --> src\retail_geometry.rs:188:12
+    |
+180 | impl CourseGeometry {
+    | ------------------- associated function in this implementation
+...
+188 |     pub fn load(directory: &Path, course_id: i32, distance: f32) -> Result<Self, String> {
+    |            ^^^^
+
+warning: function `front_index` is never used
+   --> src\retail_lane.rs:334:8
+    |
+334 | pub fn front_index(owner: Row, rows: &[Row], p: BlockParameters) -> Option<usize> {
+    |        ^^^^^^^^^^^
+
+warning: function `side_room` is never used
+   --> src\retail_lane.rs:367:8
+    |
+367 | pub fn side_room(owner: Row, max_lane: f32, rows: &[Row], p: BlockParameters) -> SideRoom {
+    |        ^^^^^^^^^
+
+warning: function `resolve_overlaps` is never used
+   --> src\retail_lane.rs:655:8
+    |
+655 | pub fn resolve_overlaps(rows: &mut [Row], force_checks: &mut [bool]) {
+    |        ^^^^^^^^^^^^^^^^
+
+warning: method `get_object` is never used
+   --> src\json.rs:136:12
+    |
+ 48 | impl Value {
+    | ---------- method in this implementation
+...
+136 |     pub fn get_object<'a>(&'a self, key: &str) -> Result<&'a BTreeMap<String, Value>, String> {
+    |            ^^^^^^^^^^
+
+warning: methods `has_active_skill`, `is_spot_struggling`, and `cleanup` are never used
+    --> src\race_solver.rs:666:12
+     |
+ 638 | impl RaceSolver {
+     | --------------- methods in this implementation
+...
+ 666 |     pub fn has_active_skill(&self, skill_id: &str, perspective: Perspective) -> bool {
+     |            ^^^^^^^^^^^^^^^^
+...
+ 691 |     pub fn is_spot_struggling(&self) -> bool {
+     |            ^^^^^^^^^^^^^^^^^^
+...
+2868 |     pub fn cleanup(&mut self) {
+     |            ^^^^^^^
+
+warning: `race_engine_rs` (lib) generated 48 warnings (run `cargo fix --lib -p race_engine_rs` to apply 2 suggestions)
+warning: `race_engine_rs` (lib test) generated 26 warnings (24 duplicates)
+    Finished `release` profile [optimized] target(s) in 52.30s
+     Running unittests src\lib.rs (target\release\deps\globalsim-591cdf3cc47d38a9.exe)
+
+running 129 tests
+test activation_conditions::trigger_contract_tests::distance_percentage_uses_field_spread_and_floors ... ok
+test activation_conditions::trigger_contract_tests::ordinary_eighteen_runner_posts_match_extracted_client_table ... ok
+test experimental_grid_tests::grid_requires_exact_contract_and_hundred_horses ... ok
+test binary_replay::tests::packet_preserves_every_float_bit_and_selected_frame ... ok
+test experimental_grid_tests::grid_has_five_separate_rows_and_twenty_ordinary_stalls ... ok
+test json::tests::response_buffer_reuses_capacity_and_replaces_previous_contents ... ok
+test json::tests::string_serialization_preserves_escapes_and_unicode ... ok
+test condition_parser::cache_tests::cached_syntax_keeps_samples_and_observer_state_private ... ok
+test condition_parser::cache_tests::warm_cache_preserves_sample_validation_errors ... ok
+test json::tests::data_comparison_checks_nested_content_and_float_bits ... ok
+test json::tests::numeric_tokens_keep_float_bits ... ok
+test json::tests::compact_replay_frames_preserve_object_bytes_and_float_formatting ... ok
+test json::tests::unicode_input_retains_whitespace_and_character_offsets ... ok
+test json::tests::replay_number_cache_preserves_transitions_and_array_shapes ... ok
+test output_cache_tests::compact_frames_restore_runner_order_and_blocker_indices ... ok
+test activation_conditions::trigger_contract_tests::large_field_extends_balanced_outer_post_grouping ... ok
+test json::tests::request_cache_preserves_duplicates_numbers_unicode_and_errors ... ok
+test output_cache_tests::finish_sample_includes_equal_tick_and_handles_missing_prior_frame ... ok
+test json::tests::ascii_and_character_paths_agree_on_tokens_and_errors ... ok
+test json::tests::request_cache_shares_exact_text_and_survives_errors_and_omission ... ok
+test overtaking::tests::equal_speed_comparisons_skip_blocker_queries ... ok
+test overtaking::tests::differing_speed_comparisons_query_blockers_once ... ok
+test output_cache_tests::dense_output_has_all_frames_without_sparse_metadata ... ok
+test overtaking::tests::irrelevant_blocker_queries_are_skipped ... ok
+test hp_policy::retail_tests::hp_guts_factor_refreshes_on_reinitialization_and_preserves_phase_boundary ... ok
+test overtaking::tests::relevant_blocker_state_selects_the_same_speed ... ok
+test json::tests::replay_batch_encoder_matches_arrays_and_reuses_finished_storage ... ok
+test hp_policy::retail_tests::exhausted_hp_has_no_debt_against_later_recovery ... ok
+test output_cache_tests::sparse_frames_keep_cadence_and_unthinned_finish_sample ... ok
+test condition_parser::cache_tests::parse_context_separates_runtime_and_condition_tables ... ok
+test race_solver::movement_tests::cornerless_course_cannot_open_a_duel_on_its_last_straight ... ok
+test race_solver::movement_tests::cooldown_keeps_stateful_checks_and_prerequisite_observations ... ok
+test race_solver::movement_tests::duel_lane_and_distance_boundaries ... ok
+test race_solver::movement_tests::boxed_runner_cancels_stale_target ... ok
+test prepared_roster_tests::roster_preparation_preserves_counts_exclusions_and_ordered_team_sums ... ok
+test race_solver::movement_tests::duel_proximity_survives_recovery_and_tracks_multiple_partners ... ok
+test race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules ... FAILED
+test race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival ... FAILED
+test race_solver::movement_tests::duel_warmup_same_target_speed_and_count ... ok
+test race_solver::movement_tests::experimental_duel_groups_do_not_sustain_unrelated_participants ... ok
+test race_solver::movement_tests::extra_pacing_checks_all_ahead_and_exits_after_passing_later_style ... ok
+test race_solver::movement_tests::duel_condition_checks_accumulated_real_count_not_random_position ... ok
+test race_solver::movement_tests::finished_runner_is_not_a_duel_target ... ok
+test race_solver::movement_tests::finished_runner_is_not_a_front_or_side_blocker ... ok
+test race_solver::movement_tests::forced_lane_step_sweeps_side_envelope_in_both_directions ... ok
+test race_solver::movement_tests::lateral_guard_compares_positions_from_the_same_tick ... ok
+test race_solver::movement_tests::outer_boundary_does_not_report_phantom_movement ... ok
+test race_solver::movement_tests::null_lane_controller_keeps_target_and_ignores_fixed_lane_skill ... ok
+test race_solver::movement_tests::overlapping_runners_can_separate_and_finished_runners_do_not_block ... ok
+test race_solver::movement_tests::empty_priority_zero_still_flushes_additional_activations_and_reservations ... ok
+test race_solver::movement_tests::partial_start_delay_preserves_effective_lateral_and_near_timer_dt ... ok
+test race_solver::movement_tests::rushing_mode_precedes_extra_catchup_and_short_course_factor_is_bounded ... ok
+test race_solver::movement_tests::special_following_timer_is_independent_and_resets_outside_its_corridor ... ok
+test race_solver::movement_tests::spot_struggle_group_start_and_expiration_are_once_per_style ... ok
+test race_solver::movement_tests::sixth_can_duel_with_fifth_but_seventh_cannot_duel_with_sixth ... ok
+test race_solver::movement_tests::spot_struggle_ignores_only_runaways_in_regular_front_runner_ranks ... ok
+test race_solver::movement_tests::spot_struggle_runaways_must_lead_the_entire_field ... ok
+test race_solver::movement_tests::spot_struggle_lane_and_entry_cutoff ... ok
+test race_solver::movement_tests::random_target_selection_precedes_random_ability_value ... ok
+test race_solver::movement_tests::surrounded_uses_single_precision_cached_gaps_at_inclusive_limits ... ok
+test race_solver::movement_tests::spot_struggle_waits_for_cached_lead_over_other_styles ... ok
+test race_solver_builder::skill_value_rounding_tests::master_and_level_conversion_round_separately ... ok
+test race_solver_builder::scoped_table_tests::nested_prepared_tables_restore_their_own_definitions ... ok
+test race_solver_builder::overcap_tests::odd_raw_stats_retain_half_points_before_mood_and_caps ... ok
+test replay_frames::tests::empty_roster_can_retain_timestamps_without_rows ... ok
+test replay_frames::tests::selection_and_reordering_preserve_samples_and_blockers ... ok
+test retail_geometry::tests::short_quaternion_arc ... ok
+test retail_initialization::initial_wisdom_tests::official_export_values_and_constructor_bounds ... ok
+test retail_initialization::tests::absent_following_straight_keeps_empty_trigger_and_rng_state ... ok
+test race_solver::retail_impl::tests::at_target_speed_clamp_ignores_all_clamped_accelerations ... ok
+test race_solver_builder::sampled_trigger_index_tests::indexed_samples_preserve_expression_order_and_parser_errors ... ok
+test retail_lane::tests::lane_continuity_preserves_blocked_time_and_skips_direction_changes ... ok
+test race_solver::movement_tests::retail_duel_can_invite_a_finished_partner_with_ready_proximity ... ok
+test replay_worker::tests::abandoned_frame_sequence_does_not_leak_into_next_request ... ok
+test retail_physics::phase_boundary_tests::exported_thresholds_and_adjacent_float ... ok
+test race_solver::retail_impl::tests::acceleration_cache_refreshes_every_dependency_and_parameter_object ... ok
+test race_solver::movement_tests::sparse_skill_pass_matches_full_scan_observers_after_removals ... ok
+test retail_physics::tests::finish_interpolation_matches_official_adjacent_crossings ... ok
+test retail_physics::tests::gate_countdown_exact_zero_and_repeated_subtraction ... ok
+test retail_physics::tests::acceleration_base_keeps_negative_values_until_after_modifiers ... ok
+test race_solver::movement_tests::inactive_skill_windows_match_full_visits_with_stateful_exceptions ... ok
+test retail_physics::tests::missing_parameters_are_rejected_instead_of_defaulted ... ok
+test retail_physics::tests::dash_threshold_uses_captured_float32_rate ... ok
+test retail_physics::tests::receiver_keeps_order_and_recomputes_after_expiry ... ok
+test retail_physics::tests::zero_time_suppresses_ai_without_changing_countdown ... ok
+test retail_random::tests::zero_width_still_consumes_a_draw ... ok
+test retail_random::tests::independent_dotnet_reference_all_signed_seed_boundaries ... ok
+test retail_geometry::tests::corner_ids_and_final_flag_follow_explicit_events ... ok
+test hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp ... FAILED
+test retail_spurt::tests::comparator_near_ties_and_large_equal_partitions_keep_framework_behavior ... ok
+test retail_spurt::tests::real_first_pass_retry_limit_rejects_a_distant_feasible_speed_without_rolls ... ok
+test retail_spurt::tests::recovery_retry_preserves_a_valid_start_and_failed_retry_keeps_plan ... ok
+test retail_states::tests::adjoining_uphill_event_uses_first_matching_end_and_does_not_restart ... ok
+test retail_spurt::tests::second_pass_lottery_is_strict_and_has_its_own_retry_limit ... ok
+test replay_worker::tests::bounded_batches_and_reused_worker_preserve_complete_arrays ... ok
+test output_cache_tests::geometry_cache_shares_only_matching_course_identity ... ok
+test retail_states::tests::downhill_zero_crossing_and_level_terrain_freeze ... ok
+test rushing::tests::extracted_mode_lottery_boundaries_and_original_strategy ... ok
+test stadium_score::tests::countdown_pauses_and_discards_overshoot ... ok
+test stadium_score::tests::leaders_use_exact_styles_and_cached_ranks ... ok
+test stadium_score::tests::positioning_is_checked_only_at_phase_change ... ok
+test starting_grid::tests::track_specific_dividers_and_half_gate ... ok
+test retail_states::tests::rushing_float_tick_and_forced_timer_replacement ... ok
+test retail_geometry::tests::captured_gates_and_per_runner_width_changes ... FAILED
+test retail_sort::tests::comparison_sort_port_matches_python_partition_vectors ... ok
+test retail_initialization::tests::all_official_rushing_eligibility_and_sections_follow_shared_stream ... ok
+test retail_states::tests::shared_stream_matches_python_state_transitions_and_float_timers ... ok
+test retail_states::tests::rushing_boundaries_consumption_and_single_use ... ok
+test retail_physics::tests::python_port_vectors_match_every_float32_bit ... FAILED
+test retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts ... FAILED
+test retail_initialization::tests::all_ninety_official_delays_are_bit_exact_from_inputs ... ok
+test retail_geometry::tests::final_half_uses_last_eligible_event_start ... ok
+test retail_geometry::tests::invalid_identity_samples_and_widths_are_rejected ... ok
+test hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits ... FAILED
+test retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits ... FAILED
+test retail_lane::tests::overlap_order_and_flags_match_python_on_small_and_large_fields ... ok
+test retail_lane::tests::target_state_retention_cooldown_and_shared_draws_match_python ... ok
+test retail_lane::tests::cached_and_live_passing_search_matches_python_bits ... ok
+test race_field::retail_impl::tests::passing_membership_keeps_owner_exclusion_and_replacements ... ok
+test retail_initialization::tests::prepared_initialization_preserves_draws_and_float_bits_across_seeds ... ok
+test race_solver::retail_impl::tests::zero_time_preserves_course_event_readiness ... ok
+test race_solver::retail_impl::tests::retail_phase_uses_cached_enum_and_preserves_boundary_window ... ok
+test race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits ... FAILED
+test retail_position_keep::tests::sequential_field_contexts_match_python_timers_draws_and_modes ... ok
+test json::tests::specialized_numbers_match_the_original_standard_formatter ... ok
+test retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses ... FAILED
+test race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits ... FAILED
+test race_solver::retail_impl::tests::movement_roster_stays_live_across_ordered_steps_and_callbacks ... ok
+test retail_geometry::tests::compiled_segments_preserve_source_interpolation_bits ... ok
+
+failures:
+
+---- race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules stdout ----
+
+thread 'race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules' (27404) panicked at src\race_solver.rs:3397:9:
+assertion failed: !field.solvers[0].borrow().duel_active
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival stdout ----
+
+thread 'race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival' (60032) panicked at src\race_solver.rs:3324:9:
+assertion `left == right` failed
+  left: Some(1)
+ right: Some(2)
+
+---- hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp stdout ----
+
+thread 'hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp' (59268) panicked at src\hp_policy.rs:132:13:
+assertion `left == right` failed
+  left: 4
+ right: 8
+
+---- retail_geometry::tests::captured_gates_and_per_runner_width_changes stdout ----
+
+thread 'retail_geometry::tests::captured_gates_and_per_runner_width_changes' (43232) panicked at src\retail_geometry.rs:476:13:
+assertion `left == right` failed
+  left: 1.1999999
+ right: 1.2
+
+---- retail_physics::tests::python_port_vectors_match_every_float32_bit stdout ----
+
+thread 'retail_physics::tests::python_port_vectors_match_every_float32_bit' (3756) panicked at src\retail_physics.rs:645:17:
+assertion `left == right` failed: vector 0, maximum_spurt_speed: 21.989582 versus 21.98958
+  left: 1102047914
+ right: 1102047913
+
+---- retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts stdout ----
+
+thread 'retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts' (44696) panicked at src\retail_spurt.rs:230:13:
+assertion `left == right` failed: result vector 32
+  left: 4
+ right: 8
+
+---- hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits stdout ----
+
+thread 'hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits' (42664) panicked at src\hp_policy.rs:85:17:
+assertion `left == right` failed
+  left: 1090684613
+ right: 1090684612
+
+---- retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits stdout ----
+
+thread 'retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits' (42136) panicked at src\retail_lane.rs:875:17:
+assertion `left == right` failed: move case 9 channel 2
+  left: 1023360276
+ right: 1023360274
+
+---- race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits stdout ----
+
+thread 'race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits' (32872) panicked at src\race_solver_retail.rs:212:13:
+assertion `left == right` failed: isolated tick 0 channel 10: 23.22417640686035
+  left: 1102695197
+ right: 1102695196
+
+---- retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses stdout ----
+
+thread 'retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses' (67952) panicked at src\retail_geometry.rs:600:21:
+assertion `left == right` failed: course 10101 position 120.123 lane 1.35 channel 0
+  left: 1123332913
+ right: 1123332912
+
+---- race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits stdout ----
+
+thread 'race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits' (72204) panicked at src\race_solver_retail.rs:212:13:
+assertion `left == right` failed: race 0 runner 0 tick 0 channel 10: 23.22417640686035
+  left: 1102695197
+ right: 1102695196
+
+
+failures:
+    hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits
+    hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp
+    race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules
+    race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival
+    race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits
+    race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits
+    retail_geometry::tests::captured_gates_and_per_runner_width_changes
+    retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses
+    retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits
+    retail_physics::tests::python_port_vectors_match_every_float32_bit
+    retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts
+
+test result: FAILED. 118 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+error: test failed, to rerun pass `--lib`

@@ -1,0 +1,182 @@
+{
+  "scope": "Dense captured-race corpus. JSON candidates must match baseline bytes; binary candidates must preserve all metadata and every selected frame scalar (f64 bits except JSON-normalized zero/null). Official finish, placement, skill-start and compared replay-frame metrics are independently recomputed for the first candidate. Parallel audit wall time is not a per-race benchmark.",
+  "identity": {
+    "schema": 1,
+    "engines": {
+      "baseline": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\latency-final-pgo.exe",
+        "sha256": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "replay_worker": false,
+        "binary": false
+      },
+      "generic": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-generic.exe",
+        "sha256": "d42225858c141dee8e122f00188cf2ceabfebb6f56d16e754f8981a8793adfff",
+        "replay_worker": false,
+        "binary": false
+      },
+      "pgo": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+        "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+        "replay_worker": false,
+        "binary": false
+      },
+      "pipeline": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+        "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+        "replay_worker": true,
+        "binary": false
+      },
+      "binary": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-final-pgo.exe",
+        "sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+        "replay_worker": false,
+        "binary": true
+      }
+    },
+    "scoreEngine": "generic",
+    "template": "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\.local\\deploy-v70-20261008\\template.json",
+    "templateSha256": "534d8c7e8d28811b95706ac7ca14b1bc1dd6475655e9985330e85f2a1d967796",
+    "inventorySha256": "c0ecc610341977ca37ba35844c48aa6d5952a6c673f2547cff9ba7091551274a",
+    "archiveSha256": "83a53fe993c22ba9c2134bf20af91c53d3c43f76f402432d285c46dc8e3213e1",
+    "inputManifestSha256": "d88b2d736c5df430796b731c1c9005bc9ada2ca4888eff09a3b213aee071f7ce",
+    "selectedRaces": 13187,
+    "inventoryRaces": 13187,
+    "localSourceSha256": {
+      "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\architecture-full-audit.py": "90af083ee874a24e8172055c1644885029dd83201362925d7534b2a8b6b692f0",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\tools\\replay_protocol.py": "ad09c1be70a4a3f25bc282428774f1a37b025a3e660df93caa1c755b50d3426c",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\scenario_format.py": "4a10a2a65eee9a2e2092622521ec8628459f9efa14b86e52ecbd6e20daa0934d",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\__init__.py": "4e83b259b80700fd8dae26fecffddaebe2b8cadf092451039064617c32e3c103",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\random_gen.py": "9bf3c8addcc54d711b4869b6b8360854a655ea047f192384f583486b95b35362",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\region.py": "ac74d8f16c71064a31d38ce758dabe29803e0751239221093ba2e4c458f72c39",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\retail_random.py": "27a43a4bd196852414fca5c45b1656d485a1e745b856e21f7a6d5ca14821c741",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\activation_sample_policy.py": "3b607f241b2877712c5893e259621766e999425d3db1eeaee829e4b1b69795b1",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\course_data.py": "8aa9ea2f5edeafa075c153c29baa22b2f3a99effa294a129802a36f43ae0f037",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\horse_types.py": "b9d4eda4aaacb4dc3f24df1a12cbf576280e09db110b84778bfa1cbd726ecd7e",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\server\\app\\simulation\\race_engine\\activation_conditions.py": "c84b88860f0307a776bca6ced4389b54cb26c308054c17b873a23caef8993744",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\race_accuracy.py": "f47dfed71d4ed7384de40a236c848e631bf173624d61be34703a07d00eb05ee8",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\race_frame_divergence.py": "2f8c2694f2478ed5ee2aedc85c821f5291a6e442111947f3d06018d7add67784",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\compare_horseact.py": "c1b03a9263c799c04a6af033d9fe442d13497844d357bf71106ae138af445f5d",
+      "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\audit_collected_races.py": "3c69ac8778006229521b46423731c4eb0f99b581070bcae1c1245ee4e722d25e"
+    },
+    "python": "3.13.6",
+    "workers": 2,
+    "limit": 0
+  },
+  "identitySha256": "ad2d6d1bd58b991d5e88f3ae2ade193b535c9013df287f4292308b792b0013ce",
+  "races": 13187,
+  "uniqueRaces": 13187,
+  "inputsVerified": 13187,
+  "passed": true,
+  "outputMatches": {
+    "generic": 13187,
+    "pgo": 13187,
+    "pipeline": 13187,
+    "binary": 13187
+  },
+  "groups": {
+    "all": {
+      "races": 13187,
+      "errors": 0,
+      "runners": 125215,
+      "winner": 13187,
+      "placements": 125215,
+      "finishExact": 13187,
+      "skillExact": 13187,
+      "frameExact": 13187,
+      "officialCasts": 1376523,
+      "simulatedCasts": 1376523,
+      "exactCasts": 1376523,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "9 runners": {
+      "races": 12405,
+      "errors": 0,
+      "runners": 111645,
+      "winner": 12405,
+      "placements": 111645,
+      "finishExact": 12405,
+      "skillExact": 12405,
+      "frameExact": 12405,
+      "officialCasts": 1253269,
+      "simulatedCasts": 1253269,
+      "exactCasts": 1253269,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "12 runners": {
+      "races": 45,
+      "errors": 0,
+      "runners": 540,
+      "winner": 45,
+      "placements": 540,
+      "finishExact": 45,
+      "skillExact": 45,
+      "frameExact": 45,
+      "officialCasts": 3001,
+      "simulatedCasts": 3001,
+      "exactCasts": 3001,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "14 runners": {
+      "races": 1,
+      "errors": 0,
+      "runners": 14,
+      "winner": 1,
+      "placements": 14,
+      "finishExact": 1,
+      "skillExact": 1,
+      "frameExact": 1,
+      "officialCasts": 152,
+      "simulatedCasts": 152,
+      "exactCasts": 152,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "16 runners": {
+      "races": 116,
+      "errors": 0,
+      "runners": 1856,
+      "winner": 116,
+      "placements": 1856,
+      "finishExact": 116,
+      "skillExact": 116,
+      "frameExact": 116,
+      "officialCasts": 14907,
+      "simulatedCasts": 14907,
+      "exactCasts": 14907,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    },
+    "18 runners": {
+      "races": 620,
+      "errors": 0,
+      "runners": 11160,
+      "winner": 620,
+      "placements": 11160,
+      "finishExact": 620,
+      "skillExact": 620,
+      "frameExact": 620,
+      "officialCasts": 105194,
+      "simulatedCasts": 105194,
+      "exactCasts": 105194,
+      "finishMAE": 0.0,
+      "maxFinishError": 0.0
+    }
+  },
+  "errors": [],
+  "mismatches": [],
+  "nonexact": [],
+  "postErrors": [],
+  "initial_attempt": {
+    "completed_cases": 1074,
+    "matching_completed_cases": 1074,
+    "outcome": "Python process pool terminated abruptly; cause unconfirmed. Complete audit rerun with two workers.",
+    "log": "architecture-initial-audit.log",
+    "results_sha256": "110e2c41a264e5ae8d54066139c4a1e1f01175e0556553762e54f6e1c2a6ebe3"
+  }
+}

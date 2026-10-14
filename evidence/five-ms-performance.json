@@ -1,0 +1,274 @@
+{
+  "scope": "Serial persistent workers, alternating request order. Includes parsing, simulation, all selected frame encoding and pipe transfer. Excludes caller JSON encoding/decoding. Standard and dense output reported separately.",
+  "label": "five-ms-final",
+  "machine": "Windows, Intel Core i7-14700K, Rust 1.97.1",
+  "repeats": 5,
+  "warmups": 5,
+  "sha256": {
+    "before": "111c9bbd46f8121aa4807846d9e804f5c9467b61765baa76769ecd6751a27d2e",
+    "after": "caa74392f24bcccf363c398d18c910b046d5d0a00d70cf61557263f4301380cf",
+    "pipeline": "caa74392f24bcccf363c398d18c910b046d5d0a00d70cf61557263f4301380cf",
+    "generic": "49a6b090dee54eab37c3cb3b2448936b7914b2abcf2d6a429dec9cb5b0c49462"
+  },
+  "groups": {
+    "nine-standard": {
+      "input_cases": 30,
+      "inputs_sha256": "9c958da8813806292ad6ab528ab45f90fe33cacd125da8233f1c7c0645238d7b",
+      "matching_replies": 150,
+      "latency_change_percent": -5.623203092170915,
+      "before": {
+        "runs": 150,
+        "cpu_mean_ms": 7.604166666666667,
+        "first_request_ms": 12.226399965584278,
+        "mean_ms": 7.701245333688955,
+        "median_ms": 7.552450028015301,
+        "p95_ms": 10.11640002252534,
+        "races_per_second": 129.8491291564909
+      },
+      "after": {
+        "runs": 150,
+        "cpu_mean_ms": 6.458333333333333,
+        "first_request_ms": 9.88670001970604,
+        "mean_ms": 7.268188667949289,
+        "median_ms": 7.168350013671443,
+        "p95_ms": 9.371399995870888,
+        "races_per_second": 137.58586157920263
+      },
+      "pipeline": {
+        "runs": 150,
+        "cpu_mean_ms": 8.229166666666666,
+        "first_request_ms": 10.128399997483939,
+        "mean_ms": 7.223374001914635,
+        "median_ms": 7.159399974625558,
+        "p95_ms": 9.472600009758025,
+        "races_per_second": 138.43946052564064
+      },
+      "generic": {
+        "runs": 150,
+        "cpu_mean_ms": 8.020833333333334,
+        "first_request_ms": 11.570099974051118,
+        "mean_ms": 8.372433999708543,
+        "median_ms": 8.344100002432242,
+        "p95_ms": 10.814699984621257,
+        "races_per_second": 119.43957993993283
+      }
+    },
+    "nine-dense": {
+      "input_cases": 30,
+      "inputs_sha256": "4d10b75a68eb4409186dc6721595012f6c6e5812000dbbbcb117a155401d966b",
+      "matching_replies": 150,
+      "latency_change_percent": -4.665633718215167,
+      "before": {
+        "runs": 150,
+        "cpu_mean_ms": 8.958333333333334,
+        "first_request_ms": 16.252300003543496,
+        "mean_ms": 10.417777334417528,
+        "median_ms": 10.359100007917732,
+        "p95_ms": 13.694799970835447,
+        "races_per_second": 95.98976517728687
+      },
+      "after": {
+        "runs": 150,
+        "cpu_mean_ms": 9.479166666666666,
+        "first_request_ms": 12.373399978969246,
+        "mean_ms": 9.931722002414366,
+        "median_ms": 9.817800018936396,
+        "p95_ms": 13.3477000053972,
+        "races_per_second": 100.68747391005341
+      },
+      "pipeline": {
+        "runs": 150,
+        "cpu_mean_ms": 10.3125,
+        "first_request_ms": 12.881599948741496,
+        "mean_ms": 9.609732667061811,
+        "median_ms": 9.649600047850981,
+        "p95_ms": 12.451899994630367,
+        "races_per_second": 104.0611674274339
+      },
+      "generic": {
+        "runs": 150,
+        "cpu_mean_ms": 9.791666666666666,
+        "first_request_ms": 14.159000013023615,
+        "mean_ms": 11.21844333402502,
+        "median_ms": 11.031050031306222,
+        "p95_ms": 16.009400016628206,
+        "races_per_second": 89.1389268747337
+      }
+    },
+    "eighteen-standard": {
+      "input_cases": 30,
+      "inputs_sha256": "cc286c56268f0f3cf83aee197bfa380ed509f7c2fed821d283514978846e3450",
+      "matching_replies": 150,
+      "latency_change_percent": -6.526081828498908,
+      "before": {
+        "runs": 150,
+        "cpu_mean_ms": 22.708333333333332,
+        "first_request_ms": 35.06520000519231,
+        "mean_ms": 23.66264133558919,
+        "median_ms": 22.915750014362857,
+        "p95_ms": 33.00860000308603,
+        "races_per_second": 42.260709014592365
+      },
+      "after": {
+        "runs": 150,
+        "cpu_mean_ms": 22.708333333333332,
+        "first_request_ms": 31.760699988808483,
+        "mean_ms": 22.118397999244433,
+        "median_ms": 21.40939998207614,
+        "p95_ms": 30.30779998516664,
+        "races_per_second": 45.21123094150671
+      },
+      "pipeline": {
+        "runs": 150,
+        "cpu_mean_ms": 22.083333333333332,
+        "first_request_ms": 31.349700002465397,
+        "mean_ms": 22.03356400054569,
+        "median_ms": 21.045300003606826,
+        "p95_ms": 30.3700000513345,
+        "races_per_second": 45.38530398328812
+      },
+      "generic": {
+        "runs": 150,
+        "cpu_mean_ms": 25.0,
+        "first_request_ms": 35.397599975112826,
+        "mean_ms": 24.905130001328263,
+        "median_ms": 23.95769997383468,
+        "p95_ms": 35.28200002619997,
+        "races_per_second": 40.1523702123485
+      }
+    },
+    "eighteen-dense": {
+      "input_cases": 30,
+      "inputs_sha256": "d0064d7b8c0add88d8a51c4e8a71caed12bcb23d30f18bdb04a05b861dc6fb30",
+      "matching_replies": 150,
+      "latency_change_percent": -4.738328681296256,
+      "before": {
+        "runs": 150,
+        "cpu_mean_ms": 27.708333333333332,
+        "first_request_ms": 44.80099998181686,
+        "mean_ms": 29.957201334570225,
+        "median_ms": 28.863550018286332,
+        "p95_ms": 41.81530000641942,
+        "races_per_second": 33.38095534465073
+      },
+      "after": {
+        "runs": 150,
+        "cpu_mean_ms": 25.208333333333332,
+        "first_request_ms": 42.66690002987161,
+        "mean_ms": 28.53773067162062,
+        "median_ms": 27.42955001303926,
+        "p95_ms": 40.820499998517334,
+        "races_per_second": 35.041328671394716
+      },
+      "pipeline": {
+        "runs": 150,
+        "cpu_mean_ms": 27.8125,
+        "first_request_ms": 40.46079999534413,
+        "mean_ms": 27.179456001225237,
+        "median_ms": 26.105299999471754,
+        "p95_ms": 37.661799986381084,
+        "races_per_second": 36.79249503576968
+      },
+      "generic": {
+        "runs": 150,
+        "cpu_mean_ms": 28.020833333333332,
+        "first_request_ms": 48.30030002631247,
+        "mean_ms": 31.01694266467045,
+        "median_ms": 29.82704999158159,
+        "p95_ms": 44.28420000476763,
+        "races_per_second": 32.2404439022625
+      }
+    },
+    "nine-monte-carlo-standard": {
+      "input_cases": 30,
+      "inputs_sha256": "3fd33c74c093ecf5125fd682d03806603a0173bdd90295b325cf15c5185be01f",
+      "matching_replies": 150,
+      "latency_change_percent": -4.18553323254125,
+      "before": {
+        "runs": 150,
+        "cpu_mean_ms": 7.1875,
+        "first_request_ms": 12.60690001072362,
+        "mean_ms": 7.158737331240748,
+        "median_ms": 7.039649994112551,
+        "p95_ms": 7.583900005556643,
+        "races_per_second": 139.68943875563048
+      },
+      "after": {
+        "runs": 150,
+        "cpu_mean_ms": 6.5625,
+        "first_request_ms": 10.930599994026124,
+        "mean_ms": 6.85910600121133,
+        "median_ms": 6.7066000192426145,
+        "p95_ms": 7.520100043620914,
+        "races_per_second": 145.79159438903528
+      },
+      "pipeline": {
+        "runs": 150,
+        "cpu_mean_ms": 7.1875,
+        "first_request_ms": 11.099600000306964,
+        "mean_ms": 6.865736665980269,
+        "median_ms": 6.7430999770294875,
+        "p95_ms": 7.543799991253763,
+        "races_per_second": 145.6507944668197
+      },
+      "generic": {
+        "runs": 150,
+        "cpu_mean_ms": 7.1875,
+        "first_request_ms": 12.497699994128197,
+        "mean_ms": 7.804948000703007,
+        "median_ms": 7.763950008666143,
+        "p95_ms": 8.318300009705126,
+        "races_per_second": 128.12385167843885
+      }
+    },
+    "nine-monte-carlo-dense": {
+      "input_cases": 30,
+      "inputs_sha256": "a34d4224cf8917d38f0e41e439702f4b5062159adaedb1a5fd946f4a31260d50",
+      "matching_replies": 150,
+      "latency_change_percent": -4.06853713131744,
+      "before": {
+        "runs": 150,
+        "cpu_mean_ms": 8.4375,
+        "first_request_ms": 16.351799946278334,
+        "mean_ms": 9.398660664446652,
+        "median_ms": 9.074500005226582,
+        "p95_ms": 11.926299950573593,
+        "races_per_second": 106.39813859679072
+      },
+      "after": {
+        "runs": 150,
+        "cpu_mean_ms": 8.125,
+        "first_request_ms": 13.431200000923127,
+        "mean_ms": 9.016272665467113,
+        "median_ms": 8.709250018000603,
+        "p95_ms": 12.022799986880273,
+        "races_per_second": 110.91057658782464
+      },
+      "pipeline": {
+        "runs": 150,
+        "cpu_mean_ms": 7.8125,
+        "first_request_ms": 14.014300017151982,
+        "mean_ms": 8.654888667709505,
+        "median_ms": 8.471750013995916,
+        "p95_ms": 9.741800022311509,
+        "races_per_second": 115.54163645465442
+      },
+      "generic": {
+        "runs": 150,
+        "cpu_mean_ms": 9.270833333333334,
+        "first_request_ms": 14.799600001424551,
+        "mean_ms": 10.074712000787258,
+        "median_ms": 9.750900004291907,
+        "p95_ms": 11.92250003805384,
+        "races_per_second": 99.2584204810875
+      }
+    }
+  },
+  "variants": {
+    "before": "Previous optimized portable PGO build",
+    "after": "Current portable PGO, single simulation thread",
+    "generic": "Current ordinary release",
+    "pipeline": "Current portable PGO with GLOBALSIM_REPLAY_WORKER=1; eligible full-frame requests use a second thread"
+  },
+  "cpu_accounting_note": "Windows GetProcessTimes summed kernel/user CPU over each measured group; coarse scheduler accounting, excludes caller process. Helper timing is elapsed latency, not a single-core speed claim."
+}

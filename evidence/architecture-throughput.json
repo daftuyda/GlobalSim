@@ -1,0 +1,129 @@
+{
+  "scope": "Measure a pool of independent persistent workers, retaining every race frame.\n\nBatch wall time per race measures throughput; individual request latency is\nreported separately. Client pipe handling and reply hashing are included in\nbatch wall time. Worker startup and warmup are excluded.\n",
+  "format": "binary-v1",
+  "engine_sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+  "inputs_sha256": "a34d4224cf8917d38f0e41e439702f4b5062159adaedb1a5fd946f4a31260d50",
+  "requests_per_trial": 240,
+  "trials": [
+    {
+      "repeat": 0,
+      "workers": 1,
+      "requests": 240,
+      "batch_ms": 1377.6801,
+      "wall_ms_per_race": 5.7403337500000005,
+      "races_per_second": 174.20589874238584,
+      "individual_request_mean_ms": 5.44999375,
+      "individual_request_p95_ms": 5.8207
+    },
+    {
+      "repeat": 0,
+      "workers": 2,
+      "requests": 240,
+      "batch_ms": 684.2582,
+      "wall_ms_per_race": 2.8510758333333333,
+      "races_per_second": 350.74479195134234,
+      "individual_request_mean_ms": 5.437801666666667,
+      "individual_request_p95_ms": 5.8403
+    },
+    {
+      "repeat": 0,
+      "workers": 4,
+      "requests": 240,
+      "batch_ms": 366.8028,
+      "wall_ms_per_race": 1.528345,
+      "races_per_second": 654.3025298607317,
+      "individual_request_mean_ms": 5.77582375,
+      "individual_request_p95_ms": 6.261
+    },
+    {
+      "repeat": 0,
+      "workers": 8,
+      "requests": 240,
+      "batch_ms": 231.1222,
+      "wall_ms_per_race": 0.9630091666666666,
+      "races_per_second": 1038.4117146686904,
+      "individual_request_mean_ms": 7.110703333333333,
+      "individual_request_p95_ms": 9.5605
+    },
+    {
+      "repeat": 1,
+      "workers": 8,
+      "requests": 240,
+      "batch_ms": 211.4246,
+      "wall_ms_per_race": 0.8809358333333334,
+      "races_per_second": 1135.1564576685967,
+      "individual_request_mean_ms": 6.517036666666667,
+      "individual_request_p95_ms": 7.8959
+    },
+    {
+      "repeat": 1,
+      "workers": 4,
+      "requests": 240,
+      "batch_ms": 376.9628,
+      "wall_ms_per_race": 1.5706783333333334,
+      "races_per_second": 636.6675969087665,
+      "individual_request_mean_ms": 5.954729166666667,
+      "individual_request_p95_ms": 6.6605
+    },
+    {
+      "repeat": 1,
+      "workers": 2,
+      "requests": 240,
+      "batch_ms": 692.9706,
+      "wall_ms_per_race": 2.8873775,
+      "races_per_second": 346.33503932201455,
+      "individual_request_mean_ms": 5.47491,
+      "individual_request_p95_ms": 5.8657
+    },
+    {
+      "repeat": 1,
+      "workers": 1,
+      "requests": 240,
+      "batch_ms": 1343.4801,
+      "wall_ms_per_race": 5.59783375,
+      "races_per_second": 178.64053215228122,
+      "individual_request_mean_ms": 5.37628375,
+      "individual_request_p95_ms": 5.7115
+    },
+    {
+      "repeat": 2,
+      "workers": 1,
+      "requests": 240,
+      "batch_ms": 1344.5791,
+      "wall_ms_per_race": 5.602412916666666,
+      "races_per_second": 178.49451921422846,
+      "individual_request_mean_ms": 5.380169166666667,
+      "individual_request_p95_ms": 5.6963
+    },
+    {
+      "repeat": 2,
+      "workers": 2,
+      "requests": 240,
+      "batch_ms": 826.0764,
+      "wall_ms_per_race": 3.4419850000000003,
+      "races_per_second": 290.5300284574163,
+      "individual_request_mean_ms": 6.548067916666667,
+      "individual_request_p95_ms": 10.1479
+    },
+    {
+      "repeat": 2,
+      "workers": 4,
+      "requests": 240,
+      "batch_ms": 342.5421,
+      "wall_ms_per_race": 1.42725875,
+      "races_per_second": 700.6438040754698,
+      "individual_request_mean_ms": 5.455382916666666,
+      "individual_request_p95_ms": 5.818
+    },
+    {
+      "repeat": 2,
+      "workers": 8,
+      "requests": 240,
+      "batch_ms": 219.7499,
+      "wall_ms_per_race": 0.9156245833333333,
+      "races_per_second": 1092.150667645355,
+      "individual_request_mean_ms": 6.639705416666667,
+      "individual_request_p95_ms": 9.1389
+    }
+  ]
+}

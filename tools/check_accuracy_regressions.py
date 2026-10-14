@@ -19,6 +19,25 @@ def f32(value):
     return struct.unpack("<f", struct.pack("<f", value))[0]
 
 
+def recorded_skill_duration(duration, event_time):
+    """Captured server wire units: stored float duration, wide product, truncation.
+
+    Rounding the product to float32 first can turn 38399.999141693115 into
+    38400 and disagree with the captured 38399. Time-zero events use -1.
+    This conversion does not change the engine's gameplay effect lifetime.
+    """
+    return -1 if event_time <= 0 else int(f32(duration) * 10000.0)
+
+
+def visual_recipient_mask(ability_targets, event_time):
+    """Replay visual masks describe the first ability, not all gameplay targets."""
+    if event_time <= 0:
+        return 0
+    if not ability_targets or ability_targets[0] is None:
+        return None
+    return sum(1 << i for i in set(ability_targets[0])) & 0xffffffff
+
+
 def check(expected, actual):
     if "error" in actual:
         raise AssertionError(actual["error"])
@@ -28,13 +47,27 @@ def check(expected, actual):
                      for e in actual["skillEvents"] if str(e["skillId"]).isdigit())
     official = Counter((i, str(sid), round(t, 4)) for i, sid, t in expected["skillStarts"])
     assert starts == official, "skill activation times differ"
+    if "skillRecordedDurations" in expected:
+        durations = Counter((e["horseIndex"], str(e["skillId"]), round(e["t"], 4),
+                             recorded_skill_duration(e["duration"], e["t"]))
+                            for e in actual["skillEvents"] if str(e["skillId"]).isdigit())
+        official_durations = Counter((i, str(sid), round(t, 4), units)
+                                     for i, sid, t, units in expected["skillRecordedDurations"])
+        assert durations == official_durations, "recorded skill durations differ"
     targets = {}
     for e in actual["skillTargetEvents"]:
         key = (e["horseIndex"], str(e["skillId"]), round(e["t"], 4))
-        targets.setdefault(key, set()).update(i for group in e["abilityTargets"] for i in (group or []))
+        targets[key] = visual_recipient_mask(e["abilityTargets"], e["t"])
     for i, sid, t, mask in expected["targetMasks"]:
-        observed = sum(1 << j for j in targets.get((i, str(sid), round(t, 4)), set()))
-        assert observed == mask, f"skill {sid} recipient differs at {t}"
+        observed = targets.get((i, str(sid), round(t, 4)))
+        assert observed == mask & 0xffffffff, f"skill {sid} visual recipient mask differs at {t}"
+    if "mechanicEvents" in expected:
+        mechanics = Counter((e["type"], e["horseIndex"], f32(e["t"]))
+                            for e in actual.get("competitionEvents", []) if e["type"] in (4, 5))
+        mechanics.update((6, e["horseIndex"], f32(e["t"]))
+                         for e in actual.get("conservePowerEvents", []))
+        official_mechanics = Counter((kind, i, f32(t)) for kind, i, t in expected["mechanicEvents"])
+        assert mechanics == official_mechanics, "competition activation events differ"
     ticks = {round(f["t"], 5): f["horses"] for f in actual["frames"]}
     samples = 0
     for t, horses in expected["frames"]:

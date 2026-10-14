@@ -1,0 +1,471 @@
+{
+  "initial_summary_sha256": "d9b001428582688436d741f885247d3ea215722d5e03f9e1d6e41e09bfc7e089",
+  "initial_results_sha256": "a560d4c75a395021e24db2e13f08b8eba1d3c380a8c4cd065b42ebd634ffc336",
+  "verification_script_sha256": "94277fe334c3e28bc8e2fb5ca444c8430bc0306c75260ba26997844bf5983c46",
+  "source_changed": false,
+  "rechecks": [
+    {
+      "case": "nine-parity-expansion-11/nine-parity-expansion-11-0115-c10507__case01",
+      "initial_exception": "JSONDecodeError: Expecting ':' delimiter: line 1 column 2603323 (char 2603322)",
+      "original_saved_replies_decode": true,
+      "fresh_repeat_count": 5,
+      "attempts": [
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0115-c10507__case01",
+          "referenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "expectedStdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "identitySha256": "67f6e3eeeee6f0dc2cb722921ab58c7a3befe5943f14ffdfe3e8be6e3457d04c",
+          "actualReferenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "stdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "warnings": [],
+          "course": 10507,
+          "seed": 439972430,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "generic": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pgo": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pipeline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e"
+          },
+          "stdoutBytes": {
+            "baseline": 3897944,
+            "generic": 3897944,
+            "pgo": 3897944,
+            "pipeline": 3897944
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "simulatedOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "officialFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "simulatedFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "skillExact": true,
+          "officialCasts": 114,
+          "simulatedCasts": 114,
+          "exactCasts": 114,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 2376
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0115-c10507__case01",
+          "referenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "expectedStdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "identitySha256": "67f6e3eeeee6f0dc2cb722921ab58c7a3befe5943f14ffdfe3e8be6e3457d04c",
+          "actualReferenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "stdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "warnings": [],
+          "course": 10507,
+          "seed": 439972430,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "generic": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pgo": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pipeline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e"
+          },
+          "stdoutBytes": {
+            "baseline": 3897944,
+            "generic": 3897944,
+            "pgo": 3897944,
+            "pipeline": 3897944
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "simulatedOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "officialFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "simulatedFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "skillExact": true,
+          "officialCasts": 114,
+          "simulatedCasts": 114,
+          "exactCasts": 114,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 2376
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0115-c10507__case01",
+          "referenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "expectedStdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "identitySha256": "67f6e3eeeee6f0dc2cb722921ab58c7a3befe5943f14ffdfe3e8be6e3457d04c",
+          "actualReferenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "stdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "warnings": [],
+          "course": 10507,
+          "seed": 439972430,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "generic": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pgo": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pipeline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e"
+          },
+          "stdoutBytes": {
+            "baseline": 3897944,
+            "generic": 3897944,
+            "pgo": 3897944,
+            "pipeline": 3897944
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "simulatedOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "officialFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "simulatedFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "skillExact": true,
+          "officialCasts": 114,
+          "simulatedCasts": 114,
+          "exactCasts": 114,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 2376
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0115-c10507__case01",
+          "referenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "expectedStdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "identitySha256": "67f6e3eeeee6f0dc2cb722921ab58c7a3befe5943f14ffdfe3e8be6e3457d04c",
+          "actualReferenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "stdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "warnings": [],
+          "course": 10507,
+          "seed": 439972430,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "generic": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pgo": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pipeline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e"
+          },
+          "stdoutBytes": {
+            "baseline": 3897944,
+            "generic": 3897944,
+            "pgo": 3897944,
+            "pipeline": 3897944
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "simulatedOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "officialFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "simulatedFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "skillExact": true,
+          "officialCasts": 114,
+          "simulatedCasts": 114,
+          "exactCasts": 114,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 2376
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0115-c10507__case01",
+          "referenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "expectedStdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "identitySha256": "67f6e3eeeee6f0dc2cb722921ab58c7a3befe5943f14ffdfe3e8be6e3457d04c",
+          "actualReferenceSha256": "c7824b442fc5e2575d58aa6e963b4a212b23a3ae331f97e4764a0f141bca661f",
+          "stdinSha256": "6f3cef5ac73698daa044a84b6bbb56bd7369bbbdc790a0d16de67fbecca54512",
+          "warnings": [],
+          "course": 10507,
+          "seed": 439972430,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "generic": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pgo": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e",
+            "pipeline": "cb22959fccbfee62a5c81db3f6b10ff288d8d3a0dff267cdee5eddaee3307f2e"
+          },
+          "stdoutBytes": {
+            "baseline": 3897944,
+            "generic": 3897944,
+            "pgo": 3897944,
+            "pipeline": 3897944
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "simulatedOrder": [
+            7,
+            0,
+            1,
+            8,
+            4,
+            6,
+            3,
+            2,
+            5
+          ],
+          "officialFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "simulatedFinish": [
+            188.07342529296875,
+            188.93885803222656,
+            195.00367736816406,
+            193.47122192382812,
+            191.203857421875,
+            196.70030212402344,
+            192.9306182861328,
+            185.59344482421875,
+            189.61590576171875
+          ],
+          "skillExact": true,
+          "officialCasts": 114,
+          "simulatedCasts": 114,
+          "exactCasts": 114,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 2376
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

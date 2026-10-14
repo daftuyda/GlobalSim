@@ -1,0 +1,141 @@
+{
+  "library_sha256": "4f73bb0870a77cb595a9e96290a7c229a1dd2adf1a902f6671801c7a96808e17",
+  "baseline_sha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+  "inputs_sha256": "bc49fbec9eb5c1055e930d8770ab0a00afdac4452678a891f251346505178fa0",
+  "modes": [
+    {
+      "all_frames": false,
+      "equivalent_runs": 438,
+      "errors": [
+        {
+          "case": "input-123",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-123",
+          "seed": 1350993397,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-123",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-125",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "input-125",
+          "seed": 1350993397,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "input-125",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1350993397,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1350993397,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        }
+      ]
+    },
+    {
+      "all_frames": true,
+      "equivalent_runs": 438,
+      "errors": [
+        {
+          "case": "input-123",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-123",
+          "seed": 1350993397,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-123",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "input-125",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "input-125",
+          "seed": 1350993397,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "input-125",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1350993397,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1350998810,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1350993397,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1350998810,
+          "error": "Missing retail initialization field 110261"
+        }
+      ]
+    }
+  ],
+  "concurrent_equivalent_runs": 24,
+  "handle_isolation_and_recovery": true
+}

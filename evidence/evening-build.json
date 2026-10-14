@@ -1,0 +1,31 @@
+{
+  "host": "x86_64-pc-windows-msvc",
+  "native": false,
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+  "features": "fast-alloc",
+  "trained_binary": true,
+  "trained_native": true,
+  "replay_worker": "0",
+  "common_rustflags": [],
+  "inputs": [
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\speed-pgo-inputs.jsonl",
+      "sha256": "1a9acb57b34957124f04a42eafed2605768cd00f1504e326a1b32919263a6bb6"
+    }
+  ],
+  "training_requests_per_format": 247,
+  "training_requests": 1235,
+  "instrumented_sha256": "a762bad90b288438226381e82607eb20dfd8009e0ce4ff5133626012645e2e73",
+  "profile_sha256": "03b96d897c9ac5b4fa47f88ceefc5369f9dde960bc7e1d8f5407f6364b4e0b04",
+  "engine_sha256": "66260cce5a703f77f294615f819c324c615a5d2b87e4e90a06428fedb3cc745d",
+  "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\pgo-gelk28m_\\build\\x86_64-pc-windows-msvc\\release\\race_engine_rs_v2.exe",
+  "output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\evening-pgo.exe",
+  "library": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\pgo-gelk28m_\\build\\x86_64-pc-windows-msvc\\release\\globalsim.dll",
+  "library_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\evening-pgo.dll",
+  "library_sha256": "acc99bef218c742059f5628d50bff400c1fc7accb809854785e91f66bd731f01",
+  "benchmark_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\evening-rust-bench.exe",
+  "genericEngineSha256": "933bea1866901a263ea80f0573320458937467265cb95ade3bbccd150ebda8ae",
+  "sourceSha256": {
+    "src/race_solver.rs": "69d07fa1f7879a3a9231af0313b731680b9954a2588e8e6539d8ba3d7566c6fc"
+  }
+}

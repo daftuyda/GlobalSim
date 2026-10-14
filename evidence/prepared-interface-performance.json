@@ -1,0 +1,154 @@
+{
+  "scope": "All frames, full binary packet returned. Native includes copying reply into Python-owned bytes; preparation and caller decode excluded. Worker includes request parse and pipe transfer. Serial paired order rotates and reverses.",
+  "sha256": {
+    "baseline": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+    "candidate": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+    "library": "4f73bb0870a77cb595a9e96290a7c229a1dd2adf1a902f6671801c7a96808e17"
+  },
+  "repeats": 7,
+  "warmup": 5,
+  "groups": {
+    "nine-monte-carlo": {
+      "preparations": 1,
+      "preparation_ms": [
+        26.4656
+      ],
+      "mean_reply_bytes": 540281.7666666667,
+      "distinct_replies": 30,
+      "timings": {
+        "before": {
+          "runs": 210,
+          "mean_ms": 5.81810380952381,
+          "median_ms": 5.641299999999999,
+          "p95_ms": 7.3481
+        },
+        "worker": {
+          "runs": 210,
+          "mean_ms": 5.849970476190476,
+          "median_ms": 5.6591000000000005,
+          "p95_ms": 7.0595
+        },
+        "native": {
+          "runs": 210,
+          "mean_ms": 5.7174909523809525,
+          "median_ms": 5.104850000000001,
+          "p95_ms": 8.5383
+        }
+      }
+    },
+    "nine": {
+      "preparations": 30,
+      "preparation_ms": [
+        6.2871,
+        5.6538,
+        9.473,
+        6.2063,
+        6.5828,
+        4.6245,
+        5.6494,
+        5.527,
+        5.6535,
+        4.4716,
+        5.1589,
+        4.2944,
+        5.0448,
+        5.6339,
+        8.0186,
+        8.1865,
+        5.1685,
+        5.3549,
+        4.3898,
+        5.1579,
+        4.9275,
+        4.4775,
+        9.1206,
+        9.2066,
+        4.5825,
+        4.7698,
+        4.785,
+        5.3133,
+        5.8644,
+        4.871
+      ],
+      "mean_reply_bytes": 596309.2666666667,
+      "distinct_replies": 30,
+      "timings": {
+        "before": {
+          "runs": 210,
+          "mean_ms": 6.397704285714286,
+          "median_ms": 6.27815,
+          "p95_ms": 9.0787
+        },
+        "worker": {
+          "runs": 210,
+          "mean_ms": 6.479041428571429,
+          "median_ms": 6.2684999999999995,
+          "p95_ms": 9.0693
+        },
+        "native": {
+          "runs": 210,
+          "mean_ms": 6.501042857142857,
+          "median_ms": 6.0912500000000005,
+          "p95_ms": 9.6393
+        }
+      }
+    },
+    "eighteen": {
+      "preparations": 30,
+      "preparation_ms": [
+        6.6242,
+        5.1473,
+        5.9849,
+        5.8067,
+        4.9657,
+        5.5551,
+        4.8025,
+        7.1115,
+        4.9347,
+        5.0362,
+        5.2158,
+        5.7184,
+        7.1733,
+        7.8541,
+        5.3763,
+        6.7939,
+        6.0636,
+        6.9781,
+        5.7336,
+        6.7721,
+        6.8831,
+        6.9042,
+        7.1145,
+        8.3389,
+        5.3273,
+        5.2967,
+        4.5011,
+        5.7424,
+        4.7203,
+        6.0854
+      ],
+      "mean_reply_bytes": 1540242.6333333333,
+      "distinct_replies": 30,
+      "timings": {
+        "before": {
+          "runs": 210,
+          "mean_ms": 19.842150476190476,
+          "median_ms": 18.24585,
+          "p95_ms": 31.7269
+        },
+        "worker": {
+          "runs": 210,
+          "mean_ms": 19.974206190476192,
+          "median_ms": 18.3046,
+          "p95_ms": 30.0076
+        },
+        "native": {
+          "runs": 210,
+          "mean_ms": 19.15129238095238,
+          "median_ms": 17.8211,
+          "p95_ms": 29.011
+        }
+      }
+    }
+  }
+}

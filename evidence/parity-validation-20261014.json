@@ -1,0 +1,1328 @@
+{
+  "schema": 1,
+  "date": "2026-10-14",
+  "version": "v73",
+  "scope": "Observed agreement on the frozen captured-race dataset. Pre-finish movement uses the existing replay cadence and wire precision. Skill starts use the existing 0.1 ms comparison. These captures informed the fixes; this is not an independent or population-wide accuracy estimate.",
+  "snapshotUtc": "2026-10-14T11:36:44.616765+00:00",
+  "completedUtc": "2026-10-14T13:28:32.142497+00:00",
+  "engineSha256": "51955e7fc2cdb5febee7fb3ca6e3cffa1fbda7c25a057a4db448ce50149e11df",
+  "librarySha256": "f81b434c38507a46c7502997d7f9b90621227c34f4edd25c04451e25bd2a194d",
+  "genericEngineSha256": "ea309039e445d3a2b664dc7a4db4586bc5483ceda3f4ada28f85b59631d3d2f9",
+  "sourceSha256": {
+    "src/race_solver.rs": "fdf1847c6fd189b90420dc5c6b132fbdd4cc9402face2cee2c8d1d04419a68c7",
+    "src/retail_lane.rs": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8",
+    "src/race_field_retail.rs": "9cb1189aafc28aceacc613444e8230bc37bfe0b15fb42883215112c768f6d0a1"
+  },
+  "fixes": [
+    {
+      "mechanic": "Queued additional skill activation",
+      "resolvedCoreRaces": 2,
+      "rule": "Apply an already queued bonus on the final ordered detail update before retiring the detail. Original receivers still expire and new triggers after expiry are rejected."
+    },
+    {
+      "mechanic": "Front blocking precision",
+      "resolvedCoreRaces": 1,
+      "rule": "Store normalized distance times 0.6f as float32; calculate complement and lane scale together in wider precision, then store the float32 limit. Apply the same inclusive boundary in lane and field queries.",
+      "evidence": "The rounding order is inferred from captured boundary outcomes and checked across the corpus; it is not a claim of direct server-code verification."
+    },
+    {
+      "mechanic": "Leader-gap duration scaling",
+      "resolvedRecordedDurationRaces": 1,
+      "rule": "Round gap / 62.5 to float32 before adding the 0.8 minimum and capping at 1.6."
+    }
+  ],
+  "auditProjections": [
+    "Recorded durations truncate the wider product of stored float32 duration and 10000; startup events use -1.",
+    "Official visual recipient masks describe the first ability, not the union of every gameplay ability recipient."
+  ],
+  "before": {
+    "races": 47664,
+    "runners": 435508,
+    "winner": 47664,
+    "placements": 435508,
+    "finishExact": 47662,
+    "skillExact": 47662,
+    "frameExact": 47661,
+    "officialCasts": 4497700,
+    "simulatedCasts": 4497700,
+    "exactCasts": 4497698,
+    "coreExact": 47661,
+    "exactWithDetailsAndMechanics": 47661,
+    "maxFinishError": 0.00142669677734375,
+    "finishMAE": 7.094943801620751e-09
+  },
+  "aggregate": {
+    "races": 47664,
+    "errors": 0,
+    "runners": 435508,
+    "winner": 47664,
+    "placements": 435508,
+    "finishExact": 47664,
+    "skillExact": 47664,
+    "frameExact": 47664,
+    "officialCasts": 4497700,
+    "simulatedCasts": 4497700,
+    "exactCasts": 4497700,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0,
+    "coreExact": 47664,
+    "exactWithDetailsAndMechanics": 47664,
+    "observedExact": 47664
+  },
+  "datasets": {
+    "initial": {
+      "metrics": {
+        "races": 13187,
+        "errors": 0,
+        "runners": 125215,
+        "winner": 13187,
+        "placements": 125215,
+        "finishExact": 13187,
+        "skillExact": 13187,
+        "frameExact": 13187,
+        "officialCasts": 1376523,
+        "simulatedCasts": 1376523,
+        "exactCasts": 1376523,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "exactCore": 13187,
+      "observedExact": 13187
+    },
+    "course10602Collection": {
+      "metrics": {
+        "races": 14775,
+        "errors": 0,
+        "runners": 132975,
+        "winner": 14775,
+        "placements": 132975,
+        "finishExact": 14775,
+        "skillExact": 14775,
+        "frameExact": 14775,
+        "officialCasts": 1304710,
+        "simulatedCasts": 1304710,
+        "exactCasts": 1304710,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "exactCore": 14775,
+      "observedExact": 14775
+    },
+    "firstFollowup": {
+      "metrics": {
+        "races": 2819,
+        "errors": 0,
+        "runners": 25371,
+        "winner": 2819,
+        "placements": 25371,
+        "finishExact": 2819,
+        "skillExact": 2819,
+        "frameExact": 2819,
+        "officialCasts": 258158,
+        "simulatedCasts": 258158,
+        "exactCasts": 258158,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "exactCore": 2819,
+      "observedExact": 2819
+    },
+    "newest": {
+      "metrics": {
+        "races": 16883,
+        "errors": 0,
+        "runners": 151947,
+        "winner": 16883,
+        "placements": 151947,
+        "finishExact": 16883,
+        "skillExact": 16883,
+        "frameExact": 16883,
+        "officialCasts": 1558309,
+        "simulatedCasts": 1558309,
+        "exactCasts": 1558309,
+        "finishMAE": 0.0,
+        "maxFinishError": 0.0
+      },
+      "exactCore": 16883,
+      "observedExact": 16883
+    }
+  },
+  "frameCounts": {
+    "samples": 51649161
+  },
+  "extraFrameCounts": {
+    "samples": 51649161
+  },
+  "resultFields": {
+    "runners": 435508,
+    "startDelayTimeExact": 435508,
+    "gutsOrderExact": 435508,
+    "wizOrderExact": 435508,
+    "lastSpurtStartDistanceExact": 435508,
+    "runningStyleExact": 435508
+  },
+  "recordedDurations": {
+    "official": 4497700,
+    "simulated": 4497700,
+    "paired": 4497700,
+    "exact": 4497700,
+    "withinOneWireUnit": 4497700,
+    "largerDifference": 0,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 4497700,
+    "startupSentinels": 790086,
+    "paired": 4497700,
+    "exact": 4497700,
+    "mismatch": 0,
+    "extraSimulated": 0
+  },
+  "extended": {
+    "officialDetails": 4497700,
+    "simulatedDetails": 4497700,
+    "matchedDetails": 4497700,
+    "officialMechanics": 351046,
+    "simulatedMechanics": 351046
+  },
+  "recentCoverage": {
+    "uniqueRosters": 77,
+    "uniqueSkills": 341,
+    "courses": {
+      "10304": 1114,
+      "10305": 1122,
+      "10402": 1141,
+      "10502": 1127,
+      "10503": 1084,
+      "10602": 17759,
+      "10603": 1079,
+      "10703": 1102,
+      "10804": 1091,
+      "10805": 1120,
+      "10806": 1095,
+      "10903": 1099,
+      "10904": 1131,
+      "11002": 1140,
+      "10103": 1142,
+      "10203": 1131
+    },
+    "frameCounts": {
+      "samples": 32858178
+    }
+  },
+  "remaining": [],
+  "regression": {
+    "newCoreDiscrepancies": 0,
+    "newExtendedDiscrepancies": 0,
+    "executionErrors": 0,
+    "unchangedFullPackets": 47493,
+    "changedFullPackets": 171
+  },
+  "postFinish": {
+    "scope": "Post-finish official samples for every runner whose frames changed in the audited packets. Uses the existing wire quantization and additionally checks rushing and front-blocker identity. Unchanged races are not newly audited after finish.",
+    "primarySummarySha256": "29c308535b061ff500b73c5aef1b0c8207d6a19e29f5e0bb6fe822af3c7efc8d",
+    "races": 171,
+    "samples": 37,
+    "mismatchingSamplesBefore": 35,
+    "mismatchingSamplesAfter": 0,
+    "regressedObservations": 0
+  },
+  "verification": {
+    "optimizedIdenticalPackets": 47664,
+    "fullPacketScoreReuse": 47548,
+    "method": "Each race was resimulated from its hash-verified pre-race input. Byte-identical full packets inherit the earlier complete score; changed packets are rescored. The optimized build is independently rerun and every complete packet must match the scored build.",
+    "auditWorkerRestarts": 0,
+    "initialHarnessFailure": "The first long-lived Python worker pool terminated with an access violation in the comparison harness after more than 9000 records. Its incomplete output was not used as the completed audit; bounded worker lifetimes were used for the successful audit."
+  },
+  "units": {
+    "default": {
+      "passed": 125,
+      "failed": 11,
+      "newFailures": [],
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ],
+      "log": "evidence/parity-default-tests.txt",
+      "sha256": "2ca222e069bcf4812e5fa45d8a04c9b599030ef6ad03288a1f9fce9c3567b885"
+    },
+    "fast": {
+      "passed": 125,
+      "failed": 11,
+      "newFailures": [],
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ],
+      "log": "evidence/parity-fast-tests.txt",
+      "sha256": "e5cc3b326979be6db33a74b1eb4823cc8bffc5385c8a850e2f264aa533dd912f"
+    }
+  },
+  "regressions": {
+    "engineSha256": "51955e7fc2cdb5febee7fb3ca6e3cffa1fbda7c25a057a4db448ce50149e11df",
+    "passed": 23,
+    "total": 23,
+    "cases": [
+      {
+        "case": "additional-bonus-on-final-skill-tick",
+        "passed": true,
+        "runnerSamples": 910
+      },
+      {
+        "case": "additional-bonus-preserves-overtake-target",
+        "passed": true,
+        "runnerSamples": 923
+      },
+      {
+        "case": "adjoining-slope-boundary",
+        "passed": true,
+        "runnerSamples": 3982
+      },
+      {
+        "case": "duel-invites-finished-partner-second-roster",
+        "passed": true,
+        "runnerSamples": 918
+      },
+      {
+        "case": "duel-invites-finished-partner",
+        "passed": true,
+        "runnerSamples": 948
+      },
+      {
+        "case": "duel-joins-finished-group-01",
+        "passed": true,
+        "runnerSamples": 933
+      },
+      {
+        "case": "duel-joins-finished-group-02",
+        "passed": true,
+        "runnerSamples": 891
+      },
+      {
+        "case": "duel-joins-finished-group-03",
+        "passed": true,
+        "runnerSamples": 977
+      },
+      {
+        "case": "duel-joins-finished-group-04",
+        "passed": true,
+        "runnerSamples": 860
+      },
+      {
+        "case": "duel-joins-finished-group-05",
+        "passed": true,
+        "runnerSamples": 922
+      },
+      {
+        "case": "front-block-excludes-rounded-boundary",
+        "passed": true,
+        "runnerSamples": 1319
+      },
+      {
+        "case": "front-block-inclusive-precision-boundary",
+        "passed": true,
+        "runnerSamples": 926
+      },
+      {
+        "case": "front-block-retains-close-boundary",
+        "passed": true,
+        "runnerSamples": 2039
+      },
+      {
+        "case": "front-block-retains-far-boundary",
+        "passed": true,
+        "runnerSamples": 2559
+      },
+      {
+        "case": "front-runner-cached-leader-distance-gate-second-course",
+        "passed": true,
+        "runnerSamples": 926
+      },
+      {
+        "case": "front-runner-cached-leader-distance-gate",
+        "passed": true,
+        "runnerSamples": 813
+      },
+      {
+        "case": "front-runner-ignores-runaways",
+        "passed": true,
+        "runnerSamples": 964
+      },
+      {
+        "case": "front-runner-no-eligible-lead",
+        "passed": true,
+        "runnerSamples": 959
+      },
+      {
+        "case": "front-runner-waits-for-lead",
+        "passed": true,
+        "runnerSamples": 935
+      },
+      {
+        "case": "heal-history-earlier-caster",
+        "passed": true,
+        "runnerSamples": 1047
+      },
+      {
+        "case": "heal-history-later-caster",
+        "passed": true,
+        "runnerSamples": 932
+      },
+      {
+        "case": "leader-gap-duration-rounding",
+        "passed": true,
+        "runnerSamples": 2451
+      },
+      {
+        "case": "pacemaker-handover",
+        "passed": true,
+        "runnerSamples": 1181
+      }
+    ]
+  },
+  "protocolEvidence": [
+    "parity-native-parity.json",
+    "parity-wire-parity.json"
+  ],
+  "performanceEvidence": "parity-performance.json",
+  "fixtureSources": [
+    {
+      "name": "additional-bonus-on-final-skill-tick",
+      "case": "live-test-batch-18ec4330f9f74cc0ace6d4ec71b085fa:1634",
+      "referenceSha256": "0c4a84de0df920e122f02576b0b38f8859633f02458559129e6edbdd99f0b707",
+      "fixtureSha256": "be69b983d018184c1abc635a55e4edbb20b0e6cbecdbb8a6908e4a37dbc42e91"
+    },
+    {
+      "name": "additional-bonus-preserves-overtake-target",
+      "case": "live-test-batch-4ed5364815aa4075a0dcb01b0483b440:50",
+      "referenceSha256": "d65f65fd533f4f8025eb9491d27a577bc3622eed9a64fa82ef6caa89ec8c3b55",
+      "fixtureSha256": "d5b1df798dc8e93efa1093ad3a6d9be56eb2ec95ac0012e29c27c3fe9370c957"
+    },
+    {
+      "name": "front-block-inclusive-precision-boundary",
+      "case": "live-test-batch-d87146000dfe49bfa8328b30329db010:6",
+      "referenceSha256": "3a9ac925890f42f2b2706c9c6e19c882fba5d3886712fa3057d764d6da481e9c",
+      "fixtureSha256": "e02d5f8b67963e41d808f369bdff5bb9a42a24798c144e7ff0904b8041de2e77"
+    },
+    {
+      "name": "front-block-excludes-rounded-boundary",
+      "case": "nine-duel-boundary-fresh-01/nine-duel-boundary-fresh-01-0085-c10606__case01",
+      "referenceSha256": "b27cccb2a4266af36b259e82df0501b1ac4160a036e01ab734978019864c1b9b",
+      "fixtureSha256": "71f555c072dfcac45ad8e8ae77bd55cf6ed4138248942522b3a7b53438b0917c"
+    },
+    {
+      "name": "front-block-retains-close-boundary",
+      "case": "nine-minimum-root-diversity-fresh-01/nine-minimum-root-diversity-fresh-01-0017-c10507__case01",
+      "referenceSha256": "f8b66cd1085a67e71a802f744a74f0444caa7a3377eb42ac58933b93e32b6f53",
+      "fixtureSha256": "03136c5a9189b59b51e9a5e9c21891c9df6707fd81dbb660eef13a5ccf4ec297"
+    },
+    {
+      "name": "front-block-retains-far-boundary",
+      "case": "original-corpus/v9-data2-20260926__case11",
+      "referenceSha256": "b95beff5c93bb5f179618b864ed7b13d0bac8b84906572403c547f0a597f00bf",
+      "fixtureSha256": "c878c02f51982c4f25b49e53dd079dc11f171a0bd3557635922e02231aedf9da"
+    },
+    {
+      "name": "leader-gap-duration-rounding",
+      "case": "original-corpus/v29-prospective-20260929__case13",
+      "referenceSha256": "e696e2392337ecf3a916895de8d23caff961e272df361d16875566c660129092",
+      "fixtureSha256": "b0bab0a121c53cd5f0fe37755f6621c6f528c4918753e58275599dfcd41fd708"
+    }
+  ],
+  "changes": [
+    {
+      "case": "frontless-handover-dev-03/frontless-handover-dev-03-0004-c10813__case01",
+      "referenceSha256": "64f90b5a8a12ce57ff095a3a5c98b23842001f30390ef2b2b71edb9d9005408a",
+      "observedExact": true
+    },
+    {
+      "case": "frontless-handover-dev-03/frontless-handover-dev-03-0014-c10814__case01",
+      "referenceSha256": "5bdbc6d140eda019a13728e5ae9872f06a990be92c0db3c2e99474727a834201",
+      "observedExact": true
+    },
+    {
+      "case": "frontless-handover-dev-03/frontless-handover-dev-03-0015-c10815__case01",
+      "referenceSha256": "e44b5b77181f7f75336c6b3c174f2c3f065a7793f6c7bffd6abd50d1d1d509ab",
+      "observedExact": true
+    },
+    {
+      "case": "frontless-handover-dev-03/frontless-handover-dev-03-0018-c11006__case01",
+      "referenceSha256": "e5b673d2583e7e6e8e391284bca8084052716fd653e67262f221c948be737861",
+      "observedExact": true
+    },
+    {
+      "case": "frontless-handover-dev-03/frontless-handover-dev-03-0024-c10815__case01",
+      "referenceSha256": "c06b786962329ef68eb389dd1614a83d45cc8a615cfb46362e76a2ad19b47774",
+      "observedExact": true
+    },
+    {
+      "case": "frontless-handover-dev-03/frontless-handover-dev-03-0040-c10813__case01",
+      "referenceSha256": "2de6b4a1b307f1eec490c1593de977132599736f6134d67536dc29970caf32e9",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-01/nine-parity-expansion-01-0151-c10812__case01",
+      "referenceSha256": "316b8408427e28a88dc3ab2ffaaaceb1ff1ec3b4145c5286a41cfb20064e0fe5",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-01/nine-parity-expansion-01-0283-c10507__case01",
+      "referenceSha256": "d717c55b7d877e83c5cbd2bdeb7d0c860a0be3e2b2c993fd8dd192de9d9697eb",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-01/nine-parity-expansion-01-0299-c10507__case01",
+      "referenceSha256": "5eb628ea365f64eb67b6d1c1828983368dd02761698d21b4111cf4664529292a",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-02/nine-parity-expansion-02-0082-c10501__case01",
+      "referenceSha256": "9da505a9d6f18916bd7cd57e99e8f70c487fd6aeadd795b23ef723b9833d814c",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-02/nine-parity-expansion-02-0154-c11003__case01",
+      "referenceSha256": "d2cbcbc8c9fd1972c2663cac65e081fa4a216c8ca21f44c85736e0924e3d4c2b",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-04/nine-parity-expansion-04-0083-c10507__case01",
+      "referenceSha256": "4d30d108995e689f68915487a166d1da30b55a198ef0cca4af953b77e4d55ecf",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-06/nine-parity-expansion-06-0014-c10507__case01",
+      "referenceSha256": "3034f7373320d3148a244a60c71ec558d03bfb7e7864bfb65c8916e9a461ec59",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-07/nine-parity-expansion-07-0018-c10507__case01",
+      "referenceSha256": "40203d41ef867c76b2b9a2acc3c4707813eb1e0f87fc5226ff880987312493ac",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-07/nine-parity-expansion-07-0031-c10507__case01",
+      "referenceSha256": "c219e51c0106ec0e4192079bd458fedc20dd79f3ed54d0103f2cc7fe515a80c6",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-08/nine-parity-expansion-08-0014-c10507__case01",
+      "referenceSha256": "202ef3f8ebf36562410ce0d38a18f9ad913fec1773bd1c705335513f8488daee",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-08/nine-parity-expansion-08-0098-c10606__case01",
+      "referenceSha256": "42cd7e1c7bb963ca5873c5169a697bb6d9671bbecf7e033f81eca432bb3d0cf1",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-10/nine-parity-expansion-10-0016-c10507__case01",
+      "referenceSha256": "514b35368c4528e240dbd728c92fc51089a0dcecf289d034111bb50e52fa6c20",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-10/nine-parity-expansion-10-0082-c10809__case01",
+      "referenceSha256": "cddf2bb0dbe77d08cd2fdf7951599c63b9c9dabcc4bea336b8d2477bf01b7f17",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-10/nine-parity-expansion-10-0087-c10809__case01",
+      "referenceSha256": "50d479932d180aee62e0486eeb76b662849aac8c278a6ddfa61a871aa7330b15",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-11/nine-parity-expansion-11-0083-c10507__case01",
+      "referenceSha256": "7797171bc2cac1302d3ac25dcff98734bc6ca648a58085b277f32f37fbe77036",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-11/nine-parity-expansion-11-0086-c10507__case01",
+      "referenceSha256": "456705cc9398817351128452d62c97daf624f782fcd80a740df301120aa3614c",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-13/nine-parity-expansion-13-0014-c10507__case01",
+      "referenceSha256": "3ae1e1cd91eb56ff2a0b8ddb5466ac2c201cbe14b150b98b1df9c1728297e0c8",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-13/nine-parity-expansion-13-0016-c10507__case01",
+      "referenceSha256": "0c61165637ec4706917a9f961aeee7aaf575a3905536620ba7a552b7fd51f8ef",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-13/nine-parity-expansion-13-0019-c10507__case01",
+      "referenceSha256": "aef2c2bdc345b41b6b44a673f2d8449793f579af76ad0ef89a3e5b701aec77b0",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-13/nine-parity-expansion-13-0081-c10809__case01",
+      "referenceSha256": "bf494bd82938f0401a18412862b46ae20dd1d014641dc6f34da876b2cf7991af",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-13/nine-parity-expansion-13-0083-c10809__case01",
+      "referenceSha256": "1d9974c7575a58049284477f6288dcb542babe90e5e1bf61fe5d89cd7140e155",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-13/nine-parity-expansion-13-0097-c10809__case01",
+      "referenceSha256": "fc9fe9d800ad456db3b5b9ce7e2028dd849f3146ebf38f8702e866f8677884be",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-14/nine-parity-expansion-14-0086-c10606__case01",
+      "referenceSha256": "62537a9c1f522f064118e45796de43b90bb12554478d3fc1adde9234ba990ded",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-15/nine-parity-expansion-15-0015-c10105__case01",
+      "referenceSha256": "a025edf7f6545ff3782f636551ab3506f75f2d70d11386f892021395bd16dd4c",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-15/nine-parity-expansion-15-0083-c10809__case01",
+      "referenceSha256": "475e0a33bc8b4a4b6fb4779b43f3a7e8d702d365d1b8de43f59608a4a1038a29",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-15/nine-parity-expansion-15-0216-c10507__case01",
+      "referenceSha256": "3c97ca6be89d437f61c20e5c4672204e1d12a7ae871f57945bba1180cdb4036b",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-15/nine-parity-expansion-15-0231-c10507__case01",
+      "referenceSha256": "7c20c96034ae42575bb3031a03cb18aa08dcc4e08e35763b38c0e3d53e7ae4fe",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-16/nine-parity-expansion-16-0031-c10606__case01",
+      "referenceSha256": "d8c5c556568c5a27fc6875b170385eb08aea0fc296b3c6fced2269dea30d42e5",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-16/nine-parity-expansion-16-0087-c10809__case01",
+      "referenceSha256": "3fe6202daa528c6fc49ee182ee69e5858311a3b4461db27c677ad0d07ad50743",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-17/nine-parity-expansion-17-0014-c10506__case01",
+      "referenceSha256": "70dc90a84ff6c0c57870e9b86cf7387ddf28653938fd5ef0581d238f1ed79f8e",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-17/nine-parity-expansion-17-0083-c10507__case01",
+      "referenceSha256": "0aae3741d4db4610cd340be5dd148e751d0f14e5f1f5a7759c5aaea0b75c4edd",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-17/nine-parity-expansion-17-0152-c10809__case01",
+      "referenceSha256": "740e915c24ab5f72b6a763c74b595d9e864c96c956f9566c247d7272da75f649",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-18/nine-parity-expansion-18-0018-c10606__case01",
+      "referenceSha256": "378f741030d2182814aef2a2e355358079949b43e0762536e4884cec523183ea",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-19/nine-parity-expansion-19-0151-c10905__case01",
+      "referenceSha256": "ee7338bc16c24a6dd1211ce9f0c715a4b71ee92cf4690defa66597458900b126",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-20/nine-parity-expansion-20-0017-c10905__case01",
+      "referenceSha256": "7c566f73aef065dbbd15386f324c78a38b91b19a563c2aef389e40e6f8eff5ea",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-20/nine-parity-expansion-20-0081-c10203__case01",
+      "referenceSha256": "6ed98533597217b2b0b5132d3db598fde93c7dde91e328d8de0eab0a8e725804",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-20/nine-parity-expansion-20-0084-c10203__case01",
+      "referenceSha256": "0665bf8355f146979776220a3e0e7948970359b9f984f5bad33aa6b8a154e12c",
+      "observedExact": true
+    },
+    {
+      "case": "nine-parity-expansion-20/nine-parity-expansion-20-0087-c10203__case01",
+      "referenceSha256": "92dfc748b089d9c6637674eed03b3de58f43d8747ca5abc10d18631d2498c166",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-pilot/nine-pools-pilot-0030-c10606__case01",
+      "referenceSha256": "5d8a1fa148f5e3812420e6aac16b94f3171fac240924011f0d65c1ea161919d5",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey/nine-pools-survey-0015-c10101__case01",
+      "referenceSha256": "43049f0ff6b7560b813cc2a56a2b2c85ab65191b5b735a29fc2c3d7d1148bcac",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey/nine-pools-survey-0083-c10102__case01",
+      "referenceSha256": "90a77a8814976da5454057489996addffd78e2038629f269d494255de6b7dcd3",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0284-c10105__case01",
+      "referenceSha256": "cacec24be3d1796bd110059d630d1e35858e08f5f9a0aeed1936d600240a17cd",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0288-c10105__case01",
+      "referenceSha256": "265fd9f288f9e9867085c0f1583587f3c7b77e500b8f7ac456a477e74d4429af",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0417-c10202__case01",
+      "referenceSha256": "58c9850d11196bdc737894a395ddd00c1772b8079268c5d710fc3d5019e77a8e",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0420-c10202__case01",
+      "referenceSha256": "05b25e7da24cebd7ec34b727578a90071e6a6f7896d0fc01f5985885bac414ce",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0754-c10303__case01",
+      "referenceSha256": "4985d8801f085f1468a5a9a328f8af3d1b29461eb269f35ed0d00210d7266f46",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0755-c10303__case01",
+      "referenceSha256": "ad33e677f4c09388a779b3e7bf7609af19e5c350eb0e8c51d5aeaad694fe9196",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0768-c10303__case01",
+      "referenceSha256": "73aa358f15aad08f4b3b98efb2a06ae7aa3af9909c5a2686454195984775afaf",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0819-c10304__case01",
+      "referenceSha256": "065ae183fd9d3965f75a78c4916d792e38d63bdc41f9e385efe25e283ef5d187",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0885-c10305__case01",
+      "referenceSha256": "45126ecbb660df01a0a0814162c0f11b2e167352bb0b523c08a378db6a62c6e9",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0901-c10305__case01",
+      "referenceSha256": "69be08603be486a10189141cf4262cb198308efa9ef81fbee811c5ee5408cfe0",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-0955-c10307__case01",
+      "referenceSha256": "d1ae32e8f5841a3ce17967f8051de99c9787478039afb29f8a08bba18aa6ffcd",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1156-c10401__case01",
+      "referenceSha256": "036e78f0a73d7f0cdd54c34ff72b8b72abda0f426bca38cec72e9cfe6888ae37",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1423-c10501__case01",
+      "referenceSha256": "6b88e3beb16927ed15c694584f4d231df3e5a215a4dd368df534e44ecb1473dc",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1505-c10502__case01",
+      "referenceSha256": "bb8a229b32e1b67c94536af9b15879c733ef13da7ea8e50014649f11a5a84740",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1695-c10505__case01",
+      "referenceSha256": "bdcd0bf7b4f3da9ab2c56d6277fb6fe1ed1c34762c8c13b229f97ef693c004a8",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1706-c10505__case01",
+      "referenceSha256": "57678fc3c07156974fbf4a7b161a4fa98d752745fcf2dd86159145e7747a642e",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1759-c10506__case01",
+      "referenceSha256": "7ab162c5e524d2ab2da837a22e2b50a52007ee82866c9d5d621e63392c6c00f7",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2041-c10601__case01",
+      "referenceSha256": "f848d923533ec285183530583b3b456a362c962c8b560e132239cd3bba057b1d",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2175-c10603__case01",
+      "referenceSha256": "6623cfd526197c32b199671ef7c0289c5fb0cb5d4701c47d0df4df6a4406ff19",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2365-c10608__case01",
+      "referenceSha256": "8b357e7abda8d525f74376131d0a5ea24e7e0d2e9c96fed99eed47f7ef155951",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2375-c10608__case01",
+      "referenceSha256": "330939bed2dfc33ddd33c3d297330f8be333153a7042c43998efcceb79c26df3",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2628-c10701__case01",
+      "referenceSha256": "fb7d8eac77590762e8b8a69b44a07e38a94d6bab399fd8095ebb932dbb0e84a4",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2694-c10702__case01",
+      "referenceSha256": "2627255db549811bc41d30d32ac030335e89c9dc48abed058cb7b4e3a9814247",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2766-c10703__case01",
+      "referenceSha256": "cf77640daf7b2f2c68afd31fd994a0b52637d3ac6b76fc38114183b435d2d433",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2828-c10704__case01",
+      "referenceSha256": "55d3f4fedef2f373ad3c328b759e51007e5f7b1b390a5744275868f0edebf3f8",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-2833-c10704__case01",
+      "referenceSha256": "91db7d62e0d747fe81540eaf1ab4e56bb2539931f03180f759136aea3d6774d0",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3032-c10801__case01",
+      "referenceSha256": "0cbfe61773aee3bad230cd5ab3547adcaae0ba4eddb91825678a1ed56d6401d7",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3045-c10801__case01",
+      "referenceSha256": "679c9e768230f556ce351c256de74c4512758582479de8e6a83163a7c22ca5ce",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3314-c10807__case01",
+      "referenceSha256": "b74c525b013deb680a52a680c1651b341f5edbb8e13f8e05022eac65d2ff9cf4",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3381-c10808__case01",
+      "referenceSha256": "74c8ca77c825bb18fb505fb806fb0441d92f683bdd2c5b5cb3a90c56441a2727",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3448-c10809__case01",
+      "referenceSha256": "63408135fc9ce6290797fea1b4bfd71a818f85330064acfa4f34664398442b79",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3514-c10810__case01",
+      "referenceSha256": "87693c53ad045b7d69bf8befba4853c5f3b64a1528243128026489adda22e93d",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3515-c10810__case01",
+      "referenceSha256": "98b392f6d17b568b3ed50b1a8b96b21e71886cae215eee699b9ed06ed04e1b91",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3570-c10811__case01",
+      "referenceSha256": "2c1bb5a94f2c0d368c32f203ad5bd29431f3e84613d381b1d76b03c7ae6afed7",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-3633-c10812__case01",
+      "referenceSha256": "4065809ccfbe6e74842f57ac8e217e289951afe8cba3e2e75bc5332b0dbb40a9",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-4105-c10904__case01",
+      "referenceSha256": "85db0855ca148a52b4485147870a357f258669c57418982384543f9207270e56",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-4241-c10906__case01",
+      "referenceSha256": "b3c59d452850b1768b4aa86eb0136ea51e06c9005d49d0da3584da9760e244b5",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-4705-c11001__case01",
+      "referenceSha256": "c6a92b777aa905375e6474b26f9ad89f3b32ab920d5632f319f2dc292b8d6f60",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-4771-c11002__case01",
+      "referenceSha256": "868c45149ec88b4347e3faf0a92e152976972b47e0f5bafacd60f044af926ee5",
+      "observedExact": true
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-4843-c11003__case01",
+      "referenceSha256": "894cc808e3e6330c7d0041999c660334b588db811c8abf6546c890afe52d5488",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-04/pacemaker-validation-04-0012-c10107__case01",
+      "referenceSha256": "20551cadc87dc4bf9a2df810441204c56e4c046f2357f41e37540a7fe155de74",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-04/pacemaker-validation-04-0030-c10612__case01",
+      "referenceSha256": "59a3db9587a01b3f34792abacd09ef8244649bea1c68e3fc05603f9055604500",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-05a/pacemaker-validation-05a-0009-c10704__case01",
+      "referenceSha256": "7604ce624a8a5ea635c5d671b40c214dd7d2f28170f335e8c0d3838d808df068",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-05a/pacemaker-validation-05a-0042-c10808__case01",
+      "referenceSha256": "0f13906cd283882227908d78445148765bf386a6f7764620d1dbe91c52b1f5a2",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-05a/pacemaker-validation-05a-0047-c10207__case01",
+      "referenceSha256": "7dfbd897b2774a75deadfe8c1d7e4c94e405c915b9607cc82ce7d02a9701e112",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-05b/pacemaker-validation-05b-0003-c10509__case01",
+      "referenceSha256": "eb1639488a14751f99b60106cce30cbd5576720c506ccc9ba16181177438695c",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-05b/pacemaker-validation-05b-0024-c10707__case01",
+      "referenceSha256": "1ce0551b56181aac29f5f94995efff45ccbbe5bf667c0018d169f4ae6f537437",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-05b/pacemaker-validation-05b-0028-c10612__case01",
+      "referenceSha256": "b44ca6e7a281ef217e9d3f857ad62a84e1d391208ddae04e38d5976b85737729",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-06/pacemaker-validation-06-0013-c10207__case01",
+      "referenceSha256": "4a9a7805923fce10e2c81fab7e6ce3c5c6f029678ea79b4dd3fd0095c51f11a5",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-06/pacemaker-validation-06-0023-c10107__case01",
+      "referenceSha256": "ae1d9605e910305ecb075637a2ce04004f780375536b8b1d43ad81ef4df9532b",
+      "observedExact": true
+    },
+    {
+      "case": "pacemaker-validation-07/pacemaker-validation-07-0016-c10509__case01",
+      "referenceSha256": "5352d4f0ae2fc281e24c71f2eb5bbbe7c258928a875157a4fa729ad8c1e7ffe1",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0003-c10304__case01",
+      "referenceSha256": "6441d0a01f6c20093824eee3b30ad7c4a5019d59b99a72cfffb66013f9bf163e",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0006-c10203__case01",
+      "referenceSha256": "881a8f15f2f289b61847033a479d33111f8fa30cfe762ec7f881c253df0c76c2",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0009-c10807__case01",
+      "referenceSha256": "7ab632f0fffb0c98163f1bcb6c5b13c00acd9994261497f7ac9a587b9f1ff3f4",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0024-c10606__case01",
+      "referenceSha256": "ceab35900094da9b9ee0ec7381daaa0c786c643646608dab81fa8ffed2caeedb",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0025-c10807__case01",
+      "referenceSha256": "93982fa742e8bcf808725a4b0623accdb7f806acdcd0e06f75a6fc9ecd7abcaf",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0033-c10101__case01",
+      "referenceSha256": "6ab5cc7fbfc4ab2e8515d9e52a29078c2dc78efe470fcbd25ab9abcaaf0fbae1",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0034-c10601__case01",
+      "referenceSha256": "8e293a41713190bbd889167214a4f5e89d1c5b366fea1f60c48896915fd8004a",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0038-c10203__case01",
+      "referenceSha256": "f71f305775d66cf9ec44fe1bf7e4c787fac61a514646f25b5e731f1cf50869c1",
+      "observedExact": true
+    },
+    {
+      "case": "skill-mechanics-dev-01/skill-mechanics-dev-01-0040-c10606__case01",
+      "referenceSha256": "5439db523ad86dd3552f4fb774b2be6c0eec6540b4616ddad3808366363db871",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v13-data2-20260926__case09",
+      "referenceSha256": "cca157ae9e2a9846a57871accd653d22b9c001cfe789dd59e5e692a7e5434bd6",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v16-data-20260926__case05",
+      "referenceSha256": "ec73051cdde7aa9171ca4279a5612ac7dfabc1726f64bbf7b69a3afb09c732b9",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v16-data-20260926__case06",
+      "referenceSha256": "661b74c193c6a1811b46357dea5e04ed41a618c37d93d71929f7fb71cf509ea5",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v18-prospective-20260927__case05",
+      "referenceSha256": "1e54f1ac27890cd558619f61d65483945d8c0c0bbf6b10e6b6b9a232ace13f16",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v21-prospective-20260927__case09",
+      "referenceSha256": "1058acd13d0eff63a4743f28434c86ad67a26f76124a158d19a166d091bac8d2",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v25-prospective-20260928__case14",
+      "referenceSha256": "753b2e0f03758dbefd3af1927c49773bd63b852f6a6e24f3e19ee75ccff2ab47",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v27-prospective-20260928__case12",
+      "referenceSha256": "5414339285832a02d792ebdab3fb1b000efe190ae411c04981651671fcd5a3fc",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v29-data-20260929__case12",
+      "referenceSha256": "eb32862b63f6c40edccf1822a9ae02a61b523da012f35ce983d0f6f12cec6195",
+      "observedExact": true
+    },
+    {
+      "case": "original-corpus/v29-prospective-20260929__case13",
+      "referenceSha256": "e696e2392337ecf3a916895de8d23caff961e272df361d16875566c660129092",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-12d554b2318d4204b009c4e3e0484834:64",
+      "referenceSha256": "e8782a156557db1e70a4dc1f48e541ccf6fead8669da9877dbd0305a9c9e68ac",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-1707bb93f08c466aa0c356d384dcc522:36",
+      "referenceSha256": "e23906c81ada4854b68409a01884702fb07d93d423b273e6092e6ca27f5c9e67",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-177e252e303d4ca0a493a434c9d37d6a:501",
+      "referenceSha256": "b40847c39732d920c59edd4f929d1a85f8d04c86095250ffaf7688391ce2abce",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-177e252e303d4ca0a493a434c9d37d6a:525",
+      "referenceSha256": "775fc38f312e6f94d92767d04a8d68095d231906c22f5c3866f13ce61fe4bfef",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-177e252e303d4ca0a493a434c9d37d6a:965",
+      "referenceSha256": "ee5d1a4cf52d17e516963b7afec6359973812083b38b32156479f638ce280812",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-180ff4c16e254498a4dbc20997216cfd:190",
+      "referenceSha256": "b73976ba267e05f79decccfe2868d1e3c85ab17c7e60dfc566b73686bb0ab8ea",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-18ec4330f9f74cc0ace6d4ec71b085fa:1634",
+      "referenceSha256": "0c4a84de0df920e122f02576b0b38f8859633f02458559129e6edbdd99f0b707",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-18ec4330f9f74cc0ace6d4ec71b085fa:1757",
+      "referenceSha256": "f1bc9e065ce2c1bd2227ed058c8ff56e3831fedb60d9a37856c5e41c9a9d7eb7",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-18ec4330f9f74cc0ace6d4ec71b085fa:1928",
+      "referenceSha256": "9b97d631b5c2793d83f155547048a16111880666304c166f2323a696c78c54c4",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-18ec4330f9f74cc0ace6d4ec71b085fa:1962",
+      "referenceSha256": "b3440f426940c0e6021fec4bbfcd8c94a1942ff79c10fa8442e787c70f369326",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-1967024c259948159bdf340169063029:11",
+      "referenceSha256": "4c3e56e65df872fa1f0b2344a71b61b8e878ade2f9dc49fa8e8fe451ce4fdf22",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-1967024c259948159bdf340169063029:98",
+      "referenceSha256": "f5f2d2061b111cb4aed6b50cef7c93afb552fd16a3d19208441fc21540cc5095",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-392a8ee3692146bab0e024ee057d0ad2:62",
+      "referenceSha256": "6e4cfa4f06e2b625b79fd50d46e40b4ebaf0c32e9c1cf807bbb79190668ddff9",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-409d42db04204d659a16fe4c23382d72:405",
+      "referenceSha256": "6c579401d0258c4cf9f67d542fb367d40bd68569fe77830cc955b4cb083c2547",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-409d42db04204d659a16fe4c23382d72:451",
+      "referenceSha256": "17bc0fcdf50ecc7cd136645a77ad8295f347e15c2da49c7a4578a36403dbba24",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-46a0be002c2549a28dbaa3a7c4deffce:79",
+      "referenceSha256": "16cd4edecfd11dff113c47d5dbe2195deeac2d0c9359cee131330fa790c74fc2",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-46a0be002c2549a28dbaa3a7c4deffce:431",
+      "referenceSha256": "165e478c8fa3ab3fcdbf3a7402d4c4a053a0757d8a13e69536a05e7eaccf7438",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-46a0be002c2549a28dbaa3a7c4deffce:595",
+      "referenceSha256": "eb5e8123cb9394aa7d1f267d24c2b33861b609473c71330b7c3e9fd2353c400b",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-484f1a5bbd3d4d4d9b9cc90c611b04e0:142",
+      "referenceSha256": "b142d89df1b893a427d3c805fec43efb4c6e4dd7c34cf6a48c807dfddbefeaef",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-4bd96a9b2a0f4223bae081ff5e5f6f5a:11",
+      "referenceSha256": "5220efcf72f7830d81524a5f2db441af1fc4a3c8104eb528c99e587411456db0",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-4ed5364815aa4075a0dcb01b0483b440:50",
+      "referenceSha256": "d65f65fd533f4f8025eb9491d27a577bc3622eed9a64fa82ef6caa89ec8c3b55",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-4ed5364815aa4075a0dcb01b0483b440:454",
+      "referenceSha256": "0b3ef80c168404f25c4c1b9113b0b938dcd730b7f67234f7d2910f864547ba16",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-4ed5364815aa4075a0dcb01b0483b440:679",
+      "referenceSha256": "a085f4588aa8a679cdd2d5f6855e7f5bc368b93f6e01c0724d6186ced6308e06",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-4ed5364815aa4075a0dcb01b0483b440:824",
+      "referenceSha256": "969f85b751949282f729c6dabac8118ac42890d8b2a331985d6d0b459921d8f0",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-618b62ee5b0c49018da9298f8bceb9cf:369",
+      "referenceSha256": "fe36dafc3561dbfe12cb3736ba6d55a8f1fa7926dd20a670519f6314584e0acb",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-618b62ee5b0c49018da9298f8bceb9cf:658",
+      "referenceSha256": "1a23be3941e21319418dae8cd1bf858b5a8b5d65e1c28841a333dc501e7b41b7",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-6cd24b070fac4deab0a7aa81da76fbcf:244",
+      "referenceSha256": "7eb7d322e0bbbda58667256ad79d454c2137e99690a9bc410c557793974fe0e9",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-765b84e1be73491986c1f6b029481e38:667",
+      "referenceSha256": "8a1a3451cd75a4a10fe962b55535a8bb247183b1e0d2cc6fcae3a456d955d479",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-765b84e1be73491986c1f6b029481e38:754",
+      "referenceSha256": "2a94cd93729a569877fcf4355a0b8f396030751e1cc0931fb7d938014cbe7e53",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-8145866b7f874be2bf4ceeebf027e65d:57",
+      "referenceSha256": "6da315aff4df946a7b2b5d2d6d228a9bb0af43eeecd8e5db2925d54eae84ee03",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-a020e5f264fb42489223d029df280aef:87",
+      "referenceSha256": "06acf2e71d2d613745b85dbcbd05fa1e9bb74e8834e55fec707fdb67f4062da5",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-a020e5f264fb42489223d029df280aef:503",
+      "referenceSha256": "4829bb37e9a8df6d561896bd3e9ed4a9337607d28d5afcb8cd5af95af3a287ab",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-a020e5f264fb42489223d029df280aef:924",
+      "referenceSha256": "62703df8ac895f308478166b1ae82f4c82f1a8d7dcc6237c65534fcc42123d5d",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-a13fd6e1357040f19a05aebb625e581e:76",
+      "referenceSha256": "dbbacf6d195079ffdac5f5a4cd76116c6fbf7c147d7ce614a17f1a57cbcaa4f3",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-a675700ce01544dca5c288890da91bf8:155",
+      "referenceSha256": "c59e5a57c21121361b3d55d218af8d2883ac479d3e8c6bc9cbdf984a0c93304d",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1109",
+      "referenceSha256": "aba4b677c05008e81e11162342f036001fbf58ba2abb4213d17a54c9924674a1",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1305",
+      "referenceSha256": "77c3f9114729a7ef83665977ea895225e658db96277e3f6294c566d2962a55b1",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-bc5a5d3146b347b4a46886ea6f3c97fb:59",
+      "referenceSha256": "aa982cc973bb3c11bb870255dd32d1b151d412e698a2ae111938223bca6bfb7f",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-c1080a26e0464d48821d4a354c251cee:36",
+      "referenceSha256": "9341bc528c384475a1172f3ff138e40d42b02120c623a61ce7cc6e6832d14014",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-c1080a26e0464d48821d4a354c251cee:322",
+      "referenceSha256": "267d15dda1b7362462ded9f397df7ad9740ab66fa5528ebce9acfc2d7d343442",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-cbb9efbb773d424e8fa8ed56251ae7db:179",
+      "referenceSha256": "bf7a649979faaca7e67c3e7ab2323a0dd4a9d6c52495b2724cf379857eafca8c",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-cbb9efbb773d424e8fa8ed56251ae7db:194",
+      "referenceSha256": "e4950e167a5149d60ff402176c8031d0cab304f67278be6668b3e21338842a72",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-cc6f979d8ce84740b03a933bb510d59f:132",
+      "referenceSha256": "e1dacdedffe3024e8cea0bf2e94266a1153cf53f66050e16ace2f1cae26ec585",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-d557d02da94e4baab531c62f0a2d943f:193",
+      "referenceSha256": "ce560d58eac74370a7c14fb200de197568f589ff9c2de8689b1a49ae9c2c521d",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-d87146000dfe49bfa8328b30329db010:6",
+      "referenceSha256": "3a9ac925890f42f2b2706c9c6e19c882fba5d3886712fa3057d764d6da481e9c",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-dceea6a94aef4fceb3a07db5287812a9:626",
+      "referenceSha256": "b4078428cad223ace2200c4911ba1f5b6a8265d247474a65abd086e318946ced",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-dceea6a94aef4fceb3a07db5287812a9:635",
+      "referenceSha256": "a928805cedb824088a1860d4f0553c5c72c107a03f5a67b1dc18d26a23fa04bf",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-dceea6a94aef4fceb3a07db5287812a9:897",
+      "referenceSha256": "7730419facf90376a1716cffb16a0285967e82c585fa24193490affbc6321733",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-e18fe246cd834787b26c20ef8b3978f2:441",
+      "referenceSha256": "fcae88218fc5a5dfc2b3df400c6f44d0a44087cfd9e90e54116bc7c2c04e797e",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-e18fe246cd834787b26c20ef8b3978f2:611",
+      "referenceSha256": "d6f12f7cce021e08a41798d2df1831bf774ee804d81bfe714a54fd58976472d0",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-ef0d6461be7c4fd8a85d2d4c2d796882:674",
+      "referenceSha256": "127893175dd017e71d8b8ce1259c402e4e6f5c096363bf4c36ff4cb302874ee2",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-ef0d6461be7c4fd8a85d2d4c2d796882:709",
+      "referenceSha256": "4c7580119c932650a778d1a09fc183713c4c25f8a9a27affc06c05bc3ec67649",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-ef0d6461be7c4fd8a85d2d4c2d796882:816",
+      "referenceSha256": "3f35267611df735ee6eefa8ff7ff2b94ca1f3ad48a36e3abcd381b99b5a27cc5",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-f732d2810444434f9f28dbdac502280e:188",
+      "referenceSha256": "f0e140130c040b7fb1ba052a9f52279df4939c463bc8133e05ae94b0009e8b6d",
+      "observedExact": true
+    },
+    {
+      "case": "live-test-batch-f732d2810444434f9f28dbdac502280e:489",
+      "referenceSha256": "10203dec0a8b4121e2cf156c0a2cd87d02ed8e21a357b638ab6cd9bad085cdf6",
+      "observedExact": true
+    }
+  ],
+  "artifacts": {
+    "target/parity6-full/identity.json": "a0d65cb83ddadec6d6e1c5e8f9c37369d334bfee96baa091ddf1c9562411fc2f",
+    "target/parity6-full/inventory.json": "311e6112811dfa9ff7e6e4e7bd06a78e86324a4d8d5bc644a939c4e6990f07f6",
+    "target/parity6-full/results.jsonl": "ed08a2b6edbd4ad111a7378c59eaa991891294a8de70c7fe78550740cb3f269b",
+    "target/parity6-full/summary.json": "29c308535b061ff500b73c5aef1b0c8207d6a19e29f5e0bb6fe822af3c7efc8d",
+    "target/parity-complete-repeat/identity.json": "68768b2f8cbc68323158948b5a37c605ddaa2a3236bc42836c1794f01a05f3ff",
+    "target/parity-complete-repeat/results.jsonl": "3acd5cd803bfa2dedcbe22355f92937e498a5d8380fb68c8dddf29acdab2ba71",
+    "target/parity-complete-repeat/summary.json": "3efca08ba516827cfa4689493e689bf9da229ebd15dc3e59f8d7738112f0f0d3",
+    "target/parity5-full-retry/summary.json": "30265367f06c0ee4a6c3232e9694f391f100c7e511f7f099f7fdbcddf6db6e1b",
+    "target/parity5-full-retry/results.jsonl": "8d84dfd5625daf6d9ff90e5fb20454a9791aa447283657ed757fadf555b7f8a1",
+    "target/parity5-full.log": "c93a37160e2ad20aafa10da3215a4bc2d31fb52c6bbb3e42ed551ac6e26b3c08",
+    "target/parity-final-stable-audit.py": "6349ff7c92689ef65c11b20b8d25a9ae178552b64261ce1bce2cb107d1d2fcce",
+    "target/parity-refinement-audit.py": "de67b9dfce9af8ffc61c16eb204818075a6c68358f8f9b02ae235034ae441c56",
+    "target/parity3-build-audit.py": "20db773849dfba72113f1e648a05d33faadfb7f07f1f04448c5306a09db6ffbf",
+    "tools/check_accuracy_regressions.py": "a9049afb97d20244e8a127a42ddefe755e4c890e47f01b1b6dea71d271746da1",
+    "target/parity-changed-observations.py": "70d51e9ee408cf49ab0e14522b8c13974531fa5e0151e755df655719b0c47dad",
+    "evidence/parity-postfinish-validation.json": "43024a3276c0567ced85bf44f2c6fa0b82c122df54a009269cb3367be5432815",
+    "evidence/parity-native-parity.json": "4fcc64562f1a292ef0ed80395723adad7fb5630039ead87d1cd10206a05f4e0b",
+    "evidence/parity-wire-parity.json": "15bbf58eb28a2c91ab0b13ed6761dfaaca96951a264d3dbdf870d60b7ba90ab8",
+    "evidence/parity-performance.json": "f4d603c6ebfa94e5190392ef43001466128ef88f5ea738d4a7c72535bdaabadf"
+  }
+}

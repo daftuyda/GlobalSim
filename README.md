@@ -2,7 +2,7 @@
 
 ### High-fidelity race simulation for Umamusume Global
 
-**Version 72**
+**Version 73**
 
 GlobalSim is a detailed race simulation engine written in Rust, modeling the
 interactions that decide a race—from starting gates and positioning to skill
@@ -21,24 +21,25 @@ trajectories, finishing orders, and race events.
 - **Skill simulation:** activation conditions, timing, effect values, duration, cooldowns, and recipients.
 - **Detailed output:** finish times, placements, movement frames, and skill and competition events.
 
-## Improvements in v72
+## Improvements in v73
 
-Pacemaker handovers restore the forward running-style group when its leader
-passes the incumbent pacemaker. Healer-targeting skills use the completed
-tick's activation history, and slope transitions preserve exact boundary
-behavior. Duel entry selects the longest-standing eligible nearby partner and
-starts both participants together when an invitation succeeds.
+Skill effects preserve queued bonuses through their final update. Front-blocking
+boundaries and leader-gap duration scaling retain the precision needed for
+consistent behavior in edge cases. The prepared API provides complete replay
+frames in under 5 ms on the measured nine-runner workload.
+See [performance measurements](docs/PERFORMANCE.md).
 
 ## Measured fidelity
 
-Results from a retrospective benchmark of **13,187 official Global races**:
+Results across **47,664 captured official Global races**:
 
 | Metric | Result |
 |---|---:|
-| Races with every finish time matching exactly | **13,187/13,187** |
-| Winner agreement | **13,187/13,187** |
-| Exact placement agreement | **125,215/125,215** |
-| Mean absolute finish-time error | **0 ms** |
+| Races matching every audited replay check | **47,664/47,664** |
+| Races with every finish time matching exactly | **47,664/47,664** |
+| Winner agreement | **47,664/47,664** |
+| Exact placement agreement | **435,508/435,508** |
+| Worst observed finish-time difference | **0 ms** |
 
 These measurements describe the tested races, not guaranteed accuracy for every
 race configuration. GlobalSim is an unofficial implementation and does not claim
@@ -55,13 +56,13 @@ cargo build --release --locked
 Run the included example on Windows:
 
 ```powershell
-Get-Content examples/v72-race.jsonl | .\target\release\race_engine_rs_v2.exe
+Get-Content examples/v73-race.jsonl | .\target\release\race_engine_rs_v2.exe
 ```
 
 On Linux or macOS:
 
 ```sh
-./target/release/race_engine_rs_v2 < examples/v72-race.jsonl > results.jsonl
+./target/release/race_engine_rs_v2 < examples/v73-race.jsonl > results.jsonl
 ```
 
 The example includes the simulation settings and skill data used by the
@@ -70,9 +71,12 @@ explore other races.
 
 ## Integration
 
-GlobalSim accepts one race specification per line of JSON and returns one JSON
+By default, GlobalSim accepts one race specification per line of JSON and returns one JSON
 result per race. A persistent worker supports repeated requests, making it
 suitable for batch simulations and integration into analysis tools.
+
+The [prepared Rust and C API](docs/IN-PROCESS.md) reuses race setup across seeds
+and provides direct access to numeric replay frames for low-latency integration.
 
 Use a fixed seed and identical inputs for reproducible comparisons. Detailed
 movement frames and event records support analysis beyond the finishing order.

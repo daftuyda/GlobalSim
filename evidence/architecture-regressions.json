@@ -1,0 +1,27 @@
+{
+  "engineSha256": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+  "passed": 4,
+  "total": 4,
+  "cases": [
+    {
+      "case": "adjoining-slope-boundary",
+      "passed": true,
+      "runnerSamples": 3982
+    },
+    {
+      "case": "heal-history-earlier-caster",
+      "passed": true,
+      "runnerSamples": 1047
+    },
+    {
+      "case": "heal-history-later-caster",
+      "passed": true,
+      "runnerSamples": 932
+    },
+    {
+      "case": "pacemaker-handover",
+      "passed": true,
+      "runnerSamples": 1181
+    }
+  ]
+}

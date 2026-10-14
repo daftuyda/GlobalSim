@@ -62,17 +62,69 @@ pub type SkillTable = BTreeMap<String, SkillDef>;
 
 static SKILLS: std::sync::OnceLock<std::sync::RwLock<SkillTable>> = std::sync::OnceLock::new();
 
+thread_local! {
+    static SCOPED_SKILLS: std::cell::RefCell<Option<std::rc::Rc<SkillTable>>> = const { std::cell::RefCell::new(None) };
+}
+
+pub(crate) fn with_skills<T>(table: std::rc::Rc<SkillTable>, run: impl FnOnce() -> T) -> T {
+    struct Restore(Option<std::rc::Rc<SkillTable>>);
+    impl Drop for Restore {
+        fn drop(&mut self) {
+            SCOPED_SKILLS.with(|slot| *slot.borrow_mut() = self.0.take());
+        }
+    }
+    let _restore = Restore(SCOPED_SKILLS.with(|slot| slot.replace(Some(table))));
+    run()
+}
+
+enum SkillTableView {
+    Scoped(std::rc::Rc<SkillTable>),
+    Global(std::sync::RwLockReadGuard<'static, SkillTable>),
+}
+
+#[cfg(test)]
+mod scoped_table_tests {
+    use super::*;
+    #[test]
+    fn nested_prepared_tables_restore_their_own_definitions() {
+        let parse = |is_general: bool| crate::load_skill_value(&crate::json::parse(&format!(
+            "{{\"123\":{{\"rarity\":1,\"wisdomCheck\":0,\"isGeneralSkill\":{is_general},\"alternatives\":[]}}}}"
+        )).unwrap()).unwrap();
+        let before = random_activation_is_general("123");
+        with_skills(std::rc::Rc::new(parse(false)), || {
+            assert!(!random_activation_is_general("123"));
+            with_skills(std::rc::Rc::new(parse(true)), || assert!(random_activation_is_general("123")));
+            assert!(!random_activation_is_general("123"));
+        });
+        assert_eq!(random_activation_is_general("123"), before);
+    }
+}
+
+impl std::ops::Deref for SkillTableView {
+    type Target = SkillTable;
+    fn deref(&self) -> &SkillTable {
+        match self { Self::Scoped(table) => table, Self::Global(table) => table }
+    }
+}
+
 pub fn init_skills(table: SkillTable) {
     *SKILLS.get_or_init(|| std::sync::RwLock::new(BTreeMap::new())).write().unwrap() = table;
 }
 
-fn skills_table() -> std::sync::RwLockReadGuard<'static, SkillTable> {
-    SKILLS.get().expect("init_skills must run before build_skill_data").read().unwrap()
+fn skills_table() -> SkillTableView {
+    if let Some(table) = SCOPED_SKILLS.with(|slot| slot.borrow().clone()) {
+        SkillTableView::Scoped(table)
+    } else {
+        SkillTableView::Global(SKILLS.get().expect("init_skills must run before build_skill_data").read().unwrap())
+    }
 }
 
 pub(crate) fn random_activation_is_general(skill_id: &str) -> bool {
     // Old/custom definitions omit this flag. Preserve their legacy behavior;
     // installed projections explicitly carry the authoritative master flag.
+    if let Some(table) = SCOPED_SKILLS.with(|slot| slot.borrow().clone()) {
+        return table.get(skill_id).map_or(true, |definition| definition.is_general_skill);
+    }
     SKILLS.get().and_then(|table| table.read().unwrap().get(skill_id)
         .map(|definition| definition.is_general_skill)).unwrap_or(true)
 }
@@ -345,8 +397,25 @@ pub struct SkillData {
     pub effects: Vec<SkillEffect>,
 }
 
+type SampledTriggerIndex<'a> = BTreeMap<(&'a str, usize, &'a str), Vec<&'a crate::retail_initialization::Trigger>>;
+
+fn index_sampled_triggers(row: &crate::retail_initialization::HorseInitialization) -> SampledTriggerIndex<'_> {
+    let mut index = SampledTriggerIndex::new();
+    for trigger in &row.triggers {
+        index.entry((trigger.skill_id.as_str(), trigger.alternative, trigger.field.as_str()))
+            .or_default().push(trigger);
+    }
+    index
+}
+
+fn sampled_triggers_for(index: &SampledTriggerIndex<'_>, skill_id: &str, alternative: usize,
+                        column: &str) -> Vec<crate::retail_initialization::Trigger> {
+    index.get(&(skill_id, alternative, column)).into_iter().flatten()
+        .map(|trigger| (**trigger).clone()).collect()
+}
+
 #[allow(clippy::too_many_arguments)]
-pub fn build_skill_data(
+fn build_skill_data(
     horse: &HorseParameters,
     race_params: &RaceParameters,
     course: &'static CourseData,
@@ -357,7 +426,9 @@ pub fn build_skill_data(
     level: i32,
     ignore_null_effects: bool,
     retail: Option<&crate::retail_initialization::HorseInitialization>,
+    sampled: Option<&SampledTriggerIndex<'_>>,
 ) -> CondResult<Vec<SkillData>> {
+    debug_assert_eq!(retail.is_some(), sampled.is_some());
     let skills = skills_table();
     let def = skills.get(skill_id).ok_or_else(|| format!("bad skill ID {skill_id}"))?;
     if def.alternatives.is_empty() {
@@ -386,8 +457,7 @@ pub fn build_skill_data(
     let mut triggers: Vec<SkillData> = Vec::new();
     for (alt_index,alt) in def.alternatives.iter().enumerate() {
         let parse = |expression:&str,column:&str| condition_parser::parse_with_retail_runtime(
-            conditions,expression,retail.map(|row| row.triggers.iter().filter(|trigger|
-                trigger.skill_id==skill_id && trigger.alternative==alt_index && trigger.field==column).cloned().collect()),
+            conditions,expression,sampled.map(|index| sampled_triggers_for(index, skill_id, alt_index, column)),
             retail.is_some_and(|row|row.runtime_phase));
         let mut full: Vec<Region> = whole_course.to_vec();
         let mut prerequisite: activation_conditions::OptCond = None;
@@ -556,8 +626,8 @@ impl RaceSolverBuilder {
     }
 
     pub fn roster_conditions(&mut self, same_style_count: i32, favorite_matches: Option<bool>,
-                             skill_counts: BTreeMap<String, i32>, popularity: i32,
-                             chara_ids: std::collections::BTreeSet<i64>, other_style_counts: [i32; 4]) -> &mut Self {
+                             skill_counts: std::rc::Rc<BTreeMap<String, i32>>, popularity: i32,
+                             chara_ids: std::rc::Rc<std::collections::BTreeSet<i64>>, other_style_counts: [i32; 4]) -> &mut Self {
         self.race_params.same_style_count = Some(same_style_count);
         self.race_params.other_style_counts = Some(other_style_counts);
         self.race_params.favorite_matches = favorite_matches;
@@ -722,9 +792,12 @@ impl RaceSolverBuilder {
             trigger_horse.guts = base(horse_desc.guts);
             trigger_horse.wisdom = base(horse_desc.wisdom);
         }
+        // These samples already belong to this seed and runner. Index their
+        // identity once, keeping each expression's original node order.
+        let sampled = self.retail_initialization.as_ref().map(index_sampled_triggers);
         let mut skilldata: Vec<SkillData> = Vec::new();
         for (skill_id, perspective, level) in &self.skills {
-            skilldata.extend(build_skill_data(&trigger_horse, &self.race_params, course, &whole_course, self.conditions, skill_id, *perspective, *level, false, self.retail_initialization.as_ref())?);
+            skilldata.extend(build_skill_data(&trigger_horse, &self.race_params, course, &whole_course, self.conditions, skill_id, *perspective, *level, false, self.retail_initialization.as_ref(), sampled.as_ref())?);
         }
         // Usage 13 uses displayed raw stats, not adjusted stats or green buffs.
         let raw_max = [horse_desc.speed, horse_desc.stamina, horse_desc.power, horse_desc.guts, horse_desc.wisdom]
@@ -765,11 +838,15 @@ impl RaceSolverBuilder {
         let mut triggers: Vec<Vec<Region>> = Vec::with_capacity(skilldata.len());
         let mut sampled: BTreeMap<String, Vec<Region>> = BTreeMap::new();
         for sd in &skilldata {
+            // Shared-stream initialization already sampled these exact windows.
+            // Only the conventional sampler needs duplicate-key RNG reuse.
+            if self.retail_initialization.is_some() {
+                triggers.push(sd.regions.clone());
+                continue;
+            }
             let key = format!("{}:{:?}:{:?}", sd.cooldown_key, sd.sample_policy, sd.regions);
             let windows = sampled.entry(key).or_insert_with(|| {
-                if self.retail_initialization.is_some() {
-                    sd.regions.clone()
-                } else if matches!(sd.sample_policy, crate::activation_sample_policy::SamplePolicy::AllCornerRandom) {
+                if matches!(sd.sample_policy, crate::activation_sample_policy::SamplePolicy::AllCornerRandom) {
                     crate::activation_sample_policy::place_all_corner_triggers(&sd.regions, &mut self.rng)
                 } else { sd.sample_policy.sample(&sd.regions, self.nsamples, &mut self.rng) }
             });
@@ -813,7 +890,7 @@ impl RaceSolverBuilder {
         let chance = (1.0 - 90.0 / base.wisdom).max(0.2);
         let mut wisdom_rngs: BTreeMap<String, Rule30CARng> = BTreeMap::new();
         let mut wisdom_picks: BTreeMap<String, bool> = BTreeMap::new();
-        for (sdi, sd) in skilldata.into_iter().enumerate() {
+        for (sd, windows) in skilldata.into_iter().zip(triggers) {
             let mut normal_enabled = true;
             if let Some(enabled)=self.retail_initialization.as_ref().and_then(|row|row.skill_enabled.get(&sd.skill_id)) {
                 normal_enabled = *enabled;
@@ -826,10 +903,9 @@ impl RaceSolverBuilder {
                 let rng = wisdom_rngs.entry(sd.skill_id.clone()).or_insert_with(|| Rule30CARng::new(seed, hi));
                 if !*wisdom_picks.entry(sd.cooldown_key.clone()).or_insert_with(|| rng.random() < chance) { continue; }
             }
-            let windows = triggers[sdi].clone();
             let trig = Region::new(windows[0].start, windows.last().unwrap().end);
             skills.push(crate::race_solver::PendingSkill {
-                anyskill_nodes: sd.anyskill_nodes.clone(),
+                anyskill_nodes: sd.anyskill_nodes,
                 random_activation_order: None,
                 detail_index: sd.detail_index,
                 priority: skills_table().get(&sd.skill_id).map_or(0,|s|s.priority),
@@ -873,6 +949,52 @@ impl RaceSolverBuilder {
             self.retail_initialization.as_ref().is_some_and(|row| row.runtime_phase));
         solver.race_context = self.race_context.clone();
         Ok(vec![solver])
+    }
+}
+
+#[cfg(test)]
+mod sampled_trigger_index_tests {
+    use super::*;
+    use crate::retail_initialization::{HorseInitialization, Trigger, Windows};
+
+    #[test]
+    fn indexed_samples_preserve_expression_order_and_parser_errors() {
+        let mut row = HorseInitialization::default();
+        for (i, (skill, alternative, column, name, argument)) in [
+            ("a", 0, "condition", "phase_random", 0),
+            ("b", 0, "condition", "phase_random", 1),
+            ("a", 0, "precondition", "phase_random", 2),
+            ("a", 1, "condition", "phase_random", 3),
+            ("a", 0, "condition", "corner_random", 1),
+            ("a", 0, "unrelated", "phase_random", 4),
+        ].into_iter().enumerate() {
+            row.triggers.push(Trigger {
+                skill_id: skill.into(), alternative, field: column.into(), name: name.into(), argument,
+                windows: Windows::Distances(vec![(i as f32, i as f32 + 10.0)]), draw_start: i, draw_end: i + 1,
+            });
+        }
+        let index = index_sampled_triggers(&row);
+        let table = Box::leak(Box::new(activation_conditions::build_conditions()));
+        for _ in 0..2 {
+            for (skill, alternative, column, expression) in [
+                ("a", 0, "condition", "phase_random==0&corner_random==1"),
+                ("a", 0, "condition", "phase_random==0"),
+                ("a", 0, "condition", "corner_random==1&phase_random==0"),
+                ("a", 0, "precondition", "phase_random==2"),
+                ("a", 1, "condition", "phase_random==3"),
+                ("b", 0, "condition", "phase_random==1"),
+                ("a", 7, "condition", "phase_random==0"),
+                ("missing", 0, "condition", "phase_random==0"),
+            ] {
+                let filtered: Vec<_> = row.triggers.iter().filter(|trigger|
+                    trigger.skill_id == skill && trigger.alternative == alternative && trigger.field == column).cloned().collect();
+                let indexed = sampled_triggers_for(&index, skill, alternative, column);
+                assert_eq!(format!("{indexed:?}"), format!("{filtered:?}"));
+                let expected = condition_parser::parse_with_retail_runtime(table, expression, Some(filtered), true).err();
+                let actual = condition_parser::parse_with_retail_runtime(table, expression, Some(indexed), true).err();
+                assert_eq!(actual, expected, "{skill}/{alternative}/{column}: {expression}");
+            }
+        }
     }
 }
 

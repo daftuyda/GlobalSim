@@ -1,0 +1,11 @@
+{
+  "result": "pass",
+  "comparisons": 162383552,
+  "scope": "Exact numeric strings against the unchanged v72 formatter: all positive f32 patterns in [16, 8388608), plus three million general/negative/neighbor bit samples.",
+  "production_module_sha256": "531eae24bfbedd6ce07da928ea51ad5fcabef7ea60fbee4d9c596537e10f7e88",
+  "tested_module_sha256": "df658585ce628690c9d2018c23b2d8267553bd1c527ce16a0384508d96aef78a",
+  "whole_module_matches_except_write_number_visibility": true,
+  "harness_sha256": "e8655a3ab125e79857be9ce6f2aabbfdeb4dea06d838e10b25db318faa509c08",
+  "reference_module_sha256": "b139c0e3fefeed2ca8030bba77f63f1f05517302b92c6b43f951281acab7fbff",
+  "log_sha256": "deec76de630fde57ac133fcffeac0c366e1c95a34dc6de1fa22f00ab0abde4bb"
+}

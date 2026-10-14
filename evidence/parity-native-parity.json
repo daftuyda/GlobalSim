@@ -1,0 +1,81 @@
+{
+  "library_sha256": "f81b434c38507a46c7502997d7f9b90621227c34f4edd25c04451e25bd2a194d",
+  "baseline_sha256": "ea309039e445d3a2b664dc7a4db4586bc5483ceda3f4ada28f85b59631d3d2f9",
+  "inputs_sha256": "52b1036ecd88dbfb569cc84493ab2c1f554e3ff12910515d1a340f87c04fddb3",
+  "modes": [
+    {
+      "all_frames": false,
+      "equivalent_runs": 843,
+      "errors": [
+        {
+          "case": "invalid-data",
+          "seed": 1351103539,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1351101148,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1351103539,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1351103539,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1351101148,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1351103539,
+          "error": "Missing retail initialization field 110261"
+        }
+      ]
+    },
+    {
+      "all_frames": true,
+      "equivalent_runs": 843,
+      "errors": [
+        {
+          "case": "invalid-data",
+          "seed": 1351103539,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1351101148,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "invalid-data",
+          "seed": 1351103539,
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1351103539,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1351101148,
+          "error": "Missing retail initialization field 110261"
+        },
+        {
+          "case": "empty-data",
+          "seed": 1351103539,
+          "error": "Missing retail initialization field 110261"
+        }
+      ]
+    }
+  ],
+  "concurrent_equivalent_runs": 24,
+  "handle_isolation_and_recovery": true
+}

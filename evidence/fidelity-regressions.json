@@ -1,0 +1,52 @@
+{
+  "engineSha256": "c8c217534c093ec7976cae6d0857e9296784ae47d28ca655c63d5d94511e9b7b",
+  "passed": 9,
+  "total": 9,
+  "cases": [
+    {
+      "case": "adjoining-slope-boundary",
+      "passed": true,
+      "runnerSamples": 3982
+    },
+    {
+      "case": "duel-invites-finished-partner-second-roster",
+      "passed": true,
+      "runnerSamples": 918
+    },
+    {
+      "case": "duel-invites-finished-partner",
+      "passed": true,
+      "runnerSamples": 948
+    },
+    {
+      "case": "front-runner-ignores-runaways",
+      "passed": true,
+      "runnerSamples": 964
+    },
+    {
+      "case": "front-runner-no-eligible-lead",
+      "passed": true,
+      "runnerSamples": 959
+    },
+    {
+      "case": "front-runner-waits-for-lead",
+      "passed": true,
+      "runnerSamples": 935
+    },
+    {
+      "case": "heal-history-earlier-caster",
+      "passed": true,
+      "runnerSamples": 1047
+    },
+    {
+      "case": "heal-history-later-caster",
+      "passed": true,
+      "runnerSamples": 932
+    },
+    {
+      "case": "pacemaker-handover",
+      "passed": true,
+      "runnerSamples": 1181
+    }
+  ]
+}

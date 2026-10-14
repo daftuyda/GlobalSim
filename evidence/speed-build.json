@@ -1,0 +1,64 @@
+{
+  "host": "x86_64-pc-windows-msvc",
+  "native": false,
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+  "common_rustflags": [],
+  "inputs": [
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\speed-pgo-inputs.jsonl",
+      "sha256": "1a9acb57b34957124f04a42eafed2605768cd00f1504e326a1b32919263a6bb6"
+    }
+  ],
+  "training_requests": 247,
+  "instrumented_sha256": "008cd6174e108a16319aa759a2a0f831a9f0793c73eff164d2183c0b29741b60",
+  "profile_sha256": "52a69b1e658617ae3b2ea8ef82148e581102151675add1397522aca0b46dbd86",
+  "engine_sha256": "111c9bbd46f8121aa4807846d9e804f5c9467b61765baa76769ecd6751a27d2e",
+  "scope": "Compiler branch-profile optimization only; race outcomes are not fitted or used as optimization targets.",
+  "generic_sha256": "c13057f5b0ffbbd18038228b65417de07cbdfcfffe79692ad4f33f056c5de9fc",
+  "baseline_sha256": "362121b419c043994937f91802ef15903c450b9b5d953fb337aa8880b180bdcd",
+  "generation_flags": [
+    "-Cprofile-generate=<fresh-profile-directory>"
+  ],
+  "optimization_flags": [
+    "-Cprofile-use=<merged-profile>",
+    "-Cllvm-args=-pgo-warn-missing-function"
+  ],
+  "explicit_target": "x86_64-pc-windows-msvc",
+  "source_build_info_sha256": "a5982b05239459c182ed40bb8192ffa22c4302c9428cc6bcf216e246d77f0744",
+  "source_sha256": {
+    "Cargo.toml": "4d32fc3e31527f8b26324d3dab7f08e2654aac5955dd7d679418fc6d335f2322",
+    "Cargo.lock": "b5167b819ffc84f07f42b614a24fbaa50668b50b3892d4b53f6cf07b8be05356",
+    "src/activation_conditions.rs": "0c35820f7e99781b7a1032449d92d823e428f2c52c5801ac310c19b78c20cfca",
+    "src/activation_sample_policy.rs": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+    "src/condition_parser.rs": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+    "src/conserve_power.rs": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+    "src/course_data.rs": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+    "src/horse_types.rs": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+    "src/hp_policy.rs": "d55a2f25a185cb8fbdb2db24ea6f5c9c6fab90e0c4a943fbc05d91d03d62ffab",
+    "src/json.rs": "e0b7974b45caf2ddd5b1ce7285c2a91d9ecf1868c60b5639926ae9c147e9df4b",
+    "src/lane_selection.rs": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+    "src/main.rs": "3ac18141ed3b09ab06ddf4708c8cd402fa24995b275494d714c43a5430a9f52b",
+    "src/overtaking.rs": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+    "src/race_field.rs": "3339b35b2770ff2db4d7e4e9438d6bc6c2b36ba04e6c3e5b1a5670a0fd83c93e",
+    "src/race_field_retail.rs": "850f800e18c04bb1ebe0dcfd2574af44918f17e22a83057f64877bcd035a8d94",
+    "src/race_parameters.rs": "6f335fc8b3edb6bc87ca6a49572c1fdec43e12069a85661f0209633e234abc8e",
+    "src/race_solver.rs": "cf0b92fb449abd855732f02b325dbfde0d64bde8f53762e0e5c13536c1fb92ad",
+    "src/race_solver_builder.rs": "43054b4a0f99f90052de9f61bacbca9a6f43d3a911eee2597aa55c5659773147",
+    "src/race_solver_retail.rs": "d16ed7e24ccd064054e4a02b7de56ffce3ea6b3242de2d95bc098aa540176a07",
+    "src/random_gen.rs": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+    "src/region.rs": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+    "src/retail_geometry.rs": "fdb4033b35a038cfc05588ec587d9d9c5536edcce1f1f025cffb5b7fadb4a380",
+    "src/retail_geometry_assets.rs": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+    "src/retail_initialization.rs": "8e3b05622eb71091f5e57d134898f4d04124be68b2b72c6ff554d50804c5a4e3",
+    "src/retail_lane.rs": "ca5b2e7a91519d77ccd4c8129dc2c25083640821d8c77e0b2111ff6cd9ef50ae",
+    "src/retail_physics.rs": "8251b94dcf9b4b694055ba6ffd8bc6c264f20c36af8217a8101d7999d3707136",
+    "src/retail_position_keep.rs": "30389dfd520cb67fc1436f001d1c0a4ca9292b774b12471fc96ef40e2c2fb67b",
+    "src/retail_random.rs": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+    "src/retail_sort.rs": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+    "src/retail_spurt.rs": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+    "src/retail_states.rs": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+    "src/rushing.rs": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+    "src/stadium_score.rs": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+    "src/starting_grid.rs": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
+  }
+}

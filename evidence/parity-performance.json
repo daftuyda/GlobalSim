@@ -1,0 +1,110 @@
+{
+  "scope": "Direct prepared Rust API, nine-runner 1600 m workload. All numeric frames retained. Preparation, transport and consumer analysis excluded; binary mode includes packet encoding. Alternating ABBA trials on the same host; collectors remain running.",
+  "inputSha256": "66c2d7192623a37d36916c27d00c8e67731fa460932fd280c826f3be5eca80b1",
+  "executables": {
+    "before": "fd020174c0ca5761a5e79eea5e9aa00da4e359d4873f99eb6ed61b47dc73a059",
+    "after": "1413799b19667b1a41dae637b9f02718dd002ee11d31593983cc4a4242ba0494"
+  },
+  "driverSha256": "9fc62f07177e228525fdd19d895c320d52791b936cc6cebd9f24f2c1a3c615c6",
+  "repeatsPerSeed": 10,
+  "seedCount": 30,
+  "firstSeed": 100003,
+  "seedStep": 7919,
+  "warmupsPerTrial": 5,
+  "trials": [
+    {
+      "mode": "frames",
+      "runs": 300,
+      "preparation_ms": 6.3502,
+      "mean_ms": 4.775912333333335,
+      "median_ms": 4.7435,
+      "p95_ms": 4.9931,
+      "total_frames": 351994,
+      "engine": "before"
+    },
+    {
+      "mode": "frames",
+      "runs": 300,
+      "preparation_ms": 3.9988,
+      "mean_ms": 4.8400630000000024,
+      "median_ms": 4.7836,
+      "p95_ms": 5.13,
+      "total_frames": 351994,
+      "engine": "after"
+    },
+    {
+      "mode": "frames",
+      "runs": 300,
+      "preparation_ms": 4.0253,
+      "mean_ms": 4.810316333333334,
+      "median_ms": 4.746,
+      "p95_ms": 4.9864999999999995,
+      "total_frames": 351994,
+      "engine": "after"
+    },
+    {
+      "mode": "frames",
+      "runs": 300,
+      "preparation_ms": 7.1982,
+      "mean_ms": 5.02236633333333,
+      "median_ms": 4.8083,
+      "p95_ms": 8.028,
+      "total_frames": 351994,
+      "engine": "before"
+    },
+    {
+      "mode": "binary",
+      "runs": 300,
+      "preparation_ms": 4.0128,
+      "mean_ms": 4.937748333333329,
+      "median_ms": 4.853,
+      "p95_ms": 5.1678999999999995,
+      "total_frames": 351994,
+      "engine": "before"
+    },
+    {
+      "mode": "binary",
+      "runs": 300,
+      "preparation_ms": 3.8880999999999997,
+      "mean_ms": 4.97304766666667,
+      "median_ms": 4.8296,
+      "p95_ms": 5.2443,
+      "total_frames": 351994,
+      "engine": "after"
+    },
+    {
+      "mode": "binary",
+      "runs": 300,
+      "preparation_ms": 3.8402000000000003,
+      "mean_ms": 4.8919283333333325,
+      "median_ms": 4.8614,
+      "p95_ms": 5.1186,
+      "total_frames": 351994,
+      "engine": "after"
+    },
+    {
+      "mode": "binary",
+      "runs": 300,
+      "preparation_ms": 4.058800000000001,
+      "mean_ms": 4.919960666666665,
+      "median_ms": 4.8984,
+      "p95_ms": 5.2824,
+      "total_frames": 351994,
+      "engine": "before"
+    }
+  ],
+  "means": {
+    "frames": {
+      "before": 4.899139333333332,
+      "after": 4.8251896666666685
+    },
+    "binary": {
+      "before": 4.928854499999996,
+      "after": 4.932488000000001
+    }
+  },
+  "changePercent": {
+    "frames": -1.5094419985877239,
+    "binary": 0.0737189543737804
+  }
+}

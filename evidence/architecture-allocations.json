@@ -1,0 +1,107 @@
+{
+  "scope": "Instrumented allocation and reallocation counts/bytes; not latency. First request excluded. System allocator, no helper.",
+  "groups": {
+    "before-json": {
+      "engine_sha256": "d0620db199b662afda10496a1bb354c208208de9b3c14836d1344de4df6d8850",
+      "requests": 30,
+      "stages": {
+        "parse_settings": {
+          "allocations": 2137,
+          "allocated_bytes": 264484
+        },
+        "initialization": {
+          "allocations": 2693,
+          "allocated_bytes": 254451
+        },
+        "solver_build": {
+          "allocations": 4592.733333333334,
+          "allocated_bytes": 594309.6666666666
+        },
+        "runtime_setup": {
+          "allocations": 754,
+          "allocated_bytes": 71257.13333333333
+        },
+        "ticks": {
+          "allocations": 11225.233333333334,
+          "allocated_bytes": 1031385.1
+        },
+        "results_cleanup": {
+          "allocations": 3871.1666666666665,
+          "allocated_bytes": 434400.5333333333
+        },
+        "output_cleanup": {
+          "allocations": 54.1,
+          "allocated_bytes": 106489.3
+        }
+      }
+    },
+    "after-json": {
+      "engine_sha256": "fa4ae875d73baad15d06987bb362df98d4ed993512246111ef3d3e6176fdd48d",
+      "requests": 30,
+      "stages": {
+        "parse_settings": {
+          "allocations": 2137,
+          "allocated_bytes": 264484
+        },
+        "initialization": {
+          "allocations": 2693,
+          "allocated_bytes": 254451
+        },
+        "solver_build": {
+          "allocations": 4592.733333333334,
+          "allocated_bytes": 594309.6666666666
+        },
+        "runtime_setup": {
+          "allocations": 754,
+          "allocated_bytes": 71161.13333333333
+        },
+        "ticks": {
+          "allocations": 10083.166666666666,
+          "allocated_bytes": 2203756.3
+        },
+        "results_cleanup": {
+          "allocations": 2718.1,
+          "allocated_bytes": 397550.4
+        },
+        "output_cleanup": {
+          "allocations": 54.1,
+          "allocated_bytes": 106489.3
+        }
+      }
+    },
+    "after-binary": {
+      "engine_sha256": "fa4ae875d73baad15d06987bb362df98d4ed993512246111ef3d3e6176fdd48d",
+      "requests": 30,
+      "stages": {
+        "parse_settings": {
+          "allocations": 2137,
+          "allocated_bytes": 264484
+        },
+        "initialization": {
+          "allocations": 2693,
+          "allocated_bytes": 254451
+        },
+        "solver_build": {
+          "allocations": 4592.733333333334,
+          "allocated_bytes": 594309.6666666666
+        },
+        "runtime_setup": {
+          "allocations": 754,
+          "allocated_bytes": 71161.13333333333
+        },
+        "ticks": {
+          "allocations": 10083.166666666666,
+          "allocated_bytes": 2203756.3
+        },
+        "results_cleanup": {
+          "allocations": 2718.1,
+          "allocated_bytes": 397550.4
+        },
+        "output_cleanup": {
+          "allocations": 0.03333333333333333,
+          "allocated_bytes": 35856.6
+        }
+      }
+    }
+  }
+}

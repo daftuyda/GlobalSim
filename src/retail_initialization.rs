@@ -238,6 +238,121 @@ pub fn initialize(seed:i32,horses:&[Value],course:&Value,skills:&Value,parameter
     Ok(Initialization {horses:rows,stages,rng})
 }
 
+struct PreparedTrigger {
+    skill_id: String,
+    alternative: usize,
+    field: String,
+    name: String,
+    argument: i32,
+}
+
+struct PreparedHorse {
+    triggers: Vec<PreparedTrigger>,
+    skills: Vec<(String, bool)>,
+    delay_modifiers: Vec<(String, Vec<f32>)>,
+    wisdom_chance: f32,
+    force_coefficient: f32,
+}
+
+/// Seed-independent decoding only. Trigger sampling and all random draws remain
+/// in their original field-wide pass order for each call to initialize.
+pub(crate) struct PreparedInitialization {
+    horses: Vec<PreparedHorse>,
+    course: Value,
+    force_span: f32,
+    start_delay_max: f32,
+}
+
+impl PreparedInitialization {
+    pub(crate) fn new(horses: &[Value], course: &Value, skills: &Value, parameters: &Value) -> Result<Self, String> {
+        let styles = ["", "RunningOut", "Proceding", "Insertion", "Chasing"];
+        let mut prepared = Vec::with_capacity(horses.len());
+        for horse in horses {
+            let mut triggers = Vec::new();
+            let mut checks = Vec::new();
+            let mut delay_modifiers = Vec::new();
+            for entry in horse.get_array("skills")? {
+                let sid = skill_id(entry)?;
+                let skill = field(skills, &sid)?;
+                let alternatives = skill.get_array("alternatives")?;
+                for (alternative, alt) in alternatives.iter().enumerate() {
+                    for column in ["precondition", "condition"] {
+                        for (name, operator, argument) in terms(alt.get(column).and_then(Value::as_str).unwrap_or("")) {
+                            if !name.contains("random") { continue; }
+                            if operator != "==" { return Err(format!("Untraced retail random operator: {name}{operator}")); }
+                            triggers.push(PreparedTrigger { skill_id: sid.clone(), alternative,
+                                field: column.into(), name, argument });
+                        }
+                    }
+                }
+                checks.push((sid.clone(), skill.get_i64("wisdomCheck")? == 1));
+                let mut modifiers = Vec::new();
+                for alt in alternatives {
+                    if alt.get_str("condition")? != "always==1"
+                        || !alt.get("precondition").and_then(Value::as_str).unwrap_or("").is_empty() { continue; }
+                    for effect in alt.get_array("effects")? {
+                        if effect.get_i64("type")? == 10 && effect.get_i64("target")? == 1 {
+                            let removal = (10000.0 - effect.get_f64("modifier")?) as f32 / 10000.0;
+                            modifiers.push(1.0 - removal);
+                        }
+                    }
+                }
+                delay_modifiers.push((sid, modifiers));
+            }
+            let style = horse.get_i64("running_style")?;
+            prepared.push(PreparedHorse { triggers, skills: checks, delay_modifiers,
+                wisdom_chance: (100.0 - 9000.0 / number(horse, "base_wisdom")?).max(20.0),
+                force_coefficient: if (1..=4).contains(&style) {
+                    number(parameters, &format!("forceInMoveTargetSpeedAdd{}", styles[style as usize]))?
+                } else { 0.0 },
+            });
+        }
+        Ok(Self { horses: prepared, course: course.clone(),
+            force_span: number(parameters, "forceInMoveTargetSpeedAddRandomRange")?,
+            start_delay_max: number(parameters, "startDelayMax")? })
+    }
+
+    pub(crate) fn initialize(&self, seed: i32) -> Result<Initialization, String> {
+        let mut rng = RetailRandom::new(seed);
+        let mut rows: Vec<_> = self.horses.iter().map(|_| HorseInitialization::default()).collect();
+        for (horse, row) in self.horses.iter().zip(&mut rows) {
+            for trigger in &horse.triggers {
+                let draw_start = rng.draw_count;
+                let windows = sample_trigger(&trigger.name, trigger.argument, &mut rng, &self.course)?;
+                row.triggers.push(Trigger { skill_id: trigger.skill_id.clone(), alternative: trigger.alternative,
+                    field: trigger.field.clone(), name: trigger.name.clone(), argument: trigger.argument,
+                    windows, draw_start, draw_end: rng.draw_count });
+            }
+        }
+        let mut stages = BTreeMap::from([("after_triggers".into(), rng.draw_count)]);
+        for (horse, row) in self.horses.iter().zip(&mut rows) {
+            let coefficient = horse.force_coefficient;
+            let offset = if coefficient > 0. { rng.real(0., self.force_span) }
+                else if coefficient < 0. { rng.real(-self.force_span, 0.) } else { 0. };
+            row.force_in_move_coefficient = coefficient + offset;
+        }
+        stages.insert("after_ai".into(), rng.draw_count);
+        for (horse, row) in self.horses.iter().zip(&mut rows) {
+            for (sid, checked) in &horse.skills {
+                let enabled = !checked || horse.wisdom_chance > rng.real(0., 100.);
+                row.skill_enabled.insert(sid.clone(), enabled);
+            }
+        }
+        stages.insert("after_wisdom".into(), rng.draw_count);
+        for (horse, row) in self.horses.iter().zip(&mut rows) {
+            let mut multiplier = 1.0_f32;
+            for (sid, modifiers) in &horse.delay_modifiers {
+                if row.skill_enabled[sid] {
+                    for modifier in modifiers { multiplier *= modifier; }
+                }
+            }
+            row.start_delay = rng.real(0., self.start_delay_max) * multiplier;
+        }
+        stages.insert("after_delays".into(), rng.draw_count);
+        Ok(Initialization { horses: rows, stages, rng })
+    }
+}
+
 /// Continue the manager's shared stream: all section values, then rushing.
 /// Wisdom is the adjusted value after starting green effects; the bonus is
 /// in percentage points. These are predicted inputs, not recorded outcomes.
@@ -280,6 +395,40 @@ pub fn initialize_sections_and_rushing(init:&mut Initialization, horses:&[(f32,f
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn prepared_initialization_preserves_draws_and_float_bits_across_seeds() {
+        let data = crate::json::parse(include_str!("../tests/fixtures/retail_initialization_official.json")).unwrap();
+        for case in data.get_array("cases").unwrap() {
+            let course = field(field(&data, "courses").unwrap(), case.get_str("course_id").unwrap()).unwrap();
+            let horses = case.get_array("horses").unwrap();
+            let skills = field(&data, "skills").unwrap();
+            let parameters = field(&data, "parameters").unwrap();
+            let prepared = PreparedInitialization::new(horses, course, skills, parameters).unwrap();
+            for seed in [i32::MIN, -71, 0, 71, i32::MAX, case.get_i64("seed").unwrap() as i32] {
+                let mut expected = initialize(seed, horses, course, skills, parameters).unwrap();
+                let mut actual = prepared.initialize(seed).unwrap();
+                assert_eq!(actual.stages, expected.stages);
+                for (a, b) in actual.horses.iter().zip(&expected.horses) {
+                    assert_eq!(a.skill_enabled, b.skill_enabled);
+                    assert_eq!(a.force_in_move_coefficient.to_bits(), b.force_in_move_coefficient.to_bits());
+                    assert_eq!(a.start_delay.to_bits(), b.start_delay.to_bits());
+                    assert_eq!(a.triggers.len(), b.triggers.len());
+                    for (a, b) in a.triggers.iter().zip(&b.triggers) {
+                        assert_eq!((&a.skill_id, a.alternative, &a.field, &a.name, a.argument, a.draw_start, a.draw_end),
+                                   (&b.skill_id, b.alternative, &b.field, &b.name, b.argument, b.draw_start, b.draw_end));
+                        match (&a.windows, &b.windows) {
+                            (Windows::Lottery(a), Windows::Lottery(b)) => assert_eq!(a, b),
+                            (Windows::Distances(a), Windows::Distances(b)) => assert_eq!(
+                                a.iter().map(|(lo,hi)| (lo.to_bits(),hi.to_bits())).collect::<Vec<_>>(),
+                                b.iter().map(|(lo,hi)| (lo.to_bits(),hi.to_bits())).collect::<Vec<_>>()),
+                            _ => panic!("Trigger kind changed"),
+                        }
+                    }
+                }
+                for _ in 0..64 { assert_eq!(actual.rng.next_int(), expected.rng.next_int()); }
+            }
+        }
+    }
     #[test]
     fn absent_following_straight_keeps_empty_trigger_and_rng_state() {
         let course=crate::json::parse(r#"{"distance":2400,"corners":[{"start":2348,"length":500}],"straights":[{"start":1900,"end":2400}]}"#).unwrap();

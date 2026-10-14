@@ -1,0 +1,27 @@
+{
+  "host": "x86_64-pc-windows-msvc",
+  "native": false,
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+  "features": "fast-alloc",
+  "trained_binary": true,
+  "trained_native": true,
+  "replay_worker": "0",
+  "common_rustflags": [],
+  "inputs": [
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\examples\\v72-race.jsonl",
+      "sha256": "525d4b31d54120a8ea7cfae334480b7a723d094ce55d765c4c2914067d39f980"
+    }
+  ],
+  "training_requests_per_format": 1,
+  "training_requests": 5,
+  "instrumented_sha256": "279a2aec1122459b5e433cd2869137d83202e633947fd0cc6b91c1fcd2a27159",
+  "profile_sha256": "1835e909443484492166eb44af97bccc47da5d50445a66408b4e5341a2a15cb9",
+  "engine_sha256": "986574bb076c02bfdd4bfeec1f7a41c0e4e4ea8d8338bc917a69e4454f55d52a",
+  "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\pgo-nlk2ur80\\build\\x86_64-pc-windows-msvc\\release\\race_engine_rs_v2.exe",
+  "output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-build-tool-smoke.exe",
+  "library": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-prototype\\target\\pgo-nlk2ur80\\build\\x86_64-pc-windows-msvc\\release\\globalsim.dll",
+  "library_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-build-tool-smoke\\globalsim.dll",
+  "library_sha256": "94a23c2b43dcf6e5f03cb426ed083a9829545f165422fd6e2de871e2aa05cfc4",
+  "benchmark_output": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\reuse-build-tool-smoke\\benchmark_prepared.exe"
+}

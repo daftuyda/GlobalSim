@@ -87,8 +87,6 @@ pub struct TargetContext {
 pub struct TargetState {
     pub targets: Vec<usize>,
     pub cached: Vec<Horse>,
-    live_points: Vec<Row>,
-    cached_points: Vec<Row>,
     pub visible: Vec<usize>,
     pub side: Option<SideRoom>,
     pub cooldown: f32,
@@ -101,6 +99,20 @@ impl TargetState {
     pub fn collect(&mut self, c: &TargetContext, others: &[Horse], p: TargetParameters) {
         self.cached.clear();
         self.cached.extend_from_slice(others);
+        self.collect_cached(c, p);
+    }
+
+    pub(crate) fn collect_roster(
+        &mut self, c: &TargetContext, roster: &[Horse], owner: usize, p: TargetParameters,
+    ) {
+        self.cached.clear();
+        self.cached.extend_from_slice(&roster[..owner]);
+        self.cached.extend_from_slice(&roster[owner + 1..]);
+        self.collect_cached(c, p);
+    }
+
+    fn collect_cached(&mut self, c: &TargetContext, p: TargetParameters) {
+        let others = &self.cached;
         self.side = Some(side_room_iter(c.owner.point, c.max_lane, others.iter().map(|r| r.point), p.block));
         self.visible.clear();
         self.visible.extend(others
@@ -143,17 +155,24 @@ impl TargetState {
                 live[i].target as f64,
                 live[i].speed as f64,
                 front == Some(i),
-                || front_index_iter(row.point, self.cached.iter().map(|r| r.point)
-                    .chain(std::iter::once(c.owner.point)), p.block).is_some(),
+                || has_front_blocker(row.point, self.cached.iter().map(|r| r.point)
+                    .chain(std::iter::once(c.owner.point)), p.block),
             )
         };
         self.targets.retain(|&i| i < self.cached.len());
+        let existing_count = self.targets.len();
         for &i in &self.visible {
             if !self.targets.contains(&i) && eligible(i) {
                 self.targets.push(i);
             }
         }
-        self.targets.retain(|&i| eligible(i));
+        // New entries already passed the identical immutable eligibility
+        // check above. Revalidate only entries retained from the prior tick.
+        let mut ordinal = 0;
+        self.targets.retain(|&i| {
+            ordinal += 1;
+            ordinal > existing_count || eligible(i)
+        });
         if let Some(i) = front {
             if !self.targets.contains(&i) {
                 self.targets.push(i);
@@ -208,17 +227,13 @@ impl TargetState {
                 || !(c.first_move_point - 200. <= c.owner.point.position
                     && c.owner.point.position <= c.first_move_point));
         if passing {
-            self.live_points.clear();
-            self.live_points.extend(live.iter().map(|r| r.point));
-            self.cached_points.clear();
-            self.cached_points.extend(self.cached.iter().map(|r| r.point));
             let mut target = PassingSearch {
                 lane_preference: c.lane_preference,
                 owner: c.owner.point,
                 phase: c.phase,
                 max_lane: c.max_lane,
-                live: &self.live_points,
-                cached: &self.cached_points,
+                live,
+                cached: &self.cached,
                 visible: &self.visible,
                 targets: &self.targets,
                 side,
@@ -320,22 +335,41 @@ pub fn front_index(owner: Row, rows: &[Row], p: BlockParameters) -> Option<usize
     front_index_iter(owner, rows.iter().copied(), p)
 }
 
+// Store the narrowing coefficient before interpolating the lane limit.
+// This operation order distinguishes captured edges on both sides of the cone.
+#[inline]
+pub(crate) fn front_lane_limit(gap: f32, p: BlockParameters) -> f32 {
+    let narrowing = (gap / p.front_distance) * 0.6_f32;
+    ((1.0 - narrowing as f64) * p.front_lane as f64) as f32
+}
+
 pub(crate) fn front_index_iter(owner: Row, rows: impl Iterator<Item = Row>, p: BlockParameters) -> Option<usize> {
     let mut found = None;
     let mut nearest = f32::INFINITY;
     for (i, row) in rows.enumerate() {
         let gap = row.position - owner.position;
-        let width = (1. - (gap / p.front_distance) * 0.6) * p.front_lane;
         if gap > 0.
             && gap < p.front_distance
             && gap < nearest
-            && (row.lane - owner.lane).abs() <= width
+            && (row.lane - owner.lane).abs()
+                <= front_lane_limit(gap, p)
         {
             found = Some(i);
             nearest = gap;
         }
     }
     found
+}
+
+// Overtaking only needs to know whether a peer is blocked. Stop at the
+// first qualifying blocker; nearest-distance tie order is irrelevant here.
+fn has_front_blocker(owner: Row, mut rows: impl Iterator<Item = Row>, p: BlockParameters) -> bool {
+    rows.any(|row| {
+        let gap = row.position - owner.position;
+        gap > 0. && gap < p.front_distance
+            && (row.lane - owner.lane).abs()
+                <= front_lane_limit(gap, p)
+    })
 }
 
 pub fn side_room(owner: Row, max_lane: f32, rows: &[Row], p: BlockParameters) -> SideRoom {
@@ -373,14 +407,22 @@ fn side_room_iter(owner: Row, max_lane: f32, rows: impl Iterator<Item = Row>, p:
     result
 }
 
-pub struct PassingSearch<'a> {
+// Passing search can read points directly from live/cached horses. Keeping
+// the row view also supports standalone searches without copying horse rows.
+pub trait PointRow {
+    fn point(&self) -> Row;
+}
+impl PointRow for Row { fn point(&self) -> Row { *self } }
+impl PointRow for Horse { fn point(&self) -> Row { self.point } }
+
+pub struct PassingSearch<'a, T = Row> {
     pub lane_preference: u8,
     pub owner: Row,
     pub phase: i32,
     pub max_lane: f32,
     /// Stable around-horse order excluding the owner, including finishers.
-    pub live: &'a [Row],
-    pub cached: &'a [Row],
+    pub live: &'a [T],
+    pub cached: &'a [T],
     /// Visible indices from the cached PreUpdate view, sampled from live rows
     /// when checking the corridor. Do not recompute visibility after movement.
     pub visible: &'a [usize],
@@ -512,7 +554,7 @@ impl MoveState {
     }
 }
 
-impl PassingSearch<'_> {
+impl<T: PointRow> PassingSearch<'_, T> {
     pub fn target(&self) -> f32 {
         let lane = self.owner.lane;
         const EDGE: f32 = 0.055555559694767_f32;
@@ -531,7 +573,7 @@ impl PassingSearch<'_> {
             }
             let (low, high) = bounds.unwrap_or((candidate - CORRIDOR, candidate + CORRIDOR));
             !self.visible.iter().any(|&i| {
-                let row = self.live[i];
+                let row = self.live[i].point();
                 self.owner.position <= row.position
                     && row.position <= end
                     && low <= row.lane
@@ -559,22 +601,23 @@ impl PassingSearch<'_> {
             for direction in [-1., 1.] {
                 let mut edge = index;
                 loop {
-                    let live = self.live[edge];
-                    let cached = self.cached[edge];
+                    let live = self.live[edge].point();
+                    let cached = self.cached[edge].point();
                     let mut next: Option<usize> = None;
                     for (j, row) in self.cached.iter().enumerate() {
+                        let row = row.point();
                         let position_gap = row.position - cached.position;
                         let lane_gap = direction * (row.lane - cached.lane);
                         if (0. ..=3.).contains(&position_gap)
                             && lane_gap > 0.
                             && lane_gap < CROWD
-                            && direction * (self.live[j].lane - live.lane) > 0.
+                            && direction * (self.live[j].point().lane - live.lane) > 0.
                         {
                             // Python max retains the first entry on equal
                             // live lane; do not let a sort choose the last.
                             if next.is_none()
-                                || direction * self.live[j].lane
-                                    > direction * self.live[next.unwrap()].lane
+                                || direction * self.live[j].point().lane
+                                    > direction * self.live[next.unwrap()].point().lane
                             {
                                 next = Some(j);
                             }
@@ -585,7 +628,7 @@ impl PassingSearch<'_> {
                         None => break,
                     }
                 }
-                let row = self.live[edge];
+                let row = self.live[edge].point();
                 let candidate = row.lane + direction * EDGE;
                 if clear(candidate, row.position + 0.5, None) {
                     consider(candidate);
@@ -600,7 +643,7 @@ impl PassingSearch<'_> {
         let nearest = self
             .targets
             .iter()
-            .map(|&i| self.live[i].position)
+            .map(|&i| self.live[i].point().position)
             .fold(f32::MAX, f32::min);
         // These two operations cannot be regrouped around the rounded lane.
         let bounds = if straight != lane {
@@ -647,6 +690,46 @@ pub fn resolve_overlaps_with_order(rows: &mut [Row], force_checks: &mut [bool], 
 mod tests {
     use super::*;
     use crate::json::Value;
+
+    #[test]
+    fn front_block_preserves_captured_inclusive_and_exclusive_edges() {
+        let p = BlockParameters {
+            front_distance: 2., front_lane: 0.0416666716337204,
+            side_distance: 1.05, side_lane: 0.1111110970377922,
+        };
+        // Captured movement boundary: the previous expression put this lane
+        // one float above the envelope, postponing blocking by a full tick.
+        let owner = Row { position: 788.2689819335938, lane: 0.02591502107679844 };
+        let blocker = Row { position: 789.5291137695313, lane: 0. };
+        assert_eq!(front_index(owner, &[blocker], p), Some(0));
+        assert!(has_front_blocker(owner, [blocker].into_iter(), p));
+        let outside = Row { lane: f32::from_bits(owner.lane.to_bits() + 1), ..owner };
+        assert_eq!(front_index(outside, &[blocker], p), None);
+        assert!(!has_front_blocker(outside, [blocker].into_iter(), p));
+        // Keeping the narrowing factor wide would include this outside runner.
+        let owner = Row { position: 1042.1102294921875, lane: 0.019883815199136734 };
+        let blocker = Row { position: 1042.9443359375, lane: 0.05112415552139282 };
+        assert_eq!(front_index(owner, &[blocker], p), None);
+        assert!(!has_front_blocker(owner, [blocker].into_iter(), p));
+        // At a third captured boundary, keeping the final comparison wide
+        // would incorrectly exclude a blocker that must remain eligible.
+        let owner = Row { position: 887.0662841796875, lane: 0.2476646900177002 };
+        let blocker = Row { position: 887.30859375, lane: 0.20902688801288605 };
+        assert_eq!(front_index(owner, &[blocker], p), Some(0));
+        assert!(has_front_blocker(owner, [blocker].into_iter(), p));
+        // Multiplying the lane coefficient before the normalized distance
+        // would incorrectly exclude this near-endpoint blocker.
+        let owner = Row { position: 609.3488159179688, lane: 0.14428995549678802 };
+        let blocker = Row { position: 611.3174438476562, lane: 0.12723113596439362 };
+        assert_eq!(front_index(owner, &[blocker], p), Some(0));
+        assert!(has_front_blocker(owner, [blocker].into_iter(), p));
+        for gap in [0., 2.] {
+            assert_eq!(front_index(owner, &[Row {
+                position: owner.position + gap, lane: owner.lane,
+            }], p), None);
+        }
+    }
+
     #[test]
     fn lane_continuity_preserves_blocked_time_and_skips_direction_changes() {
         let p = MoveParameters { power_coefficient: 0.001, speed_add: 0.3,
@@ -756,6 +839,17 @@ mod tests {
                 v.get_i64("target_bits").unwrap() as u32,
                 "passing case {case}"
             );
+            let horses = |rows: &[Row]| rows.iter().enumerate().map(|(i, &point)|
+                Horse { point, speed: i as f32, target: f32::NAN }).collect::<Vec<_>>();
+            let live_horses = horses(&live);
+            let cached_horses = horses(&cached);
+            let direct = PassingSearch {
+                lane_preference: v.get("lane_preference").and_then(Value::as_i64).unwrap_or(0) as u8,
+                owner, phase: v.get_i64("phase").unwrap() as i32, max_lane,
+                live: &live_horses, cached: &cached_horses, visible: &visible, targets: &targets, side,
+            }.target();
+            assert_eq!(direct.to_bits(), v.get_i64("target_bits").unwrap() as u32,
+                "direct horse passing case {case}");
         }
     }
     #[test]

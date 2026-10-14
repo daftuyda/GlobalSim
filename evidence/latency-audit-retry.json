@@ -1,0 +1,561 @@
+{
+  "initial_summary_sha256": "703536c7bff04ace5c42a5facb6c6463fe1e07f2d4ff908ef6f1ffad0d113e74",
+  "initial_results_sha256": "83cdaa1fe8fe7f2d0483aff5589fe564aa4d6a601223c2c6e9c2053f7e9df830",
+  "verification_script_sha256": "14d010ccbf43e108e728ab5a8aa983b35c643aa03cb929fa26ce951b07ad98de",
+  "source_changed": false,
+  "rechecks": [
+    {
+      "case": "nine-parity-expansion-11/nine-parity-expansion-11-0058-c10809__case01",
+      "initial_exception": "JSONDecodeError: Expecting ':' delimiter: line 1 column 281295 (char 281294)",
+      "original_saved_replies_decode": true,
+      "pure_python_decoder_also_agrees": true,
+      "fresh_repeat_count": 5,
+      "attempts": [
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0058-c10809__case01",
+          "referenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "expectedStdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "identitySha256": "87fc0765660c887087c1f1e316f5984b2703738a6822cbdde61c391faff81590",
+          "actualReferenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "stdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "warnings": [],
+          "course": 10809,
+          "seed": 2087857801,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "generic": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pgo": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pipeline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native-helper": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03"
+          },
+          "stdoutBytes": {
+            "baseline": 2426378,
+            "generic": 2426378,
+            "pgo": 2426378,
+            "pipeline": 2426378,
+            "native": 2426378,
+            "native-helper": 2426378
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true,
+            "native": true,
+            "native-helper": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "simulatedOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "officialFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "simulatedFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "skillExact": true,
+          "officialCasts": 115,
+          "simulatedCasts": 115,
+          "exactCasts": 115,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 1726
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0058-c10809__case01",
+          "referenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "expectedStdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "identitySha256": "87fc0765660c887087c1f1e316f5984b2703738a6822cbdde61c391faff81590",
+          "actualReferenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "stdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "warnings": [],
+          "course": 10809,
+          "seed": 2087857801,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "generic": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pgo": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pipeline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native-helper": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03"
+          },
+          "stdoutBytes": {
+            "baseline": 2426378,
+            "generic": 2426378,
+            "pgo": 2426378,
+            "pipeline": 2426378,
+            "native": 2426378,
+            "native-helper": 2426378
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true,
+            "native": true,
+            "native-helper": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "simulatedOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "officialFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "simulatedFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "skillExact": true,
+          "officialCasts": 115,
+          "simulatedCasts": 115,
+          "exactCasts": 115,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 1726
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0058-c10809__case01",
+          "referenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "expectedStdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "identitySha256": "87fc0765660c887087c1f1e316f5984b2703738a6822cbdde61c391faff81590",
+          "actualReferenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "stdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "warnings": [],
+          "course": 10809,
+          "seed": 2087857801,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "generic": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pgo": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pipeline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native-helper": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03"
+          },
+          "stdoutBytes": {
+            "baseline": 2426378,
+            "generic": 2426378,
+            "pgo": 2426378,
+            "pipeline": 2426378,
+            "native": 2426378,
+            "native-helper": 2426378
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true,
+            "native": true,
+            "native-helper": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "simulatedOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "officialFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "simulatedFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "skillExact": true,
+          "officialCasts": 115,
+          "simulatedCasts": 115,
+          "exactCasts": 115,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 1726
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0058-c10809__case01",
+          "referenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "expectedStdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "identitySha256": "87fc0765660c887087c1f1e316f5984b2703738a6822cbdde61c391faff81590",
+          "actualReferenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "stdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "warnings": [],
+          "course": 10809,
+          "seed": 2087857801,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "generic": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pgo": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pipeline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native-helper": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03"
+          },
+          "stdoutBytes": {
+            "baseline": 2426378,
+            "generic": 2426378,
+            "pgo": 2426378,
+            "pipeline": 2426378,
+            "native": 2426378,
+            "native-helper": 2426378
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true,
+            "native": true,
+            "native-helper": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "simulatedOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "officialFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "simulatedFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "skillExact": true,
+          "officialCasts": 115,
+          "simulatedCasts": 115,
+          "exactCasts": 115,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 1726
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        },
+        {
+          "case": "nine-parity-expansion-11/nine-parity-expansion-11-0058-c10809__case01",
+          "referenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "expectedStdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "identitySha256": "87fc0765660c887087c1f1e316f5984b2703738a6822cbdde61c391faff81590",
+          "actualReferenceSha256": "04213d178138d173923c6f68604e75e7b105d9dad5230de0b47d650804b78c5d",
+          "stdinSha256": "bb69c809e2db7b015fd60ddff6b653160aa413f7175bfa9470efc59ab1159b73",
+          "warnings": [],
+          "course": 10809,
+          "seed": 2087857801,
+          "inputVerified": true,
+          "stdoutSha256": {
+            "baseline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "generic": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pgo": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "pipeline": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03",
+            "native-helper": "990569e7b70da6b928b40f276a229e4538fbae708801564e5e6e3c7a616bfa03"
+          },
+          "stdoutBytes": {
+            "baseline": 2426378,
+            "generic": 2426378,
+            "pgo": 2426378,
+            "pipeline": 2426378,
+            "native": 2426378,
+            "native-helper": 2426378
+          },
+          "byteIdentical": {
+            "generic": true,
+            "pgo": true,
+            "pipeline": true,
+            "native": true,
+            "native-helper": true
+          },
+          "runners": 9,
+          "winner": true,
+          "placements": 9,
+          "finishExact": true,
+          "finishMAE": 0.0,
+          "maxFinishError": 0.0,
+          "finishErrorSum": 0.0,
+          "officialOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "simulatedOrder": [
+            8,
+            3,
+            4,
+            2,
+            5,
+            1,
+            0,
+            6,
+            7
+          ],
+          "officialFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "simulatedFinish": [
+            120.57652282714844,
+            120.4933090209961,
+            118.48049926757812,
+            117.6380844116211,
+            118.02960205078125,
+            120.08973693847656,
+            122.59796905517578,
+            122.72993469238281,
+            116.01024627685547
+          ],
+          "skillExact": true,
+          "officialCasts": 115,
+          "simulatedCasts": 115,
+          "exactCasts": 115,
+          "frameExact": true,
+          "frameCounts": {
+            "samples": 1726
+          },
+          "firstDivergence": null,
+          "exact": true,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "worker_check_retry": {
+    "initial_log_sha256": "cc962f87803772fefbc12d712bf9faa3c4a39a4c4e72a673b2382b3a8769170f",
+    "initial_case_not_captured": true,
+    "initial_exception": "JSONDecodeError after the engine/baseline byte comparison succeeded",
+    "complete_retry": {
+      "input_cases": 135,
+      "isolation_cases": 11,
+      "modes": [
+        {
+          "dense": false,
+          "byte_identical_replies": 146,
+          "error_replies": [
+            {
+              "case": "input-123",
+              "error": "Missing retail initialization field 110261"
+            },
+            {
+              "case": "input-125",
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "invalid-data",
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "empty-data",
+              "error": "Missing retail initialization field 110261"
+            }
+          ]
+        },
+        {
+          "dense": true,
+          "byte_identical_replies": 146,
+          "error_replies": [
+            {
+              "case": "input-123",
+              "error": "Missing retail initialization field 110261"
+            },
+            {
+              "case": "input-125",
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "invalid-data",
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "empty-data",
+              "error": "Missing retail initialization field 110261"
+            }
+          ]
+        }
+      ],
+      "sha256": {
+        "engine": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+        "baseline": "caa74392f24bcccf363c398d18c910b046d5d0a00d70cf61557263f4301380cf"
+      }
+    }
+  }
+}

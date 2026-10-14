@@ -1,0 +1,161 @@
+{
+  "engineSha256": "66260cce5a703f77f294615f819c324c615a5d2b87e4e90a06428fedb3cc745d",
+  "baselineSha256": "c14eb48e151c414b8c4b670fc12cc3b971056d4198bc4cc07024b7936fc54c76",
+  "scope": "Official post-finish replay samples for every otherwise-exact race whose packet changed. Same quantization as core movement checks; comparisons restricted to changed runners.",
+  "races": 10,
+  "rows": [
+    {
+      "case": "live-test-batch-177e252e303d4ca0a493a434c9d37d6a:1406",
+      "referenceSha256": "cc5bbd77d43896dc78b1143ce33be300a5f0e225e11d164c15e1f87ef1b44650",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 489,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        1
+      ],
+      "officialPostFinishSamples": 58,
+      "mismatchingSamplesBefore": 58,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-371d910485c549b7b8cfa22e8a7447f2:147",
+      "referenceSha256": "13c9442b89b289fa393116ccbf835b39db2660fde5a663130f09771c345fab41",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 78,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        6
+      ],
+      "officialPostFinishSamples": 26,
+      "mismatchingSamplesBefore": 26,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-392a8ee3692146bab0e024ee057d0ad2:57",
+      "referenceSha256": "d8bbf7cfa96242cfa3fe455e619782a300b8161209c1714efb95e2551f6fcfb1",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 147,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        5
+      ],
+      "officialPostFinishSamples": 49,
+      "mismatchingSamplesBefore": 49,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-4148d21c9fa94e43b607864d220244dc:186",
+      "referenceSha256": "0be2b8756877d43d625fa594ac8b2abcad16b8a6fc542b087066b94918faa040",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 3,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        7
+      ],
+      "officialPostFinishSamples": 1,
+      "mismatchingSamplesBefore": 1,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-484f1a5bbd3d4d4d9b9cc90c611b04e0:128",
+      "referenceSha256": "1dddbf3ed8b964384c9c33080a7a3e8b47e8f2b478ddf4ad9c60356561b33eda",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 12,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        3
+      ],
+      "officialPostFinishSamples": 4,
+      "mismatchingSamplesBefore": 4,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-765b84e1be73491986c1f6b029481e38:1543",
+      "referenceSha256": "c8acb1d6630aae54ae0ffe648b2962c8eca14e3ae7ffa6374c501ff6a49efc9f",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 432,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        2
+      ],
+      "officialPostFinishSamples": 54,
+      "mismatchingSamplesBefore": 54,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-cbb9efbb773d424e8fa8ed56251ae7db:3",
+      "referenceSha256": "f3b5460b5b1aa772e1a522f40648ed2a6e3d71bd5de48595e9e3be37f78465e7",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 60,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        5
+      ],
+      "officialPostFinishSamples": 20,
+      "mismatchingSamplesBefore": 20,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-cf8199fba13b464cb8f791ab5f58f814:1101",
+      "referenceSha256": "f5d988a30445a601f1b2cd02f850b1451d9fd0cde9688e0cc6a1ae49ba4d645e",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 63,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        7
+      ],
+      "officialPostFinishSamples": 21,
+      "mismatchingSamplesBefore": 21,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "live-test-batch-d87146000dfe49bfa8328b30329db010:273",
+      "referenceSha256": "90a46fd3c706bdefe819e68c0c81d7854040ac3276d0bcc26f685026ee0009cc",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 57,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        5
+      ],
+      "officialPostFinishSamples": 19,
+      "mismatchingSamplesBefore": 19,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    },
+    {
+      "case": "nine-pools-survey-continue/nine-pools-survey-1551-c10503__case01",
+      "referenceSha256": "3444a196aa34bc8f2c025aecd84fb63be1404f38ec39ad53ef86d3851f387f16",
+      "metadataEqual": true,
+      "frameCountsEqual": true,
+      "differingScalars": 78,
+      "allDifferencesPostFinish": true,
+      "changedRunners": [
+        0
+      ],
+      "officialPostFinishSamples": 26,
+      "mismatchingSamplesBefore": 26,
+      "mismatchingSamplesAfter": 0,
+      "regressedObservations": []
+    }
+  ],
+  "officialPostFinishSamples": 278,
+  "mismatchingSamplesBefore": 278,
+  "mismatchingSamplesAfter": 0
+}

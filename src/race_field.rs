@@ -68,6 +68,7 @@ pub struct RaceField {
     rank_buffers: RefCell<RankBuffers>,
     pub solvers: Vec<RefCell<RaceSolver>>,
     pub n: usize,
+    order_band_thresholds: [f64; 5],
     pub player_horse_index: usize,
     /// Each solver's fixed strategy, mirrored outside its `RefCell` so
     /// `pacemaker()` can scan every horse's strategy -- including the one
@@ -115,6 +116,7 @@ impl RaceField {
             rank_buffers: RefCell::new(RankBuffers::default()),
             solvers: solvers.into_iter().map(RefCell::new).collect(),
             n,
+            order_band_thresholds: [0.2, 0.4, 0.5, 0.7, 0.8].map(|rate| (rate * n as f64).round()),
             player_horse_index: 0,
             strategies,
             teams, characters, heal_history: RefCell::new(Vec::new()),
@@ -162,7 +164,7 @@ impl RaceField {
         // skill that uses them is being checked.
         for (i, &r) in rank_of.iter().enumerate() {
             if let Ok(s) = self.solvers[i].try_borrow() {
-                crate::activation_conditions::track_order_bands(&s, r, self.n);
+                crate::activation_conditions::track_order_bands(&s, r, &self.order_band_thresholds);
             }
         }
         std::mem::swap(&mut *self.rank_of.borrow_mut(), rank_of);
@@ -645,12 +647,9 @@ impl RaceField {
         // Runaway shares the Front Runner group; it does not outrank it.
         let style = |i: usize| self.strategies[i].base_running_style() as usize;
         let pos = |i: usize| self.solvers[i].borrow().pos as f32;
-        let active: Vec<_> = order.iter().copied().filter(|&i| {
+        let Some(overall) = order.iter().copied().find(|&i| {
             let h=self.solvers[i].borrow(); h.pos < h.course.distance
-        }).collect();
-        let Some(&overall)=active.first() else {return};
-        let forward=active.iter().map(|&i|style(i)).min().unwrap();
-        let leader=*active.iter().find(|&&i|style(i)==forward).unwrap();
+        }) else { return; };
         let distance=self.solvers[overall].borrow().course.distance as f32;
         let section=crate::retail_physics::target_speed_indices(pos(overall),distance).0;
         let previous=self.section_pacemaker.get();
@@ -659,10 +658,16 @@ impl RaceField {
             let pace = &solver.retail.as_ref().unwrap().config.pace;
             (pace.end_section(), pace.pacemaker_forward_range, pace.pacemaker_not_forward_count)
         };
-        let (mut selected, old_section)=previous.unwrap_or((leader,0));
         // Position-keep exits still consult the incumbent after the selection
         // window closes. Do not perform a late handover or restoration.
+        // Once closed, neither a roster allocation nor style scans are needed.
         if previous.is_some() && section as f32 >= end { return; }
+        let active: Vec<_> = order.iter().copied().filter(|&i| {
+            let h=self.solvers[i].borrow(); h.pos < h.course.distance
+        }).collect();
+        let forward=active.iter().map(|&i|style(i)).min().unwrap();
+        let leader=*active.iter().find(|&&i|style(i)==forward).unwrap();
+        let (mut selected, old_section)=previous.unwrap_or((leader,0));
         if previous.is_none() {self.section_pacemaker.set(Some((leader,0)));}
         if section>old_section {
             if style(overall)==forward && (section as f32)<end {selected=leader;}

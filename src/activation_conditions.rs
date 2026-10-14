@@ -98,7 +98,7 @@ fn immediate() -> Condition {
 pub(crate) fn retail_phase_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
-        fn filter(compare:fn(f64,f64)->bool)->FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions,arg,_,_,_| Ok((regions.to_vec(),Some(Box::new(move |s,_| {
                 compare(s.retail.as_ref().map_or(0.,|r|r.phase as f64),arg)
             })))))
@@ -111,7 +111,7 @@ pub(crate) fn retail_phase_condition() -> &'static Condition {
 pub(crate) fn retail_distance_rate_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
-        fn filter(compare: fn(f64, f64) -> bool) -> FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, course, _, _| {
                 let threshold = ((arg as f32 / 100.0 * course.distance as f32) + 0.5) as i32;
                 Ok((regions.to_vec(), Some(Box::new(move |s, _| {
@@ -127,7 +127,7 @@ pub(crate) fn retail_distance_rate_condition() -> &'static Condition {
 pub(crate) fn retail_remaining_distance_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
-        fn filter(compare: fn(f64, f64) -> bool) -> FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, course, _, _| {
                 let distance = course.distance;
                 Ok((regions.to_vec(), Some(Box::new(move |s, _| {
@@ -143,7 +143,7 @@ pub(crate) fn retail_remaining_distance_condition() -> &'static Condition {
 pub(crate) fn retail_final_corner_half_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
-        fn filter(compare: fn(f64, f64) -> bool) -> FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
                 Ok((regions.to_vec(), Some(Box::new(move |s, _| {
                     s.final_corner_half_value().map_or(false, |value| compare(value as i32 as f64, arg))
@@ -160,7 +160,7 @@ pub(crate) fn retail_corner_condition(final_flag: bool) -> &'static Condition {
     static FINAL: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     let slot = if final_flag { &FINAL } else { &CORNER };
     slot.get_or_init(|| {
-        fn filter(compare: fn(f64, f64) -> bool, final_flag: bool) -> FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C, final_flag: bool) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
                 Ok((regions.to_vec(), Some(Box::new(move |s, _| compare(s.corner_value(final_flag) as f64, arg)))))
             })
@@ -173,7 +173,7 @@ pub(crate) fn retail_corner_condition(final_flag: bool) -> &'static Condition {
 pub(crate) fn retail_slope_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
-        fn filter(compare: fn(f64, f64) -> bool) -> FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
                 Ok((regions.to_vec(), Some(Box::new(move |s, _| compare(s.slope_type() as f64, arg)))))
             })
@@ -186,7 +186,7 @@ pub(crate) fn retail_slope_condition() -> &'static Condition {
 pub(crate) fn retail_furlong_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
-        fn filter(compare: fn(f64, f64) -> bool) -> FilterFn {
+        fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
                 Ok((regions.to_vec(), Some(Box::new(move |s, _| {
                     compare((((s.pos as f32 + 0.5) * 0.005).floor()) as f64, arg)
@@ -269,7 +269,6 @@ fn same_style_rate_condition() -> Condition {
         .lt(mk(|v,a| v<a)).lte(mk(|v,a| v<=a))
         .gt(mk(|v,a| v>a)).gte(mk(|v,a| v>=a))
 }
-type TransformArgFn = fn(f64, &RaceSolver, Option<&RaceField>) -> f64;
 type StaticFilterFn = fn(&[Region], f64, &CourseData, &HorseParameters, &RaceParametersWithSkillId) -> Vec<Region>;
 
 fn identity_transform(arg: f64, _s: &RaceSolver, _f: Option<&RaceField>) -> f64 {
@@ -283,8 +282,15 @@ fn passthrough_static(regions: &[Region], _arg: f64, _c: &CourseData, _h: &Horse
 /// runtime value comes from `get_value(state, field)` each tick (`field`
 /// `None` -> condition is "not yet determinable", i.e. false, matching the
 /// pre-race gate-skill activation round where no field exists yet).
-fn live_condition(get_value: LiveValueFn, transform_arg: TransformArgFn, static_filter: StaticFilterFn) -> Condition {
-    fn mk(get_value: LiveValueFn, transform_arg: TransformArgFn, static_filter: StaticFilterFn, cmp: fn(f64, f64) -> bool) -> FilterFn {
+fn live_condition<V, T>(get_value: V, transform_arg: T, static_filter: StaticFilterFn) -> Condition
+where V: Fn(&RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static,
+      T: Fn(f64, &RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static {
+    // Keep function items as concrete types so tick predicates can inline the
+    // getter, threshold transform and comparison instead of three indirect calls.
+    fn mk<V, T, C>(get_value: V, transform_arg: T, static_filter: StaticFilterFn, cmp: C) -> FilterFn
+    where V: Fn(&RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static,
+          T: Fn(f64, &RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static,
+          C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static {
         Box::new(move |regions, arg, course, horse, extra| {
             let restricted = static_filter(regions, arg, course, horse, extra);
             let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
@@ -305,7 +311,8 @@ fn live_condition(get_value: LiveValueFn, transform_arg: TransformArgFn, static_
         .gte(mk(get_value, transform_arg, static_filter, |v, a| v >= a))
 }
 
-fn live_simple(get_value: LiveValueFn) -> Condition {
+fn live_simple<V>(get_value: V) -> Condition
+where V: Fn(&RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static {
     live_condition(get_value, identity_transform, passthrough_static)
 }
 
@@ -330,7 +337,8 @@ fn behind_in_condition() -> Condition {
         .gt(mk(|a,b| a>b)).gte(mk(|a,b| a>=b))
 }
 
-fn live_with_static(get_value: LiveValueFn, static_filter: StaticFilterFn) -> Condition {
+fn live_with_static<V>(get_value: V, static_filter: StaticFilterFn) -> Condition
+where V: Fn(&RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static {
     live_condition(get_value, identity_transform, static_filter)
 }
 
@@ -338,7 +346,8 @@ fn order_of_value(s: &RaceSolver, field: Option<&RaceField>) -> f64 {
     field.map(|f| f.order_of(s.field_index.unwrap()) as f64).unwrap_or(0.0)
 }
 
-fn order_filter(get_threshold: TransformArgFn) -> Condition {
+fn order_filter<T>(get_threshold: T) -> Condition
+where T: Fn(f64, &RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'static {
     live_condition(order_of_value, get_threshold, passthrough_static)
 }
 
@@ -416,19 +425,18 @@ fn continuous_band_check(cell: &std::cell::Cell<Option<f64>>, t: f64, in_band: b
     t >= 5.0 && in_band && matches!(cell.get(), Some(s) if !s.is_nan())
 }
 
-pub(crate) fn track_order_bands(s: &RaceSolver, rank: usize, n: usize) {
+pub(crate) fn track_order_bands(s: &RaceSolver, rank: usize, thresholds: &[f64; 5]) {
     let t = s.accumulatetime.get();
-    let within = |rate: f64| (rank as f64) <= (rate * n as f64).round();
-    band_track(&s.order_band_in_200, t, within(0.2));
-    band_track(&s.order_band_in_400, t, within(0.4));
-    band_track(&s.order_band_in_500, t, within(0.5));
-    band_track(&s.order_band_in_800, t, within(0.8));
+    let rank = rank as f64;
+    band_track(&s.order_band_in_200, t, rank <= thresholds[0]);
+    band_track(&s.order_band_in_400, t, rank <= thresholds[1]);
+    band_track(&s.order_band_in_500, t, rank <= thresholds[2]);
+    band_track(&s.order_band_in_800, t, rank <= thresholds[4]);
     // v69: out bands are inclusive, rank >= round(n*rate) (doc 13.189).
-    let out = |rate: f64| (rank as f64) >= (rate * n as f64).round();
-    band_track(&s.order_band_out_200, t, out(0.2));
-    band_track(&s.order_band_out_400, t, out(0.4));
-    band_track(&s.order_band_out_500, t, out(0.5));
-    band_track(&s.order_band_out_700, t, out(0.7));
+    band_track(&s.order_band_out_200, t, rank >= thresholds[0]);
+    band_track(&s.order_band_out_400, t, rank >= thresholds[1]);
+    band_track(&s.order_band_out_500, t, rank >= thresholds[2]);
+    band_track(&s.order_band_out_700, t, rank >= thresholds[3]);
 }
 
 fn section_random(start: f64, end: f64) -> Condition {
@@ -1361,6 +1369,9 @@ pub enum CmpKind {
 
 pub enum Op {
     Fixed(crate::retail_initialization::Windows),
+    /// Immutable parsed structure is shared; sampled windows belong to this call.
+    Shared(std::rc::Rc<Op>, Vec<crate::retail_initialization::Windows>),
+    Sampled(usize),
     Cmp { cond: &'static Condition, kind: CmpKind, arg: f64 },
     And(Box<Op>, Box<Op>, SamplePolicy),
     Or(Box<Op>, Box<Op>, SamplePolicy),
@@ -1369,14 +1380,22 @@ pub enum Op {
 impl Op {
     pub fn sample_policy(&self) -> &SamplePolicy {
         match self {
-            Op::Fixed(_) => &SamplePolicy::Immediate,
+            Op::Fixed(_) | Op::Sampled(_) => &SamplePolicy::Immediate,
+            Op::Shared(root, _) => root.sample_policy(),
             Op::Cmp { cond, .. } => &cond.sample_policy,
             Op::And(_, _, sp) | Op::Or(_, _, sp) => sp,
         }
     }
 
     pub fn apply(&self, regions: &[Region], course: &CourseData, horse: &HorseParameters, extra: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
+        self.apply_sampled(regions, course, horse, extra, &[])
+    }
+
+    fn apply_sampled(&self, regions: &[Region], course: &CourseData, horse: &HorseParameters, extra: &RaceParametersWithSkillId,
+        sampled: &[crate::retail_initialization::Windows]) -> CondResult<(Vec<Region>, OptCond)> {
         match self {
+            Op::Shared(root, windows) => root.apply_sampled(regions, course, horse, extra, windows),
+            Op::Sampled(index) => Self::apply_windows(&sampled[*index], regions),
             Op::Fixed(crate::retail_initialization::Windows::Lottery(enabled)) =>
                 Ok((if *enabled {regions.to_vec()} else {Vec::new()},None)),
             Op::Fixed(crate::retail_initialization::Windows::Distances(windows)) => {
@@ -1395,21 +1414,20 @@ impl Op {
                 f(regions, *arg, course, horse, extra)
             }
             Op::And(left, right, _) => {
-                let (leftval, leftcond) = left.apply(regions, course, horse, extra)?;
-                let (rightval, rightcond) = right.apply(&leftval, course, horse, extra)?;
+                let (leftval, leftcond) = left.apply_sampled(regions, course, horse, extra, sampled)?;
+                let (rightval, rightcond) = right.apply_sampled(&leftval, course, horse, extra, sampled)?;
                 match (leftcond, rightcond) {
                     (None, None) => Ok((rightval, None)),
-                    (lc, rc) => {
-                        let lc = lc.unwrap_or_else(|| Box::new(|_: &RaceSolver, _: Option<&RaceField>| true));
-                        let rc = rc.unwrap_or_else(|| Box::new(|_: &RaceSolver, _: Option<&RaceField>| true));
+                    (Some(cond), None) | (None, Some(cond)) => Ok((rightval, Some(cond))),
+                    (Some(lc), Some(rc)) => {
                         let combined: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| lc(s, field) && rc(s, field));
                         Ok((rightval, Some(combined)))
                     }
                 }
             }
             Op::Or(left, right, _) => {
-                let (leftval, leftcond) = left.apply(regions, course, horse, extra)?;
-                let (rightval, rightcond) = right.apply(regions, course, horse, extra)?;
+                let (leftval, leftcond) = left.apply_sampled(regions, course, horse, extra, sampled)?;
+                let (rightval, rightcond) = right.apply_sampled(regions, course, horse, extra, sampled)?;
                 let merged = union(&leftval, &rightval);
                 let lc = leftcond.unwrap_or_else(|| Box::new(|_: &RaceSolver, _: Option<&RaceField>| true));
                 let rc = rightcond.unwrap_or_else(|| Box::new(|_: &RaceSolver, _: Option<&RaceField>| true));
@@ -1419,6 +1437,31 @@ impl Op {
                 });
                 Ok((merged, Some(combined)))
             }
+        }
+    }
+
+    fn apply_windows(windows: &crate::retail_initialization::Windows, regions: &[Region]) -> CondResult<(Vec<Region>, OptCond)> {
+        use crate::retail_initialization::Windows;
+        Ok(match windows {
+            Windows::Lottery(enabled) => (if *enabled { regions.to_vec() } else { Vec::new() }, None),
+            Windows::Distances(windows) => (rmap_multi(regions, |r| windows.iter().map(|&(start, end)|
+                r.intersect(&Region::new(start as f64, end as f64))).collect()), None),
+        })
+    }
+
+    /// Replace seed-dependent leaves after a successful parse. The cached tree
+    /// never retains sampled windows or predicates created by `apply`.
+    pub(crate) fn separate_samples(&mut self, windows: &mut Vec<crate::retail_initialization::Windows>) {
+        match self {
+            Op::Fixed(_) => {
+                let Op::Fixed(value) = std::mem::replace(self, Op::Sampled(windows.len())) else { unreachable!() };
+                windows.push(value);
+            }
+            Op::And(left, right, _) | Op::Or(left, right, _) => {
+                left.separate_samples(windows);
+                right.separate_samples(windows);
+            }
+            _ => {}
         }
     }
 }

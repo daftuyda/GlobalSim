@@ -1,0 +1,19 @@
+{
+  "scope": "Persistent-worker raw-wire comparison: exact errors, duplicate keys, Unicode, escapes, whitespace, omitted/changed tables and numeric-token boundaries.",
+  "sha256": {
+    "before": "362121b419c043994937f91802ef15903c450b9b5d953fb337aa8880b180bdcd",
+    "after": "c13057f5b0ffbbd18038228b65417de07cbdfcfffe79692ad4f33f056c5de9fc"
+  },
+  "modes": [
+    {
+      "dense": false,
+      "identical_replies": 93,
+      "matching_error_replies": 39
+    },
+    {
+      "dense": true,
+      "identical_replies": 93,
+      "matching_error_replies": 39
+    }
+  ]
+}

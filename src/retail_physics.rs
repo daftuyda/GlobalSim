@@ -371,15 +371,22 @@ impl Parameters {
         phase: usize,
         rate: f32,
     ) -> f32 {
+        let factor = (phase >= 2).then(|| self.hp_guts_factor(guts));
+        self.hp_per_second_with_guts_factor(speed, base_speed, ground, factor, rate)
+    }
+
+    pub(crate) fn hp_guts_factor(&self, guts: f32) -> f32 {
+        // Preserve the sqrt return, then round quotient plus one together.
+        (1.0_f64 + self.hp_drain[4] as f64
+            / root(bounded_stat(guts) * self.hp_drain[3]) as f64) as f32
+    }
+
+    pub(crate) fn hp_per_second_with_guts_factor(
+        &self, speed: f32, base_speed: f32, ground: f32, guts_factor: Option<f32>, rate: f32,
+    ) -> f32 {
         let gap = (speed - base_speed) + self.hp_drain[0];
         let mut value = (((((gap * gap) / self.hp_drain[1]) as f64) * self.hp_drain[2] as f64 * rate as f64) * ground as f64) as f32;
-        if phase >= 2 {
-            // Isolated expression-store hypothesis: preserve the sqrt return,
-            // round the quotient plus one together before multiplying consumption.
-            let factor = (1.0_f64 + self.hp_drain[4] as f64
-                / root(bounded_stat(guts) * self.hp_drain[3]) as f64) as f32;
-            value *= factor;
-        }
+        if let Some(factor) = guts_factor { value *= factor; }
         value
     }
 
@@ -388,18 +395,25 @@ impl Parameters {
     }
 
     pub fn acceleration_iter(&self, input: Acceleration, modifiers: impl IntoIterator<Item = f32>) -> f32 {
+        self.acceleration_from_base_iter(self.base_acceleration(input), input.start_dash, modifiers)
+    }
+
+    pub(crate) fn base_acceleration(&self, input: Acceleration) -> f32 {
         // v20: the float sqrt is a rounded call result; the product chain is
-        // evaluated at double and rounded once. Modifiers and the start-dash
-        // addition stay float statements (x87 there is worse).
-        let mut value = ((((root(bounded_stat(input.power) * self.accel[0]) as f64
+        // evaluated at double and rounded once. Do not clamp this base before
+        // applying modifiers: custom parameters may make it negative.
+        ((((root(bounded_stat(input.power) * self.accel[0]) as f64
             * self.accel[if input.uphill { 2 } else { 1 }] as f64)
             * input.ground as f64)
             * input.distance as f64)
-            * self.phase_accel[input.strategy - 1][input.phase] as f64) as f32;
-        value = apply_additive_modifiers(value, modifiers);
-        if input.start_dash {
-            value += self.accel[3];
-        }
+            * self.phase_accel[input.strategy - 1][input.phase] as f64) as f32
+    }
+
+    pub(crate) fn acceleration_from_base_iter(
+        &self, base: f32, start_dash: bool, modifiers: impl IntoIterator<Item = f32>,
+    ) -> f32 {
+        let mut value = apply_additive_modifiers(base, modifiers);
+        if start_dash { value += self.accel[3]; }
         value.max(0.)
     }
 }
@@ -526,6 +540,21 @@ mod tests {
         assert_eq!(p.start_dash_speed(1800.).to_bits(), 0x41895c2a);
         assert_eq!(p.start_dash_speed(2000.).to_bits(), 0x41880000);
         assert_ne!(p.start_dash_speed(1800.), (0.85_f64 * 20.2) as f32);
+    }
+
+    #[test]
+    fn acceleration_base_keeps_negative_values_until_after_modifiers() {
+        let mut p = parameters();
+        p.accel = [1., -2., -3., 24.];
+        p.phase_accel = [[1.; 4]; 5];
+        let input = Acceleration { power: 4., strategy: 1, phase: 0,
+            ground: 1., distance: 1., uphill: false, start_dash: false };
+        assert_eq!(p.base_acceleration(input), -4.);
+        assert_eq!(p.acceleration(input, &[5.]), 1.);
+        assert_eq!(p.acceleration(Acceleration { start_dash: true, ..input }, &[-30.]), 0.);
+        // Changing addition order can lose the unit at this magnitude.
+        assert_eq!(p.acceleration_from_base_iter(1., false, [16777216., -16777216.]), 0.);
+        assert_eq!(p.acceleration_from_base_iter(1., false, [-16777216., 16777216.]), 1.);
     }
 
     #[test]

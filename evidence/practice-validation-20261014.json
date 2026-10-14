@@ -1,0 +1,697 @@
+{
+  "schema": 1,
+  "date": "2026-10-14",
+  "snapshotUtc": "2026-10-14T04:52:48.222992+00:00",
+  "snapshotLocal": "2026-10-14 14:52:48 Australia/Brisbane",
+  "scope": "Additional original-seed captured races, disjoint by replay bytes from the previous 13,187-race corpus. This snapshot was not used to tune the engine before scoring. Not a population-wide accuracy estimate.",
+  "engineSha256": "ea4e746846c41018b6d7accba0d77565252dfda3af2f05739d7211cbf8fd1f2c",
+  "raceCount": 14775,
+  "batchCount": 38,
+  "excluded": 0,
+  "referencesVerified": 14775,
+  "manifestReceiptHashes": 14773,
+  "metrics": {
+    "races": 14775,
+    "errors": 0,
+    "runners": 132975,
+    "winner": 14765,
+    "placements": 132874,
+    "finishExact": 14749,
+    "skillExact": 14751,
+    "frameExact": 14747,
+    "officialCasts": 1304710,
+    "simulatedCasts": 1304703,
+    "exactCasts": 1304021,
+    "finishMAE": 0.00021889474477550998,
+    "maxFinishError": 0.9816131591796875
+  },
+  "exactCoreRaces": 14747,
+  "exactWithMechanicEvents": 14744,
+  "coverage": {
+    "courses": {
+      "10602": {
+        "track": "Tokyo",
+        "distanceMetres": 1600,
+        "surface": "turf",
+        "races": 14775
+      }
+    },
+    "runnerCount": 9,
+    "season": "spring",
+    "weather": "sunny",
+    "ground": "good/firm",
+    "uniqueRosters": 76,
+    "learnedSkills": 341,
+    "availableSkillDefinitions": 732,
+    "newAvailableSkills": [
+      "100471",
+      "900471"
+    ],
+    "newAvailableSkillsUsed": 0
+  },
+  "frameCounts": {
+    "samples": 13678463,
+    "positionMismatch": 11883,
+    "speedMismatch": 4946,
+    "hpMismatch": 10148,
+    "laneMismatch": 8869,
+    "missingFrames": 3
+  },
+  "extended": {
+    "detailAvailable": 14775,
+    "detailExact": 14751,
+    "officialDetails": 1304710,
+    "simulatedDetails": 1304703,
+    "matchedDetails": 1304021,
+    "mechanicsExact": 14746,
+    "officialMechanics": 110943,
+    "simulatedMechanics": 110946
+  },
+  "additionalFrameCounts": {
+    "samples": 13678463,
+    "blockFrontHorseIndexMismatch": 215
+  },
+  "resultFields": {
+    "runners": 132975,
+    "startDelayTimeExact": 132975,
+    "gutsOrderExact": 132975,
+    "wizOrderExact": 132975,
+    "lastSpurtStartDistanceExact": 132792,
+    "runningStyleExact": 132975
+  },
+  "recordedDurations": {
+    "official": 1304710,
+    "simulated": 1304703,
+    "paired": 1304021,
+    "exact": 1085496,
+    "withinOneWireUnit": 1304021,
+    "largerDifference": 0,
+    "unpairedOfficial": 689,
+    "unpairedSimulated": 682,
+    "maxDifference": 1
+  },
+  "durationScope": "Recorder duration comparison among casts matched by runner, skill ID and 0.1 ms timestamp. Negative sentinels preserved. Every paired duration is within one 0.1 ms wire unit; this is not bit-exact duration parity or validation of gameplay effect lifetime.",
+  "repeatIdentical": 14775,
+  "originalV72FlaggedOutputMatches": 31,
+  "classifications": {
+    "early_front_runner_competition": 25,
+    "post_finish_duel_recording": 3,
+    "movement_precision_or_geometry": 3
+  },
+  "cases": [
+    {
+      "case": "live-test-batch-1707bb93f08c466aa0c356d384dcc522:98",
+      "referenceSha256": "e575acdca0283330c32261591127d01963785edde08c0e4b4158a620099a67e1",
+      "seed": 36282010,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "position",
+          "speed",
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.6784515380859375,
+      "finishMAE": 0.2498236762152778,
+      "winner": false,
+      "placements": 2,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-177e252e303d4ca0a493a434c9d37d6a:870",
+      "referenceSha256": "d2c333ce7e00f386bb82bea07823b0173d83936b4d88eadcc0f11adc2d219b4d",
+      "seed": 1926005798,
+      "firstDivergence": null,
+      "maxFinishError": 0.0,
+      "finishMAE": 0.0,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "post_finish_duel_recording",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-18ec4330f9f74cc0ace6d4ec71b085fa:1634",
+      "referenceSha256": "0c4a84de0df920e122f02576b0b38f8859633f02458559129e6edbdd99f0b707",
+      "seed": 503926942,
+      "firstDivergence": {
+        "time": 35.16500473022461,
+        "runner": 4,
+        "fields": [
+          "position"
+        ]
+      },
+      "maxFinishError": 0.000885009765625,
+      "finishMAE": 0.00011189778645833333,
+      "winner": true,
+      "placements": 9,
+      "skillExact": false,
+      "classification": "movement_precision_or_geometry",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-392a8ee3692146bab0e024ee057d0ad2:197",
+      "referenceSha256": "d0217b80e05164d31c6152d1b4375f1ac7838be51645b8c3f46399c2b4c83a7a",
+      "seed": 1266389439,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 5,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.5786361694335938,
+      "finishMAE": 0.14150831434461805,
+      "winner": true,
+      "placements": 5,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-4ed5364815aa4075a0dcb01b0483b440:50",
+      "referenceSha256": "d65f65fd533f4f8025eb9491d27a577bc3622eed9a64fa82ef6caa89ec8c3b55",
+      "seed": 861470200,
+      "firstDivergence": {
+        "time": 40.49306869506836,
+        "runner": 1,
+        "fields": [
+          "position",
+          "lane"
+        ]
+      },
+      "maxFinishError": 0.0,
+      "finishMAE": 0.0,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "movement_precision_or_geometry",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1008",
+      "referenceSha256": "130f1d2e0568638d01997e2f4319532e10487f35d6b18b234de51f81449a67c3",
+      "seed": 118547691,
+      "firstDivergence": {
+        "time": 9.590389251708984,
+        "runner": 5,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.0,
+      "finishMAE": 0.0,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1104",
+      "referenceSha256": "78d68b528d0ac88bb4d3deb37661bafa19ffd021a16752ef3dadec05ea95fd24",
+      "seed": 1099758022,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.9816131591796875,
+      "finishMAE": 0.2814754909939236,
+      "winner": false,
+      "placements": 0,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1163",
+      "referenceSha256": "417a5b28eb0dbca74b48213a6792f0862141a03f0045840e71e1d31f7718ab97",
+      "seed": 1080545977,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.7307205200195312,
+      "finishMAE": 0.2773878309461806,
+      "winner": false,
+      "placements": 1,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1242",
+      "referenceSha256": "97e51005d24d9026b165099d3acb4f9e6eebb1c634ba6144be57aa0e1b5f42c7",
+      "seed": 180958766,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.00908660888671875,
+      "finishMAE": 0.0023930867513020835,
+      "winner": true,
+      "placements": 7,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1272",
+      "referenceSha256": "3d2310ab80d3f9257bbea3133c9868b7af0a866a7a32a8a1f92cd29b32ea4ef7",
+      "seed": 1247849300,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 1,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.2840423583984375,
+      "finishMAE": 0.08687337239583333,
+      "winner": false,
+      "placements": 7,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1442",
+      "referenceSha256": "f80719bcafc018c97941763e4cf35f0dc464f72315af557b2e06ee5592e566a3",
+      "seed": 1363832843,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 5,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.54876708984375,
+      "finishMAE": 0.1067047119140625,
+      "winner": true,
+      "placements": 5,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1525",
+      "referenceSha256": "accb1b412ecea4e4fa0206803168710f081c906d5719af7a680f899184c2fe34",
+      "seed": 1361150889,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "position",
+          "speed",
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.7061767578125,
+      "finishMAE": 0.27133772108289933,
+      "winner": false,
+      "placements": 1,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1600",
+      "referenceSha256": "0827f995aff8067355c25d9faa513949f0fe921b751b75a5bfadae11b69a220a",
+      "seed": 256202648,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.49613189697265625,
+      "finishMAE": 0.09068128797743055,
+      "winner": false,
+      "placements": 2,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1629",
+      "referenceSha256": "93ea9e60403c5bb7a56288eb6f65642df04fb0a9e255294cc35cf72226d21b7b",
+      "seed": 91314549,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 5,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.24526214599609375,
+      "finishMAE": 0.12500508626302084,
+      "winner": true,
+      "placements": 5,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1662",
+      "referenceSha256": "ce6fe87a865e2150b0a48d58601731c7efcd33b144bdb47f23cd3a78b03aedb7",
+      "seed": 1520831721,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.4694061279296875,
+      "finishMAE": 0.21241929796006945,
+      "winner": false,
+      "placements": 3,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1717",
+      "referenceSha256": "35f52da3bcb1127c5f69ab3d0eaaae756dad487acc7f2c00385bc1aad6136bf8",
+      "seed": 1438539156,
+      "firstDivergence": {
+        "time": 10.655986785888672,
+        "runner": 1,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.00243377685546875,
+      "finishMAE": 0.0007120768229166666,
+      "winner": true,
+      "placements": 9,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1767",
+      "referenceSha256": "e3fa474654aa7655a1758e565b5d9d238c36565cfcdf431aaa841661d5cbcbf3",
+      "seed": 1486408648,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.3159332275390625,
+      "finishMAE": 0.045958624945746526,
+      "winner": false,
+      "placements": 5,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1817",
+      "referenceSha256": "25e00e2705d825b3a6bf17dabac253cda39d2dbf92821e7f676fef096a5d75a4",
+      "seed": 1164184867,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 6,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.2393646240234375,
+      "finishMAE": 0.1273473103841146,
+      "winner": true,
+      "placements": 4,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1876",
+      "referenceSha256": "c3dae86aad55b84a3f30bb9d9df5144cc38bf323cbf1b54656f3e741e5dc340c",
+      "seed": 1238153536,
+      "firstDivergence": {
+        "time": 14.918376922607422,
+        "runner": 0,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.2061767578125,
+      "finishMAE": 0.1273744371202257,
+      "winner": false,
+      "placements": 6,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1916",
+      "referenceSha256": "032f2432b571e235f5b8469832a684b8abd345dec29995d431a8290c6c74abc5",
+      "seed": 152084087,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 2,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.6914138793945312,
+      "finishMAE": 0.2548862033420139,
+      "winner": false,
+      "placements": 3,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-b624c2e529d644e4850b2c1db022d403:1932",
+      "referenceSha256": "24ae1eccfafff3d77b6effc6ab2c13d3f98db63d3fad729eee051825534b3e58",
+      "seed": 1278261633,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.39406585693359375,
+      "finishMAE": 0.1622348361545139,
+      "winner": true,
+      "placements": 4,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-c1a7802a2c6f485b9f80a7eae0792ab3:143",
+      "referenceSha256": "e627be5902a332de52b1bfa84b73f5417227cfc6f4ffc5546ec1a0e02b5304b8",
+      "seed": 1617808222,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.40508270263671875,
+      "finishMAE": 0.18590799967447916,
+      "winner": true,
+      "placements": 5,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-c1a7802a2c6f485b9f80a7eae0792ab3:155",
+      "referenceSha256": "c64698f57b01278d188cd7e0728873605e0566a831fa64fc3a33fded79ee7c1f",
+      "seed": 641234648,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 1,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.0045928955078125,
+      "finishMAE": 0.0005103217230902778,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-c1a7802a2c6f485b9f80a7eae0792ab3:175",
+      "referenceSha256": "a559afb33950011211a9d6ab7b4c845da0e5ae8f0335e8eaa3b11c0ed4b331a6",
+      "seed": 1091366982,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.00701141357421875,
+      "finishMAE": 0.0011808607313368055,
+      "winner": true,
+      "placements": 9,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-c1a7802a2c6f485b9f80a7eae0792ab3:180",
+      "referenceSha256": "5cd7189bd50d28d5a977f302147a8da5f83b0d99cbb534f8b115909c1eecba67",
+      "seed": 1220972384,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 2,
+        "fields": [
+          "position",
+          "speed",
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.5201492309570312,
+      "finishMAE": 0.23905436197916666,
+      "winner": true,
+      "placements": 3,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-c1a7802a2c6f485b9f80a7eae0792ab3:183",
+      "referenceSha256": "9201a991b7135556c42d91a1ccf36a4138a91e70ecdd0978724c66116445a1a9",
+      "seed": 969202303,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 1,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.20361328125,
+      "finishMAE": 0.07200368245442708,
+      "winner": true,
+      "placements": 7,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-c1a7802a2c6f485b9f80a7eae0792ab3:193",
+      "referenceSha256": "1c3f81bd5bd0bb060088bff8d23aa9f0ae034103270d4022fe84c9d03f392148",
+      "seed": 1643947605,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 4,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.4337615966796875,
+      "finishMAE": 0.1710289849175347,
+      "winner": true,
+      "placements": 4,
+      "skillExact": false,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-cf8199fba13b464cb8f791ab5f58f814:321",
+      "referenceSha256": "58013ece75c6eba133bd69a62bd110480575458ab20d3f73adb3f082cce9dec9",
+      "seed": 1188173420,
+      "firstDivergence": null,
+      "maxFinishError": 0.0,
+      "finishMAE": 0.0,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "post_finish_duel_recording",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-cf8199fba13b464cb8f791ab5f58f814:686",
+      "referenceSha256": "dc8f654db71c4bdbeed9fdb76bd00ae8b2bedad7f7abcf102f06424c57d1bea9",
+      "seed": 270038571,
+      "firstDivergence": null,
+      "maxFinishError": 0.0,
+      "finishMAE": 0.0,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "post_finish_duel_recording",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-d87146000dfe49bfa8328b30329db010:6",
+      "referenceSha256": "3a9ac925890f42f2b2706c9c6e19c882fba5d3886712fa3057d764d6da481e9c",
+      "seed": 1315386517,
+      "firstDivergence": {
+        "time": 40.49306869506836,
+        "runner": 3,
+        "fields": [
+          "position",
+          "lane"
+        ]
+      },
+      "maxFinishError": 0.00142669677734375,
+      "finishMAE": 0.00023142496744791666,
+      "winner": true,
+      "placements": 9,
+      "skillExact": false,
+      "classification": "movement_precision_or_geometry",
+      "originalV72OutputMatches": true
+    },
+    {
+      "case": "live-test-batch-e7596d65457a46c0947dea911e64ed23:198",
+      "referenceSha256": "64ae40fbc0d9358019deddc7070a862d6bbdb602d0302b23456a1504dbd4f29b",
+      "seed": 2002310996,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.000152587890625,
+      "finishMAE": 1.6954210069444445e-05,
+      "winner": true,
+      "placements": 9,
+      "skillExact": true,
+      "classification": "early_front_runner_competition",
+      "originalV72OutputMatches": true
+    }
+  ],
+  "limitations": [
+    "One course, field size and condition combination; roster and skill coverage is uneven.",
+    "Replay snapshots sample the race and do not expose every internal state transition.",
+    "Three frames are missing in divergent runs; position, speed, HP and lane comparisons otherwise stop at the earlier finish for each runner.",
+    "Skill duration recorder differences of one 0.1 ms wire unit remain, including races whose movement and outcomes match.",
+    "The two newly available master skills do not appear in these rosters."
+  ],
+  "artifacts": {
+    "inventory.json": "4ed07ee8546ea02ac21d1bc9183fa1bf20745c851f527e5b953b2fe0188ed98e",
+    "results.jsonl": "7593e246be2ef5927d2147ff42fa3851094555609a05fdee59ad73c5609c4a39",
+    "extra-results.jsonl": "d383a88e694c5c1fd38aa6523ffce86e21619ddb16ec734b2c02fc054929d0c7",
+    "summary.json": "bc5dfba16dc36daa1a23a00c7b901b6fb7ee5234ead820f45c046daab0069f94",
+    "extra-summary.json": "9924e7a699d0e5a82b558e58659c81a5d4b35f8c67057de856bd898e5d6db938",
+    "diagnostics.json": "410c02136eb880611923dce97115f5375f67ecd8ba2a1c9ea9bf75e6f529ff36"
+  }
+}

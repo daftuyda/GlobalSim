@@ -1,0 +1,14 @@
+{
+  "version": "v73",
+  "manifestFiles": 216,
+  "localDocumentLinks": 168,
+  "exampleContentUnchanged": true,
+  "buildHashesVerified": true,
+  "artifactHashesVerified": true,
+  "accuracyEvidence": "parity-validation-20261014.json",
+  "performanceEvidence": "parity-performance.json",
+  "observedExact": 47664,
+  "optimizedIdenticalPackets": 47664,
+  "engineSha256": "51955e7fc2cdb5febee7fb3ca6e3cffa1fbda7c25a057a4db448ce50149e11df",
+  "librarySha256": "f81b434c38507a46c7502997d7f9b90621227c34f4edd25c04451e25bd2a194d"
+}

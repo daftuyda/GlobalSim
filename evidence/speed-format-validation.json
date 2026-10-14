@@ -1,0 +1,88 @@
+{
+  "scope": "Exact JSON numeric-text comparison against the v72 standard formatter on Windows with Rust 1.97.1. This validates numeric formatting only.",
+  "result": "pass",
+  "comparison": "Every produced string must equal the unchanged v72 write_number result byte for byte.",
+  "reference": {
+    "revision": "939179d546849d59a8ae10e14b78817b3a5e08cd",
+    "git_path": "src/json.rs",
+    "git_module_sha256": "6b9bfa8ecf32ed9bef59a3a4f38a58825edd3b02ec19572a289594b6f324cb7d",
+    "tested_module": "target/json-speed/before.rs",
+    "tested_module_sha256": "b139c0e3fefeed2ca8030bba77f63f1f05517302b92c6b43f951281acab7fbff",
+    "module_matches_revision_except_write_number_visibility_and_line_endings": true,
+    "write_number_sha256": "f26ff2d94adfebb6511f183e38cac8fdd71583c1595f37596e532597aae27309"
+  },
+  "candidate": {
+    "production_module": "src/json.rs",
+    "production_module_sha256": "e0b7974b45caf2ddd5b1ce7285c2a91d9ecf1868c60b5639926ae9c147e9df4b",
+    "tested_module": "target/json-speed/final.rs",
+    "tested_module_sha256": "a6cbaa8a02dc01ed60061bc3b02bf9496c6b9ab7b8f774944592b6002b7b4f14",
+    "whole_module_matches_production_except_write_number_visibility": true,
+    "numeric_functions": {
+      "write_number": {
+        "sha256": "561263b006940921e4f44ef765467fc11835080d9cb3b2b47980381c45af864a",
+        "tested_matches_production": true
+      },
+      "write_widened_f32": {
+        "sha256": "a4988eed088bb64b0e8bb00b6196fe2da434a3ce642c56816c15bc7038cc033a",
+        "tested_matches_production": true
+      }
+    }
+  },
+  "hash_conventions": {
+    "module_hashes": "Raw file bytes, preserving encoding and line endings.",
+    "function_hashes": "UTF-8 function text including one final LF; line endings normalized to LF and the test-only pub visibility on write_number removed."
+  },
+  "optimized_guard": {
+    "finite": true,
+    "nonintegral": true,
+    "absolute_magnitude_minimum_inclusive": 16,
+    "absolute_magnitude_maximum_exclusive": 8388608,
+    "f64_to_f32_to_f64_preserves_value": true,
+    "other_values": "Original standard formatter or existing integral/nonfinite handling."
+  },
+  "coverage": {
+    "positive_f32_exhaustive": {
+      "biased_exponents_inclusive": [
+        131,
+        149
+      ],
+      "mantissas_inclusive": [
+        0,
+        8388607
+      ],
+      "comparisons": 159383552,
+      "description": "Every positive f32 value in [16, 8388608), widened exactly to f64. Includes integral values using the existing integer branch."
+    },
+    "additional_bit_samples": {
+      "generator": "xorshift64 with shifts left 13, right 7, left 17",
+      "initial_state_hex": "2718281831415926",
+      "iterations": 1000000,
+      "comparisons_per_iteration": 3,
+      "comparisons": 3000000,
+      "cases": [
+        "Interpret the 64-bit generator state directly as f64.",
+        "Interpret its low 32 bits as f32, widen to f64, then negate (both signs are represented).",
+        "Widen the low-32-bit f32 to f64, then increment the f64 bit pattern by one with wrapping."
+      ]
+    },
+    "total_comparisons": 162383552
+  },
+  "harness": {
+    "original_path": "target/json-speed/exhaustive-final.rs",
+    "sha256": "6ce49536d9aec3a17de1e8f85159f249316b47b08553ff78d03c7b78c909336e",
+    "candidate_module": "final.rs",
+    "reference_module": "before.rs",
+    "compile_command": "rustc --edition 2021 -C opt-level=3 -C lto=yes -A dead_code target/json-speed/exhaustive-final.rs -o target/json-speed/exhaustive-final.exe",
+    "source": "#[path = \"before.rs\"] mod before;\n#[path = \"final.rs\"] mod after;\nfn check(n: f64, old: &mut String, new: &mut String) {\n    old.clear(); new.clear();\n    before::write_number(old, n); after::write_number(new,n);\n    assert!(old==new,\"{:016x}: {} != {}\",n.to_bits(),old,new);\n}\nfn main() {\n    let mut old=String::with_capacity(350); let mut new=String::with_capacity(350);\n    let start=std::time::Instant::now();\n    let mut count=0u64;\n    // Every positive f32 in the optimized magnitude interval, including integral cases.\n    for exponent in 131..150 {\n        for mantissa in 0..0x800000u32 {\n            let n=f32::from_bits(exponent<<23 | mantissa) as f64;\n            check(n,&mut old,&mut new);\n            count+=1;\n        }\n        println!(\"exponent={} tested={} elapsed={:.2}\",exponent,count,start.elapsed().as_secs_f64());\n    }\n    // Uniform bit samples cover negative values, nonfinite values, underflow,\n    // narrow-path bounds and general f64 values that must take the old formatter.\n    let mut state=0x2718281831415926u64;\n    for _ in 0..1_000_000 {\n        state ^= state<<13; state ^= state>>7; state ^= state<<17;\n        for n in [f64::from_bits(state), -(f32::from_bits(state as u32) as f64),\n            f64::from_bits((f32::from_bits(state as u32) as f64).to_bits().wrapping_add(1))] {\n            check(n,&mut old,&mut new); count+=1;\n        }\n    }\n    println!(\"PASS {} values in {:.2}s\",count,start.elapsed().as_secs_f64());\n}\n"
+  },
+  "execution": {
+    "reported_elapsed_seconds": 11.81,
+    "log": "speed-format-validation.log",
+    "log_sha256": "968d0f925c083a2dc3e94cf0c9ef66d7167073718663f52b8adce4f501ade060"
+  },
+  "limits": [
+    "Exhaustive enumeration covers positive f32 values in the stated interval only; other domains are sampled.",
+    "This run does not establish compatibility for every possible f64 value, Rust toolchain or platform.",
+    "Replay-array caching, worker behavior and race mechanics require separate validation."
+  ]
+}

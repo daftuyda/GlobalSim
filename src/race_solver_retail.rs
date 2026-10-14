@@ -241,6 +241,106 @@ mod tests {
         }
     }
     #[test]
+    fn movement_roster_stays_live_across_ordered_steps_and_callbacks() {
+        let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_field_port.json")).unwrap();
+        let trace = &fixture.get_array("races").unwrap()[2];
+        let config = config(trace.get_i64("seed").unwrap() as i32);
+        let course = course();
+        let field = Rc::new(RaceField::new(trace.get_array("horses").unwrap().iter()
+            .map(|horse| solver(horse, course, config.clone())).collect()));
+        let callbacks = Rc::new(std::cell::Cell::new(0));
+        for (i, cell) in field.solvers.iter().enumerate() {
+            let hook = || {
+                let field = Rc::downgrade(&field);
+                let callbacks = callbacks.clone();
+                Box::new(move |_: &mut RaceSolver, _: &str, _: Perspective| {
+                    let field = field.upgrade().unwrap();
+                    let mut peer = field.solvers[(i + 1) % field.solvers.len()].borrow_mut();
+                    peer.target_speed += 0.03125;
+                    let peer_index = (i + 1) % field.solvers.len();
+                    peer.retail.as_mut().unwrap().lane.targets = vec![i - usize::from(i > peer_index)];
+                    callbacks.set(callbacks.get() + 1);
+                }) as SkillHook
+            };
+            cell.borrow_mut().set_on_skill_activate(hook());
+            cell.borrow_mut().set_on_skill_deactivate(hook());
+        }
+        let dt = fixture.get_f64("dt").unwrap();
+        let mut dirty_passes = 0;
+        for tick in 0..2400 {
+            let mut active: Vec<_> = field.solvers.iter().enumerate()
+                .filter_map(|(i, s)| (s.borrow().pos < course.distance).then_some(i)).collect();
+            if active.is_empty() { break; }
+            if tick % 2 != 0 { active.reverse(); }
+            field.step_all(if tick == 0 { 0. } else { dt }, &active);
+            dirty_passes += active.iter().filter(|&&i|
+                field.solvers[i].borrow().retail.as_ref().unwrap().live_roster_dirty).count();
+            // The test-only observation check inside step_forward compares
+            // every cached peer row with a fresh field sample before use.
+        }
+        assert!(callbacks.get() > 0);
+        assert!(dirty_passes > 0);
+        assert!(field.solvers.iter().all(|s| s.borrow().pos >= course.distance));
+    }
+
+    #[test]
+    fn at_target_speed_clamp_ignores_all_clamped_accelerations() {
+        let physics = config(1).physics.clone();
+        for current in [0.0001_f32, 16.00001, 30., f32::MAX] {
+            for dt in [f32::from_bits(1), f32::MIN_POSITIVE, 0.0666, f32::MAX] {
+                for base in [f32::NEG_INFINITY, -1., -0., 0., 0.5, f32::INFINITY, f32::NAN] {
+                    for modifiers in [vec![], vec![f32::INFINITY], vec![f32::NEG_INFINITY],
+                        vec![f32::NAN], vec![f32::MAX, -f32::MAX]] {
+                        for dash in [false, true] {
+                            let acceleration = physics.acceleration_from_base_iter(base, dash,
+                                modifiers.iter().copied());
+                            assert!(acceleration >= 0.);
+                            let original = (current + acceleration * dt).min(current);
+                            assert_eq!(original.to_bits(), current.to_bits());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn acceleration_cache_refreshes_every_dependency_and_parameter_object() {
+        let physics = config(1).physics.clone();
+        let input = Acceleration { power: 1000., strategy: 1, phase: 0,
+            ground: 1., distance: 1., uphill: false, start_dash: false };
+        let mut cache = AccelerationCache::default();
+        let inputs = [input,
+            Acceleration { power: 999., ..input },
+            Acceleration { power: f32::from_bits(1000_f32.to_bits() + 1), ..input },
+            Acceleration { strategy: 2, ..input },
+            Acceleration { phase: 1, ..input },
+            Acceleration { ground: 0.9, ..input },
+            Acceleration { distance: 0.6, ..input },
+            Acceleration { uphill: true, ..input },
+            Acceleration { start_dash: true, ..input }, input];
+        for input in inputs {
+            for _ in 0..2 {
+                assert_eq!(cache.base(&physics, input).to_bits(), physics.base_acceleration(input).to_bits());
+                for modifiers in [vec![], vec![0.2, -0.1], vec![-10., 1., 0.05]] {
+                    assert_eq!(physics.acceleration_from_base_iter(cache.base(&physics, input),
+                        input.start_dash, modifiers.iter().copied()).to_bits(),
+                        physics.acceleration(input, &modifiers).to_bits());
+                }
+            }
+        }
+        let mut data = crate::json::parse(include_str!("../data/global_parameters.json")).unwrap();
+        let Value::Object(root) = &mut data else { unreachable!() };
+        let parameters = root.get_mut("parameters").unwrap();
+        let Value::Object(values) = parameters else { unreachable!() };
+        values.insert("accelPowCoef".into(), Value::Number(-0.5));
+        let replacement = Rc::new(Physics::from_value(parameters).unwrap());
+        assert_ne!(replacement.base_acceleration(input).to_bits(), physics.base_acceleration(input).to_bits());
+        assert_eq!(cache.base(&replacement, input).to_bits(), replacement.base_acceleration(input).to_bits());
+        assert_eq!(cache.base(&physics, input).to_bits(), physics.base_acceleration(input).to_bits());
+    }
+
+    #[test]
     fn zero_time_preserves_course_event_readiness() {
         let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_solver_port.json")).unwrap();
         let mut s = solver(&fixture.get_array("traces").unwrap()[0], course(), config(1));
@@ -391,6 +491,35 @@ impl RetailRuntimeConfig {
     }
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+struct AccelerationKey {
+    power: u32,
+    strategy: usize,
+    phase: usize,
+    ground: u32,
+    distance: u32,
+    uphill: bool,
+}
+
+#[derive(Default)]
+struct AccelerationCache(Option<(Rc<Physics>, AccelerationKey, f32)>);
+
+impl AccelerationCache {
+    fn base(&mut self, physics: &Rc<Physics>, input: Acceleration) -> f32 {
+        let key = AccelerationKey { power: input.power.to_bits(), strategy: input.strategy,
+            phase: input.phase, ground: input.ground.to_bits(), distance: input.distance.to_bits(),
+            uphill: input.uphill };
+        if let Some((previous, previous_key, value)) = &self.0 {
+            if Rc::ptr_eq(previous, physics) && *previous_key == key { return *value; }
+        }
+        let value = physics.base_acceleration(input);
+        // Retain the parameter object too, so pointer reuse cannot disguise a
+        // replacement configuration. Receiver and dash additions stay live.
+        self.0 = Some((physics.clone(), key, value));
+        value
+    }
+}
+
 pub(crate) struct RetailRuntimeState {
     pub skill_cooldowns: BTreeMap<String, Timer>,
     pub config: Rc<RetailRuntimeConfig>,
@@ -400,6 +529,7 @@ pub(crate) struct RetailRuntimeState {
     pub pace: pace::State,
     pub lane: TargetState,
     live_horses: Vec<retail_lane::Horse>,
+    pub live_roster_dirty: bool,
     pub spurt: SpurtState,
     pub force_in_coefficient: f32,
     pub observed_speed: f32,
@@ -410,6 +540,8 @@ pub(crate) struct RetailRuntimeState {
     /// treats that runner as unfinished and in the final straight for new duels.
     pub duel_goal_crossing_snapshot: bool,
     pub minimum: f32,
+    base_minimum: (u32, f32),
+    acceleration: AccelerationCache,
     pub phase: usize,
     pub lane_max: f32,
     pub front_blocker: Option<(usize, f32)>,
@@ -531,6 +663,7 @@ impl RaceSolver {
             pace: Default::default(),
             lane: Default::default(),
             live_horses: Vec::new(),
+            live_roster_dirty: false,
             spurt: Default::default(),
             force_in_coefficient: row.force_in_move_coefficient,
             observed_speed: self.current_speed as f32,
@@ -539,6 +672,8 @@ impl RaceSolver {
             duel_preupdate_final_straight: false,
             duel_goal_crossing_snapshot: false,
             minimum: 3.,
+            base_minimum: ((self.horse.guts as f32).to_bits(), self.min_speed as f32),
+            acceleration: AccelerationCache::default(),
             phase: 0,
             lane_max,
             front_blocker: None,
@@ -612,6 +747,14 @@ impl RaceSolver {
         }
     }
 
+    pub(crate) fn retail_live_horse(&self) -> retail_lane::Horse {
+        retail_lane::Horse {
+            point: retail_lane::Row { position: self.pos as f32, lane: self.lane as f32 },
+            speed: self.retail.as_ref().map_or(self.current_speed as f32, |r| r.observed_speed),
+            target: self.retail_target_speed_with_current_skills(),
+        }
+    }
+
     pub(crate) fn retail_other_horses(&self, field: Option<&RaceField>) -> Vec<retail_lane::Horse> {
         let mut others = Vec::new();
         self.fill_retail_other_horses(field, &mut others);
@@ -629,18 +772,7 @@ impl RaceSolver {
                     if Some(i) == self.field_index {
                         return None;
                     }
-                    let s = other.borrow();
-                    Some(retail_lane::Horse {
-                        point: retail_lane::Row {
-                            position: s.pos as f32,
-                            lane: s.lane as f32,
-                        },
-                        speed: s
-                            .retail
-                            .as_ref()
-                            .map_or(s.current_speed as f32, |r| r.observed_speed),
-                        target: s.retail_target_speed_with_current_skills(),
-                    })
+                    Some(other.borrow().retail_live_horse())
                 }));
         }
     }
@@ -697,6 +829,20 @@ impl RaceSolver {
                 Some(x) => x,
                 None => return,
             };
+        let retail = self.retail.as_mut().unwrap();
+        let end = retail.config.pace.end_section();
+        // Once both position-keep windows have ended, an idle non-rushing
+        // controller cannot enter a mode or accrue conserve power. Preserve
+        // its bookkeeping without constructing the unused live-peer context.
+        if retail.pace.mode.is_none() && !self.is_kakari && !retail.pace.rushing
+            && self.pos as f32 >= (self.course.distance as f32 / 24.).floor() * end
+            && self.pos >= (self.course.distance as i64 / 24) as f64 * end as f64
+        {
+            retail.pace.style = self.horse.strategy.base_running_style() as usize;
+            self.is_pace_down = false;
+            self.pos_keep_speed_coef = retail.pace.coefficient as f64;
+            return;
+        }
         let (pacemaker_pos, pacemaker_style) = if pacemaker == index {
             (self.pos, self.horse.strategy)
         } else {
@@ -781,7 +927,18 @@ impl RaceSolver {
     }
 
     pub(super) fn step_forward_retail(&mut self, dt: f32, field: Option<&RaceField>) -> f64 {
+        self.step_forward_retail_with_roster(dt, field, None)
+    }
+
+    pub(crate) fn step_forward_retail_with_roster(
+        &mut self, dt: f32, field: Option<&RaceField>, roster: Option<&[retail_lane::Horse]>,
+    ) -> f64 {
+        self.retail.as_mut().unwrap().live_roster_dirty = false;
+        let mut roster = roster;
         if !self.retail.as_ref().unwrap().prepared {
+            // Preparation can apply immediate effects to other runners.
+            roster = None;
+            self.retail.as_mut().unwrap().live_roster_dirty = true;
             let others = self.retail_other_horses(field);
             let context = self.retail_lane_context();
             let retail = self.retail.as_mut().unwrap();
@@ -808,9 +965,15 @@ impl RaceSolver {
         } else if self.start_dash {
             3.
         } else {
-            config
-                .physics
-                .minimum_speed(self.horse.guts as f32, self.course.distance as f32)
+            let guts = self.horse.guts as f32;
+            let retail = self.retail.as_mut().unwrap();
+            // Only guts can change this per-runner base during the race.
+            // Keep blocker reductions separate and refresh after stat effects.
+            if retail.base_minimum.0 != guts.to_bits() {
+                retail.base_minimum = (guts.to_bits(), config.physics.minimum_speed(
+                    guts, self.course.distance as f32));
+            }
+            retail.base_minimum.1
         };
         if !self.start_dash && !finished_runner {
             if let Some((i, _)) = blocker {
@@ -834,7 +997,25 @@ impl RaceSolver {
             self.update_retail_pace(dt, field);
         }
         let mut others = std::mem::take(&mut self.retail.as_mut().unwrap().live_horses);
-        self.fill_retail_other_horses(field, &mut others);
+        if let Some(roster) = roster {
+            let owner = self.field_index.unwrap();
+            others.clear();
+            others.extend_from_slice(&roster[..owner]);
+            others.extend_from_slice(&roster[owner + 1..]);
+            // Exercise the actual observation boundary in field tests: the
+            // evolving roster must match a fresh sample, including callbacks.
+            #[cfg(test)] {
+                let sampled = self.retail_other_horses(field);
+                let bits = |h: &retail_lane::Horse| [h.point.position.to_bits(),
+                    h.point.lane.to_bits(), h.speed.to_bits(), h.target.to_bits()];
+                assert_eq!(others.len(), sampled.len());
+                for (cached, live) in others.iter().zip(&sampled) {
+                    assert_eq!(bits(cached), bits(live), "Stale movement roster for {owner}");
+                }
+            }
+        } else {
+            self.fill_retail_other_horses(field, &mut others);
+        }
         let context = self.retail_lane_context();
         self.retail
             .as_mut()
@@ -848,6 +1029,7 @@ impl RaceSolver {
         ) };
         self.is_kakari = self.retail.as_ref().unwrap().rushing.active;
         self.rushing_mode = self.retail.as_ref().unwrap().rushing.mode as u8;
+        if transition != 0 { self.retail.as_mut().unwrap().live_roster_dirty = true; }
         if transition == 1 {
             self.temptation_count += 1;
             self.call_activate_hook("kakari", Perspective::Self_);
@@ -866,8 +1048,10 @@ impl RaceSolver {
                 self.is_kakari, self.spot_struggle_active && self.spot_struggle_timer.get() < 0.);
         }
 
-        let context = self.retail_lane_context();
         if config.empty_in_move && self.retail.as_ref().unwrap().after_goal_time < 1. {
+            // Rushing callbacks may mutate solver state. Otherwise neither
+            // rushing nor conserve accumulation changes any context field.
+            let context = if transition == 0 { context } else { self.retail_lane_context() };
             self.lane_target = self.retail.as_mut().unwrap().lane.target(
             &context,
             &others,
@@ -879,6 +1063,9 @@ impl RaceSolver {
         let was_spurting = self.is_last_spurt;
         self.update_retail_spurt();
         if !was_spurting && self.is_last_spurt {
+            // Retail external effects apply immediately, and user callbacks
+            // may also mutate peers. Refresh the complete roster afterwards.
+            self.retail.as_mut().unwrap().live_roster_dirty = true;
             self.release_conserve_power_now(field);
         }
         let transition = self.retail.as_mut().unwrap().downhill.update(
@@ -889,6 +1076,7 @@ impl RaceSolver {
             config.downhill,
         );
         self.is_downhill_mode = self.retail.as_ref().unwrap().downhill.active;
+        if transition != 0 { self.retail.as_mut().unwrap().live_roster_dirty = true; }
         if transition == 1 {
             self.call_activate_hook("downhill", Perspective::Self_);
         }
@@ -991,11 +1179,18 @@ impl RaceSolver {
             } else {
                 PHASE_DECELERATION[self.phase as usize] as f32
             }
+        } else if current == target && current > 0. && current.is_finite()
+            && dt > 0. && dt.is_finite()
+        {
+            // Acceleration's final max(0) yields a nonnegative value even
+            // after NaN modifiers. With a positive finite dt, the speed
+            // update can only reach/exceed this target, then clamps to it.
+            // The private accel field is read only by the non-retail solver.
+            0.
         } else {
             let cp = self.cp_accel_token.unwrap_or(u64::MAX);
             let excluded = [cp, 4];
-            config.physics.acceleration_iter(
-                Acceleration {
+            let input = Acceleration {
                     power: self.horse.power as f32,
                     strategy: self.horse.strategy as usize,
                     phase: self.phase as usize,
@@ -1010,7 +1205,9 @@ impl RaceSolver {
                         [self.horse.distance_aptitude as usize] as f32 * 0.0001_f32,
                     uphill: self.slope_per > 0.,
                     start_dash: self.start_dash,
-                },
+                };
+            let base = self.retail.as_mut().unwrap().acceleration.base(&config.physics, input);
+            config.physics.acceleration_from_base_iter(base, self.start_dash,
                 // v69: the Conserve Power release and duel accelerations are summed after
                 // the skill acceleration modifiers, not in activation order (doc 13.188).
                 self.retail_accel_modifiers.values_except_tokens(&excluded)

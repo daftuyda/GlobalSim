@@ -1,0 +1,127 @@
+{
+  "scope": "Serial persistent workers; parse, simulate, capture every frame, encode, transfer. Caller decode excluded. All selected frame values and all metadata compared.",
+  "sha256": {
+    "before": "f8779b8e164b5648d3ca3d1b17d1d5e58d3711d5ef79b360f03412e2d7e0ca96",
+    "json": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+    "binary": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2",
+    "json-helper": "ba01a20447b77cae37b75fc66c5eb3f69b96306cad5a13893622f3b73b854ff2"
+  },
+  "affinity_masks": {
+    "before": null,
+    "json": null,
+    "binary": null,
+    "json-helper": null
+  },
+  "repeats": 7,
+  "warmups": 5,
+  "groups": {
+    "nine-monte-carlo": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 8.88957142857143,
+        "median_ms": 8.45215,
+        "p95_ms": 12.1573,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 7.952929523809524,
+        "median_ms": 7.49785,
+        "p95_ms": 11.0166,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 6.246548571428572,
+        "median_ms": 5.887700000000001,
+        "p95_ms": 8.9495,
+        "mean_bytes": 540281.7666666667,
+        "reply_sequence_sha256": "73126c91d53662137a7ba0f05266a3cb4461fd1861aa82f53d9c4683c579000c"
+      },
+      "json-helper": {
+        "runs": 210,
+        "mean_ms": 7.605149523809524,
+        "median_ms": 7.37155,
+        "p95_ms": 10.0082,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "a34d4224cf8917d38f0e41e439702f4b5062159adaedb1a5fd946f4a31260d50"
+    },
+    "nine": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 9.572758095238095,
+        "median_ms": 9.40785,
+        "p95_ms": 13.0449,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 8.661479047619048,
+        "median_ms": 8.5518,
+        "p95_ms": 12.8904,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 6.602721904761904,
+        "median_ms": 6.378299999999999,
+        "p95_ms": 9.6165,
+        "mean_bytes": 596309.2666666667,
+        "reply_sequence_sha256": "1c1bc87fc5142177e83963f51f6a42c9f142b96b25c317d510e891417b797d90"
+      },
+      "json-helper": {
+        "runs": 210,
+        "mean_ms": 8.25193619047619,
+        "median_ms": 8.2714,
+        "p95_ms": 11.0816,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "4d10b75a68eb4409186dc6721595012f6c6e5812000dbbbcb117a155401d966b"
+    },
+    "eighteen": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 27.877317142857144,
+        "median_ms": 26.48885,
+        "p95_ms": 43.879,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 25.87197523809524,
+        "median_ms": 24.17855,
+        "p95_ms": 39.0926,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 20.151789047619047,
+        "median_ms": 18.442,
+        "p95_ms": 30.6644,
+        "mean_bytes": 1540242.6333333333,
+        "reply_sequence_sha256": "c28525a5ebf973fac79cb20fd46cd41c10440da336c23dfe6a321ef0c827b0ce"
+      },
+      "json-helper": {
+        "runs": 210,
+        "mean_ms": 24.720503333333333,
+        "median_ms": 23.5665,
+        "p95_ms": 36.1983,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "d0064d7b8c0add88d8a51c4e8a71caed12bcb23d30f18bdb04a05b861dc6fb30"
+    }
+  }
+}

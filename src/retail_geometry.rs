@@ -60,12 +60,14 @@ fn backend_distance_to_world(length: f32, x: &[f32], y: &[f32], z: &[f32]) -> f3
     let (dx, dy, dz) = ((a[0] - b[0]) as f64, (a[1] - b[1]) as f64, (a[2] - b[2]) as f64);
     ((dy * dy + dx * dx) + dz * dz).sqrt() as f32
 }
+#[cfg(test)]
 fn lerp(a: f32, b: f32, t: f32) -> f32 {
     a + (b - a) * t
 }
 fn dot(a: Quaternion, b: Quaternion) -> f32 {
     ((a[0] * b[0] + a[1] * b[1]) + a[2] * b[2]) + a[3] * b[3]
 }
+#[cfg(test)]
 fn quaternion_lerp(a: Quaternion, mut b: Quaternion, t: f32) -> Quaternion {
     if dot(a, b) < 0. {
         for v in &mut b {
@@ -93,12 +95,57 @@ fn quaternion_multiply(a: Quaternion, b: Quaternion) -> Quaternion {
     ]
 }
 
+// Source samples are immutable. Compute their fixed subtraction and short-arc
+// operands once; interpolation keeps the original float/double rounding order.
+#[derive(Clone, Debug)]
+struct AnimationSegment {
+    x: f64,
+    x_delta: f64,
+    z: f64,
+    z_delta: f64,
+    rotation: Quaternion,
+    rotation_delta: Quaternion,
+}
+
+impl AnimationSegment {
+    fn interpolate(&self, t: f32, endpoint: bool) -> (f32, f32, Quaternion) {
+        let x = (self.x + self.x_delta * t as f64) as f32;
+        let z = (self.z + self.z_delta * t as f64) as f32;
+        let mut q = self.rotation;
+        if !endpoint {
+            for i in 0..4 {
+                q[i] = self.rotation[i] + self.rotation_delta[i] * t;
+            }
+            let norm = (dot(q, q) as f64).sqrt() as f32;
+            for v in &mut q { *v /= norm; }
+        }
+        (x, z, q)
+    }
+}
+
+fn animation_segments(xs: &[f32], zs: &[f32], rotation: &[Quaternion]) -> Vec<AnimationSegment> {
+    (0..xs.len()).map(|i| {
+        let j = (i + 1).min(xs.len() - 1);
+        let a = rotation[i];
+        let mut b = rotation[j];
+        if dot(a, b) < 0. {
+            for v in &mut b { *v = -*v; }
+        }
+        AnimationSegment {
+            x: xs[i] as f64,
+            x_delta: xs[j] as f64 - xs[i] as f64,
+            z: zs[i] as f64,
+            z_delta: zs[j] as f64 - zs[i] as f64,
+            rotation: a,
+            rotation_delta: std::array::from_fn(|k| b[k] - a[k]),
+        }
+    }).collect()
+}
+
 #[derive(Clone, Debug)]
 struct OverrunAnimation {
     distance: f32,
-    x: Vec<f32>,
-    z: Vec<f32>,
-    rotation: Vec<Quaternion>,
+    segments: Vec<AnimationSegment>,
 }
 
 impl OverrunAnimation {
@@ -110,7 +157,7 @@ impl OverrunAnimation {
         if distance <= 0. || x.len() != 1001 || z.len() != 1001 || rotation.len() != 1001 {
             return Err("Invalid overrun animation".into());
         }
-        Ok(Self { distance, x, z, rotation })
+        Ok(Self { distance, segments: animation_segments(&x, &z, &rotation) })
     }
 }
 
@@ -119,9 +166,7 @@ pub struct CourseGeometry {
     pub course_id: i32,
     pub distance: f32,
     distance_to_world: f32,
-    x: Vec<f32>,
-    z: Vec<f32>,
-    rotation: Vec<Quaternion>,
+    segments: Vec<AnimationSegment>,
     overrun: Option<OverrunAnimation>,
     rotation_fix: Quaternion,
     initial_lane_max: f32,
@@ -295,9 +340,7 @@ impl CourseGeometry {
             course_id,
             distance,
             distance_to_world,
-            x,
-            z,
-            rotation,
+            segments: animation_segments(&x, &z, &rotation),
             overrun: data.get("overrun").map(OverrunAnimation::from_value).transpose()?,
             rotation_fix,
             initial_lane_max: width as f32 * 0.0001_f32,
@@ -339,23 +382,16 @@ impl CourseGeometry {
         if !distance.is_finite() || distance < 0. || !lane.is_finite() {
             return Err("Course geometry requires finite nonnegative distance and finite lane".into());
         }
-        let (distance, length, xs, zs, rotation) = if distance > self.distance {
+        let (distance, length, segments) = if distance > self.distance {
             let a = self.overrun.as_ref().ok_or("Course geometry lacks an overrun animation")?;
-            ((distance-self.distance) % a.distance, a.distance, &a.x, &a.z, &a.rotation)
-        } else { (distance, self.distance, &self.x, &self.z, &self.rotation) };
+            ((distance-self.distance) % a.distance, a.distance, &a.segments)
+        } else { (distance, self.distance, &self.segments) };
         let sample = ((distance as f64 / length as f64) * 1000.) as f32;
         let i = (sample as usize).min(1000);
-        let j = (i + 1).min(1000);
         let t = sample - i as f32;
-        // Sample interpolation with the difference of the two key values evaluated
-        // unrounded (double), then a + diff * t rounded once (doc 13.183).
-        let x = (xs[i] as f64 + (xs[j] as f64 - xs[i] as f64) * t as f64) as f32;
-        let z = (zs[i] as f64 + (zs[j] as f64 - zs[i] as f64) * t as f64) as f32;
-        let q = if i < 1000 {
-            quaternion_lerp(rotation[i], rotation[j], t)
-        } else {
-            rotation[i]
-        };
+        // The last sample retains its raw rotation, without normalization.
+        // Coordinate interpolation still runs, including its signed-zero rules.
+        let (x, z, q) = segments[i].interpolate(t, i == 1000);
         let [qx, qy, qz, qw] = quaternion_multiply(q, self.rotation_fix);
         // v12: Quaternion * Vector3(lane * 11.25, 0, 0) with the backend's
         // rounding points: the float locals (num2..num11 = q * 2q products)
@@ -494,6 +530,35 @@ mod tests {
             assert_eq!(CourseGeometry::from_value(&d,10504,2000.).unwrap().final_corner_half, expected);
         }
     }
+    #[test]
+    fn compiled_segments_preserve_source_interpolation_bits() {
+        let catalog = crate::json::parse(include_str!("../data/course_geometry/catalog.json")).unwrap();
+        for entry in catalog.get_array("courses").unwrap() {
+            let id = entry.get_i64("id").unwrap();
+            let data = crate::json::parse(&std::fs::read_to_string(directory().join(format!("{id}.json"))).unwrap()).unwrap();
+            for name in ["animation", "overrun"] {
+                let Some(source) = data.get(name) else { continue };
+                let xs: Vec<_> = source.get_array("x").unwrap().iter().map(|v| finite(v).unwrap()).collect();
+                let zs: Vec<_> = source.get_array("z").unwrap().iter().map(|v| finite(v).unwrap()).collect();
+                let qs: Vec<_> = source.get_array("rotation").unwrap().iter().map(|v| quaternion(v).unwrap()).collect();
+                let segments = animation_segments(&xs, &zs, &qs);
+                for (i, segment) in segments.iter().enumerate() {
+                    let j = (i + 1).min(1000);
+                    for t in [-0., 0., f32::from_bits(1), 0.5, f32::from_bits(1.0_f32.to_bits() - 1), 1.] {
+                        // Evaluate the source representation directly, including
+                        // exact endpoints and the adjacent representable values.
+                        let x = (xs[i] as f64 + (xs[j] as f64 - xs[i] as f64) * t as f64) as f32;
+                        let z = (zs[i] as f64 + (zs[j] as f64 - zs[i] as f64) * t as f64) as f32;
+                        let q = if i < 1000 { quaternion_lerp(qs[i], qs[j], t) } else { qs[i] };
+                        let (actual_x, actual_z, actual_q) = segment.interpolate(t, i == 1000);
+                        assert_eq!([actual_x, actual_z].map(f32::to_bits), [x, z].map(f32::to_bits), "{id} {name} {i} {t}");
+                        assert_eq!(actual_q.map(f32::to_bits), q.map(f32::to_bits), "{id} {name} {i} {t}");
+                    }
+                }
+            }
+        }
+    }
+
     #[test]
     fn short_quaternion_arc() {
         assert_eq!(

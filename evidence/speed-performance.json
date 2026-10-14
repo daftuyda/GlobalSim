@@ -1,0 +1,201 @@
+{
+  "version": "v72 performance update",
+  "date": "2026-10-14",
+  "scope": "Serial persistent workers, alternating request order. Includes parsing, simulation, all selected frame encoding and pipe transfer. Excludes caller JSON encoding/decoding. Standard and dense output reported separately.",
+  "machine": "Windows, Intel Core i7-14700K, Rust 1.97.1",
+  "warmups": 5,
+  "repeats": 5,
+  "variants": {
+    "before": "validated v72",
+    "generic": "optimized ordinary release",
+    "after": "same optimized source with portable host-target compiler PGO"
+  },
+  "sha256": {
+    "before": "362121b419c043994937f91802ef15903c450b9b5d953fb337aa8880b180bdcd",
+    "after": "111c9bbd46f8121aa4807846d9e804f5c9467b61765baa76769ecd6751a27d2e",
+    "generic": "c13057f5b0ffbbd18038228b65417de07cbdfcfffe79692ad4f33f056c5de9fc"
+  },
+  "groups": {
+    "nine-standard": {
+      "input_cases": 30,
+      "inputs_sha256": "9c958da8813806292ad6ab528ab45f90fe33cacd125da8233f1c7c0645238d7b",
+      "matching_replies": 150,
+      "latency_change_percent": -23.7608124662261,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 16.426199988927692,
+        "mean_ms": 10.046811335487291,
+        "median_ms": 10.041000001365319,
+        "p95_ms": 12.85450003342703,
+        "races_per_second": 99.53406773627823
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 10.527099948376417,
+        "mean_ms": 7.65960733522661,
+        "median_ms": 7.649250008398667,
+        "p95_ms": 9.82159998966381,
+        "races_per_second": 130.55499534564782
+      },
+      "generic": {
+        "runs": 150,
+        "first_request_ms": 11.8217000272125,
+        "mean_ms": 8.89842200286997,
+        "median_ms": 8.830100006889552,
+        "p95_ms": 11.237700004130602,
+        "races_per_second": 112.3794757854229
+      }
+    },
+    "nine-dense": {
+      "input_cases": 30,
+      "inputs_sha256": "4d10b75a68eb4409186dc6721595012f6c6e5812000dbbbcb117a155401d966b",
+      "matching_replies": 150,
+      "latency_change_percent": -37.783487107894985,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 22.815800039097667,
+        "mean_ms": 17.382860000943765,
+        "median_ms": 17.14219999848865,
+        "p95_ms": 24.033699999563396,
+        "races_per_second": 57.52793268459317
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 12.434299977030605,
+        "mean_ms": 10.815009333503744,
+        "median_ms": 10.749650013167411,
+        "p95_ms": 15.200399968307465,
+        "races_per_second": 92.46409033620589
+      },
+      "generic": {
+        "runs": 150,
+        "first_request_ms": 13.908699969761074,
+        "mean_ms": 12.188603998705124,
+        "median_ms": 12.159000005340204,
+        "p95_ms": 16.579899995122105,
+        "races_per_second": 82.04385014938845
+      }
+    },
+    "eighteen-standard": {
+      "input_cases": 30,
+      "inputs_sha256": "cc286c56268f0f3cf83aee197bfa380ed509f7c2fed821d283514978846e3450",
+      "matching_replies": 150,
+      "latency_change_percent": -22.151892690701523,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 45.66110001178458,
+        "mean_ms": 30.508447997660067,
+        "median_ms": 29.398499988019466,
+        "p95_ms": 42.2017999808304,
+        "races_per_second": 32.777806333403056
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 33.20770000573248,
+        "mean_ms": 23.75024933561993,
+        "median_ms": 22.8447999979835,
+        "p95_ms": 32.982699980493635,
+        "races_per_second": 42.10482112708725
+      },
+      "generic": {
+        "runs": 150,
+        "first_request_ms": 37.99460001755506,
+        "mean_ms": 27.35002533105823,
+        "median_ms": 25.98045000922866,
+        "p95_ms": 38.34359999746084,
+        "races_per_second": 36.56303743398792
+      }
+    },
+    "eighteen-dense": {
+      "input_cases": 30,
+      "inputs_sha256": "d0064d7b8c0add88d8a51c4e8a71caed12bcb23d30f18bdb04a05b861dc6fb30",
+      "matching_replies": 150,
+      "latency_change_percent": -33.43396078218529,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 67.3604000476189,
+        "mean_ms": 46.644438665825874,
+        "median_ms": 44.88950001541525,
+        "p95_ms": 65.73820003541186,
+        "races_per_second": 21.43878302758206
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 44.04649999924004,
+        "mean_ms": 31.04935533522318,
+        "median_ms": 29.710999981034547,
+        "p95_ms": 43.671199993696064,
+        "races_per_second": 32.20678784482119
+      },
+      "generic": {
+        "runs": 150,
+        "first_request_ms": 52.2365000215359,
+        "mean_ms": 34.77419733108642,
+        "median_ms": 33.23689999524504,
+        "p95_ms": 50.67119997693226,
+        "races_per_second": 28.75695420023539
+      }
+    },
+    "nine-monte-carlo-standard": {
+      "input_cases": 30,
+      "inputs_sha256": "3fd33c74c093ecf5125fd682d03806603a0173bdd90295b325cf15c5185be01f",
+      "matching_replies": 150,
+      "latency_change_percent": -25.21183543955291,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 18.228399974759668,
+        "mean_ms": 9.559856665243084,
+        "median_ms": 9.320100012701005,
+        "p95_ms": 10.89129998581484,
+        "races_per_second": 104.60407880755318
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 11.656499991659075,
+        "mean_ms": 7.149641334544867,
+        "median_ms": 7.074750028550625,
+        "p95_ms": 7.531999959610403,
+        "races_per_second": 139.86715601638753
+      },
+      "generic": {
+        "runs": 150,
+        "first_request_ms": 12.858100002631545,
+        "mean_ms": 8.341005337812627,
+        "median_ms": 8.23780003702268,
+        "p95_ms": 8.671899966429919,
+        "races_per_second": 119.88962475142635
+      }
+    },
+    "nine-monte-carlo-dense": {
+      "input_cases": 30,
+      "inputs_sha256": "a34d4224cf8917d38f0e41e439702f4b5062159adaedb1a5fd946f4a31260d50",
+      "matching_replies": 150,
+      "latency_change_percent": -38.891940150992674,
+      "before": {
+        "runs": 150,
+        "first_request_ms": 24.36790004139766,
+        "mean_ms": 15.284421330628296,
+        "median_ms": 14.73095000255853,
+        "p95_ms": 20.657000015489757,
+        "races_per_second": 65.42609486929742
+      },
+      "after": {
+        "runs": 150,
+        "first_request_ms": 14.080799999646842,
+        "mean_ms": 9.340013334294781,
+        "median_ms": 9.103949996642768,
+        "p95_ms": 10.626600007526577,
+        "races_per_second": 107.06622830271421
+      },
+      "generic": {
+        "runs": 150,
+        "first_request_ms": 16.307200014125556,
+        "mean_ms": 10.747863998791823,
+        "median_ms": 10.423250001622364,
+        "p95_ms": 12.512599991168827,
+        "races_per_second": 93.04174300236873
+      }
+    }
+  },
+  "source_report_sha256": "d7953809cc0fb618a9740ec88036291e874503307d06ee3da9984d3292fe6752"
+}

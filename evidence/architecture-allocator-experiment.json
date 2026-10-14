@@ -1,0 +1,127 @@
+{
+  "scope": "Serial persistent workers; parse, simulate, capture every frame, encode, transfer. Caller decode excluded. All selected frame values and all metadata compared.",
+  "sha256": {
+    "before": "b736a22ecf1b8f6d357843a91c86cb853a0890b40301f3077755a76bfd6541ef",
+    "json": "ee3d320dbdd8bf8ba5c77a278c6ff94ab5772eb493e2e77ca2df364315dce8a9",
+    "binary": "ee3d320dbdd8bf8ba5c77a278c6ff94ab5772eb493e2e77ca2df364315dce8a9",
+    "binary-system": "b736a22ecf1b8f6d357843a91c86cb853a0890b40301f3077755a76bfd6541ef"
+  },
+  "affinity_masks": {
+    "before": null,
+    "json": null,
+    "binary": null,
+    "binary-system": null
+  },
+  "repeats": 7,
+  "warmups": 5,
+  "groups": {
+    "nine-monte-carlo": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 10.011658095238095,
+        "median_ms": 9.41975,
+        "p95_ms": 13.3481,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 8.970503809523809,
+        "median_ms": 8.513349999999999,
+        "p95_ms": 12.4278,
+        "mean_bytes": 1574468.7666666666,
+        "reply_sequence_sha256": "58f1d2fa814add7bcb352a64aca3d962742f4be33d1e5754a93cdc99c2bb8bda"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 7.0935219047619045,
+        "median_ms": 6.66565,
+        "p95_ms": 10.0934,
+        "mean_bytes": 540281.7666666667,
+        "reply_sequence_sha256": "73126c91d53662137a7ba0f05266a3cb4461fd1861aa82f53d9c4683c579000c"
+      },
+      "binary-system": {
+        "runs": 210,
+        "mean_ms": 8.102181428571429,
+        "median_ms": 7.591,
+        "p95_ms": 11.5584,
+        "mean_bytes": 540281.7666666667,
+        "reply_sequence_sha256": "73126c91d53662137a7ba0f05266a3cb4461fd1861aa82f53d9c4683c579000c"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "a34d4224cf8917d38f0e41e439702f4b5062159adaedb1a5fd946f4a31260d50"
+    },
+    "nine": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 10.672874285714286,
+        "median_ms": 10.5776,
+        "p95_ms": 14.6821,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 9.91312761904762,
+        "median_ms": 9.64885,
+        "p95_ms": 14.4799,
+        "mean_bytes": 1735750.6,
+        "reply_sequence_sha256": "d6b7f50b35d49b6a650f1a2b672cb21938fdf0c1cb451dcec36c0c7cc7734990"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 7.675147142857143,
+        "median_ms": 7.3732,
+        "p95_ms": 11.069,
+        "mean_bytes": 596309.2666666667,
+        "reply_sequence_sha256": "1c1bc87fc5142177e83963f51f6a42c9f142b96b25c317d510e891417b797d90"
+      },
+      "binary-system": {
+        "runs": 210,
+        "mean_ms": 8.54149,
+        "median_ms": 8.37135,
+        "p95_ms": 12.0433,
+        "mean_bytes": 596309.2666666667,
+        "reply_sequence_sha256": "1c1bc87fc5142177e83963f51f6a42c9f142b96b25c317d510e891417b797d90"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "4d10b75a68eb4409186dc6721595012f6c6e5812000dbbbcb117a155401d966b"
+    },
+    "eighteen": {
+      "before": {
+        "runs": 210,
+        "mean_ms": 31.09324714285714,
+        "median_ms": 29.637700000000002,
+        "p95_ms": 44.47,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "json": {
+        "runs": 210,
+        "mean_ms": 28.855856666666668,
+        "median_ms": 26.898600000000002,
+        "p95_ms": 44.3921,
+        "mean_bytes": 4494165.566666666,
+        "reply_sequence_sha256": "25eed80b1fb53a4be3cf8af5f78af04ec00a3580c5b41c3faac9c375947d328e"
+      },
+      "binary": {
+        "runs": 210,
+        "mean_ms": 22.876070952380953,
+        "median_ms": 21.378149999999998,
+        "p95_ms": 34.0739,
+        "mean_bytes": 1540242.6333333333,
+        "reply_sequence_sha256": "c28525a5ebf973fac79cb20fd46cd41c10440da336c23dfe6a321ef0c827b0ce"
+      },
+      "binary-system": {
+        "runs": 210,
+        "mean_ms": 25.336506666666665,
+        "median_ms": 23.619,
+        "p95_ms": 37.2891,
+        "mean_bytes": 1540242.6333333333,
+        "reply_sequence_sha256": "c28525a5ebf973fac79cb20fd46cd41c10440da336c23dfe6a321ef0c827b0ce"
+      },
+      "compared_distinct_replies": 30,
+      "inputs_sha256": "d0064d7b8c0add88d8a51c4e8a71caed12bcb23d30f18bdb04a05b861dc6fb30"
+    }
+  }
+}

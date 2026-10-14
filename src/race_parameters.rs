@@ -124,8 +124,8 @@ pub struct RaceParameters {
     pub same_style_count: Option<i32>,
     pub other_style_counts: Option<[i32; 4]>,
     pub favorite_matches: Option<bool>,
-    pub skill_counts: Option<std::collections::BTreeMap<String, i32>>,
-    pub chara_ids: Option<std::collections::BTreeSet<i64>>,
+    pub skill_counts: Option<std::rc::Rc<std::collections::BTreeMap<String, i32>>>,
+    pub chara_ids: Option<std::rc::Rc<std::collections::BTreeSet<i64>>>,
 }
 
 impl Default for RaceParameters {

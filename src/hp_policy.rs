@@ -90,6 +90,31 @@ mod retail_tests {
         }
     }
     #[test]
+    fn hp_guts_factor_refreshes_on_reinitialization_and_preserves_phase_boundary() {
+        let parameters=parameters();
+        let course=course(2400.,2);
+        let mut hp=GameHpState::with_retail(&course,4,parameters.clone(),
+            Rc::new(RefCell::new(RetailRandom::new(1))));
+        for guts in [1.,600.,2000.,800.] {
+            hp.init(&horse(1,guts,1200.));
+            for phase in [-1,0,1,2,3] {
+                for flags in 0..32 {
+                    let ctx=HpTickCtx {is_pace_down:flags&1!=0,is_kakari:flags&2!=0,
+                        is_downhill_mode:flags&4!=0,is_compete_top:flags&8!=0,
+                        is_runaway:flags&16!=0,phase,current_speed:22.123_f32 as f64};
+                    let rate=parameters.hp_state_rate(RetailHpFlags {rushing:ctx.is_kakari,
+                        competing:ctx.is_compete_top,runaway:ctx.is_runaway,
+                        pace_down:ctx.is_pace_down,downhill:ctx.is_downhill_mode});
+                    let expected=parameters.hp_per_second(ctx.current_speed as f32,
+                        hp.base_speed as f32,hp.ground_modifier as f32,guts as f32,
+                        phase.max(0) as usize,rate);
+                    assert_eq!((hp.hp_per_second(ctx,ctx.current_speed) as f32).to_bits(),expected.to_bits());
+                }
+            }
+        }
+    }
+
+    #[test]
     fn spurt_policy_uses_shared_stream_and_current_hp() {
         let f=crate::json::parse(include_str!("../tests/fixtures/retail_physics_port.json")).unwrap();
         let parameters=parameters();
@@ -138,7 +163,7 @@ mod retail_tests {
 struct RetailHpConfig {
     parameters: Rc<RetailParameters>,
     random: Rc<RefCell<RetailRandom>>,
-    guts: f32,
+    guts_factor: f32,
     wisdom: f32,
 }
 
@@ -168,7 +193,8 @@ impl GameHpState {
                        random: Rc<RefCell<RetailRandom>>) -> Self {
         let mut state=Self::new(course,ground,Rule30CARng::new(0,0));
         state.base_speed=parameters.course_speed(course.distance as f32) as f64;
-        state.retail=Some(RetailHpConfig{parameters,random,guts:1.,wisdom:1.});
+        let guts_factor=parameters.hp_guts_factor(1.);
+        state.retail=Some(RetailHpConfig{parameters,random,guts_factor,wisdom:1.});
         state
     }
 
@@ -176,7 +202,9 @@ impl GameHpState {
         if let Some(retail)=&mut self.retail {
             self.max_hp=retail.parameters.initial_hp(horse.stamina as f32,horse.strategy as usize,self.distance as f32) as f64;
             self.hp=self.max_hp;
-            retail.guts=horse.guts as f32;
+            // Retail HP captures guts at initialization; later stat effects
+            // do not change the policy's existing consumption parameters.
+            retail.guts_factor=retail.parameters.hp_guts_factor(horse.guts as f32);
             retail.wisdom=horse.wisdom as f32;
             self.last_retail_spurt_plan=None;
             return;
@@ -204,8 +232,8 @@ impl GameHpState {
         if let Some(retail)=&self.retail {
             let rate=retail.parameters.hp_state_rate(RetailHpFlags{rushing:ctx.is_kakari,competing:ctx.is_compete_top,
                 runaway:ctx.is_runaway,pace_down:ctx.is_pace_down,downhill:ctx.is_downhill_mode});
-            return retail.parameters.hp_per_second(velocity as f32,self.base_speed as f32,self.ground_modifier as f32,
-                retail.guts,ctx.phase.max(0) as usize,rate) as f64;
+            return retail.parameters.hp_per_second_with_guts_factor(velocity as f32,self.base_speed as f32,self.ground_modifier as f32,
+                (ctx.phase >= 2).then_some(retail.guts_factor),rate) as f64;
         }
         let guts_modifier = if ctx.phase >= 2 { self.guts_modifier } else { 1.0 };
         20.0 * (velocity - self.base_speed + 12.0).powi(2) / 144.0

@@ -93,6 +93,15 @@ Front blocking caps speed according to minimum speed, blocker speed and gap
 longitudinal position, lane, blocker identity and speed must be compared
 together when diagnosing a mismatch.
 
+The front-block envelope narrows with distance:
+`laneGap <= (1 - 0.6f * (distanceGap / frontDistance)) * frontLaneGap`,
+with `0 < distanceGap < frontDistance`. Positions, lane gaps, parameters and
+the distance ratio are float32. The product of that ratio and `0.6f` is also
+stored as float32. The complement and lane-width multiplication retain wider
+precision until the final float32 limit is stored. Changing these rounding
+points can change whether a runner exactly at its edge is blocked, affecting
+the next lane and speed update.
+
 ## Competition and later stamina mechanics
 
 `race_solver.rs` contains Spot Struggle, Compete Before Spurt, Secure Lead,
@@ -102,12 +111,27 @@ gap is .165, its entry cutoff is section 6 and end cutoff section 9; the duel
 lane gap is .25. Duel proximity must persist and real starts increment the
 duel count used by skill conditions. A finish is not a duel event.
 
+Spot Struggle starts only when the front of the same-style group leads the
+eligible field in the cached ranking. Ordinary Front Runners exclude Runaways
+from that ranking, but must lead every other style. Runaways must lead the
+entire field. The 150 m entry threshold uses the live position of the cached
+overall leader, including a Runaway. A runner passing that leader during the
+tick does not take over the threshold check until ranks update. Live positions
+also determine the group's distance and lane checks.
+
 In the detailed runtime, duel entry first selects the longest-standing eligible
 nearby partner, then checks that partner's duel history. A selected partner
 whose earlier duel has ended prevents entry; selection does not fall back to a
 newer partner. A valid invitation activates both runners together, including a
 runner whose own partner search failed. Group membership, eligibility and
 participation counts are updated with the activation.
+A runner still within its entry window can invite a partner who has already
+finished. The partner must still satisfy proximity, speed, HP and duel-history
+checks. This can produce duel events at the inviting runner's finish tick.
+Crossing the finish line does not itself end an active retail duel. The group
+remains available to eligible entrants until its HP or separation conditions
+end participation; finishing does not grant another activation to an existing
+participant.
 
 The later stamina behavior is explicitly gated by
 `experimentalLaterStaminaMechanics`. Its approximations include the flat

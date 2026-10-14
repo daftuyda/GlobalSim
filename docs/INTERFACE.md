@@ -1,13 +1,16 @@
 # JSON-lines interface
 
+JSON is the default output. The optional [binary replay interface](BINARY-REPLAY.md)
+accepts the same requests and returns exact numeric frames with lower output cost.
+
 The binary reads stdin until EOF and emits one compact JSON reply for each
 nonempty input line, flushing after each reply. Multiline pretty-printed JSON
 is not a request. No command-line mode flag is needed. Use the provided
 [default example](../examples/race.jsonl) or
-[benchmark example](../examples/v72-race.jsonl).
+[benchmark example](../examples/v73-race.jsonl).
 
 The example includes the skill table and settings used for the benchmark.
-`examples/v72-settings.json` lists switches separately;
+`examples/v73-settings.json` lists switches separately;
 `data/v70-skill-data.json` contains that table. The built-in `data/skill_data.json`
 is the legacy fallback: omitting `skillData` does not select the audited table.
 
@@ -69,7 +72,7 @@ with no official oversized-field benchmark. Defaults apply when a setting is omi
 `competitionEvents` and `conservePowerEvents` expose supported events.
 `playerLastSpurtTime` and `playerHorseIndex` describe player telemetry.
 Capability/version fields describe output behavior, not official-game parity.
-Consult the serialization block in [`main.rs`](../src/main.rs) for every field.
+Consult the serialization block in [`lib.rs`](../src/lib.rs) for every field.
 
 Normal output includes `framesDownsampled`, `gateFrameNeeded` and preserved
 finish samples. Callers encoding replay data must not thin frames a second
