@@ -7,10 +7,10 @@ The binary reads stdin until EOF and emits one compact JSON reply for each
 nonempty input line, flushing after each reply. Multiline pretty-printed JSON
 is not a request. No command-line mode flag is needed. Use the provided
 [default example](../examples/race.jsonl) or
-[benchmark example](../examples/v73-race.jsonl).
+[benchmark example](../examples/v74-race.jsonl).
 
 The example includes the skill table and settings used for the benchmark.
-`examples/v73-settings.json` lists switches separately;
+`examples/v74-settings.json` lists switches separately;
 `data/v70-skill-data.json` contains that table. The built-in `data/skill_data.json`
 is the legacy fallback: omitting `skillData` does not select the audited table.
 

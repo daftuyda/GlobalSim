@@ -378,7 +378,9 @@ fn order_in_filter(rate: f64, band: fn(&RaceSolver) -> &std::cell::Cell<Option<f
             };
             let idx = s.field_index.unwrap();
             let in_band = (field.order_of(idx) as f64) <= (rate * field.n as f64).round();
-            continuous_band_check(cell_fn(s), s.accumulatetime.get(), in_band)
+            if s.retail.is_some() {
+                matches!(cell_fn(s).get(), Some(start) if !start.is_nan())
+            } else { continuous_band_check(cell_fn(s), s.accumulatetime.get(), in_band) }
         });
         Ok((regions.to_vec(), Some(check)))
     });
@@ -399,7 +401,9 @@ fn order_out_filter(rate: f64, band: fn(&RaceSolver) -> &std::cell::Cell<Option<
             let idx = s.field_index.unwrap();
             // v69: out bands are inclusive, rank >= round(n*rate) (doc 13.189).
             let in_band = (field.order_of(idx) as f64) >= (rate * field.n as f64).round();
-            continuous_band_check(cell_fn(s), s.accumulatetime.get(), in_band)
+            if s.retail.is_some() {
+                matches!(cell_fn(s).get(), Some(start) if !start.is_nan())
+            } else { continuous_band_check(cell_fn(s), s.accumulatetime.get(), in_band) }
         });
         Ok((regions.to_vec(), Some(check)))
     });
@@ -617,7 +621,10 @@ fn hp_per_filter_gte(regions: &[Region], hp_per: f64, _c: &CourseData, _h: &Hors
 
 fn hp_condition_percent(s: &RaceSolver) -> f64 {
     match &s.hp {
-        crate::hp_policy::HpPolicy::Game(hp) => (((hp.hp as f32 / hp.max_hp as f32) * 100.) as i32) as f64,
+        // Store the HP ratio as a float, but retain the wider percentage
+        // product until integer truncation. A ratio of 0.71_f32 is just
+        // below 71%; rounding the product to float would delay <=70 triggers.
+        crate::hp_policy::HpPolicy::Game(hp) => (((hp.hp as f32 / hp.max_hp as f32) as f64 * 100.) as i32) as f64,
         _ => 100.,
     }
 }
@@ -833,7 +840,11 @@ fn is_last_straight_onetime_filter_eq(regions: &[Region], one: f64, course: &Cou
     }
     let last_start = course.straights.last().ok_or("no straights")?.start;
     let trigger = Region::new(last_start, last_start + 10.0);
-    Ok((rmap_one(regions, |r| r.intersect(&trigger)), None))
+    // A one-time entry condition must not become true on a later tick when
+    // the runner's rank changes while still inside the distance window.
+    let check: DynCond = Box::new(|s, _| s.retail.as_ref()
+        .map_or(true, |r| r.last_straight_entry_tick));
+    Ok((rmap_one(regions, |r| r.intersect(&trigger)), Some(check)))
 }
 
 fn is_temptation_filter_eq(regions: &[Region], b: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {

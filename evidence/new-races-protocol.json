@@ -1,0 +1,37 @@
+{
+  "engines": {
+    "baseline": "03ace44867bcf1117a236ef739ddc9409b8b56ce449b5c5715b2ebc203b7fa9c",
+    "candidate": "03ace44867bcf1117a236ef739ddc9409b8b56ce449b5c5715b2ebc203b7fa9c"
+  },
+  "inputs_sha256": "047bc2e0a67d7d1c6cdbee44430ad49f186565ed676c213ff41490c3a823600a",
+  "modes": [
+    {
+      "all_frames": false,
+      "equivalent_replies_per_binary_mode": 45,
+      "errors": [
+        {
+          "case": "invalid-data",
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "error": "Missing retail initialization field 110591"
+        }
+      ]
+    },
+    {
+      "all_frames": true,
+      "equivalent_replies_per_binary_mode": 45,
+      "errors": [
+        {
+          "case": "invalid-data",
+          "error": "skill_data.json root must be an object"
+        },
+        {
+          "case": "empty-data",
+          "error": "Missing retail initialization field 110591"
+        }
+      ]
+    }
+  ]
+}

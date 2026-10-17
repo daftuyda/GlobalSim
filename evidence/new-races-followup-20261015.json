@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "status": "unreleased candidate with seven unresolved races",
+  "baseVersion": "v73",
+  "engineSha256": "03ace44867bcf1117a236ef739ddc9409b8b56ce449b5c5715b2ebc203b7fa9c",
+  "engine": "target/late-final/race_engine_rs_v2.exe",
+  "snapshotFrozenUtc": "2026-10-15T08:03:10.118972+00:00",
+  "completedUtc": "2026-10-15T08:05:28.073444+00:00",
+  "scope": "Observed official replay agreement at recorded precision and cadence; not population-wide or hidden-state equivalence.",
+  "newBatch": {
+    "races": 3912,
+    "observedExact": 3912,
+    "discrepant": 0,
+    "errors": 0,
+    "excluded": 0,
+    "runners": 51213,
+    "winner": 3912,
+    "placements": 51213,
+    "finishExact": 3912,
+    "skillExact": 3912,
+    "frameExact": 3912,
+    "officialCasts": 514676,
+    "simulatedCasts": 514676,
+    "exactCasts": 514676,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "previous": {
+    "races": 100405,
+    "observedExact": 100398,
+    "discrepant": 7
+  },
+  "cumulative": {
+    "races": 104317,
+    "observedExact": 104310,
+    "discrepant": 7,
+    "errors": 0,
+    "runners": 979244,
+    "winner": 104312,
+    "placements": 979189,
+    "finishExact": 104310,
+    "skillExact": 104310,
+    "frameExact": 104310,
+    "officialCasts": 10170223,
+    "simulatedCasts": 10170228,
+    "exactCasts": 10169868,
+    "finishMAE": 2.8136760039873953e-05,
+    "maxFinishError": 2.1440353393554688
+  },
+  "newRegressions": 0,
+  "simulatorChangesRequired": false,
+  "remaining": [
+    {
+      "referenceSha256": "d3fe40bbc72414e034af606bc58ab33f826680351e43127099774f82490cfaff",
+      "course": 10607,
+      "seed": 1480423280,
+      "runners": 12,
+      "firstDivergence": {
+        "time": 40.49306869506836,
+        "runner": 7,
+        "fields": [
+          "position",
+          "speed"
+        ]
+      },
+      "maxFinishError": 1.11065673828125,
+      "winner": false
+    },
+    {
+      "referenceSha256": "e86af88cc224377bb2bd30814e846fa0929c6f938ee3ffac39c1f712ee596f1a",
+      "course": 10708,
+      "seed": 1780539616,
+      "runners": 16,
+      "firstDivergence": {
+        "time": 35.16500473022461,
+        "runner": 5,
+        "fields": [
+          "position",
+          "speed",
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.6762542724609375,
+      "winner": false
+    },
+    {
+      "referenceSha256": "26d92b7d95839d4fcffdaafb000e81f790b4b3eeff3b2ef97795145a486cdd30",
+      "course": 10708,
+      "seed": 96219061,
+      "runners": 16,
+      "firstDivergence": {
+        "time": 28.77132797241211,
+        "runner": 0,
+        "fields": [
+          "position",
+          "speed",
+          "lane"
+        ]
+      },
+      "maxFinishError": 0.688201904296875,
+      "winner": false
+    },
+    {
+      "referenceSha256": "f2507584757984edaa61bc4652f6599d977b05128ef75f7db4cdfd916d6dc5f2",
+      "course": 11303,
+      "seed": 1031129736,
+      "runners": 9,
+      "firstDivergence": {
+        "time": 14.918376922607422,
+        "runner": 2,
+        "fields": [
+          "position",
+          "speed",
+          "hp"
+        ]
+      },
+      "maxFinishError": 2.1440353393554688,
+      "winner": false
+    },
+    {
+      "referenceSha256": "bf5482433dc9f18224a035395c19f5e69993e83f2442ed6d8b6bfe5eeb43f5ad",
+      "course": 10102,
+      "seed": 1313295325,
+      "runners": 9,
+      "firstDivergence": {
+        "time": 34.09939193725586,
+        "runner": 1,
+        "fields": [
+          "position",
+          "speed"
+        ]
+      },
+      "maxFinishError": 0.02685546875,
+      "winner": true
+    },
+    {
+      "referenceSha256": "8cf81c19b5c8296b0b1a4586dd31efe0faff31892fd750bf8344efda305f5110",
+      "course": 10301,
+      "seed": 63486583,
+      "runners": 9,
+      "firstDivergence": {
+        "time": 7.459194183349609,
+        "runner": 3,
+        "fields": [
+          "position",
+          "speed",
+          "hp"
+        ]
+      },
+      "maxFinishError": 0.122161865234375,
+      "winner": true
+    },
+    {
+      "referenceSha256": "1427609cea28f86be4a62983e952e12f545aa6f45052dc9d2f97418dc10e0056",
+      "course": 10401,
+      "seed": 571543362,
+      "runners": 9,
+      "firstDivergence": {
+        "time": 8.524791717529297,
+        "runner": 3,
+        "fields": [
+          "position",
+          "speed"
+        ]
+      },
+      "maxFinishError": 0.3785858154296875,
+      "winner": false
+    }
+  ],
+  "remainingRechecked": 7,
+  "coverage": {
+    "courses": 105,
+    "distinctDistances": 21,
+    "minDistance": 1000,
+    "maxDistance": 3600,
+    "byFieldSize": [
+      {
+        "runners": 9,
+        "races": 96826,
+        "observedExact": 96822
+      },
+      {
+        "runners": 12,
+        "races": 2745,
+        "observedExact": 2744
+      },
+      {
+        "runners": 14,
+        "races": 541,
+        "observedExact": 541
+      },
+      {
+        "runners": 15,
+        "races": 2260,
+        "observedExact": 2260
+      },
+      {
+        "runners": 16,
+        "races": 807,
+        "observedExact": 805
+      },
+      {
+        "runners": 18,
+        "races": 1138,
+        "observedExact": 1138
+      }
+    ]
+  },
+  "frameCounts": {
+    "samples": 113239246,
+    "positionMismatch": 4859,
+    "speedMismatch": 2923,
+    "hpMismatch": 3898,
+    "laneMismatch": 4077,
+    "missingFrames": 40
+  },
+  "extraFrameCounts": {
+    "samples": 113239246,
+    "blockFrontHorseIndexMismatch": 283,
+    "temptationModeMismatch": 6
+  },
+  "resultFields": {
+    "runners": 979244,
+    "startDelayTimeExact": 979244,
+    "gutsOrderExact": 979244,
+    "wizOrderExact": 979244,
+    "lastSpurtStartDistanceExact": 979167,
+    "runningStyleExact": 979244
+  },
+  "recordedDurations": {
+    "official": 10170223,
+    "simulated": 10170228,
+    "paired": 10169868,
+    "exact": 10169868,
+    "withinOneWireUnit": 10169868,
+    "largerDifference": 0,
+    "unpairedOfficial": 355,
+    "unpairedSimulated": 360,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 10170223,
+    "startupSentinels": 1758597,
+    "paired": 10169868,
+    "exact": 10169868,
+    "mismatch": 0,
+    "extraSimulated": 360,
+    "unpaired": 355
+  },
+  "retainedChecks": {
+    "capturedRegressionTests": 34,
+    "rustTestsPassed": 130,
+    "preExistingRustFailures": 11,
+    "status": "Previous checks retained for unchanged source and binary; not rerun for a data-only audit."
+  },
+  "previousReport": "evidence/new-races-refinement-20261015.json",
+  "previousReportSha256": "1df461276d2bf894c06f9dfad8c3a0ae605079a9b3183ffcd7ad12d86f9640a5",
+  "sourceHashes": {
+    "Cargo.toml": "2724218301608cca6d3e657ec2bcaf5ef678d1d2f80394dd668e56d0bf6eeb73",
+    "Cargo.lock": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+    "data/course_data.json": "6a61cec5958cbc7f47effff59edcdd3f623456353c98d3baa9110e83b9b9cc9b",
+    "src/activation_conditions.rs": "813aa8a66eee5beb272352b6d5ea6609a299b7b08f5355ae219b4367cc4e4297",
+    "src/race_field.rs": "facf651562897e811cd133885bc29e3759a6916bd0784873296494c1013691f5",
+    "src/race_solver.rs": "df4a29004fea296e12305d6cf6d0c484da0b771186876d1723e9d7eac6169ffe",
+    "src/race_solver_retail.rs": "faf41a4c2afb500e0653d6d3786dfe40bfa12e776b5226cea4f455a18c59f013",
+    "src/retail_geometry.rs": "b5573066ad71e7e5291841b46123dc734d47d4d60ca422330a2b4098a3d4fb81",
+    "src/retail_initialization.rs": "553a6f17bc56b835d99d129438af93e4d46a4896b196f723f93ba93c224e2e71"
+  },
+  "timing": {
+    "racesExecuted": 3919,
+    "seconds": 46.439564000000246,
+    "newWorkerRoundTripMeanMs": 13.521965158357407,
+    "scope": "Full-frame worker round trip under concurrent audit load, not isolated API latency"
+  },
+  "resultsSha256": "1219c28887e8e34a375d6129f9d6f828e4d83a9287756e8dfbbc3464cea207b0"
+}

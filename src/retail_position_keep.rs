@@ -113,7 +113,11 @@ impl Parameters {
         if !(2..=4).contains(&style) {
             return (0., 0.);
         }
-        let factor = (1. + (distance - self.base_distance) * self.distance_coefficient).max(1.);
+        // Store the scale after the wider multiply-and-add. Rounding its
+        // product first makes the 2500 m Senkou maximum one ulp below 11 m
+        // and consumes an extra lottery draw at an exactly 11 m gap.
+        let factor = ((1. + (distance - self.base_distance) as f64
+            * self.distance_coefficient as f64) as f32).max(1.);
         let [low, high] = self.gaps[style - 2];
         (if style == 2 { low } else { low * factor }, high * factor)
     }
@@ -322,6 +326,36 @@ impl State {
 mod tests {
     use super::*;
     use crate::retail_random::RetailRandom;
+
+    #[test]
+    fn exact_pace_up_gap_does_not_consume_a_lottery_draw() {
+        let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_pacing_port.json"))
+            .unwrap();
+        let p = Parameters::from_value(fixture.get("parameters").unwrap()).unwrap();
+        assert_eq!(p.thresholds(2, 2500.), (3., 11.));
+        let context = Context {
+            distance: 2500., position: 725., wisdom: 680., strategy: 2,
+            rushing: false, rushing_mode: 0, phase: 1, rank: 9,
+            pacemaker_rank: 1, pacemaker_style: 2, pacemaker_gap: 11.,
+            pacemaker_is_self: false, later_style_ahead: false,
+            ordinary_nige_count: 0, behind_gap: Some(0.5), has_speed_skill: false,
+        };
+        let mut rng = RetailRandom::new(0);
+        let mut state = State::default();
+        state.update(context, 0.0666, &p, &mut rng);
+        assert_eq!(state.mode, None);
+        assert_eq!(rng.draw_count, 0);
+
+        // Crossing the boundary by one representable float does attempt
+        // the wisdom lottery, even though this particular roll fails.
+        let mut state = State::default();
+        state.update(Context {
+            pacemaker_gap: f32::from_bits(11_f32.to_bits() + 1), ..context
+        }, 0.0666, &p, &mut rng);
+        assert_eq!(state.mode, None);
+        assert_eq!(rng.draw_count, 1);
+    }
+
     #[test]
     fn sequential_field_contexts_match_python_timers_draws_and_modes() {
         let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_pacing_port.json"))

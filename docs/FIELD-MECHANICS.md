@@ -43,6 +43,11 @@ previous region's end point. The new gradient then expires as soon as the runner
 passes that point and stays inactive until another slope event. A position-only
 lookup would incorrectly reactivate it on every tick.
 
+Straight-entry events clear the current corner even when its nominal length
+overlaps the straight. The persistent final-corner flag remains set after
+leaving that corner, so corner membership and having reached the final corner
+are separate conditions.
+
 ## Position keeping and pacemaker
 
 [`retail_position_keep.rs`](../src/retail_position_keep.rs) implements a state
@@ -55,6 +60,9 @@ In the ordinary path, base minimum/maximum gaps for Senkou, Sasi, Oikomi are
 `max(1,.0008*(D-1000)+1)`; Senkou's minimum alone is unscaled. Different modes
 accelerate to catch up, ease off when too close, or handle front-runner rivalry.
 Reconstructed thresholds and multipliers come from the parameter tables.
+The scale's multiply-and-add uses wider arithmetic before its float32 store.
+The Senkou maximum at 2500 m is exactly 11 m. A gap equal to that maximum
+does not attempt the pace-up lottery or consume a random draw.
 
 The detailed runtime groups Runaway with Front Runner and selects among active
 runners using the preceding rank pass and current positions. At each new
@@ -65,12 +73,29 @@ uses `PaseMakerChangeTopHorseNotMostForwardStyleCount` and
 
 In a field without Front Runners, a detached forward-style runner can yield
 to the most-forward style within range of the overall leader. After a handover,
-the forward group's leader passing the incumbent pacemaker restores the forward
-pacemaker and clears handover state, even if a different running style still
-leads the race. A change of overall leader alone does not trigger restoration
-while the forward group's leader remains behind the incumbent. Selection stops
-at the configured end section (section 10); the incumbent
-remains available to subsequent position-keep exit checks.
+this distance-based refresh also applies to fields containing Front Runners.
+At each new section, if the original forward group remains outside the configured
+range, the pacemaker becomes the leading runner of the most-forward style still
+within range. This refresh clears the section counter even when it selects the
+same incumbent; the current section is counted afterward. Otherwise, the normal
+recalculation threshold retains the incumbent.
+If the forward group's leader has passed a handed-over incumbent at a new
+section, the incumbent first refreshes to the leader of its own running-style
+group. Subsequent restoration checks use that refreshed runner. The forward
+group must also pass this runner before it can regain the pacemaker role.
+A returning Runaway does not trigger this incumbent-group refresh: the
+incumbent remains available for the following restoration check. Runaway
+still shares the Front Runner group for the other selection rules.
+Between section-selection passes, the forward group's leader passing the
+incumbent restores the forward pacemaker and clears handover state, even if a
+different running style still leads the race. If that pass coincides with a
+new section, restoration occurs on the following tick.
+
+A change of overall leader alone does not trigger restoration while the forward
+group's leader remains behind the incumbent. Section-based selection stops at
+the configured end section (section 10). Restoration remains available after
+that boundary because active position-keep effects still consult the pacemaker
+when deciding whether to end.
 
 ## Vision, overtaking, blocking and lanes
 
@@ -84,6 +109,20 @@ The reconstructed lane controller collects pre-update context, then may query
 live targets. It retains targets/cooldowns, accelerates lateral motion and
 applies side constraints. Overlap resolution is a separate field pass. Lane
 values and lane-gap constants are normalized course widths, not metres.
+Visible distance starts at 20 m and includes active vision modifiers. Stacked
+vision reductions can reduce it to zero, leaving the visible-runner list empty.
+Physical front blocking still applies independently of visibility.
+The visible cone has half-width `(0.6388889f * (gap / vision) + 0.11111111f) / 2`.
+The distance ratio is stored as float32; the remaining expression retains wider
+precision until the final float32 width is stored. Intermediate rounding can
+change which runners obstruct a passing corridor at the cone's boundary.
+The inward passing route uses a separate corridor test. Its half-width is
+`C = 0.04444444924592972f` and its inward offset is
+`S = 0.0555555559694767f`. Store `lane - C` and `lane + C` as float32,
+then subtract `S` in wider arithmetic and compare peer lanes against those
+unrounded bounds. The selected lane itself remains float32. Rounding the
+final bounds too early can admit a runner just outside the corridor and
+change the chosen passing direction.
 The final-corner outward preference does not disable passing or force an
 unconditional fixed lane. Finished runners are excluded where the relevant
 blocking/competition checks require active rivals.
@@ -92,6 +131,12 @@ Front blocking caps speed according to minimum speed, blocker speed and gap
 (see mathematics). Lane movement can also change world-path length. Therefore
 longitudinal position, lane, blocker identity and speed must be compared
 together when diagnosing a mismatch.
+
+After a finished runner's one-second grace period, lateral speed becomes
+signed `dt`, so each unobstructed lateral step is `dt * dt`, capped at the
+target lane and course limits. This branch bypasses ordinary lateral
+acceleration, skill modifiers and the inward lane multiplier. Finished runners
+can still affect passing decisions made by runners approaching the finish.
 
 The front-block envelope narrows with distance:
 `laneGap <= (1 - 0.6f * (distanceGap / frontDistance)) * frontLaneGap`,
@@ -118,6 +163,9 @@ entire field. The 150 m entry threshold uses the live position of the cached
 overall leader, including a Runaway. A runner passing that leader during the
 tick does not take over the threshold check until ranks update. Live positions
 also determine the group's distance and lane checks.
+Each invited partner must be before the section-6 entry cutoff. The cached
+group leader may already be beyond it when an eligible partner starts the
+competition; that does not admit other partners beyond their entry cutoff.
 
 In the detailed runtime, duel entry first selects the longest-standing eligible
 nearby partner, then checks that partner's duel history. A selected partner
@@ -128,6 +176,10 @@ participation counts are updated with the activation.
 A runner still within its entry window can invite a partner who has already
 finished. The partner must still satisfy proximity, speed, HP and duel-history
 checks. This can produce duel events at the inviting runner's finish tick.
+A runner that has already finished can also complete its own warmup while the
+pair's cached pre-movement positions still include a partner on the final
+straight. The pair leaves the proximity cache once neither position is on the
+straight; the other entry checks still apply.
 Crossing the finish line does not itself end an active retail duel. The group
 remains available to eligible entrants until its HP or separation conditions
 end participation; finishing does not grant another activation to an existing

@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "engineVersion": "v73",
+  "engineSha256": "51955e7fc2cdb5febee7fb3ca6e3cffa1fbda7c25a057a4db448ce50149e11df",
+  "engineCommit": "1df8c0e5393e1dd8e62734875e1609e4872b15c6",
+  "snapshotFrozenUtc": "2026-10-14T19:53:27.487582+00:00",
+  "completedUtc": "2026-10-14T19:59:39.495231+00:00",
+  "scope": "New original-seed captures compared against unchanged v73 at the recorded cadence and wire precision.",
+  "priorValidatedRaces": 47664,
+  "newRaces": 23684,
+  "newObservedExact": 23684,
+  "combinedValidatedRaces": 71348,
+  "simulationChanged": false,
+  "metrics": {
+    "races": 23684,
+    "errors": 0,
+    "runners": 213156,
+    "winner": 23684,
+    "placements": 213156,
+    "finishExact": 23684,
+    "skillExact": 23684,
+    "frameExact": 23684,
+    "officialCasts": 2195010,
+    "simulatedCasts": 2195010,
+    "exactCasts": 2195010,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "frameCounts": {
+    "samples": 23089574
+  },
+  "extraFrameCounts": {
+    "samples": 23089574
+  },
+  "resultFields": {
+    "runners": 213156,
+    "startDelayTimeExact": 213156,
+    "gutsOrderExact": 213156,
+    "wizOrderExact": 213156,
+    "lastSpurtStartDistanceExact": 213156,
+    "runningStyleExact": 213156
+  },
+  "recordedDurations": {
+    "official": 2195010,
+    "simulated": 2195010,
+    "paired": 2195010,
+    "exact": 2195010,
+    "withinOneWireUnit": 2195010,
+    "largerDifference": 0,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 2195010,
+    "startupSentinels": 408973,
+    "paired": 2195010,
+    "exact": 2195010,
+    "mismatch": 0,
+    "extraSimulated": 0
+  },
+  "coverage": {
+    "runnerCounts": {
+      "9": 23684
+    },
+    "courses": [
+      {
+        "course": 10103,
+        "races": 1512,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10203,
+        "races": 1517,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10304,
+        "races": 1500,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10305,
+        "races": 1465,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10402,
+        "races": 1460,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10502,
+        "races": 1453,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10503,
+        "races": 1450,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10602,
+        "races": 1708,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10603,
+        "races": 1421,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10703,
+        "races": 1409,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10804,
+        "races": 1403,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10805,
+        "races": 1430,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10806,
+        "races": 1460,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10903,
+        "races": 1480,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10904,
+        "races": 1498,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 11002,
+        "races": 1518,
+        "distance": 1800,
+        "surface": 1
+      }
+    ]
+  },
+  "comparisonWorkerRestarts": 1,
+  "timing": {
+    "wallSecondsIncludingResume": 255.09884,
+    "finalPassSeconds": 43.487471600063145,
+    "finalPassRaces": 4944,
+    "workerRoundTripMeanMs": 8.98652618226245,
+    "scope": "Full-frame worker round trip under concurrent audit load, not isolated API latency"
+  },
+  "artifacts": {
+    "target/new-races-v73-20261015/inventory.json": "e2690b8af1be87e8b6333a200c6e10c8da799f031cf5c72b67236655e26781e1",
+    "target/new-races-v73-20261015/results.jsonl": "25d0277c441e7cb8ab541b7985dc258850852024333cb2c625a2bbd44d19212f",
+    "target/new-races-v73-20261015/identity.json": "17e7cf5173d0e06dc326762b3df5b02d270f4ddd1c9f09c60d757504fced67db",
+    "target/new-races-v73-20261015/summary.json": "f4b57d0fcd11690334c895e752b31e6abcd79560eb80767057682c41b87ef38a",
+    "target/practice-morning-snapshot-20261015/inventory.json": "0bc353b208bfc149dcf5328b8ade28886a4c348bdce902be1a91c5bc200fc3ee",
+    "target/new-races-audit-20261015.py": "0baaa75e3ece39dd390b01c09b7c784ddc2debb1b4af1eec2e2367fdb8415c52",
+    "target/parity6-full/inventory.json": "311e6112811dfa9ff7e6e4e7bd06a78e86324a4d8d5bc644a939c4e6990f07f6",
+    "target/parity6-full/results.jsonl": "ed08a2b6edbd4ad111a7378c59eaa991891294a8de70c7fe78550740cb3f269b",
+    "evidence/parity-validation-20261014.json": "d9702c1d2b7acec3a8ef2065da175c95bc95a4277e11d53a138acd7c955c7417",
+    "target/new-races-v73-20261015/execution-events.jsonl": "b3174629b158ebfc5d630e31097ff1a3ad139778ccc0e5550383c0a649c5afe1"
+  }
+}

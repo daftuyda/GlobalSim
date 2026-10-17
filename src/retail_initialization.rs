@@ -135,12 +135,27 @@ fn sample_trigger(name:&str,arg:i32,rng:&mut RetailRandom,course:&Value)->Result
             // Global SkillTriggerCornerRandom._InitDistance (0x35c3200)
             // reverse-scans explicit corner IDs; absent matches draw nothing.
             let row = if arg <= 0 { None }
+            else if name == "is_finalcorner_random" {
+                // SkillTriggerFinalCornerRandom uses CalcFinalCornerDistance,
+                // which requires a corner numbered >= 4 starting within the
+                // final 1000 m. No qualifying corner means no random draw.
+                let mut found = None;
+                for (i, row) in rows.iter().enumerate().rev() {
+                    let id = if row.get("index").is_some() { row.get_i64("index")? }
+                        else { i as i64 + 5 - rows.len() as i64 };
+                    if id >= 4 && distance - number(row, "start")? <= 1000.0 {
+                        found = Some(row);
+                        break;
+                    }
+                }
+                found
+            }
             else if name == "corner_random" && rows.iter().any(|r| r.get("index").is_some()) {
                 for r in rows { r.get_i64("index")?; }
                 rows.iter().rev().find(|r| r.get_i64("index").ok() == Some(arg as i64))
             } else {
-                // Final-corner selection is separate. Retain legacy metadata support.
-                let index=if name=="is_finalcorner_random" {rows.len() as i32-1} else {rows.len() as i32+arg-5};
+                // Retain legacy metadata support for unnumbered corners.
+                let index=rows.len() as i32+arg-5;
                 if index >= 0 { rows.get(index as usize) } else { None }
             };
             if let Some(row) = row {
@@ -435,6 +450,17 @@ mod tests {
         let mut rng=RetailRandom::new(123);
         assert!(matches!(sample_trigger("last_straight_random",1,&mut rng,&course).unwrap(),Windows::Distances(windows) if windows.is_empty()));
         assert_eq!(rng.draw_count,0);
+    }
+    #[test]
+    fn final_corner_random_requires_an_eligible_start() {
+        for (start, id, draws) in [(1399.0,4,0), (1400.0,4,1), (1500.0,3,0), (1500.0,90,1)] {
+            let course = crate::json::parse(&format!(
+                r#"{{"distance":2400,"corners":[{{"start":{start},"length":400,"index":{id}}}]}}"#)).unwrap();
+            let mut rng = RetailRandom::new(123);
+            let windows = sample_trigger("is_finalcorner_random",1,&mut rng,&course).unwrap();
+            assert_eq!(rng.draw_count, draws);
+            assert!(matches!(windows, Windows::Distances(rows) if rows.len() == draws));
+        }
     }
     #[test]
     fn all_ninety_official_delays_are_bit_exact_from_inputs() {

@@ -1,0 +1,546 @@
+{
+  "schema": 1,
+  "status": "unreleased candidate; all frozen captures match audited observations",
+  "baseVersion": "v73",
+  "baseCommit": "1df8c0e5393e1dd8e62734875e1609e4872b15c6",
+  "engineSha256": "3abd366a68fe06628cb9a5201dcc464fbab4f1d43746a082d533e0299062c1f1",
+  "engine": "target/followup-final-production/race_engine_rs_v2.exe",
+  "snapshotFrozenUtc": "2026-10-15T10:45:38.473272+00:00",
+  "completedUtc": "2026-10-15T11:47:44.708214+00:00",
+  "scope": "Observed official replay agreement at recorded precision and cadence; not population-wide or hidden-state equivalence.",
+  "newBatch": {
+    "races": 3995,
+    "beforeObservedExact": 3993,
+    "observedExact": 3995,
+    "discrepant": 0,
+    "errors": 0,
+    "excluded": 0,
+    "courses": 105,
+    "runners": 53135,
+    "officialCasts": 583982,
+    "runnerFrameSamples": 6967187
+  },
+  "previousCoverage": {
+    "races": 109459,
+    "observedExact": 109459
+  },
+  "before": {
+    "races": 113454,
+    "observedExact": 113452,
+    "discrepant": 2
+  },
+  "after": {
+    "races": 113454,
+    "observedExact": 113454,
+    "discrepant": 0
+  },
+  "resolvedRaces": 2,
+  "newRegressions": 0,
+  "resolvedReferenceSha256": [
+    "9970aac5d952c3446fe95fbf373d0ddd41f10184a31ed982ee3165571a68509e",
+    "a0d3e8f90797838305ec79a9a9b56d9307b47169f9b743fb7009067ee873b396"
+  ],
+  "full": {
+    "races": 113454,
+    "errors": 0,
+    "runners": 1094012,
+    "winner": 113454,
+    "placements": 1094012,
+    "finishExact": 113454,
+    "skillExact": 113454,
+    "frameExact": 113454,
+    "officialCasts": 11425407,
+    "simulatedCasts": 11425407,
+    "exactCasts": 11425407,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "observedExact": 113454,
+  "mechanicsExact": 113454,
+  "simulatorChangesRequired": true,
+  "coverage": {
+    "courses": 105,
+    "distinctDistances": 21,
+    "minDistance": 1000,
+    "maxDistance": 3600,
+    "byFieldSize": [
+      {
+        "runners": 9,
+        "races": 99466,
+        "observedExact": 99466
+      },
+      {
+        "runners": 12,
+        "races": 5425,
+        "observedExact": 5425
+      },
+      {
+        "runners": 14,
+        "races": 1051,
+        "observedExact": 1051
+      },
+      {
+        "runners": 15,
+        "races": 4520,
+        "observedExact": 4520
+      },
+      {
+        "runners": 16,
+        "races": 1326,
+        "observedExact": 1326
+      },
+      {
+        "runners": 18,
+        "races": 1666,
+        "observedExact": 1666
+      }
+    ]
+  },
+  "corrections": [
+    {
+      "mechanism": "At a section boundary, a returning forward group first refreshes a handed-over incumbent to the current leader of the incumbent running-style group. Subsequent restoration checks use that refreshed runner.",
+      "restoredRaces": 1
+    },
+    {
+      "mechanism": "The detailed runtime permits zero visible distance when vision debuffs exhaust the visible corridor. Physical front blocking remains independent of visibility.",
+      "restoredRaces": 1
+    }
+  ],
+  "regressions": {
+    "engineSha256": "3abd366a68fe06628cb9a5201dcc464fbab4f1d43746a082d533e0299062c1f1",
+    "passed": 46,
+    "total": 46,
+    "cases": [
+      {
+        "case": "additional-bonus-on-final-skill-tick",
+        "passed": true,
+        "runnerSamples": 910
+      },
+      {
+        "case": "additional-bonus-preserves-overtake-target",
+        "passed": true,
+        "runnerSamples": 923
+      },
+      {
+        "case": "adjoining-slope-boundary",
+        "passed": true,
+        "runnerSamples": 3982
+      },
+      {
+        "case": "continuous-rank-before-last-straight-entry-a",
+        "passed": true,
+        "runnerSamples": 818
+      },
+      {
+        "case": "continuous-rank-before-last-straight-entry-b",
+        "passed": true,
+        "runnerSamples": 819
+      },
+      {
+        "case": "cornerless-course-has-no-final-straight-entry",
+        "passed": true,
+        "runnerSamples": 671
+      },
+      {
+        "case": "course-11203-geometry-and-final-corner-lottery",
+        "passed": true,
+        "runnerSamples": 1563
+      },
+      {
+        "case": "duel-invites-finished-partner-second-roster",
+        "passed": true,
+        "runnerSamples": 918
+      },
+      {
+        "case": "duel-invites-finished-partner",
+        "passed": true,
+        "runnerSamples": 948
+      },
+      {
+        "case": "duel-joins-finished-group-01",
+        "passed": true,
+        "runnerSamples": 933
+      },
+      {
+        "case": "duel-joins-finished-group-02",
+        "passed": true,
+        "runnerSamples": 891
+      },
+      {
+        "case": "duel-joins-finished-group-03",
+        "passed": true,
+        "runnerSamples": 977
+      },
+      {
+        "case": "duel-joins-finished-group-04",
+        "passed": true,
+        "runnerSamples": 860
+      },
+      {
+        "case": "duel-joins-finished-group-05",
+        "passed": true,
+        "runnerSamples": 922
+      },
+      {
+        "case": "front-block-excludes-rounded-boundary",
+        "passed": true,
+        "runnerSamples": 1319
+      },
+      {
+        "case": "front-block-inclusive-precision-boundary",
+        "passed": true,
+        "runnerSamples": 926
+      },
+      {
+        "case": "front-block-retains-close-boundary",
+        "passed": true,
+        "runnerSamples": 2039
+      },
+      {
+        "case": "front-block-retains-far-boundary",
+        "passed": true,
+        "runnerSamples": 2559
+      },
+      {
+        "case": "front-runner-cached-leader-distance-gate-second-course",
+        "passed": true,
+        "runnerSamples": 926
+      },
+      {
+        "case": "front-runner-cached-leader-distance-gate",
+        "passed": true,
+        "runnerSamples": 813
+      },
+      {
+        "case": "front-runner-ignores-runaways",
+        "passed": true,
+        "runnerSamples": 964
+      },
+      {
+        "case": "front-runner-no-eligible-lead",
+        "passed": true,
+        "runnerSamples": 959
+      },
+      {
+        "case": "front-runner-waits-for-lead",
+        "passed": true,
+        "runnerSamples": 935
+      },
+      {
+        "case": "heal-history-earlier-caster",
+        "passed": true,
+        "runnerSamples": 1047
+      },
+      {
+        "case": "heal-history-later-caster",
+        "passed": true,
+        "runnerSamples": 932
+      },
+      {
+        "case": "last-straight-rank-change-after-entry",
+        "passed": true,
+        "runnerSamples": 708
+      },
+      {
+        "case": "late-corner-overtake-cached-state-a",
+        "passed": true,
+        "runnerSamples": 1387
+      },
+      {
+        "case": "late-corner-overtake-cached-state-b",
+        "passed": true,
+        "runnerSamples": 971
+      },
+      {
+        "case": "leader-gap-duration-rounding",
+        "passed": true,
+        "runnerSamples": 2451
+      },
+      {
+        "case": "new-activation-on-final-bonus-tick-1000",
+        "passed": true,
+        "runnerSamples": 726
+      },
+      {
+        "case": "new-activation-on-final-bonus-tick-1200",
+        "passed": true,
+        "runnerSamples": 881
+      },
+      {
+        "case": "new-activation-on-final-bonus-tick-1400",
+        "passed": true,
+        "runnerSamples": 828
+      },
+      {
+        "case": "pacemaker-handover-refresh-1800-a",
+        "passed": true,
+        "runnerSamples": 1696
+      },
+      {
+        "case": "pacemaker-handover-refresh-1800-b",
+        "passed": true,
+        "runnerSamples": 1708
+      },
+      {
+        "case": "pacemaker-handover-refresh-2100",
+        "passed": true,
+        "runnerSamples": 1334
+      },
+      {
+        "case": "pacemaker-handover",
+        "passed": true,
+        "runnerSamples": 1181
+      },
+      {
+        "case": "pacemaker-keeps-incumbent-in-range-large-field",
+        "passed": true,
+        "runnerSamples": 1945
+      },
+      {
+        "case": "pacemaker-keeps-incumbent-with-forward-group-in-range",
+        "passed": true,
+        "runnerSamples": 810
+      },
+      {
+        "case": "pacemaker-refresh-before-returning-forward-group",
+        "passed": true,
+        "runnerSamples": 708
+      },
+      {
+        "case": "pacemaker-restoration-after-selection-window",
+        "passed": true,
+        "runnerSamples": 843
+      },
+      {
+        "case": "pacemaker-restoration-at-section-boundary-1000",
+        "passed": true,
+        "runnerSamples": 656
+      },
+      {
+        "case": "pacemaker-restoration-at-section-boundary-1200",
+        "passed": true,
+        "runnerSamples": 747
+      },
+      {
+        "case": "pacemaker-retains-incumbent-under-later-style-leader",
+        "passed": true,
+        "runnerSamples": 985
+      },
+      {
+        "case": "pacing-gap-2500-float-rounding",
+        "passed": true,
+        "runnerSamples": 1946
+      },
+      {
+        "case": "stacked-vision-debuffs-remove-visible-corridor",
+        "passed": true,
+        "runnerSamples": 2930
+      },
+      {
+        "case": "straight-entry-clears-overlapping-corner",
+        "passed": true,
+        "runnerSamples": 974
+      }
+    ]
+  },
+  "fixturesAdded": [
+    {
+      "name": "pacemaker-refresh-before-returning-forward-group",
+      "referenceSha256": "a0d3e8f90797838305ec79a9a9b56d9307b47169f9b743fb7009067ee873b396",
+      "replaySha256": "c150a23e41870873f2e7463b55ab74b75ce3d304494f493bd753c42ddc423ae9",
+      "fixtureSha256": "98088bc68ebc2022b9111035db352e8ff981670fc2b9430f5af6c5bc15fb6576",
+      "bytes": 33984
+    },
+    {
+      "name": "stacked-vision-debuffs-remove-visible-corridor",
+      "referenceSha256": "9970aac5d952c3446fe95fbf373d0ddd41f10184a31ed982ee3165571a68509e",
+      "replaySha256": "a373c4f1337430827722c7e7f731ce2086dd162b70b60978381d096499a2c544",
+      "fixtureSha256": "8e23b312390b785ef46e0d8ae71b9c9afecf0cccc0cc2a6b2c0d166adc49741e",
+      "bytes": 67948
+    }
+  ],
+  "unitTests": {
+    "previousCandidate": {
+      "passed": 131,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ]
+    },
+    "defaultRelease": {
+      "passed": 131,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ]
+    },
+    "fastAllocRelease": {
+      "passed": 131,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ]
+    },
+    "newFailures": []
+  },
+  "protocol": {
+    "engines": {
+      "baseline": "3abd366a68fe06628cb9a5201dcc464fbab4f1d43746a082d533e0299062c1f1",
+      "candidate": "3abd366a68fe06628cb9a5201dcc464fbab4f1d43746a082d533e0299062c1f1"
+    },
+    "inputs_sha256": "9d6f267256ff434220a1217f54ee429c54f150ef8940e4959a9ef174ffad4f34",
+    "modes": [
+      {
+        "all_frames": false,
+        "equivalent_replies_per_binary_mode": 13,
+        "errors": [
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 100141"
+          }
+        ]
+      },
+      {
+        "all_frames": true,
+        "equivalent_replies_per_binary_mode": 13,
+        "errors": [
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 100141"
+          }
+        ]
+      }
+    ]
+  },
+  "previousReport": "evidence/new-races-followup-20261015-0929.json",
+  "previousReportSha256": "64e378874d9fb2e45bd7e1bf9b81521d138a7757461c9688ce23135779d62767",
+  "sourceHashes": {
+    "Cargo.toml": "2724218301608cca6d3e657ec2bcaf5ef678d1d2f80394dd668e56d0bf6eeb73",
+    "Cargo.lock": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+    "data/course_data.json": "6a61cec5958cbc7f47effff59edcdd3f623456353c98d3baa9110e83b9b9cc9b",
+    "src/activation_conditions.rs": "813aa8a66eee5beb272352b6d5ea6609a299b7b08f5355ae219b4367cc4e4297",
+    "src/activation_sample_policy.rs": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+    "src/api.rs": "f71456075056bb064a770ed79646081b186c2f96837905716f84d41c85c99f19",
+    "src/binary_replay.rs": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e",
+    "src/condition_parser.rs": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+    "src/conserve_power.rs": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+    "src/course_data.rs": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+    "src/ffi.rs": "eaa607d39527d8427f93d1c631bb5a6caa2d3f6ca739995f64a06b1844c7f1e2",
+    "src/horse_types.rs": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+    "src/hp_policy.rs": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade",
+    "src/json.rs": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26",
+    "src/lane_selection.rs": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+    "src/lib.rs": "b94183ccca366786c0242b9a632639116d43b5fbd11720adc1c72e718fd6f165",
+    "src/main.rs": "401000b4d06b8129d600b6feef929fb64b8c7df73d83d0e4719bf0c3cf68189d",
+    "src/overtaking.rs": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+    "src/race_field.rs": "6f6b5751a3a9581b93b3f69c990bd665ce4de4f509c2a29a5fb0e1f9820d9c86",
+    "src/race_field_retail.rs": "9cb1189aafc28aceacc613444e8230bc37bfe0b15fb42883215112c768f6d0a1",
+    "src/race_parameters.rs": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106",
+    "src/race_solver.rs": "b0f10c10429805fe39685097a7d45bc706ba3d8acf6bfcfcc2a0a6a0218a0213",
+    "src/race_solver_builder.rs": "1f5f1ff9195599fa8441375ff604d7aae59b466d857c398ddc92ecb6a86d057e",
+    "src/race_solver_retail.rs": "faf41a4c2afb500e0653d6d3786dfe40bfa12e776b5226cea4f455a18c59f013",
+    "src/random_gen.rs": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+    "src/region.rs": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+    "src/replay_frames.rs": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac",
+    "src/replay_worker.rs": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d",
+    "src/retail_geometry.rs": "b5573066ad71e7e5291841b46123dc734d47d4d60ca422330a2b4098a3d4fb81",
+    "src/retail_geometry_assets.rs": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+    "src/retail_initialization.rs": "553a6f17bc56b835d99d129438af93e4d46a4896b196f723f93ba93c224e2e71",
+    "src/retail_lane.rs": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8",
+    "src/retail_physics.rs": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976",
+    "src/retail_position_keep.rs": "019be12532bb862ed8822692f0e266cc5674e74eb9892fe5eacd0166afe150af",
+    "src/retail_random.rs": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+    "src/retail_sort.rs": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+    "src/retail_spurt.rs": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+    "src/retail_states.rs": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+    "src/rushing.rs": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+    "src/stadium_score.rs": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+    "src/starting_grid.rs": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
+  },
+  "captureVerification": {
+    "previousInventorySha256": "e13fe7539cccc5e0792c58751f2fa8b94154c6dcf35a3b7c390c6a73e2b27b12",
+    "retainedVerifiedCaptures": 96272,
+    "newlyVerifiedCaptures": 3995,
+    "method": "Old manifest bytes must remain an identical prefix; all appended capture and receipt files and replay hashes are verified. Archived master databases and projections are rehashed. Previously audited capture files are not reread."
+  },
+  "audit": {
+    "racesExecuted": 113454,
+    "seconds": 987.0974054000108,
+    "workerRoundTripMeanMs": 10.255832950473435,
+    "timingScope": "Full-frame worker round trip under concurrent audit load, not isolated API latency",
+    "unchangedFullOutputs": 113452,
+    "changedFullOutputs": 2,
+    "inputAndOutputHashReuse": "Every race was re-executed. Scores were reused only for identical pre-race requests and complete binary outputs.",
+    "resultsSha256": "5ad8ecceecbb2a136b6c424fdf79e281734e22c9469043c383c9f0eb8cda326e",
+    "summarySha256": "20993766d880ca6b28d91182fe38868ba3adead3a85f9ceb2a7e817cf1d221d6"
+  },
+  "frameCounts": {
+    "samples": 128047332
+  },
+  "extraFrameCounts": {
+    "samples": 128047332
+  },
+  "resultFields": {
+    "runners": 1094012,
+    "startDelayTimeExact": 1094012,
+    "gutsOrderExact": 1094012,
+    "wizOrderExact": 1094012,
+    "lastSpurtStartDistanceExact": 1094012,
+    "runningStyleExact": 1094012
+  },
+  "recordedDurations": {
+    "official": 11425407,
+    "simulated": 11425407,
+    "paired": 11425407,
+    "exact": 11425407,
+    "withinOneWireUnit": 11425407,
+    "largerDifference": 0,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 11425407,
+    "startupSentinels": 1934154,
+    "paired": 11425407,
+    "exact": 11425407,
+    "mismatch": 0,
+    "extraSimulated": 0
+  }
+}

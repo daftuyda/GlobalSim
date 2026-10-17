@@ -1,5 +1,5 @@
 {
-  "version": "v73",
+  "version": "v74",
   "archive_sha256": "b3959bcc729e32c046096c11344233b1b276a8cfaa896ca40fe27a2a5b22582a",
   "files": [
     {
@@ -402,7 +402,7 @@
       "path": "data/course_data.json",
       "archive_path": "inputs/812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98-course_data.json",
       "archive_sha256": "812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98",
-      "sha256": "812d883a12035055743b2d2d19b02e77043618ec080330690138d2435a1abb98"
+      "sha256": "6a61cec5958cbc7f47effff59edcdd3f623456353c98d3baa9110e83b9b9cc9b"
     },
     {
       "path": "data/course_geometry/10905.json",
@@ -822,7 +822,7 @@
       "path": "src/activation_conditions.rs",
       "archive_path": "src/activation_conditions.rs",
       "archive_sha256": "38da21e2e840ebb7a5ff0c5bc9380e9809721f9795483e205e5b437addcc7a7a",
-      "sha256": "370fa07bf8bfdf2852f3be8ec6a5930ee96c51832b9e6f56ef4a9ba22605e1ee"
+      "sha256": "8316dd1f91208dc95bdbdacb97b1386422dd4e8e344de618a3128ea42d62933a"
     },
     {
       "path": "src/activation_sample_policy.rs",
@@ -888,7 +888,7 @@
       "path": "src/race_field.rs",
       "archive_path": "src/race_field.rs",
       "archive_sha256": "6b78ab128f3d64cadc13ae4db700c968899808909a87076c8128adda897e3a3b",
-      "sha256": "eb1bd5f23957d834cb8e75019f8217db2909997e6d0909114dba35c4a9b3796e",
+      "sha256": "e10f7edf51be7463afee6eb76649c9f353d3eb1f488c8cfadbd56261e310cdf3",
       "release_sha256": "81d6717b287cb3a9e9f85a5c62273d5c6a78c8f4fa1cf7132410fd2225fb33cb"
     },
     {
@@ -907,20 +907,20 @@
       "path": "src/race_solver.rs",
       "archive_path": "src/race_solver.rs",
       "archive_sha256": "0c01fd0ed38154818be3809977e49a8ce3b1a9e6333627db7153cf0131e7531b",
-      "sha256": "fdf1847c6fd189b90420dc5c6b132fbdd4cc9402face2cee2c8d1d04419a68c7",
+      "sha256": "1b4175b15b66a7c21522c73bc332214b06bc088a860893e4971b6818c599aa62",
       "release_sha256": "286f49a5b3083dff0af972f61322dce798348764247baaca1f7b05988b3ad070"
     },
     {
       "path": "src/race_solver_builder.rs",
       "archive_path": "src/race_solver_builder.rs",
       "archive_sha256": "2332903e7dcbf8075b66eb399909e376864838976c91dceb3224bcbe737a7690",
-      "sha256": "1f5f1ff9195599fa8441375ff604d7aae59b466d857c398ddc92ecb6a86d057e"
+      "sha256": "8f82d45f96b28f5d57235525c044988651ab12fdf2d2e5138f3628285bfa7aa1"
     },
     {
       "path": "src/race_solver_retail.rs",
       "archive_path": "src/race_solver_retail.rs",
       "archive_sha256": "0b9d4c01c348d9420faec616526a873ce7f8e8ff7c421f7d77e09235d3ade157",
-      "sha256": "c9dacbf53e7f536fb1889b0c77e1a0f63cb87b574dbcb17a1b34798fbf95e790"
+      "sha256": "dbc2b8764c5dba9127629c9c9d242a0786c9a1f3cb50ba88185df3da6e593c75"
     },
     {
       "path": "src/random_gen.rs",
@@ -938,7 +938,7 @@
       "path": "src/retail_geometry.rs",
       "archive_path": "src/retail_geometry.rs",
       "archive_sha256": "2773a11ecfff60f4ebcc023840e135c5c4345f8be0fabed77e9fdb2a38449310",
-      "sha256": "fdb4033b35a038cfc05588ec587d9d9c5536edcce1f1f025cffb5b7fadb4a380"
+      "sha256": "b5573066ad71e7e5291841b46123dc734d47d4d60ca422330a2b4098a3d4fb81"
     },
     {
       "path": "src/retail_geometry_assets.rs",
@@ -950,13 +950,13 @@
       "path": "src/retail_initialization.rs",
       "archive_path": "src/retail_initialization.rs",
       "archive_sha256": "e9ca4ec8b50370082836f332cb06d84101b83babcc97e99cd67779771760df22",
-      "sha256": "a4106979ac52a84c30cfba253943d9921cb9ddc6f66657c4d916c5101e6020d4"
+      "sha256": "553a6f17bc56b835d99d129438af93e4d46a4896b196f723f93ba93c224e2e71"
     },
     {
       "path": "src/retail_lane.rs",
       "archive_path": "src/retail_lane.rs",
       "archive_sha256": "7c26006355c2f99b1d6c97fe65ad2b411233691e0421db69928dd02649e0c11b",
-      "sha256": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8"
+      "sha256": "3b92e98e78b263cf311f63040056bd9fbb30e1d9432600b16f6a3968a8f0dc44"
     },
     {
       "path": "src/retail_physics.rs",
@@ -968,7 +968,7 @@
       "path": "src/retail_position_keep.rs",
       "archive_path": "src/retail_position_keep.rs",
       "archive_sha256": "416a0b7e3fc91b9fe127ccba597c84eefa3e07ce274f24f5e19418442ec9817e",
-      "sha256": "30389dfd520cb67fc1436f001d1c0a4ca9292b774b12471fc96ef40e2c2fb67b",
+      "sha256": "019be12532bb862ed8822692f0e266cc5674e74eb9892fe5eacd0166afe150af",
       "release_sha256": "d28724c8e1087e2d0f8e88b3a28a35dd9b98b3834142af01ae353ff6cc88d505"
     },
     {
@@ -987,7 +987,7 @@
       "path": "src/retail_spurt.rs",
       "archive_path": "src/retail_spurt.rs",
       "archive_sha256": "71670bbab6576a335bf21fb5a1f3d5f723cd1fb9fc06c8cdf633039fbad28459",
-      "sha256": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8"
+      "sha256": "bfd0ca051e589ea1d91a0fe646f08822739872e81c7328ea4f3c729cf74c4c75"
     },
     {
       "path": "src/retail_states.rs",
@@ -1195,17 +1195,177 @@
     },
     {
       "path": "VERSION",
-      "sha256": "eff48ec1c8587a89746101c616cb6375700712400d5a77a3dd802598a80cb147"
+      "sha256": "56b84d8d77481ce69331f10b8e04dff0080cbd57842a7c81914e75a3de68db87"
     },
     {
-      "path": "examples/v73-race.jsonl",
+      "path": "examples/v74-race.jsonl",
       "sha256": "525d4b31d54120a8ea7cfae334480b7a723d094ce55d765c4c2914067d39f980"
     },
     {
-      "path": "examples/v73-settings.json",
+      "path": "examples/v74-settings.json",
       "sha256": "793d74406f14dcf1f4720bdd4378a1ef52287e39105a76724da037c1398eeecb"
+    },
+    {
+      "path": "tests/fixtures/accuracy/continuous-rank-before-last-straight-entry-a.json.gz",
+      "sha256": "30cacef038d21eb1190795c28572ff8472e3341d458f99d15a11c496fdb96f29"
+    },
+    {
+      "path": "tests/fixtures/accuracy/continuous-rank-before-last-straight-entry-b.json.gz",
+      "sha256": "ac79f4aacab12d5585d6727c41078ad510c621aa96ea260de3cdb5c127310d2f"
+    },
+    {
+      "path": "tests/fixtures/accuracy/cornerless-course-has-no-final-straight-entry.json.gz",
+      "sha256": "77ed2ee4326f05e876e8885df2cccc3bc440c7774b2c49aa91e663eaea98ff9c"
+    },
+    {
+      "path": "tests/fixtures/accuracy/course-11203-geometry-and-final-corner-lottery.json.gz",
+      "sha256": "dfe7d49482c89c2c0af383b7f8201230d9cee8aaa1cea66fbe6fc20a505cebea"
+    },
+    {
+      "path": "tests/fixtures/accuracy/duel-warmup-completes-after-own-finish.json.gz",
+      "sha256": "ab8c08546a9551b126ace31681fe049567d558ccfdf0b8b8181b54fb4b342f17"
+    },
+    {
+      "path": "tests/fixtures/accuracy/final-corner-overtake-on-entry-tick.json.gz",
+      "sha256": "ffc5617ed523c149b7d1aae984af8efc8c9f4a1b7dcb835b8b05a5ffb67c6e25"
+    },
+    {
+      "path": "tests/fixtures/accuracy/finished-lane-movement-affects-trailing-runner.json.gz",
+      "sha256": "5af53d5392919c3b37ef10c4d1bc925c9b2ebd26740e261d9281bc659890fe40"
+    },
+    {
+      "path": "tests/fixtures/accuracy/hp-percent-truncation-boundary.json.gz",
+      "sha256": "be1628103a1937ab9923bf6fa6cc36fe5ca37b5ac9bc703bed45398f12b53b1d"
+    },
+    {
+      "path": "tests/fixtures/accuracy/inward-passing-corridor-wide-comparison.json.gz",
+      "sha256": "3e81578dae3c62d195e9068177aac6005428744112cf31eea5736465dad554cd"
+    },
+    {
+      "path": "tests/fixtures/accuracy/last-straight-rank-change-after-entry.json.gz",
+      "sha256": "955af5d5bff662006c3c9b21243eb25084530df5012e2fb057a2233eaefda21f"
+    },
+    {
+      "path": "tests/fixtures/accuracy/late-corner-overtake-cached-state-a.json.gz",
+      "sha256": "154aa0e23fe93c49a32f4e9f4f5fc5e73202cec040f1602d76079e26b93f2b35"
+    },
+    {
+      "path": "tests/fixtures/accuracy/late-corner-overtake-cached-state-b.json.gz",
+      "sha256": "e09f444a0fb6255238ed5c68194dd1e2f0cfe6375c68437529b6cf803fe9b276"
+    },
+    {
+      "path": "tests/fixtures/accuracy/late-gate-activation-preserves-start-delay.json.gz",
+      "sha256": "722e1d32779d443f8bf85b7994d1bb845accbe20f2a30d7295fe2593e9e6bdc2"
+    },
+    {
+      "path": "tests/fixtures/accuracy/lead-competition-partner-past-entry-cutoff.json.gz",
+      "sha256": "c0c87582c2dc5da5315933dfbe6a20361465120d9157eacb795f7255fc66961e"
+    },
+    {
+      "path": "tests/fixtures/accuracy/new-activation-on-final-bonus-tick-1000.json.gz",
+      "sha256": "b94ccfd2fb461a6e1ea296832859a0e51e91de9268e2e54b52adc879401eebbf"
+    },
+    {
+      "path": "tests/fixtures/accuracy/new-activation-on-final-bonus-tick-1200.json.gz",
+      "sha256": "267108a72748155118bae39f86975937aabb3482d23fa341df41c075410bc3c1"
+    },
+    {
+      "path": "tests/fixtures/accuracy/new-activation-on-final-bonus-tick-1400.json.gz",
+      "sha256": "cab4ebf652c7ba38cb5a3774be667da07bdae3e6077436dc7ea0f58d89ccd928"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-handover-refresh-1800-a.json.gz",
+      "sha256": "82ee16faa233634af9466709e3eae63f45577f51e5d0c9d44fb403640cecc6aa"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-handover-refresh-1800-b.json.gz",
+      "sha256": "ac6d7885a20f1344bc0cbf81c9da1f62c2c899e59c3901ae810aafb7da786ef8"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-handover-refresh-2100.json.gz",
+      "sha256": "5e81db5054452224eb2643cdaa4c6fe58463c88667ee716afdd461c712f9e4a3"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-keeps-incumbent-in-range-large-field.json.gz",
+      "sha256": "12ecee2ab2389ffa39f528583094d8cfd37069a94171a94f4ce2eb9d8ac64b8c"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-keeps-incumbent-with-forward-group-in-range.json.gz",
+      "sha256": "a309e7a60912d9b729002e67b8074a7eae49af506e67904c339c518c91752c63"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-refresh-before-returning-forward-group.json.gz",
+      "sha256": "98088bc68ebc2022b9111035db352e8ff981670fc2b9430f5af6c5bc15fb6576"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-refresh-restarts-count-consecutive-sections.json.gz",
+      "sha256": "79f747d60645a71764ed6e6745c8caf8d198551905751b39961511228f774c5c"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-refresh-restarts-count-one-section.json.gz",
+      "sha256": "159f472549f5df0d0ba1a9618a375126f294cea54e579b0747989ed19e9de0d7"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-restoration-after-selection-window.json.gz",
+      "sha256": "12c7c3efc1fbc1b7ec9176e7f7ca5de99bc5ec7c8a256ea2ac46e7ea8306aa57"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-restoration-at-section-boundary-1000.json.gz",
+      "sha256": "2ae4ada563e95c3a20a2f7b3daff5cf901c9bc5c8438cf87c46991aaffd5d74b"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-restoration-at-section-boundary-1200.json.gz",
+      "sha256": "f72d184315ce7f240199f73a8f62384a63eb6daa30f5a2d191086a1513279721"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-retains-incumbent-under-later-style-leader.json.gz",
+      "sha256": "7039f75d44bc68286b784f0574bf9e6352222299fce332ae8f6d8d42a1416f7b"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-returning-runaway-keeps-incumbent.json.gz",
+      "sha256": "51f317b5ee28636d0396fe11623a10d159dcb7f665119fa1614ae2d28866e73a"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacemaker-section-keeps-full-course-precision.json.gz",
+      "sha256": "27367f4ae0036e37a94e1c7fb121ef023f0af0eb683df830f87f9ef3396201cf"
+    },
+    {
+      "path": "tests/fixtures/accuracy/pacing-gap-2500-float-rounding.json.gz",
+      "sha256": "3077627955f9a9d379b384ebdbaf930e88a2bef0012948b314fdd77dc653f1d9"
+    },
+    {
+      "path": "tests/fixtures/accuracy/speed-stat-ground-penalty-rounding-2200.json.gz",
+      "sha256": "6498a6fdab13c89a63058f24c472de13260e4d246332f514adcb11f67e92edbe"
+    },
+    {
+      "path": "tests/fixtures/accuracy/speed-stat-ground-penalty-rounding-2300.json.gz",
+      "sha256": "bae3fe34a8c1cc5038c6c00f20435371318009372551d5974f4c5d322b00dd47"
+    },
+    {
+      "path": "tests/fixtures/accuracy/spurt-guts-product-retains-wide-precision.json.gz",
+      "sha256": "cf9c242fcddad5385dc2efed856863c401840585c4d95d25b504401effa7fc54"
+    },
+    {
+      "path": "tests/fixtures/accuracy/spurt-normal-cost-rounding-accepts-plan.json.gz",
+      "sha256": "263a1fd05154d709f221e97e4260dfd6f20cee5d657b5e950a6a58c07a2cdfb9"
+    },
+    {
+      "path": "tests/fixtures/accuracy/spurt-normal-cost-rounding-rejects-plan.json.gz",
+      "sha256": "06b8d3c0ced7dc52cdf5ab49e716497c3a4d9b9c36df6be22185630276b3a879"
+    },
+    {
+      "path": "tests/fixtures/accuracy/stacked-vision-debuffs-remove-visible-corridor.json.gz",
+      "sha256": "8e23b312390b785ef46e0d8ae71b9c9afecf0cccc0cc2a6b2c0d166adc49741e"
+    },
+    {
+      "path": "tests/fixtures/accuracy/straight-entry-clears-overlapping-corner.json.gz",
+      "sha256": "54faecfb57f0655a06553d2e799e6848566df30326c1bd673f0bf25232b9e829"
+    },
+    {
+      "path": "tests/fixtures/accuracy/visible-cone-width-rounding-boundary.json.gz",
+      "sha256": "bb7b21be97d20268ed699ef1d86229f0182b6c5b5afb2fa0044da159407f39d6"
     }
   ],
-  "relocations": "Local include and geometry-test paths retained; current source hashes describe v73.",
-  "build_variant": "v73 with prepared Rust/C API, final-turn skill bonuses, captured front-block rounding, leader-gap duration precision, optional fast allocator and profile-guided builds"
+  "relocations": "Local include and geometry-test paths retained; current source hashes describe v74.",
+  "build_variant": "v74 with captured-race corrections to pacing, lane selection, skill timing, course transitions and spurt arithmetic"
 }

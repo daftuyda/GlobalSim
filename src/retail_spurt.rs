@@ -76,11 +76,12 @@ pub fn choose(
         while sprint_distance > 0. {
             let slow_time = (remaining - sprint_distance) / input.base_speed;
             let fast_time = sprint_distance / speed;
-            // v80: the server keeps the two times as float locals but evaluates the cost sum
-            // and its comparison with HP at double precision (x87-style). Exact float ties
-            // (expansion-11-0100, 15-0239) are infeasible; the client's SSE float sum
-            // (CalcSpurtDistance 0x3429ee0) would accept them.
-            let needed = slow_time as f64 * base_cost as f64 + fast_time as f64 * cost as f64;
+            // Store the normal-pace cost as a float before adding the wider
+            // sprint cost. Rounding both products, or neither product, changes
+            // feasibility at captured HP boundaries and can select a different
+            // 30 m plan. Keep the final sum and comparison at double precision.
+            let slow_cost = slow_time * base_cost;
+            let needed = slow_cost as f64 + fast_time as f64 * cost as f64;
             let start = (input.distance - parameters.buffer) - sprint_distance;
             if input.hp as f64 >= needed && start < latest {
                 return Some(Candidate {

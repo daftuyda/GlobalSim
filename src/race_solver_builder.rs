@@ -261,8 +261,11 @@ pub fn build_adjusted_stats_for_mode(base: &HorseParameters, course: &CourseData
     // Extracted Global.SingleModeAdd* values; added after base-stat adjustments.
     let bonus = if single_mode { 400.0 } else { 0.0 };
     HorseParameters {
-        speed: (((base.speed as f32 * race_course_modifier as f32)
-            + GROUND_SPEED_MODIFIER[course.surface as usize][ground] as f32)
+        // Round after combining the course bonus and ground penalty. An
+        // intermediate float store can change the adjusted stat when the
+        // penalty crosses a float exponent boundary, affecting spurt speed.
+        speed: (((base.speed as f32 as f64 * race_course_modifier as f32 as f64
+            + GROUND_SPEED_MODIFIER[course.surface as usize][ground]) as f32)
             + bonus as f32).clamp(1.,2000.) as f64,
         stamina: (base.stamina + bonus).clamp(1.0,2000.0),
         power: (base.power + GROUND_POWER_MODIFIER[course.surface as usize][ground] + bonus).clamp(1.0,2000.0),

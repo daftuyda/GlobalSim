@@ -291,6 +291,7 @@ impl CourseGeometry {
         }
         let mut lane_max_changes = Vec::new();
         let mut corner_events = Vec::new();
+        let mut straight_entries = Vec::new();
         let mut final_corner_half = None;
         let mut first_corner: Option<f32> = None;
         let mut first_override: Option<(f32, Option<bool>)> = None;
@@ -299,6 +300,9 @@ impl CourseGeometry {
                 let kind = event.get_f64("kind")?;
                 let boundary = number(event, "distance")?;
                 let values = event.get_array("values_i32")?;
+                if kind == 2. && values.first().and_then(Value::as_i64) == Some(1) {
+                    straight_entries.push(boundary);
+                }
                 if kind == 0. && !values.is_empty() {
                     let id = values[0].as_i64().ok_or("Invalid corner ID")? as i32;
                     let length = if values.len() > 1 { finite(&values[1])? } else { 200. };
@@ -331,6 +335,14 @@ impl CourseGeometry {
         }
         // Stable here: event ordering is not the runner comparison sort.
         corner_events.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
+        // EventStraightChange clears CurCorner even when the recorded corner
+        // length extends beyond the straight's entry. Preserve the final-
+        // corner flag, which is a separate persistent state.
+        for (start, end, _, _) in &mut corner_events {
+            for &entry in &straight_entries {
+                if entry >= *start && entry < *end { *end = entry; }
+            }
+        }
         lane_max_changes.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
         let (first_move_lane_point, empty_in_move) = match first_override {
             Some((point,Some(inward))) => (point,point>0. && inward),
@@ -556,6 +568,15 @@ mod tests {
                     }
                 }
             }
+        }
+    }
+    #[test]
+    fn straight_entry_clears_an_overlapping_corner() {
+        let geometry = CourseGeometry::bundled(11102, 1800.).unwrap();
+        for (pos, expected) in [(500.,(2,false)), (599.99,(2,false)),
+            (600.,(0,false)), (649.99,(0,false)), (1100.,(3,false)),
+            (1250.,(4,true)), (1414.,(0,true))] {
+            assert_eq!(geometry.corner_state_at(pos,true), expected);
         }
     }
 

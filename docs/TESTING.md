@@ -6,22 +6,26 @@ Run the Rust test suite with:
 cargo test --release --locked
 ```
 
-Both default and `fast-alloc` release suites have **125 passing tests and 11 pre-existing failures**.
+Both default and `fast-alloc` release suites have **133 passing tests and 11 pre-existing failures**.
 The failure set is unchanged. Failures cover
 numerical reference comparisons, geometry, stamina and spurt behavior,
 lateral movement, and duel conditions.
-[Default allocator log](../evidence/parity-default-tests.txt),
-[fast allocator log](../evidence/parity-fast-tests.txt).
+[Default allocator log](../evidence/morning-batch-20261017-default-tests.txt),
+[fast allocator log](../evidence/morning-batch-20261017-fast-tests.txt).
 
 Unit tests, persistent-worker checks and [official-race benchmark results](ACCURACY.md)
 measure different aspects of the engine and should be considered together.
 
-The current accuracy build passes **23 captured regressions** and all audited
-observations across **47,664 official races**. The optimized build reproduces
-every complete packet from the scored build. There are no observed regressions.
-[Current validation](../evidence/parity-validation-20261014.json).
+The current accuracy build passes **63 captured regressions** and matches all
+audited observations in **203,572 of 203,572 captured official races**.
+[Current validation](../evidence/new-races-20261017-morning.json).
 
-The current prepared library matches 843 runs per frame mode against the ordinary
+JSON and binary output agree across 13 requests per frame mode, including
+changed skill data, invalid/empty tables, recovery and runner permutations.
+The binary helper produces identical packets with both sparse and full frames.
+[Current protocol checks](../evidence/morning-batch-20261017-protocol.json).
+
+The v73 prepared library matches 843 runs per frame mode against the ordinary
 release worker, plus 24 concurrent runs and handle isolation/recovery checks.
 The binary protocol check matches 281 replies per frame mode, including expected
 errors. [Library checks](../evidence/parity-native-parity.json),
@@ -39,7 +43,7 @@ and enabled. Expected error replies also match.
 [helper checks](../evidence/prepared-helper-worker.json),
 [binary checks](../evidence/prepared-protocol-check.json).
 
-The current ordinary release build matches **186 raw-wire replies**, including 78 expected errors, covering
+The v73 ordinary release build matches **186 raw-wire replies**, including 78 expected errors, covering
 Unicode, whitespace, escaped and duplicate keys, malformed requests, numeric
 token boundaries and recovery. [Raw-wire results](../evidence/prepared-wire-parity.json).
 
@@ -89,7 +93,7 @@ coverage of that positive float32 range, not of all float64 values.
 To compare two persistent workers on your own inputs:
 
 ```powershell
-python tools/check_worker_parity.py --engine target/release/race_engine_rs_v2.exe --baseline path/to/previous-engine.exe --inputs examples/v73-race.jsonl
+python tools/check_worker_parity.py --engine target/release/race_engine_rs_v2.exe --baseline path/to/previous-engine.exe --inputs examples/v74-race.jsonl
 ```
 
 Add `--isolation` when supplying captured inputs with `skillData` and equipped
@@ -103,26 +107,45 @@ encoding concurrency while retaining the same JSON contract.
 
 ## Full captured-race validation
 
-All **47,664 races** match the audited official observations: raw finishes,
-winners, all 435,508 placements, all 4,497,700 skill starts and every compared
-replay sample. Recorded skill durations, detail choices, visual recipient masks
-and competition events also match. Binary PGO replies preserve all metadata
-and every generated frame from the scored build. These are regression checks,
-not a guarantee for unseen races.
-See [validation evidence](../evidence/parity-validation-20261014.json) and the
+Full dataset validation covers **203,572 races**, 2,210,585 runners and 266,951,869 compared
+pre-finish runner/frame samples. It checks raw finish times, ordering, skill
+starts, detail choices, recorded durations, visual recipients, competition
+events, movement and recorded runner state. **All 203,572 races pass every check**.
+These are regression checks, not a guarantee for unseen races.
+See [validation evidence](../evidence/new-races-20261017-morning.json) and the
 [comparison definitions](ACCURACY.md).
 
-Twenty-three included regression fixtures cover pacemaker restoration, healer-history
+Sixty-three included regression fixtures cover pacemaker restoration, healer-history
 timing for both runner update orders, an exact shared slope boundary,
 front-runner competition eligibility, cached leader identity at the 150 m
 threshold, invitations to finished duel partners and entry into groups that
 remain active past the finish line. They also cover bonuses queued on a skill's
 final tick, inclusive and exclusive front-block boundaries, and leader-gap
-duration rounding. Checks include finish times, skill starts, competition
-events, visual recipient masks and sampled movement; the new fixtures also
+duration rounding. Further cases cover final-corner lottery eligibility,
+overlapping corner/straight events, one-time straight entry, cornerless courses,
+cached overtake state, continuous rank history and activations before a running
+skill's final ordered turn. Pacemaker cases cover in-range and detached forward
+groups, restoration at section boundaries and after selection ends, and the
+exact pace-up gap that must not consume a lottery draw. Further fixtures cover
+refreshing the handed-over group leader before forward-group restoration and
+an empty visible corridor under stacked vision debuffs. Additional fixtures cover
+an overtake on the final-corner entry tick, a competition partner beyond the
+entry cutoff, post-finish lane movement affecting an unfinished runner, and
+a one-float visibility-cone boundary that changes passing direction. Six further
+fixtures cover a late gate-skill activation preserving bad-start state, duel
+warmup completing after the entrant finishes, opposite spurt HP rounding
+boundaries, and section-counter resets after isolated or consecutive pacemaker
+refreshes. Three further fixtures cover course/ground speed-stat rounding on
+two courses and a counterexample that preserves the wider spurt guts product.
+Three new cases cover a returning Runaway retaining the pacemaker incumbent,
+HP-percentage truncation before a skill trigger, and a control preserving the
+full course-section precision. An additional case covers an inward passing
+corridor whose final boundary must retain wider precision during comparison.
+Checks include finish times, skill starts, competition
+events, visual recipient masks and sampled movement; recent fixtures also
 check recorded skill durations. The engine receives only pre-race inputs;
 expected official observations are checked separately.
-[Fixture results](../evidence/parity-regressions.json).
+[Fixture results](../evidence/morning-batch-20261017-regressions.json).
 
 ```powershell
 python tools/check_accuracy_regressions.py --engine target/release/race_engine_rs_v2.exe
@@ -136,7 +159,9 @@ for latency comparisons.
 
 Focused unit tests additionally check queued-bonus caps, cooldown cleanup and
 receiver expiry, front-block edges one float apart, and duration multiplier
-rounding and clamps.
+rounding and clamps. Adjacent-float visibility checks exercise both sides of the
+captured cone boundary. Post-finish movement checks cover signed step speed,
+side permissions, target clamping and exclusion of normal lane modifiers.
 
 ## Binary protocol checks
 
@@ -162,7 +187,7 @@ Failed preparation clears the old race; failed runs clear the old reply and
 permit recovery. [Generic API checks](../evidence/prepared-generic-api.json),
 [PGO API checks](../evidence/prepared-pgo-api.json).
 
-The current prepared PGO library check uses 270 captured inputs and generated
+The v73 prepared PGO library check uses 270 captured inputs and generated
 variants, comparing every selected frame value and all metadata with the release
 worker. Rust unit tests additionally compare prepared initialization with the original path across
 signed seed boundaries, checking exact float bits and subsequent RNG draws.

@@ -164,7 +164,10 @@ impl RaceField {
         // skill that uses them is being checked.
         for (i, &r) in rank_of.iter().enumerate() {
             if let Ok(s) = self.solvers[i].try_borrow() {
-                crate::activation_conditions::track_order_bands(&s, r, &self.order_band_thresholds);
+                // Continuity is updated from the existing rank before the new
+                // order is published. Skills read that stored history.
+                let tracked_rank = if s.retail.is_some() { prev[i] } else { r };
+                crate::activation_conditions::track_order_bands(&s, tracked_rank, &self.order_band_thresholds);
             }
         }
         std::mem::swap(&mut *self.rank_of.borrow_mut(), rank_of);
@@ -658,10 +661,10 @@ impl RaceField {
             let pace = &solver.retail.as_ref().unwrap().config.pace;
             (pace.end_section(), pace.pacemaker_forward_range, pace.pacemaker_not_forward_count)
         };
-        // Position-keep exits still consult the incumbent after the selection
-        // window closes. Do not perform a late handover or restoration.
-        // Once closed, neither a roster allocation nor style scans are needed.
-        if previous.is_some() && section as f32 >= end { return; }
+        // Section-based selection ends here, but an active position-keep
+        // effect can still observe restoration of the forward group.
+        // Once restored, late ticks need neither allocation nor style scans.
+        if previous.is_some() && section as f32 >= end && !self.pm_handed.get() { return; }
         let active: Vec<_> = order.iter().copied().filter(|&i| {
             let h=self.solvers[i].borrow(); h.pos < h.course.distance
         }).collect();
@@ -669,13 +672,28 @@ impl RaceField {
         let leader=*active.iter().find(|&&i|style(i)==forward).unwrap();
         let (mut selected, old_section)=previous.unwrap_or((leader,0));
         if previous.is_none() {self.section_pacemaker.set(Some((leader,0)));}
-        if section>old_section {
-            if style(overall)==forward && (section as f32)<end {selected=leader;}
-            // In a frontless field, a detached forward runner yields to the
-            // most-forward style within range, preserving order within style.
-            if forward > 1 && pos(overall)-pos(leader)>=range {
+        let entering_section = section > old_section && (section as f32) < end;
+        if entering_section {
+            // A returning forward leader first refreshes the handed-over
+            // group's incumbent at a section boundary. A returning Runaway
+            // retains the incumbent through this pass. Restoration then
+            // compares against that group's current leader on later ticks.
+            if self.pm_handed.get()
+                && self.strategies[leader] != Strategy::Oonige
+                && active.iter().position(|&i|i==leader) < active.iter().position(|&i|i==selected) {
+                selected=active.iter().copied().find(|&i|style(i)==style(selected)).unwrap_or(selected);
+            }
+            if style(overall)==forward && !self.pm_handed.get() {selected=leader;}
+            // A detached forward group yields to the most-forward style
+            // within range, preserving rank within that style. Front Runners
+            // participate in this refresh once a handover has occurred.
+            if (forward > 1 || self.pm_handed.get()) && pos(overall)-pos(leader)>=range {
                 selected=*active.iter().filter(|&&i|pos(overall)-pos(i)<range)
                     .min_by_key(|&&i|style(i)).unwrap_or(&overall);
+                // A detached-group refresh starts a new counting interval,
+                // including when it selects the same incumbent. The current
+                // section still contributes to the check below.
+                self.pm_count.set(0);
             }
             if style(overall)!=forward {
                 let count=self.pm_count.get()+1;
@@ -694,9 +712,10 @@ impl RaceField {
             }
             self.section_pacemaker.set(Some((selected,section)));
         }
-        // Restore the forward group when its leader passes the incumbent
-        // pacemaker, even if another running style still leads the race.
-        if (self.pm_handed.get() || self.pm_count.get()>=threshold)
+        // Restoration runs between section-selection passes. If a forward
+        // runner retakes the lead on a new section's tick, the following tick
+        // restores it. This can also happen after section selection has ended.
+        if !entering_section && (self.pm_handed.get() || self.pm_count.get()>=threshold)
             && (style(overall)==forward || (leader != selected
                 && active.iter().position(|&i|i==leader) < active.iter().position(|&i|i==selected))) {
             self.section_pacemaker.set(Some((leader,section)));

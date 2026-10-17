@@ -510,6 +510,7 @@ pub struct RaceSolver {
     /// v74: highest skill id whose turn in this tick's skill pass has been taken.
     additional_turn_floor: i64,
     unapplied_running_skills: usize,
+    retiring_additional_skills: bool,
 
     on_skill_activate: SkillHook,
     on_skill_deactivate: SkillHook,
@@ -793,6 +794,7 @@ impl RaceSolver {
             activated_ids_this_tick: Vec::new(),
             additional_turn_floor: i64::MIN,
             unapplied_running_skills: 0,
+            retiring_additional_skills: false,
 
             on_skill_activate: on_skill_activate.unwrap_or_else(noop_hook),
             on_skill_deactivate: on_skill_deactivate.unwrap_or_else(noop_hook),
@@ -1259,8 +1261,12 @@ impl RaceSolver {
     }
 
     pub(crate) fn visible_distance(&self) -> f64 {
+        // Stacked vision reductions can remove the entire visible corridor.
+        // Front blocking still applies, but passing search must not see a
+        // nearby blocker through the generic controller's positive floor.
+        let minimum = if self.retail.is_some() { 0.0 } else { 0.1 };
         (20.0 + self.active_aux_skills.iter().filter(|s| s.effect_type == SkillType::Vision)
-            .map(|s| s.modifier).sum::<f64>()).max(0.1)
+            .map(|s| s.modifier).sum::<f64>()).max(minimum)
     }
 
     pub(crate) fn apply_external_effect(&mut self, id: &str, rarity: SkillRarity, effect: SkillEffect, duration: f64, own: bool, field: &RaceField) {
@@ -1692,9 +1698,20 @@ impl RaceSolver {
     pub(crate) fn record_overtakes(&mut self, count: usize) {
         self.pending_overtakes += count;
         self.phase_overtakes[(self.phase as usize).min(2)] += count;
-        if self.course.corners.last().is_some_and(|c| self.pos >= c.start) { self.final_corner_overtakes += count; }
-        if self.pos >= self.course.distance * 2.0 / 3.0
-            && self.course.corners.iter().any(|c| c.start <= self.pos && self.pos < c.start + c.length) {
+        // The rank pass follows movement, but final-corner history reads the
+        // course-event flag from the start of that tick. A pass on the entry
+        // tick belongs to the preceding corner state.
+        let after_final_corner = self.retail.as_ref().map_or_else(
+            || self.course.corners.last().is_some_and(|c| self.pos >= c.start),
+            |retail| retail.final_corner);
+        if after_final_corner { self.final_corner_overtakes += count; }
+        let late_corner = self.retail.as_ref().map_or_else(
+            || self.pos >= self.course.distance * 2.0 / 3.0
+                && self.course.corners.iter().any(|c| c.start <= self.pos && self.pos < c.start + c.length),
+            // Rank updates run after movement. The phase and corner flags still
+            // describe the start of that tick, including boundary crossings.
+            |retail| retail.phase >= 2 && retail.corner != 0);
+        if late_corner {
             self.late_corner_overtakes += count;
         }
     }
@@ -1725,13 +1742,19 @@ impl RaceSolver {
 
     // Receivers expire in PreUpdate, but SkillDetail.UpdateSkill handles
     // queued additional activations before stopping the running detail.
-    // Keep that detail through its final ordered turn; do not extend its
-    // original receivers or allow fresh activations after its expiry.
+    // Keep that detail through its final ordered turn. Earlier activations in
+    // that pass can still add a bonus; its original receivers remain expired.
     fn retire_finished_running_skills(&mut self) -> bool {
         let mut retired = false;
+        self.retiring_additional_skills = false;
         for i in (0..self.running_skills.len()).rev() {
-            if self.running_skills[i].timer.get() >= 0.0
-                && !(self.retail.is_some() && self.running_skills[i].unapplied > 0) {
+            if self.running_skills[i].timer.get() >= 0.0 {
+                let runtime = &self.running_skills[i];
+                if self.retail.is_some() && runtime.numeric_skill_id > self.additional_turn_floor
+                    && runtime.delayed.iter().any(|(effect, _)| matches!(effect.additional_activate, 2 | 3)) {
+                    self.retiring_additional_skills = true;
+                    continue;
+                }
                 let runtime = self.running_skills.remove(i);
                 if runtime.unapplied > 0 { self.unapplied_running_skills -= 1; }
                 self.release_timer(&runtime.timer);
@@ -1765,7 +1788,8 @@ impl RaceSolver {
             // recently-activated list (an entry leaves it at its own skill's next turn). An
             // activation after the running skill's turn is therefore applied on the next tick.
             for runtime in &mut self.running_skills {
-                if Some(runtime.skill_id.as_str()) == exclude || runtime.timer.get() >= 0.0 { continue; }
+                if Some(runtime.skill_id.as_str()) == exclude
+                    || (runtime.timer.get() >= 0.0 && runtime.numeric_skill_id <= self.additional_turn_floor) { continue; }
                 if runtime.delayed.iter().any(|(e, _)| matches!(e.additional_activate, 2 | 3)) {
                     if runtime.unapplied == 0 { self.unapplied_running_skills += 1; }
                     runtime.unapplied += 1;
@@ -1824,7 +1848,7 @@ impl RaceSolver {
         let floor = self.additional_turn_floor;
         if upto <= floor { return; }
         self.additional_turn_floor = upto;
-        if self.unapplied_running_skills == 0 { return; }
+        if self.unapplied_running_skills == 0 && !self.retiring_additional_skills { return; }
         let mut applications = Vec::new();
         for runtime in &mut self.running_skills {
             let id = runtime.numeric_skill_id;
@@ -2320,7 +2344,12 @@ impl RaceSolver {
                     self.add_stat_modifier(3, modifier);
                     self.add_stat_modifier(4, modifier);
                 }
-                SkillType::MultiplyStartDelay => self.start_delay *= modifier,
+                SkillType::MultiplyStartDelay => {
+                    // Retail initialization already applies the successful
+                    // gate effects. The runtime activation must not apply the
+                    // multiplier again to the delay read by skill conditions.
+                    if self.retail.is_none() { self.start_delay *= modifier; }
+                },
                 SkillType::ExtendKakari => {
                     if self.is_kakari {
                         if let Some(retail)=&mut self.retail {retail.rushing.set_forced_end(modifier as f32);}
@@ -2605,8 +2634,12 @@ impl RaceSolver {
             return;
         }
         let front_lane = group.iter().find(|s| s.0 == front_idx).unwrap().2;
+        // The cached group leader can already be beyond the entry cutoff.
+        // Each invited partner must still be before it; another eligible
+        // partner does not make a late runner eligible too.
         let participants: Vec<_> = group.into_iter().filter(|s|
-            front_pos - s.1 <= 3.75 && (front_lane - s.2).abs() <= SPOT_STRUGGLE_LANE_GAP).collect();
+            front_pos - s.1 <= 3.75 && (front_lane - s.2).abs() <= SPOT_STRUGGLE_LANE_GAP
+                && (s.0 == front_idx || s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION)).collect();
         if participants.len() < 2 || !participants.iter().any(|s| s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION) {
             return;
         }
@@ -2775,7 +2808,12 @@ impl RaceSolver {
         }
         // CompeteFight.TargetOrderPer=50, using percentage-order half-up rounding.
         let top_half = field.order_of(i) <= ((field.n + 1) / 2).max(1);
-        let eligible_straight = self.retail.as_ref().map_or(in_final_straight, |r| r.duel_preupdate_final_straight);
+        // A finisher can complete its warmup while a nearby partner is still
+        // on the final straight. The proximity cache retains a pair only while
+        // at least one pre-movement position remains inside that straight.
+        let eligible_straight = self.retail.as_ref().map_or(in_final_straight, |r|
+            r.duel_preupdate_final_straight
+                || (r.duel_preupdate_finished && r.final_corner && r.corner == 0));
         if !eligible_straight || self.compete_fight_count > 0 {
             self.duel_continuous_timer = 0.0;
             self.duel_target_index = None;
@@ -3215,8 +3253,11 @@ mod movement_tests {
     }
 
     #[test]
-    fn queued_bonus_survives_final_turn_without_extending_original_effect() {
-        for (queued, count, expected) in [(0, 0, 0), (1, 0, 1), (1, 2, 0)] {
+    fn final_skill_turn_accepts_earlier_activations_and_rejects_later_ones() {
+        for (queued, incoming, count, expected) in [
+            (0, false, 0, 0), (0, true, 0, 1), (1, false, 0, 1),
+            (1, true, 0, 2), (1, true, 1, 1), (1, true, 2, 0),
+        ] {
             let mut s = solver(100., 0.);
             enable_retail_for_skill_test(&mut s);
             let effect = SkillEffect {
@@ -3224,8 +3265,8 @@ mod movement_tests {
                 value_usage: 1, duration_usage: 1, additional_activate: 3,
                 target: 1, target_value: 0, target_is_debuff: false,
             };
-            // The duration crossed zero during PreUpdate; a bonus recorded
-            // on the preceding skill pass still belongs to this final turn.
+            // The receiver expired in PreUpdate, but the running detail has
+            // not taken its final turn in the ascending-id skill pass yet.
             let timer = s.new_timer(0.05);
             s.running_skills.push(RunningSkill {
                 skill_id: "110211".into(), numeric_skill_id: 110211, detail_index: 0,
@@ -3237,25 +3278,106 @@ mod movement_tests {
             s.waiting_skill_cooldowns.insert("110211".into(), ("110211".into(), 0, 30.));
             s.process_skill_history(None);
             s.start_expired_skill_cooldowns();
-            // A new activation after expiry must not add another bonus.
-            s.additional_skill_event(2, None, None);
-            s.apply_unapplied_additional(i64::MAX, None);
+            assert_eq!(s.running_skills.len(), 1);
+            assert!(s.active_target_speed_skills.is_empty());
+            if incoming { s.additional_skill_event(2, None, None); }
+            s.apply_unapplied_additional(110210, None);
+            assert!(s.active_target_speed_skills.is_empty());
+            s.apply_unapplied_additional(110211, None);
             assert!(s.running_skills.is_empty());
             assert_eq!(s.unapplied_running_skills, 0);
             assert_eq!(s.active_target_speed_skills.len(), expected);
             assert_eq!(s.additional_target_events.len(), expected);
             assert!(!s.waiting_skill_cooldowns.contains_key("110211"));
             assert!(s.retail.as_ref().unwrap().skill_cooldowns.contains_key("110211"));
+            // Later activations cannot resurrect the completed detail.
+            s.additional_skill_event(2, None, None);
+            s.apply_unapplied_additional(i64::MAX, None);
+            assert_eq!(s.active_target_speed_skills.len(), expected);
+            assert_eq!(s.unapplied_running_skills, 0);
             if expected > 0 {
                 let bonus = &s.active_target_speed_skills[0];
                 assert_eq!(bonus.modifier, 0.02675);
                 assert!(bonus.duration_timer.get() < 0.);
                 assert!(bonus.duration_timer.get() > -0.0666);
-                bonus.duration_timer.set(0.);
+                for bonus in &s.active_target_speed_skills { bonus.duration_timer.set(0.); }
                 s.expire_skill_effects(None);
                 assert!(s.active_target_speed_skills.is_empty());
             }
         }
+    }
+
+    #[test]
+    fn final_straight_condition_only_checks_the_entry_tick() {
+        for final_corner in [false, true] {
+            let mut s = solver(1799.0, 0.0);
+            enable_retail_for_skill_test(&mut s);
+            s.retail.as_mut().unwrap().course_events_ready = true;
+            s.retail.as_mut().unwrap().final_corner = final_corner;
+            let table = Box::leak(Box::new(build_conditions()));
+            let op = crate::condition_parser::parse(table, "is_last_straight_onetime==1").unwrap();
+            let params = RaceParameters::default();
+            let extra = RaceParametersWithSkillId { params: &params, skill_id: "900671".into() };
+            let (regions, check) = op.apply(&[Region::new(0.0, 2400.0)], s.course, &s.horse, &extra).unwrap();
+            let check = check.unwrap();
+            s.prepare_retail_tick(0.0666, None, false);
+            assert!(!check(&s, None));
+            s.pos = 1800.0;
+            s.prepare_retail_tick(0.0666, None, false);
+            assert_eq!(check(&s, None), final_corner);
+            // The runner remains inside the old 10 m window, but a condition
+            // that becomes satisfied later cannot trigger a delayed entry.
+            s.pos = 1801.0;
+            assert!(regions.iter().any(|r| r.start <= s.pos && s.pos < r.end));
+            s.prepare_retail_tick(0.0666, None, false);
+            assert!(!check(&s, None));
+        }
+    }
+
+    #[test]
+    fn late_corner_overtakes_use_flags_from_before_movement() {
+        for (position, phase, corner, expected) in [
+            (1600.5, 1, 4, 0), (1799.5, 2, 4, 1),
+            (1800.5, 2, 4, 1), (1800.5, 2, 0, 0),
+        ] {
+            let mut s = solver(position, 0.0);
+            enable_retail_for_skill_test(&mut s);
+            let retail = s.retail.as_mut().unwrap();
+            retail.phase = phase;
+            retail.corner = corner;
+            s.record_overtakes(1);
+            assert_eq!(s.late_corner_overtakes, expected);
+            assert_eq!(s.pending_overtakes, 1);
+        }
+    }
+
+    #[test]
+    fn rank_continuity_reads_history_before_new_order_is_published() {
+        let mut runners: Vec<_> = (0..10).map(|i| solver(100.0 - i as f64, 0.0)).collect();
+        for s in &mut runners { enable_retail_for_skill_test(s); }
+        let field = RaceField::new(runners);
+        for s in &field.solvers { s.borrow().accumulatetime.set(6.0); }
+        field.update();
+        let table = Box::leak(Box::new(build_conditions()));
+        let op = crate::condition_parser::parse(table, "order_rate_in20_continue==1").unwrap();
+        let params = RaceParameters::default();
+        let extra = RaceParametersWithSkillId { params: &params, skill_id: "900261".into() };
+        let check = {
+            let s = field.solvers[1].borrow();
+            op.apply(&[Region::new(0.0, 2400.0)], s.course, &s.horse, &extra).unwrap().1.unwrap()
+        };
+        assert!(check(&field.solvers[1].borrow(), Some(&field)));
+        field.solvers[1].borrow_mut().pos = 80.0;
+        field.update();
+        assert_eq!(field.order_of(1), 10);
+        assert!(check(&field.solvers[1].borrow(), Some(&field)));
+        field.update();
+        assert!(!check(&field.solvers[1].borrow(), Some(&field)));
+        field.solvers[1].borrow_mut().pos = 99.0;
+        field.update();
+        field.update();
+        assert_eq!(field.order_of(1), 2);
+        assert!(!check(&field.solvers[1].borrow(), Some(&field)));
     }
 
     fn force_lane(s: &mut RaceSolver, target: f64) {

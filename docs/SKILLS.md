@@ -22,6 +22,12 @@ activation locations for sampled conditions. A chosen location still needs
 its runtime predicates. Recognizing a condition name does not establish that
 all of its game semantics are implemented; inspect that name's handler.
 
+The detailed runtime evaluates `hp_per` as an integer percentage. It stores
+the remaining/max HP ratio as float32, multiplies that ratio by 100 in wider
+arithmetic, then truncates. For example, `0.71_f32` represents a value just
+below 0.71, so its integer percentage is 70. Rounding the product to float32
+first would incorrectly make it 71 and delay a `hp_per<=70` activation.
+
 ## Lottery and order
 
 The conventional wisdom probability is `max(.2,1-90/baseWisdom)` for skills
@@ -31,12 +37,32 @@ its own ordered lottery/trigger construction. Random-skill reservations can
 override a failed ordinary lottery; the same seed on different paths is not
 expected to imply the same sequence.
 
+Retail initialization applies successful gate-delay multipliers to the starting
+delay. A later runtime activation of such a skill, including one selected by a
+random-skill effect, records the activation without multiplying that delay
+again. Conditions requiring a good or bad start therefore retain the original
+start classification throughout the race.
+
+The final-corner random trigger searches backwards for a corner numbered 4 or
+higher whose start is within the last 1000 m. If none qualifies, it has no
+activation window and consumes no random draw. This preserves the shared
+random sequence for later initialization and race decisions.
+
 Runtime processing expires effects, evaluates armed/pending skills, checks
 cooldowns and prerequisites, then applies activations according to priority
 and field order. A skill ID, a detail branch, an additional activation and an
 individual recipient are different identities. The output records each where
 supported. Per-runner activation history feeds subsequent prerequisites,
 recovery counts, green-tag counts and overtake-related additional activations.
+
+A one-time final-straight condition is eligible only on the entry tick after
+the final corner. A later rank change inside its distance window cannot make
+it eligible again. A cornerless course does not produce this entry event.
+
+Continuous rank-band conditions latch the history accumulated from 5 seconds
+onwards. The rank pass records the preceding rank before publishing the new
+order; skill checks read that stored history. Leaving the band breaks the
+condition permanently once the departure reaches that history update.
 
 ## Effect values
 
@@ -52,6 +78,13 @@ career +400 adjusted stat. Runtime random usages 8/9 use values 0/.02/.04 with
 weights 60/30/10; an amount -10000 with these usages is a random 0/2/4% cost,
 not automatically a fixed full-HP loss. Usage 14 depends on distinct activated
 green-tagged skills. See `apply_activation` for dispatch and operation order.
+
+Late-corner overtake scaling uses the phase and corner flags cached before
+movement. A pass recorded after movement therefore belongs to the state at
+the start of that tick, including a tick that crosses a phase or corner edge.
+The `change_order_up_finalcorner_after` counter also reads the cached
+final-corner flag. A pass on the tick entering the final corner is not yet
+counted as an overtake after final-corner entry.
 
 Effects include base stats, target speed, current speed, acceleration, HP,
 vision, lane preference/movement, rushing-related changes and random skill
@@ -88,12 +121,13 @@ The detailed runtime rounds the normalized gap and the resulting coefficient
 to float32 before multiplying the distance-scaled base duration. Keeping the
 division wider can change the recorded duration at a wire-unit boundary.
 
-Queued additional activations are applied during the running skill's ordered
-turn, before that detail stops. A bonus triggered on its final active tick
-therefore still applies on the following update, even though the original
-effect receiver has expired. Only the queued bonus receives its remaining
-duration; the original effect is not extended. Activation caps still apply,
-and a new trigger after expiry cannot add another bonus.
+Additional activations are applied during the running skill's turn in the
+ascending-ID pass, before that detail stops. On its final turn, this includes
+bonuses queued on the previous pass and new activations earlier in the current
+pass, even if the original effect receiver expired during preparation. The
+bonus lasts for the detail's remaining time plus one tick; it does not extend
+the original receiver. Activation caps still apply. Activations after that
+final ordered turn cannot add another bonus.
 
 Recorded durations and effect lifetimes are separate. The observed server
 recording converts a float32 duration to 0.1 ms units using a wider product

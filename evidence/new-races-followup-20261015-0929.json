@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "status": "unreleased candidate; all frozen captures match audited observations",
+  "baseVersion": "v73",
+  "baseCommit": "1df8c0e5393e1dd8e62734875e1609e4872b15c6",
+  "engineSha256": "61f1ae37087bbd312d70dc45c4fdb6c1b525effec5ad2c9f3497221f20582127",
+  "engine": "target/final-seven-complete/race_engine_rs_v2.exe",
+  "snapshotFrozenUtc": "2026-10-15T09:28:46.397666+00:00",
+  "completedUtc": "2026-10-15T09:34:31.393408+00:00",
+  "scope": "Observed official replay agreement at recorded precision and cadence; not population-wide or hidden-state equivalence.",
+  "newBatch": {
+    "races": 5142,
+    "observedExact": 5142,
+    "discrepant": 0,
+    "errors": 0,
+    "excluded": 0,
+    "courses": 105,
+    "runners": 61633,
+    "winner": 5142,
+    "placements": 61633,
+    "finishExact": 5142,
+    "skillExact": 5142,
+    "frameExact": 5142,
+    "officialCasts": 671202,
+    "simulatedCasts": 671202,
+    "exactCasts": 671202,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "before": {
+    "races": 104317,
+    "observedExact": 104317,
+    "discrepant": 0
+  },
+  "after": {
+    "races": 109459,
+    "observedExact": 109459,
+    "discrepant": 0
+  },
+  "full": {
+    "races": 109459,
+    "errors": 0,
+    "runners": 1040877,
+    "winner": 109459,
+    "placements": 1040877,
+    "finishExact": 109459,
+    "skillExact": 109459,
+    "frameExact": 109459,
+    "officialCasts": 10841425,
+    "simulatedCasts": 10841425,
+    "exactCasts": 10841425,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "observedExact": 109459,
+  "mechanicsExact": 109459,
+  "simulatorChangesRequired": false,
+  "coverage": {
+    "courses": 105,
+    "distinctDistances": 21,
+    "minDistance": 1000,
+    "maxDistance": 3600,
+    "byFieldSize": [
+      {
+        "runners": 9,
+        "races": 98586,
+        "observedExact": 98586
+      },
+      {
+        "runners": 12,
+        "races": 4535,
+        "observedExact": 4535
+      },
+      {
+        "runners": 14,
+        "races": 701,
+        "observedExact": 701
+      },
+      {
+        "runners": 15,
+        "races": 3395,
+        "observedExact": 3395
+      },
+      {
+        "runners": 16,
+        "races": 956,
+        "observedExact": 956
+      },
+      {
+        "runners": 18,
+        "races": 1286,
+        "observedExact": 1286
+      }
+    ]
+  },
+  "retainedChecks": {
+    "capturedRegressionTests": 44,
+    "rustTestsPassed": 131,
+    "preExistingRustFailures": 11,
+    "status": "Previous checks retained for unchanged source and binary; not rerun for this data-only audit.",
+    "report": "evidence/final-seven-accuracy-20261015.json"
+  },
+  "previousReport": "evidence/final-seven-accuracy-20261015.json",
+  "previousReportSha256": "76b80252fe4129e4a35ca331317da79d4873453b70f9a80c5c0fdb7f82239c24",
+  "sourceHashes": {
+    "Cargo.toml": "2724218301608cca6d3e657ec2bcaf5ef678d1d2f80394dd668e56d0bf6eeb73",
+    "Cargo.lock": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+    "data/course_data.json": "6a61cec5958cbc7f47effff59edcdd3f623456353c98d3baa9110e83b9b9cc9b",
+    "src/activation_conditions.rs": "813aa8a66eee5beb272352b6d5ea6609a299b7b08f5355ae219b4367cc4e4297",
+    "src/activation_sample_policy.rs": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+    "src/api.rs": "f71456075056bb064a770ed79646081b186c2f96837905716f84d41c85c99f19",
+    "src/binary_replay.rs": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e",
+    "src/condition_parser.rs": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+    "src/conserve_power.rs": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+    "src/course_data.rs": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+    "src/ffi.rs": "eaa607d39527d8427f93d1c631bb5a6caa2d3f6ca739995f64a06b1844c7f1e2",
+    "src/horse_types.rs": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+    "src/hp_policy.rs": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade",
+    "src/json.rs": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26",
+    "src/lane_selection.rs": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+    "src/lib.rs": "b94183ccca366786c0242b9a632639116d43b5fbd11720adc1c72e718fd6f165",
+    "src/main.rs": "401000b4d06b8129d600b6feef929fb64b8c7df73d83d0e4719bf0c3cf68189d",
+    "src/overtaking.rs": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+    "src/race_field.rs": "c51f6a61686ae6a9ef50b09ea40ad56593dce424a332c7362502ed46b4802efa",
+    "src/race_field_retail.rs": "9cb1189aafc28aceacc613444e8230bc37bfe0b15fb42883215112c768f6d0a1",
+    "src/race_parameters.rs": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106",
+    "src/race_solver.rs": "df4a29004fea296e12305d6cf6d0c484da0b771186876d1723e9d7eac6169ffe",
+    "src/race_solver_builder.rs": "1f5f1ff9195599fa8441375ff604d7aae59b466d857c398ddc92ecb6a86d057e",
+    "src/race_solver_retail.rs": "faf41a4c2afb500e0653d6d3786dfe40bfa12e776b5226cea4f455a18c59f013",
+    "src/random_gen.rs": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+    "src/region.rs": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+    "src/replay_frames.rs": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac",
+    "src/replay_worker.rs": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d",
+    "src/retail_geometry.rs": "b5573066ad71e7e5291841b46123dc734d47d4d60ca422330a2b4098a3d4fb81",
+    "src/retail_geometry_assets.rs": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+    "src/retail_initialization.rs": "553a6f17bc56b835d99d129438af93e4d46a4896b196f723f93ba93c224e2e71",
+    "src/retail_lane.rs": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8",
+    "src/retail_physics.rs": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976",
+    "src/retail_position_keep.rs": "019be12532bb862ed8822692f0e266cc5674e74eb9892fe5eacd0166afe150af",
+    "src/retail_random.rs": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+    "src/retail_sort.rs": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+    "src/retail_spurt.rs": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+    "src/retail_states.rs": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+    "src/rushing.rs": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+    "src/stadium_score.rs": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+    "src/starting_grid.rs": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
+  },
+  "evaluation": "Cumulative coverage: retain the prior 104317-race full audit and add 5142 newly scored races. Engine, source and comparison helpers are unchanged. Prior races were not re-executed this turn.",
+  "timing": {
+    "racesExecuted": 5142,
+    "seconds": 69.44992649997585,
+    "workerRoundTripMeanMs": 14.669371294952569,
+    "scope": "Full-frame worker round trip under concurrent audit load, not isolated API latency"
+  },
+  "auditRetry": {
+    "initialRaces": 5142,
+    "initialObservedExact": 5141,
+    "initialErrors": [
+      {
+        "case": "live-test-batch-c47899878602428c98283295400b82e4:535",
+        "referenceSha256": "9f8bd9a59374b332ac13487321851f5cde2b7cb477315b75eb39fd11876099fe",
+        "replaySha256": "6b6746f4bdfe69c92e3cf4d6a6a1a6a61e7e5c31a4e2d1e4497987a19ce78da1",
+        "corpus": "recent",
+        "workerRoundTripMs": 14.684000052511692,
+        "stdinSha256": "09f5640eda1d8706d1986af78411a3749bbe709f55a5e9bcfbce54bb49570145",
+        "stdoutSha256": "5506db7a520d38ff9d502163c29cde3bed87eea398194bbe1474f5976d1b0813",
+        "inputVerified": true,
+        "course": 10304,
+        "seed": 909916970,
+        "warnings": [],
+        "simulatedFrames": 1163,
+        "replayFrames": 113,
+        "inheritedScore": false,
+        "outputSame": null,
+        "error": "TypeError: 'float' object is not callable",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\late-refinement-audit.py\", line 84, in run\n    row.update(m.audit.score(decoded, events, simulated))\n               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\tools\\audit_collected_races.py\", line 58, in score\n    value=f32(max(0.,min(65535./scale,s[key])))\n                     ~~~^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'float' object is not callable\n"
+      }
+    ],
+    "focusedRetryPassed": true,
+    "completeRepeatPassed": true,
+    "identicalInputsAndCompleteOutputsAcrossBothPasses": 5142,
+    "note": "An isolated comparison exception did not reproduce. Its cause is undetermined; engine output was identical on retry and on the clean complete repeat."
+  },
+  "resultsSha256": "e31f74de90e96e6f9632e86b17279a02ebde6b968e3adc6b328f5d26cacc71ba",
+  "frameCounts": {
+    "samples": 121080145
+  },
+  "extraFrameCounts": {
+    "samples": 121080145
+  },
+  "resultFields": {
+    "runners": 1040877,
+    "startDelayTimeExact": 1040877,
+    "gutsOrderExact": 1040877,
+    "wizOrderExact": 1040877,
+    "lastSpurtStartDistanceExact": 1040877,
+    "runningStyleExact": 1040877
+  },
+  "recordedDurations": {
+    "official": 10841425,
+    "simulated": 10841425,
+    "paired": 10841425,
+    "exact": 10841425,
+    "withinOneWireUnit": 10841425,
+    "largerDifference": 0,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 10841425,
+    "startupSentinels": 1855903,
+    "paired": 10841425,
+    "exact": 10841425,
+    "mismatch": 0,
+    "extraSimulated": 0
+  }
+}

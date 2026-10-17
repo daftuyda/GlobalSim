@@ -327,7 +327,12 @@ pub fn is_visible(gap: f32, lane_gap: f32, vision: f32) -> bool {
     if vision <= 0. || !(0. ..=vision).contains(&gap) {
         return false;
     }
-    let width = ((gap / vision) * 0.6388888955116272_f32 + 0.1111111119389534_f32) * 0.5;
+    // Store the distance ratio, then keep the width expression wide until
+    // its final float32 store. Intermediate float rounding can admit a
+    // runner just outside the cone and close an otherwise clear corridor.
+    let ratio = gap / vision;
+    let width = ((ratio as f64 * 0.6388888955116272_f32 as f64
+        + 0.1111111119389534_f32 as f64) * 0.5) as f32;
     lane_gap.abs() <= width
 }
 
@@ -469,6 +474,8 @@ pub struct MoveState {
 }
 
 pub struct MoveContext<M> {
+    /// Switch to the post-finish rule after the one-second grace period.
+    pub after_goal: bool,
     pub position: f32,
     pub power: f32,
     pub phase: i32,
@@ -495,42 +502,50 @@ impl MoveState {
         }
         let previous_direction = self.continue_direction;
         self.continue_direction = (self.target >= self.lane) as i32;
-        // v20: lateral movement follows the backend's x87-style evaluation:
-        // the base rate local is computed at double and rounded once; the
-        // factor is an unrounded double temporary of `rate * factor`, whose
-        // product is rounded once. Inward speed and the lane update are
-        // likewise double expressions rounded on the store (full corpus:
-        // exact distance samples +135k, never-drifting runners +2079).
-        let rate = ((bounded_stat(context.power) as f64 * p.power_coefficient as f64
-            + p.speed_add as f64)
-            * p.base_speed as f64) as f32;
-        let factor = if context.phase >= 2 {
-            // v10: official late-race lateral speed uses the 0-based order (leader x1.00).
-            1. + (context.rank as f64 - 1.) * 0.01f32 as f64
-        } else if context.position <= context.first_move_point {
-            // v69: the lane ratio is a float quotient (doc 13.186).
-            1. + (self.lane / context.max_lane) as f64 * p.outer_coefficient as f64
+        let speed = if context.after_goal {
+            // Finished runners use signed dt as their lateral speed. The
+            // displacement below therefore uses dt twice, with no normal
+            // acceleration, skill modifiers or inward lane multiplier.
+            if self.target < self.lane { -dt } else { dt }
         } else {
-            1.
+            // v20: lateral movement follows the backend's x87-style evaluation:
+            // the base rate local is computed at double and rounded once; the
+            // factor is an unrounded double temporary of `rate * factor`, whose
+            // product is rounded once. Inward speed and the lane update are
+            // likewise double expressions rounded on the store (full corpus:
+            // exact distance samples +135k, never-drifting runners +2079).
+            let rate = ((bounded_stat(context.power) as f64 * p.power_coefficient as f64
+                + p.speed_add as f64)
+                * p.base_speed as f64) as f32;
+            let factor = if context.phase >= 2 {
+                // v10: official late-race lateral speed uses the 0-based order (leader x1.00).
+                1. + (context.rank as f64 - 1.) * 0.01f32 as f64
+            } else if context.position <= context.first_move_point {
+                // v69: the lane ratio is a float quotient (doc 13.186).
+                1. + (self.lane / context.max_lane) as f64 * p.outer_coefficient as f64
+            } else {
+                1.
+            };
+            let rate = (rate as f64 * factor) as f32;
+            // v69: the lane-change acceleration is an unrounded double temporary
+            // added to the stored lateral speed (doc 13.186).
+            let acceleration = (p.acceleration as f64 * p.base_speed as f64) * dt as f64;
+            self.speed = if self.speed < rate {
+                ((self.speed as f64 + acceleration) as f32).min(rate)
+            } else {
+                ((self.speed as f64 - acceleration) as f32).max(rate)
+            }
+            .max(0.);
+            let mut speed =
+                apply_additive_modifiers(self.speed, context.modifiers).clamp(0., 0.6);
+            if approximately(speed, 0.) {
+                return false;
+            }
+            if self.target < self.lane {
+                speed = (-(speed as f64) * (1. + self.lane as f64)) as f32;
+            }
+            speed
         };
-        let rate = (rate as f64 * factor) as f32;
-        // v69: the lane-change acceleration is an unrounded double temporary
-        // added to the stored lateral speed (doc 13.186).
-        let acceleration = (p.acceleration as f64 * p.base_speed as f64) * dt as f64;
-        self.speed = if self.speed < rate {
-            ((self.speed as f64 + acceleration) as f32).min(rate)
-        } else {
-            ((self.speed as f64 - acceleration) as f32).max(rate)
-        }
-        .max(0.);
-        let mut speed =
-            apply_additive_modifiers(self.speed, context.modifiers).clamp(0., 0.6);
-        if approximately(speed, 0.) {
-            return false;
-        }
-        if self.target < self.lane {
-            speed = (-(speed as f64) * (1. + self.lane as f64)) as f32;
-        }
         let mut next = (self.lane as f64 + dt as f64 * speed as f64) as f32;
         next = if self.target < self.lane {
             next.max(self.target)
@@ -566,18 +581,18 @@ impl<T: PointRow> PassingSearch<'_, T> {
             self.cached.len(),
             "Live/cached horse indices must align"
         );
-        let clear = |candidate: f32, end: f32, bounds: Option<(f32, f32)>| {
+        let clear = |candidate: f32, end: f32, bounds: Option<(f64, f64)>| {
             if !(0. ..=self.max_lane).contains(&candidate) || !self.side.reachable(lane, candidate)
             {
                 return false;
             }
-            let (low, high) = bounds.unwrap_or((candidate - CORRIDOR, candidate + CORRIDOR));
+            let (low, high) = bounds.unwrap_or(((candidate - CORRIDOR) as f64, (candidate + CORRIDOR) as f64));
             !self.visible.iter().any(|&i| {
                 let row = self.live[i].point();
                 self.owner.position <= row.position
                     && row.position <= end
-                    && low <= row.lane
-                    && row.lane <= high
+                    && low <= row.lane as f64
+                    && row.lane as f64 <= high
             })
         };
         let mut best = lane;
@@ -645,9 +660,12 @@ impl<T: PointRow> PassingSearch<'_, T> {
             .iter()
             .map(|&i| self.live[i].point().position)
             .fold(f32::MAX, f32::min);
-        // These two operations cannot be regrouped around the rounded lane.
+        // Store the corridor edges before subtracting the inward offset.
+        // The final subtraction stays wide through the lane comparison;
+        // rounding it to float can close a clear corridor at the boundary.
         let bounds = if straight != lane {
-            Some(((lane - CORRIDOR) - STRAIGHT, (lane + CORRIDOR) - STRAIGHT))
+            Some(((lane - CORRIDOR) as f64 - STRAIGHT as f64,
+                (lane + CORRIDOR) as f64 - STRAIGHT as f64))
         } else {
             None
         };
@@ -690,6 +708,43 @@ pub fn resolve_overlaps_with_order(rows: &mut [Row], force_checks: &mut [bool], 
 mod tests {
     use super::*;
     use crate::json::Value;
+
+    #[test]
+    fn visible_cone_preserves_captured_rounding_boundary() {
+        let gap = 1193.378173828125_f32 - 1191.0203857421875_f32;
+        let outside = 0.2024788111448288_f32 - 0.10926413536071777_f32;
+        assert!(!is_visible(gap, outside, 20.));
+        assert!(!is_visible(gap, -outside, 20.));
+        let edge = f32::from_bits(outside.to_bits() - 1);
+        assert!(is_visible(gap, edge, 20.));
+        assert!(is_visible(gap, -edge, 20.));
+        assert!(!is_visible(0., 0., 0.));
+    }
+
+    #[test]
+    fn post_finish_lane_motion_uses_signed_dt_without_normal_modifiers() {
+        let p = MoveParameters { power_coefficient: 0.001, speed_add: 0.3,
+            base_speed: 0.02, outer_coefficient: 0.05, acceleration: 1.5 };
+        let dt = 0.0666_f32;
+        for (target, sign) in [(0., -1.), (1., 1.)] {
+            let mut state = MoveState { lane: 0.5, target, speed: 0.03,
+                continue_time: 0., continue_direction: (sign > 0.) as i32 };
+            let context = |allowed| MoveContext { after_goal: true,
+                position: 1820., power: 1200., phase: 2, rank: 8,
+                first_move_point: 0., max_lane: 1.2, modifiers: [0.3],
+                side: SideRoom { can_in: allowed, can_out: allowed,
+                    in_space: 0.5, out_space: 0.7, inner_blocker: None,
+                    inner_blocker_index: None } };
+            assert!(!state.step(context(false), dt, p));
+            assert_eq!(state.lane, 0.5);
+            assert!(state.step(context(true), dt, p));
+            assert_eq!(state.lane, (0.5_f64 + sign as f64 * dt as f64 * dt as f64) as f32);
+            assert_eq!(state.speed, 0.03);
+            state.target = state.lane + sign * 0.001;
+            assert!(state.step(context(true), dt, p));
+            assert_eq!(state.lane, state.target);
+        }
+    }
 
     #[test]
     fn front_block_preserves_captured_inclusive_and_exclusive_edges() {
@@ -737,7 +792,7 @@ mod tests {
         let mut state = MoveState { lane: 0.6, target: 0., speed: 0.,
             continue_time: 0., continue_direction: 0 };
         let step = |s: &mut MoveState, allowed| {
-            s.step(MoveContext { position: 100., power: 1000., phase: 0,
+            s.step(MoveContext { after_goal: false, position: 100., power: 1000., phase: 0,
                 rank: 1, first_move_point: 0., max_lane: 1.3, modifiers: std::iter::empty(),
                 side: SideRoom { can_in: allowed, can_out: allowed,
                     in_space: 1., out_space: 1., inner_blocker: None, inner_blocker_index: None } }, 0.0666, p)
@@ -905,6 +960,7 @@ mod tests {
                 inner_blocker_index: None,
             };
             let context = MoveContext {
+                after_goal: false,
                 position: n("position"),
                 power: n("power"),
                 phase: n("phase") as i32,

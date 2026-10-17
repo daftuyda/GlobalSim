@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "engineVersion": "v73",
+  "engineSha256": "51955e7fc2cdb5febee7fb3ca6e3cffa1fbda7c25a057a4db448ce50149e11df",
+  "engineCommit": "1df8c0e5393e1dd8e62734875e1609e4872b15c6",
+  "snapshotFrozenUtc": "2026-10-15T03:23:24.523474+00:00",
+  "completedUtc": "2026-10-15T03:30:45.822313+00:00",
+  "scope": "New original-seed captures compared against unchanged v73 at the recorded cadence and wire precision.",
+  "priorValidatedRaces": 71348,
+  "newRaces": 17065,
+  "newObservedExact": 17065,
+  "combinedValidatedRaces": 88413,
+  "simulationChanged": false,
+  "errors": 0,
+  "exclusions": 0,
+  "inheritedScores": 0,
+  "metrics": {
+    "races": 17065,
+    "errors": 0,
+    "runners": 153585,
+    "winner": 17065,
+    "placements": 153585,
+    "finishExact": 17065,
+    "skillExact": 17065,
+    "frameExact": 17065,
+    "officialCasts": 1576139,
+    "simulatedCasts": 1576139,
+    "exactCasts": 1576139,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "frameCounts": {
+    "samples": 16690397
+  },
+  "extraFrameCounts": {
+    "samples": 16690397
+  },
+  "resultFields": {
+    "runners": 153585,
+    "startDelayTimeExact": 153585,
+    "gutsOrderExact": 153585,
+    "wizOrderExact": 153585,
+    "lastSpurtStartDistanceExact": 153585,
+    "runningStyleExact": 153585
+  },
+  "recordedDurations": {
+    "official": 1576139,
+    "simulated": 1576139,
+    "paired": 1576139,
+    "exact": 1576139,
+    "withinOneWireUnit": 1576139,
+    "largerDifference": 0,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 1576139,
+    "startupSentinels": 292781,
+    "paired": 1576139,
+    "exact": 1576139,
+    "mismatch": 0,
+    "extraSimulated": 0
+  },
+  "events": {
+    "officialDetails": 1576139,
+    "simulatedDetails": 1576139,
+    "matchedDetails": 1576139,
+    "officialMechanics": 106462,
+    "simulatedMechanics": 106462
+  },
+  "coverage": {
+    "runnerCounts": {
+      "9": 17065
+    },
+    "courses": [
+      {
+        "course": 10103,
+        "races": 1082,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10203,
+        "races": 1082,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10304,
+        "races": 1051,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10305,
+        "races": 1046,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10402,
+        "races": 1049,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10502,
+        "races": 1056,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10503,
+        "races": 1070,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10602,
+        "races": 1080,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10603,
+        "races": 1058,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10703,
+        "races": 1039,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10804,
+        "races": 1067,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10805,
+        "races": 1060,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10806,
+        "races": 1070,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 10903,
+        "races": 1075,
+        "distance": 1600,
+        "surface": 1
+      },
+      {
+        "course": 10904,
+        "races": 1090,
+        "distance": 1800,
+        "surface": 1
+      },
+      {
+        "course": 11002,
+        "races": 1090,
+        "distance": 1800,
+        "surface": 1
+      }
+    ]
+  },
+  "timing": {
+    "auditSeconds": 148.7133482999634,
+    "currentPassRaces": 17065,
+    "workerRoundTripMeanMs": 7.817276595340463,
+    "scope": "Full-frame worker round trip under concurrent audit load, not isolated API latency",
+    "comparisonRetrySeconds": 25.216432900051586
+  },
+  "artifacts": {
+    "target/new-races-v73-20261015-0323/inventory.json": "fc84a5120118c1b8326662dfee81cd6f1aa4230218a48b0cf43a551749273ba6",
+    "target/new-races-v73-20261015-0323/results.jsonl": "72fea6536ed3975ed1af1cb80740f560de11b6d2331c6eb3eb8b01b079ce887a",
+    "target/new-races-v73-20261015-0323/identity.json": "aab30ef049fa990dbc8c8a83c3a959b687a5f77c0f40a37358ea5b56ab8815b0",
+    "target/new-races-v73-20261015-0323/summary.json": "c52da490bd1e47d50f90dfb97eb900e2cb58223d160d371603016ffb17be93b1",
+    "target/new-races-v73-20261015-0323/previous-validation.json": "9a054468e72d67efc7fe156e581fd3ab5450df11e3158398740cb08636b78e95",
+    "target/new-races-v73-20261015-0323/execution-events.jsonl": "5acb77159b3cd1bac2a9b7ab397501201b6ab63eec62b33634ba6664c33b45cc",
+    "target/new-races-v73-20261015-0323/resolved-results.jsonl": "d405888ff63e20721b3f0db33dc67502f095b5bc26c2d3502a39bb8ead798ca0",
+    "target/new-races-v73-20261015-0323/resolved-summary.json": "30aec8262e8d5e81544c58cd1d1fb66555a1ea0a9c00359b79ca93fe4b03f930",
+    "target/new-races-v73-20261015-0323/comparison-retry/results.jsonl": "75f1b36770c1aa3c61254154a6528840f6d8ac8f83cde729aa68a4502f255240",
+    "target/new-races-v73-20261015-0323/comparison-retry/summary.json": "8394d34b5e38710b622f3d195e84c1ca910ad0d4fefae89016f5f8ae83e36ca7"
+  },
+  "comparisonRetry": {
+    "initialComparisonErrors": [
+      {
+        "case": "live-test-batch-ea02a93b9b4142f5acb7663db1a56155:811",
+        "referenceSha256": "de947a8d68617892aea902ee573090d67d1c735aac5da5be940f0d1e4b059144",
+        "replaySha256": "6722f97bb4414e7ce2fec6206cfd05070a74896f464ff5283958a75cc94a3dbb",
+        "corpus": "recent",
+        "workerRoundTripMs": 6.259300047531724,
+        "stdinSha256": "735970404af40128f0e0829dcefd07555fd62fdf0ea4a1378198249af85fb906",
+        "stdoutSha256": "015edd0e6074fbb191367b06ad34391411d0eff44b999ae860fb3b184ea97f9d",
+        "inputVerified": true,
+        "course": 10603,
+        "seed": 491618591,
+        "warnings": [],
+        "simulatedFrames": 1294,
+        "replayFrames": 124,
+        "inheritedScore": false,
+        "outputSame": null,
+        "error": "TypeError: 'float' object is not callable"
+      }
+    ],
+    "resolution": "Fresh comparisons passed with identical original inputs and complete engine outputs; no engine or scoring changes.",
+    "repeatRuns": 1020,
+    "repeatedUniqueRaces": 1000,
+    "affectedRaceRuns": 21,
+    "seconds": 25.216432900051586,
+    "summarySha256": "8394d34b5e38710b622f3d195e84c1ca910ad0d4fefae89016f5f8ae83e36ca7",
+    "resultsSha256": "75f1b36770c1aa3c61254154a6528840f6d8ac8f83cde729aa68a4502f255240"
+  }
+}

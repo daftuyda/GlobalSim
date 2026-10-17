@@ -1,0 +1,29 @@
+{
+  "version": "v74",
+  "manifestFiles": 256,
+  "localDocumentLinks": 167,
+  "exampleContentUnchanged": true,
+  "buildHashesVerified": true,
+  "productionSourceFilesMatchingAuditedBuild": 165,
+  "productionSourceComparison": "Exact SHA256 of all staged Cargo, src and data files against the audited build identity",
+  "sourceManifestSha256": "efefadd60505183f89f74cf7a3499a1d9da16b02ec2aa596dfb6009012d276ec",
+  "accuracyEvidence": "new-races-20261017-morning.json",
+  "accuracyEvidenceSha256": "3de00f83598f7ee0c776ea9ea67d14ab704bbbeef13620f7ae87ae5017e881df",
+  "observedExact": 203572,
+  "racesTested": 203572,
+  "scope": "Observed agreement on audited captures at recorded precision and cadence",
+  "regressionEvidence": "v74-regressions.json",
+  "capturedRegressionsPassed": 63,
+  "unitTests": {
+    "default": {
+      "passed": 133,
+      "failed": 11
+    },
+    "fastAlloc": {
+      "passed": 133,
+      "failed": 11
+    },
+    "status": "Same pre-existing failures; see morning-batch-20261017 test logs"
+  },
+  "engineSha256": "79008781f7c85219dc74bd76a726057663c7cc0c622a9d3c43440b7632574494"
+}

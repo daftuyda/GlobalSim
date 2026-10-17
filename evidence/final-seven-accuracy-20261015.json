@@ -1,0 +1,1052 @@
+{
+  "schema": 1,
+  "status": "unreleased candidate; all frozen captures match audited observations",
+  "baseVersion": "v73",
+  "baseCommit": "1df8c0e5393e1dd8e62734875e1609e4872b15c6",
+  "engineSha256": "61f1ae37087bbd312d70dc45c4fdb6c1b525effec5ad2c9f3497221f20582127",
+  "engine": "target/final-seven-complete/race_engine_rs_v2.exe",
+  "snapshotFrozenUtc": "2026-10-15T08:03:10.118972+00:00",
+  "completedUtc": "2026-10-15T09:10:13.274084+00:00",
+  "scope": "Observed official replay agreement at recorded precision and cadence; not population-wide or hidden-state equivalence.",
+  "before": {
+    "races": 104317,
+    "observedExact": 104310,
+    "discrepant": 7
+  },
+  "after": {
+    "races": 104317,
+    "observedExact": 104317,
+    "discrepant": 0
+  },
+  "resolvedRaces": 7,
+  "newRegressions": 0,
+  "resolvedReferenceSha256": [
+    "1427609cea28f86be4a62983e952e12f545aa6f45052dc9d2f97418dc10e0056",
+    "26d92b7d95839d4fcffdaafb000e81f790b4b3eeff3b2ef97795145a486cdd30",
+    "8cf81c19b5c8296b0b1a4586dd31efe0faff31892fd750bf8344efda305f5110",
+    "bf5482433dc9f18224a035395c19f5e69993e83f2442ed6d8b6bfe5eeb43f5ad",
+    "d3fe40bbc72414e034af606bc58ab33f826680351e43127099774f82490cfaff",
+    "e86af88cc224377bb2bd30814e846fa0929c6f938ee3ffac39c1f712ee596f1a",
+    "f2507584757984edaa61bc4652f6599d977b05128ef75f7db4cdfd916d6dc5f2"
+  ],
+  "full": {
+    "races": 104317,
+    "errors": 0,
+    "runners": 979244,
+    "winner": 104317,
+    "placements": 979244,
+    "finishExact": 104317,
+    "skillExact": 104317,
+    "frameExact": 104317,
+    "officialCasts": 10170223,
+    "simulatedCasts": 10170223,
+    "exactCasts": 10170223,
+    "finishMAE": 0.0,
+    "maxFinishError": 0.0
+  },
+  "observedExact": 104317,
+  "mechanicsExact": 104317,
+  "coverage": {
+    "courses": 105,
+    "distinctDistances": 21,
+    "minDistance": 1000,
+    "maxDistance": 3600,
+    "byFieldSize": [
+      {
+        "runners": 9,
+        "races": 96826,
+        "observedExact": 96826
+      },
+      {
+        "runners": 12,
+        "races": 2745,
+        "observedExact": 2745
+      },
+      {
+        "runners": 14,
+        "races": 541,
+        "observedExact": 541
+      },
+      {
+        "runners": 15,
+        "races": 2260,
+        "observedExact": 2260
+      },
+      {
+        "runners": 16,
+        "races": 807,
+        "observedExact": 807
+      },
+      {
+        "runners": 18,
+        "races": 1138,
+        "observedExact": 1138
+      }
+    ]
+  },
+  "corrections": [
+    {
+      "mechanism": "After a handover, refresh the in-range pacemaker when the original forward group is outside the configured distance range, including fields containing Front Runners.",
+      "restoredRaces": 3
+    },
+    {
+      "mechanism": "Forward-group restoration occurs between section-selection passes; a coincident section boundary defers restoration to the next tick.",
+      "restoredRaces": 2
+    },
+    {
+      "mechanism": "Forward-group restoration remains available after the section-selection window closes, for active position-keep exit checks.",
+      "restoredRaces": 1
+    },
+    {
+      "mechanism": "Round the pace-gap distance scale after the wider multiply-and-add; an exact maximum gap does not consume a pace-up lottery draw.",
+      "restoredRaces": 1
+    }
+  ],
+  "regressions": {
+    "engineSha256": "61f1ae37087bbd312d70dc45c4fdb6c1b525effec5ad2c9f3497221f20582127",
+    "passed": 44,
+    "total": 44,
+    "cases": [
+      {
+        "case": "additional-bonus-on-final-skill-tick",
+        "passed": true,
+        "runnerSamples": 910
+      },
+      {
+        "case": "additional-bonus-preserves-overtake-target",
+        "passed": true,
+        "runnerSamples": 923
+      },
+      {
+        "case": "adjoining-slope-boundary",
+        "passed": true,
+        "runnerSamples": 3982
+      },
+      {
+        "case": "continuous-rank-before-last-straight-entry-a",
+        "passed": true,
+        "runnerSamples": 818
+      },
+      {
+        "case": "continuous-rank-before-last-straight-entry-b",
+        "passed": true,
+        "runnerSamples": 819
+      },
+      {
+        "case": "cornerless-course-has-no-final-straight-entry",
+        "passed": true,
+        "runnerSamples": 671
+      },
+      {
+        "case": "course-11203-geometry-and-final-corner-lottery",
+        "passed": true,
+        "runnerSamples": 1563
+      },
+      {
+        "case": "duel-invites-finished-partner-second-roster",
+        "passed": true,
+        "runnerSamples": 918
+      },
+      {
+        "case": "duel-invites-finished-partner",
+        "passed": true,
+        "runnerSamples": 948
+      },
+      {
+        "case": "duel-joins-finished-group-01",
+        "passed": true,
+        "runnerSamples": 933
+      },
+      {
+        "case": "duel-joins-finished-group-02",
+        "passed": true,
+        "runnerSamples": 891
+      },
+      {
+        "case": "duel-joins-finished-group-03",
+        "passed": true,
+        "runnerSamples": 977
+      },
+      {
+        "case": "duel-joins-finished-group-04",
+        "passed": true,
+        "runnerSamples": 860
+      },
+      {
+        "case": "duel-joins-finished-group-05",
+        "passed": true,
+        "runnerSamples": 922
+      },
+      {
+        "case": "front-block-excludes-rounded-boundary",
+        "passed": true,
+        "runnerSamples": 1319
+      },
+      {
+        "case": "front-block-inclusive-precision-boundary",
+        "passed": true,
+        "runnerSamples": 926
+      },
+      {
+        "case": "front-block-retains-close-boundary",
+        "passed": true,
+        "runnerSamples": 2039
+      },
+      {
+        "case": "front-block-retains-far-boundary",
+        "passed": true,
+        "runnerSamples": 2559
+      },
+      {
+        "case": "front-runner-cached-leader-distance-gate-second-course",
+        "passed": true,
+        "runnerSamples": 926
+      },
+      {
+        "case": "front-runner-cached-leader-distance-gate",
+        "passed": true,
+        "runnerSamples": 813
+      },
+      {
+        "case": "front-runner-ignores-runaways",
+        "passed": true,
+        "runnerSamples": 964
+      },
+      {
+        "case": "front-runner-no-eligible-lead",
+        "passed": true,
+        "runnerSamples": 959
+      },
+      {
+        "case": "front-runner-waits-for-lead",
+        "passed": true,
+        "runnerSamples": 935
+      },
+      {
+        "case": "heal-history-earlier-caster",
+        "passed": true,
+        "runnerSamples": 1047
+      },
+      {
+        "case": "heal-history-later-caster",
+        "passed": true,
+        "runnerSamples": 932
+      },
+      {
+        "case": "last-straight-rank-change-after-entry",
+        "passed": true,
+        "runnerSamples": 708
+      },
+      {
+        "case": "late-corner-overtake-cached-state-a",
+        "passed": true,
+        "runnerSamples": 1387
+      },
+      {
+        "case": "late-corner-overtake-cached-state-b",
+        "passed": true,
+        "runnerSamples": 971
+      },
+      {
+        "case": "leader-gap-duration-rounding",
+        "passed": true,
+        "runnerSamples": 2451
+      },
+      {
+        "case": "new-activation-on-final-bonus-tick-1000",
+        "passed": true,
+        "runnerSamples": 726
+      },
+      {
+        "case": "new-activation-on-final-bonus-tick-1200",
+        "passed": true,
+        "runnerSamples": 881
+      },
+      {
+        "case": "new-activation-on-final-bonus-tick-1400",
+        "passed": true,
+        "runnerSamples": 828
+      },
+      {
+        "case": "pacemaker-handover-refresh-1800-a",
+        "passed": true,
+        "runnerSamples": 1696
+      },
+      {
+        "case": "pacemaker-handover-refresh-1800-b",
+        "passed": true,
+        "runnerSamples": 1708
+      },
+      {
+        "case": "pacemaker-handover-refresh-2100",
+        "passed": true,
+        "runnerSamples": 1334
+      },
+      {
+        "case": "pacemaker-handover",
+        "passed": true,
+        "runnerSamples": 1181
+      },
+      {
+        "case": "pacemaker-keeps-incumbent-in-range-large-field",
+        "passed": true,
+        "runnerSamples": 1945
+      },
+      {
+        "case": "pacemaker-keeps-incumbent-with-forward-group-in-range",
+        "passed": true,
+        "runnerSamples": 810
+      },
+      {
+        "case": "pacemaker-restoration-after-selection-window",
+        "passed": true,
+        "runnerSamples": 843
+      },
+      {
+        "case": "pacemaker-restoration-at-section-boundary-1000",
+        "passed": true,
+        "runnerSamples": 656
+      },
+      {
+        "case": "pacemaker-restoration-at-section-boundary-1200",
+        "passed": true,
+        "runnerSamples": 747
+      },
+      {
+        "case": "pacemaker-retains-incumbent-under-later-style-leader",
+        "passed": true,
+        "runnerSamples": 985
+      },
+      {
+        "case": "pacing-gap-2500-float-rounding",
+        "passed": true,
+        "runnerSamples": 1946
+      },
+      {
+        "case": "straight-entry-clears-overlapping-corner",
+        "passed": true,
+        "runnerSamples": 974
+      }
+    ]
+  },
+  "fixturesAdded": [
+    {
+      "name": "pacing-gap-2500-float-rounding",
+      "referenceSha256": "d3fe40bbc72414e034af606bc58ab33f826680351e43127099774f82490cfaff",
+      "replaySha256": "194fce14adafa022f1d273e4b1e85823b43cdbec5361c9ab1cee53f78776466e",
+      "fixtureSha256": "3077627955f9a9d379b384ebdbaf930e88a2bef0012948b314fdd77dc653f1d9",
+      "bytes": 46617
+    },
+    {
+      "name": "pacemaker-handover-refresh-1800-a",
+      "referenceSha256": "e86af88cc224377bb2bd30814e846fa0929c6f938ee3ffac39c1f712ee596f1a",
+      "replaySha256": "3b74a53f55ef23cd1f52f4da7cf68baf876e6120b13402c40c274a875bf2aeac",
+      "fixtureSha256": "82ee16faa233634af9466709e3eae63f45577f51e5d0c9d44fb403640cecc6aa",
+      "bytes": 48295
+    },
+    {
+      "name": "pacemaker-handover-refresh-1800-b",
+      "referenceSha256": "26d92b7d95839d4fcffdaafb000e81f790b4b3eeff3b2ef97795145a486cdd30",
+      "replaySha256": "251bb5e622474a8a47bbc85524b0751d276ac433be88b43a4dc6bbef25513c75",
+      "fixtureSha256": "ac6d7885a20f1344bc0cbf81c9da1f62c2c899e59c3901ae810aafb7da786ef8",
+      "bytes": 47832
+    },
+    {
+      "name": "pacemaker-handover-refresh-2100",
+      "referenceSha256": "f2507584757984edaa61bc4652f6599d977b05128ef75f7db4cdfd916d6dc5f2",
+      "replaySha256": "ab00c3842ba3349a6e8a5d05b5fa84622e8d26c40a2816d6ef77647e11e05b6f",
+      "fixtureSha256": "5e81db5054452224eb2643cdaa4c6fe58463c88667ee716afdd461c712f9e4a3",
+      "bytes": 37539
+    },
+    {
+      "name": "pacemaker-restoration-after-selection-window",
+      "referenceSha256": "bf5482433dc9f18224a035395c19f5e69993e83f2442ed6d8b6bfe5eeb43f5ad",
+      "replaySha256": "6d8639387c0a26e296392453fd17c7b20af18f658b566ce95033d7ad49ef3d5c",
+      "fixtureSha256": "12c7c3efc1fbc1b7ec9176e7f7ca5de99bc5ec7c8a256ea2ac46e7ea8306aa57",
+      "bytes": 30688
+    },
+    {
+      "name": "pacemaker-restoration-at-section-boundary-1000",
+      "referenceSha256": "8cf81c19b5c8296b0b1a4586dd31efe0faff31892fd750bf8344efda305f5110",
+      "replaySha256": "8c774d90e6b2898c632482a43940c32f6ec708459753f56722afb37b03a1bf77",
+      "fixtureSha256": "2ae4ada563e95c3a20a2f7b3daff5cf901c9bc5c8438cf87c46991aaffd5d74b",
+      "bytes": 27207
+    },
+    {
+      "name": "pacemaker-restoration-at-section-boundary-1200",
+      "referenceSha256": "1427609cea28f86be4a62983e952e12f545aa6f45052dc9d2f97418dc10e0056",
+      "replaySha256": "3097a53af24d02d5fd1476ecca452e2be515fb145943ed68e1c90ba0e82ef330",
+      "fixtureSha256": "f72d184315ce7f240199f73a8f62384a63eb6daa30f5a2d191086a1513279721",
+      "bytes": 29358
+    },
+    {
+      "name": "pacemaker-retains-incumbent-under-later-style-leader",
+      "referenceSha256": "c3c5fafd03aa213e63685ca12105360c63306c40e2a016669fe25da3efdb5ee5",
+      "replaySha256": "beb997b668de7c96267c60445900bb67dfd38dc02b2a6fc45b1f399902233d10",
+      "fixtureSha256": "7039f75d44bc68286b784f0574bf9e6352222299fce332ae8f6d8d42a1416f7b",
+      "bytes": 36202
+    },
+    {
+      "name": "pacemaker-keeps-incumbent-with-forward-group-in-range",
+      "referenceSha256": "0b17b7757ee9e88ac22cf123c79cbe2224d71757f352677d935aabad60cb3c97",
+      "replaySha256": "0f42efaeeb4b11b106d803fb51c7bf3b8480def4f605635942d42fa1c2b4357e",
+      "fixtureSha256": "a309e7a60912d9b729002e67b8074a7eae49af506e67904c339c518c91752c63",
+      "bytes": 32967
+    },
+    {
+      "name": "pacemaker-keeps-incumbent-in-range-large-field",
+      "referenceSha256": "6901e7bfc858a69165f874501924f9810baf6b9bf9b1773809aa82fff32179ea",
+      "replaySha256": "59b54f793e92b619c4cf9325426ceac0c37ec7279df931f76c83a89fbb367e7f",
+      "fixtureSha256": "12ecee2ab2389ffa39f528583094d8cfd37069a94171a94f4ce2eb9d8ac64b8c",
+      "bytes": 52812
+    }
+  ],
+  "unitTests": {
+    "previousCandidate": {
+      "passed": 130,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ]
+    },
+    "defaultRelease": {
+      "passed": 131,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ]
+    },
+    "fastAllocRelease": {
+      "passed": 131,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ]
+    },
+    "newFailures": []
+  },
+  "protocol": {
+    "engines": {
+      "baseline": "61f1ae37087bbd312d70dc45c4fdb6c1b525effec5ad2c9f3497221f20582127",
+      "candidate": "61f1ae37087bbd312d70dc45c4fdb6c1b525effec5ad2c9f3497221f20582127"
+    },
+    "inputs_sha256": "3901063dd948238d0cf976c67cfe8b567db02c89911d1656549bdc93f9f16dcb",
+    "modes": [
+      {
+        "all_frames": false,
+        "equivalent_replies_per_binary_mode": 21,
+        "errors": [
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 100141"
+          }
+        ]
+      },
+      {
+        "all_frames": true,
+        "equivalent_replies_per_binary_mode": 21,
+        "errors": [
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 100141"
+          }
+        ]
+      }
+    ]
+  },
+  "previousReport": "evidence/new-races-followup-20261015.json",
+  "previousReportSha256": "efe53a0daca88e9b5eee79b3f8a76f2a64beb1914879b2252cfb775832e562d6",
+  "sourceHashes": {
+    "Cargo.toml": "2724218301608cca6d3e657ec2bcaf5ef678d1d2f80394dd668e56d0bf6eeb73",
+    "Cargo.lock": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b",
+    "data/course_data.json": "6a61cec5958cbc7f47effff59edcdd3f623456353c98d3baa9110e83b9b9cc9b",
+    "src/activation_conditions.rs": "813aa8a66eee5beb272352b6d5ea6609a299b7b08f5355ae219b4367cc4e4297",
+    "src/activation_sample_policy.rs": "42ecd0d5d50d912aaeb351c638b01a9741d4426c3ac845b68d5b21a300c8d80e",
+    "src/api.rs": "f71456075056bb064a770ed79646081b186c2f96837905716f84d41c85c99f19",
+    "src/binary_replay.rs": "a5bf5b4101b948bbebafbd6ecc73dca53579a7ec48df3ccafe35bd6d5a54e95e",
+    "src/condition_parser.rs": "7721fc5f7111a62f5f779dab2d2f19aea740cf1876ca969d2248ba6f698cdf69",
+    "src/conserve_power.rs": "14e169f29e84ab425084c52177a7391176c3295c40a4e2006774106c08723006",
+    "src/course_data.rs": "40498a344242c8aa3dc09ef81ecd875191f4f0cda3b9f3e90dca23d9a092157c",
+    "src/ffi.rs": "eaa607d39527d8427f93d1c631bb5a6caa2d3f6ca739995f64a06b1844c7f1e2",
+    "src/horse_types.rs": "16de3bd2ee1f07464e2467f53756e0e2dd2dd36c9bae8a1e3a8b20d2d0855fed",
+    "src/hp_policy.rs": "78a4e0bc416d0c11fdec9337bef4069c22adf4546442fe3ac10c651de9a16ade",
+    "src/json.rs": "36fbef2a58dd2b47468d55e3978819521fbd3d901b17f956ac7896207c0fdb26",
+    "src/lane_selection.rs": "88c59936813a4855c52d62917b5c394f8b2b13e7888a76517a3e542a89a9b42c",
+    "src/lib.rs": "b94183ccca366786c0242b9a632639116d43b5fbd11720adc1c72e718fd6f165",
+    "src/main.rs": "401000b4d06b8129d600b6feef929fb64b8c7df73d83d0e4719bf0c3cf68189d",
+    "src/overtaking.rs": "503c12bb47bcadcde9df17f1c92510ad99cda3e4233cfd425382b46c00f1abf5",
+    "src/race_field.rs": "c51f6a61686ae6a9ef50b09ea40ad56593dce424a332c7362502ed46b4802efa",
+    "src/race_field_retail.rs": "9cb1189aafc28aceacc613444e8230bc37bfe0b15fb42883215112c768f6d0a1",
+    "src/race_parameters.rs": "dad011b4d1b3e1fdeb5da57d69423809da94e98b603784e28962a9ed7e916106",
+    "src/race_solver.rs": "df4a29004fea296e12305d6cf6d0c484da0b771186876d1723e9d7eac6169ffe",
+    "src/race_solver_builder.rs": "1f5f1ff9195599fa8441375ff604d7aae59b466d857c398ddc92ecb6a86d057e",
+    "src/race_solver_retail.rs": "faf41a4c2afb500e0653d6d3786dfe40bfa12e776b5226cea4f455a18c59f013",
+    "src/random_gen.rs": "250140b838b77cd5f85586855fa52613843b3e3dafce9444a48126c6068c57dd",
+    "src/region.rs": "f594f738380b560fdc8bbf2b52dd47d7e7058f4cc7b76e7cfda8166ede1c26bf",
+    "src/replay_frames.rs": "066222f1581d2ab9257024384ac60a6e580cbcb39129919127abfbfcae4624ac",
+    "src/replay_worker.rs": "c8e035b26aee878088a3d9b22ddfc0c084bc232acc10a496012cba6d784e2c7d",
+    "src/retail_geometry.rs": "b5573066ad71e7e5291841b46123dc734d47d4d60ca422330a2b4098a3d4fb81",
+    "src/retail_geometry_assets.rs": "83f0da911402f9204cc1800fade95df80629f2325ea2f4581f4ce3544f785486",
+    "src/retail_initialization.rs": "553a6f17bc56b835d99d129438af93e4d46a4896b196f723f93ba93c224e2e71",
+    "src/retail_lane.rs": "5b861a810f8bdd625c5a25eeb5b34270952214a2332ed0e4d41411068d487dd8",
+    "src/retail_physics.rs": "bd53d46e78111b5baabe59b6b3bea9bf7747884959dfd8cfc0f9121583240976",
+    "src/retail_position_keep.rs": "019be12532bb862ed8822692f0e266cc5674e74eb9892fe5eacd0166afe150af",
+    "src/retail_random.rs": "5e1edc8d1b1e1842410f9bc7d9a844f9b44fcc5b82792b3fd0358924ddc50463",
+    "src/retail_sort.rs": "58716281a06fcc22476d2da29a1535ffbc405a000b8157b5828dcc82e5717d03",
+    "src/retail_spurt.rs": "c4b631ccac868ee33afddaf62ca541da57aa22c6f9578263a634c5f143960ed8",
+    "src/retail_states.rs": "159293ace1218b0c6076ef934d850825663cd60c0e5abbd6f54b060df2899842",
+    "src/rushing.rs": "e8e62a91e2600f50df8b955e1ba4bc723a5f451fd32fda63a9a8a0bd64ef5a67",
+    "src/stadium_score.rs": "1888ba930dce41eb7c5ab5015c06533c1c55a8d19abab1676e046bfa6ec5d159",
+    "src/starting_grid.rs": "f25566a6af63cecfe32dc5702fa8869ade0eaf2a4af7bb3b41e8079ad342c830"
+  },
+  "audit": {
+    "racesExecuted": 104317,
+    "seconds": 640.099283699994,
+    "workerRoundTripMeanMs": 8.863938931664316,
+    "timingScope": "Full-frame worker round trip under concurrent audit load, not isolated API latency",
+    "unchangedFullOutputs": 104310,
+    "changedFullOutputs": 7,
+    "inputAndOutputHashReuse": "Every race was re-executed. Scores were reused only for identical pre-race requests and complete binary outputs.",
+    "resultsSha256": "aba467ddd4bc1733c67bc4f2371b794760a7dc0741a6fa879ef3c4168adb3705",
+    "summarySha256": "6a6b7fd7662e3d5a3317a72f6b83afb5ee6088765a5ae7043b2bd7842e3049ee"
+  },
+  "frameCounts": {
+    "samples": 113239542
+  },
+  "extraFrameCounts": {
+    "samples": 113239542
+  },
+  "resultFields": {
+    "runners": 979244,
+    "startDelayTimeExact": 979244,
+    "gutsOrderExact": 979244,
+    "wizOrderExact": 979244,
+    "lastSpurtStartDistanceExact": 979244,
+    "runningStyleExact": 979244
+  },
+  "recordedDurations": {
+    "official": 10170223,
+    "simulated": 10170223,
+    "paired": 10170223,
+    "exact": 10170223,
+    "withinOneWireUnit": 10170223,
+    "largerDifference": 0,
+    "maxDifference": 0
+  },
+  "visualRecipients": {
+    "official": 10170223,
+    "startupSentinels": 1758597,
+    "paired": 10170223,
+    "exact": 10170223,
+    "mismatch": 0,
+    "extraSimulated": 0
+  },
+  "performance": {
+    "scope": "Direct prepared Rust API, nine-runner 2000 m workload. All numeric frames retained. Preparation and transport excluded; binary mode includes encoding. Both builds use ordinary release with fast-alloc, without PGO. ABBA trials on the same host after the full audit finished; live collectors remained active.",
+    "inputSha256": "525d4b31d54120a8ea7cfae334480b7a723d094ce55d765c4c2914067d39f980",
+    "executables": {
+      "before": "ec50781f6a5d544626ebc1f67287a628c1a366fc72377819c4207a515e6b1bf5",
+      "after": "acf1b09e511075b5e2361ae5501564bd69881ea203bba50b10e6380f6808d276"
+    },
+    "repeatsPerSeed": 10,
+    "seedCount": 30,
+    "firstSeed": 100003,
+    "seedStep": 7919,
+    "warmupsPerTrial": 5,
+    "trials": [
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.2137,
+        "mean_ms": 4.2130493333333305,
+        "median_ms": 4.1766,
+        "p95_ms": 4.3502,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.7772,
+        "mean_ms": 4.260709666666664,
+        "median_ms": 3.9887000000000006,
+        "p95_ms": 7.5674,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.0093000000000005,
+        "mean_ms": 4.12787266666667,
+        "median_ms": 4.013199999999999,
+        "p95_ms": 4.4287,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.8917,
+        "mean_ms": 4.466898666666667,
+        "median_ms": 4.2004,
+        "p95_ms": 7.8516,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.0728,
+        "mean_ms": 4.6580693333333345,
+        "median_ms": 4.2826,
+        "p95_ms": 8.1725,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.9782999999999995,
+        "mean_ms": 4.4502416666666695,
+        "median_ms": 4.010599999999999,
+        "p95_ms": 7.5839,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.1834999999999996,
+        "mean_ms": 5.964993333333332,
+        "median_ms": 7.0885,
+        "p95_ms": 7.527299999999999,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.8411,
+        "mean_ms": 4.468226999999997,
+        "median_ms": 4.413,
+        "p95_ms": 4.5671,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.185300000000001,
+        "mean_ms": 4.234357666666667,
+        "median_ms": 4.2054,
+        "p95_ms": 4.433000000000001,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.837,
+        "mean_ms": 4.086503333333334,
+        "median_ms": 4.014,
+        "p95_ms": 4.2429,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.404100000000001,
+        "mean_ms": 4.477524333333332,
+        "median_ms": 3.9886,
+        "p95_ms": 7.2759,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.9658,
+        "mean_ms": 4.24232233333333,
+        "median_ms": 4.202,
+        "p95_ms": 4.408600000000001,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 4.9115,
+        "mean_ms": 4.563569666666666,
+        "median_ms": 4.3006,
+        "p95_ms": 7.1836,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.7670999999999997,
+        "mean_ms": 4.029303000000003,
+        "median_ms": 3.9856,
+        "p95_ms": 4.1954,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 5.2299,
+        "mean_ms": 4.564865333333329,
+        "median_ms": 4.0832999999999995,
+        "p95_ms": 7.495,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "frames",
+        "runs": 300,
+        "preparation_ms": 3.9234999999999998,
+        "mean_ms": 4.405910000000002,
+        "median_ms": 4.2677000000000005,
+        "p95_ms": 5.1411,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.313199999999999,
+        "mean_ms": 4.758482000000002,
+        "median_ms": 4.3695,
+        "p95_ms": 7.9159,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.9663,
+        "mean_ms": 4.500267999999997,
+        "median_ms": 4.1838,
+        "p95_ms": 7.280799999999999,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.796,
+        "mean_ms": 4.760928333333337,
+        "median_ms": 4.1475,
+        "p95_ms": 7.804099999999999,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.0157,
+        "mean_ms": 4.431604666666673,
+        "median_ms": 4.3624,
+        "p95_ms": 4.6241,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.8923,
+        "mean_ms": 4.429107000000002,
+        "median_ms": 4.3474,
+        "p95_ms": 4.8241,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.2322999999999995,
+        "mean_ms": 4.218473333333333,
+        "median_ms": 4.0758,
+        "p95_ms": 4.7,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.9271000000000003,
+        "mean_ms": 4.6012353333333325,
+        "median_ms": 4.1046,
+        "p95_ms": 7.4921,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.9511,
+        "mean_ms": 4.801258666666666,
+        "median_ms": 4.356299999999999,
+        "p95_ms": 8.1006,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.1996,
+        "mean_ms": 4.460692000000002,
+        "median_ms": 4.3326,
+        "p95_ms": 4.9939,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.7294,
+        "mean_ms": 4.268260000000001,
+        "median_ms": 4.0668,
+        "p95_ms": 6.7785,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.7763,
+        "mean_ms": 4.286358666666668,
+        "median_ms": 4.0765,
+        "p95_ms": 7.5903,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.343999999999999,
+        "mean_ms": 4.605178666666665,
+        "median_ms": 4.4063,
+        "p95_ms": 6.457199999999999,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.9346,
+        "mean_ms": 4.761795,
+        "median_ms": 4.403,
+        "p95_ms": 7.960999999999999,
+        "total_frames": 446193,
+        "engine": "before"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 3.8986,
+        "mean_ms": 5.354246999999997,
+        "median_ms": 4.4184,
+        "p95_ms": 7.7405,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.25,
+        "mean_ms": 4.674248666666667,
+        "median_ms": 4.2052000000000005,
+        "p95_ms": 7.5073,
+        "total_frames": 446193,
+        "engine": "after"
+      },
+      {
+        "mode": "binary",
+        "runs": 300,
+        "preparation_ms": 4.5335,
+        "mean_ms": 5.0150763333333295,
+        "median_ms": 4.4868,
+        "p95_ms": 8.434000000000001,
+        "total_frames": 446193,
+        "engine": "before"
+      }
+    ],
+    "means": {
+      "frames": {
+        "before": 4.4065505,
+        "after": 4.495251666666666
+      },
+      "binary": {
+        "before": 4.657899291666667,
+        "after": 4.583002416666666
+      }
+    },
+    "changePercent": {
+      "frames": 2.012938843357559,
+      "binary": -1.6079539361015693
+    },
+    "abbaCyclesPerMode": 4,
+    "trialMedianMeans": {
+      "frames": {
+        "before": 4.2560375,
+        "after": 4.3965625
+      },
+      "binary": {
+        "before": 4.3830375,
+        "after": 4.159825
+      }
+    },
+    "initialTimingCheck": {
+      "scope": "Direct prepared Rust API, nine-runner 2000 m workload. All numeric frames retained. Preparation and transport excluded; binary mode includes encoding. Both builds use ordinary release with fast-alloc, without PGO. ABBA trials on the same host after the full audit finished; live collectors remained active.",
+      "inputSha256": "525d4b31d54120a8ea7cfae334480b7a723d094ce55d765c4c2914067d39f980",
+      "executables": {
+        "before": "ec50781f6a5d544626ebc1f67287a628c1a366fc72377819c4207a515e6b1bf5",
+        "after": "acf1b09e511075b5e2361ae5501564bd69881ea203bba50b10e6380f6808d276"
+      },
+      "repeatsPerSeed": 10,
+      "seedCount": 30,
+      "firstSeed": 100003,
+      "seedStep": 7919,
+      "warmupsPerTrial": 5,
+      "trials": [
+        {
+          "mode": "frames",
+          "runs": 300,
+          "preparation_ms": 4.7412,
+          "mean_ms": 4.374139333333333,
+          "median_ms": 4.258,
+          "p95_ms": 4.9350000000000005,
+          "total_frames": 446193,
+          "engine": "before"
+        },
+        {
+          "mode": "frames",
+          "runs": 300,
+          "preparation_ms": 4.211399999999999,
+          "mean_ms": 5.306314333333333,
+          "median_ms": 4.2532000000000005,
+          "p95_ms": 8.075000000000001,
+          "total_frames": 446193,
+          "engine": "after"
+        },
+        {
+          "mode": "frames",
+          "runs": 300,
+          "preparation_ms": 9.5837,
+          "mean_ms": 4.7325143333333335,
+          "median_ms": 4.138199999999999,
+          "p95_ms": 7.7884,
+          "total_frames": 446193,
+          "engine": "after"
+        },
+        {
+          "mode": "frames",
+          "runs": 300,
+          "preparation_ms": 4.3566,
+          "mean_ms": 4.608839999999996,
+          "median_ms": 4.1942,
+          "p95_ms": 8.1035,
+          "total_frames": 446193,
+          "engine": "before"
+        },
+        {
+          "mode": "binary",
+          "runs": 300,
+          "preparation_ms": 3.8194000000000004,
+          "mean_ms": 4.403435000000003,
+          "median_ms": 4.2757000000000005,
+          "p95_ms": 4.8248,
+          "total_frames": 446193,
+          "engine": "before"
+        },
+        {
+          "mode": "binary",
+          "runs": 300,
+          "preparation_ms": 3.9531,
+          "mean_ms": 4.380203666666668,
+          "median_ms": 4.081300000000001,
+          "p95_ms": 7.6309000000000005,
+          "total_frames": 446193,
+          "engine": "after"
+        },
+        {
+          "mode": "binary",
+          "runs": 300,
+          "preparation_ms": 3.9143,
+          "mean_ms": 4.162270999999999,
+          "median_ms": 4.0537,
+          "p95_ms": 4.2805,
+          "total_frames": 446193,
+          "engine": "after"
+        },
+        {
+          "mode": "binary",
+          "runs": 300,
+          "preparation_ms": 3.948,
+          "mean_ms": 4.640663,
+          "median_ms": 4.5139000000000005,
+          "p95_ms": 4.9664,
+          "total_frames": 446193,
+          "engine": "before"
+        }
+      ],
+      "means": {
+        "frames": {
+          "before": 4.491489666666665,
+          "after": 5.019414333333334
+        },
+        "binary": {
+          "before": 4.522049000000001,
+          "after": 4.2712373333333336
+        }
+      },
+      "changePercent": {
+        "frames": 11.753888038185467,
+        "binary": -5.546416384843845
+      }
+    },
+    "repeatReason": "Initial means disagreed between frame and binary modes, with high-tail interruptions despite similar medians. Four ABBA cycles per mode retain all repeated trials."
+  }
+}

@@ -2,7 +2,7 @@
 
 ### High-fidelity race simulation for Umamusume Global
 
-**Version 73**
+**Version 74**
 
 GlobalSim is a detailed race simulation engine written in Rust, modeling the
 interactions that decide a race—from starting gates and positioning to skill
@@ -21,29 +21,28 @@ trajectories, finishing orders, and race events.
 - **Skill simulation:** activation conditions, timing, effect values, duration, cooldowns, and recipients.
 - **Detailed output:** finish times, placements, movement frames, and skill and competition events.
 
-## Improvements in v73
+## Improvements in v74
 
-Skill effects preserve queued bonuses through their final update. Front-blocking
-boundaries and leader-gap duration scaling retain the precision needed for
-consistent behavior in edge cases. The prepared API provides complete replay
-frames in under 5 ms on the measured nine-runner workload.
-See [performance measurements](docs/PERFORMANCE.md).
+Version 74 refines pacing, overtaking, lane selection, skill timing, course
+transitions, and final-sprint planning. Expanded coverage includes 203,572
+official race captures across 105 courses and fields of 9 to 18 runners.
 
 ## Measured fidelity
 
-Results across **47,664 captured official Global races**:
+Results across **203,572 captured official Global races**:
 
 | Metric | Result |
 |---|---:|
-| Races matching every audited replay check | **47,664/47,664** |
-| Races with every finish time matching exactly | **47,664/47,664** |
-| Winner agreement | **47,664/47,664** |
-| Exact placement agreement | **435,508/435,508** |
+| Races matching every audited replay check | **203,572/203,572** |
+| Races with every finish time matching exactly | **203,572/203,572** |
+| Winner agreement | **203,572/203,572** |
+| Exact placement agreement | **2,210,585/2,210,585** |
 | Worst observed finish-time difference | **0 ms** |
 
-These measurements describe the tested races, not guaranteed accuracy for every
-race configuration. GlobalSim is an unofficial implementation and does not claim
-1:1 equivalence with the game. See [benchmark methodology and coverage](docs/ACCURACY.md).
+These measurements describe the tested captures at their recorded precision and
+cadence. GlobalSim is an unofficial implementation and does not claim 1:1
+equivalence with the game across every race configuration.
+See [benchmark methodology and coverage](docs/ACCURACY.md).
 
 ## Getting started
 
@@ -56,13 +55,13 @@ cargo build --release --locked
 Run the included example on Windows:
 
 ```powershell
-Get-Content examples/v73-race.jsonl | .\target\release\race_engine_rs_v2.exe
+Get-Content examples/v74-race.jsonl | .\target\release\race_engine_rs_v2.exe
 ```
 
 On Linux or macOS:
 
 ```sh
-./target/release/race_engine_rs_v2 < examples/v73-race.jsonl > results.jsonl
+./target/release/race_engine_rs_v2 < examples/v74-race.jsonl > results.jsonl
 ```
 
 The example includes the simulation settings and skill data used by the

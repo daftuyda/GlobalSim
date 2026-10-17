@@ -1,0 +1,237 @@
+{
+  "engineSha256": "3abd366a68fe06628cb9a5201dcc464fbab4f1d43746a082d533e0299062c1f1",
+  "passed": 46,
+  "total": 46,
+  "cases": [
+    {
+      "case": "additional-bonus-on-final-skill-tick",
+      "passed": true,
+      "runnerSamples": 910
+    },
+    {
+      "case": "additional-bonus-preserves-overtake-target",
+      "passed": true,
+      "runnerSamples": 923
+    },
+    {
+      "case": "adjoining-slope-boundary",
+      "passed": true,
+      "runnerSamples": 3982
+    },
+    {
+      "case": "continuous-rank-before-last-straight-entry-a",
+      "passed": true,
+      "runnerSamples": 818
+    },
+    {
+      "case": "continuous-rank-before-last-straight-entry-b",
+      "passed": true,
+      "runnerSamples": 819
+    },
+    {
+      "case": "cornerless-course-has-no-final-straight-entry",
+      "passed": true,
+      "runnerSamples": 671
+    },
+    {
+      "case": "course-11203-geometry-and-final-corner-lottery",
+      "passed": true,
+      "runnerSamples": 1563
+    },
+    {
+      "case": "duel-invites-finished-partner-second-roster",
+      "passed": true,
+      "runnerSamples": 918
+    },
+    {
+      "case": "duel-invites-finished-partner",
+      "passed": true,
+      "runnerSamples": 948
+    },
+    {
+      "case": "duel-joins-finished-group-01",
+      "passed": true,
+      "runnerSamples": 933
+    },
+    {
+      "case": "duel-joins-finished-group-02",
+      "passed": true,
+      "runnerSamples": 891
+    },
+    {
+      "case": "duel-joins-finished-group-03",
+      "passed": true,
+      "runnerSamples": 977
+    },
+    {
+      "case": "duel-joins-finished-group-04",
+      "passed": true,
+      "runnerSamples": 860
+    },
+    {
+      "case": "duel-joins-finished-group-05",
+      "passed": true,
+      "runnerSamples": 922
+    },
+    {
+      "case": "front-block-excludes-rounded-boundary",
+      "passed": true,
+      "runnerSamples": 1319
+    },
+    {
+      "case": "front-block-inclusive-precision-boundary",
+      "passed": true,
+      "runnerSamples": 926
+    },
+    {
+      "case": "front-block-retains-close-boundary",
+      "passed": true,
+      "runnerSamples": 2039
+    },
+    {
+      "case": "front-block-retains-far-boundary",
+      "passed": true,
+      "runnerSamples": 2559
+    },
+    {
+      "case": "front-runner-cached-leader-distance-gate-second-course",
+      "passed": true,
+      "runnerSamples": 926
+    },
+    {
+      "case": "front-runner-cached-leader-distance-gate",
+      "passed": true,
+      "runnerSamples": 813
+    },
+    {
+      "case": "front-runner-ignores-runaways",
+      "passed": true,
+      "runnerSamples": 964
+    },
+    {
+      "case": "front-runner-no-eligible-lead",
+      "passed": true,
+      "runnerSamples": 959
+    },
+    {
+      "case": "front-runner-waits-for-lead",
+      "passed": true,
+      "runnerSamples": 935
+    },
+    {
+      "case": "heal-history-earlier-caster",
+      "passed": true,
+      "runnerSamples": 1047
+    },
+    {
+      "case": "heal-history-later-caster",
+      "passed": true,
+      "runnerSamples": 932
+    },
+    {
+      "case": "last-straight-rank-change-after-entry",
+      "passed": true,
+      "runnerSamples": 708
+    },
+    {
+      "case": "late-corner-overtake-cached-state-a",
+      "passed": true,
+      "runnerSamples": 1387
+    },
+    {
+      "case": "late-corner-overtake-cached-state-b",
+      "passed": true,
+      "runnerSamples": 971
+    },
+    {
+      "case": "leader-gap-duration-rounding",
+      "passed": true,
+      "runnerSamples": 2451
+    },
+    {
+      "case": "new-activation-on-final-bonus-tick-1000",
+      "passed": true,
+      "runnerSamples": 726
+    },
+    {
+      "case": "new-activation-on-final-bonus-tick-1200",
+      "passed": true,
+      "runnerSamples": 881
+    },
+    {
+      "case": "new-activation-on-final-bonus-tick-1400",
+      "passed": true,
+      "runnerSamples": 828
+    },
+    {
+      "case": "pacemaker-handover-refresh-1800-a",
+      "passed": true,
+      "runnerSamples": 1696
+    },
+    {
+      "case": "pacemaker-handover-refresh-1800-b",
+      "passed": true,
+      "runnerSamples": 1708
+    },
+    {
+      "case": "pacemaker-handover-refresh-2100",
+      "passed": true,
+      "runnerSamples": 1334
+    },
+    {
+      "case": "pacemaker-handover",
+      "passed": true,
+      "runnerSamples": 1181
+    },
+    {
+      "case": "pacemaker-keeps-incumbent-in-range-large-field",
+      "passed": true,
+      "runnerSamples": 1945
+    },
+    {
+      "case": "pacemaker-keeps-incumbent-with-forward-group-in-range",
+      "passed": true,
+      "runnerSamples": 810
+    },
+    {
+      "case": "pacemaker-refresh-before-returning-forward-group",
+      "passed": true,
+      "runnerSamples": 708
+    },
+    {
+      "case": "pacemaker-restoration-after-selection-window",
+      "passed": true,
+      "runnerSamples": 843
+    },
+    {
+      "case": "pacemaker-restoration-at-section-boundary-1000",
+      "passed": true,
+      "runnerSamples": 656
+    },
+    {
+      "case": "pacemaker-restoration-at-section-boundary-1200",
+      "passed": true,
+      "runnerSamples": 747
+    },
+    {
+      "case": "pacemaker-retains-incumbent-under-later-style-leader",
+      "passed": true,
+      "runnerSamples": 985
+    },
+    {
+      "case": "pacing-gap-2500-float-rounding",
+      "passed": true,
+      "runnerSamples": 1946
+    },
+    {
+      "case": "stacked-vision-debuffs-remove-visible-corridor",
+      "passed": true,
+      "runnerSamples": 2930
+    },
+    {
+      "case": "straight-entry-clears-overlapping-corner",
+      "passed": true,
+      "runnerSamples": 974
+    }
+  ]
+}

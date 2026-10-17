@@ -28,6 +28,11 @@ Odd excess stats retain half-points. For example, raw 1201 at mood +2 becomes
 approximately 1200.5 × 1.04 = 1248.52 before subsequent adjustments;
 The engine uses the float32 master-rate coefficient, not exact decimal arithmetic. Raw-stat conditions and
 special conserve-power inputs are separate from these adjusted values.
+For speed, multiply the float32 base stat and course coefficient in wider
+arithmetic, add the ground adjustment, then store that combined value as
+float32. Add the career bonus afterward. Rounding the course product before
+the ground adjustment can change the result when the penalty crosses a float
+exponent boundary.
 `raw_stamina = rawStamina*moodFactor`; the conserve-power input is
 `base(rawPower) + max(rawPower-1200,0)/2`.
 
@@ -168,7 +173,11 @@ The latter is fully specified in [`retail_spurt.rs`](../src/retail_spurt.rs):
    pays `slowTime*baseCost + fastTime*sprintCost`, and must start before D-100.
 4. Reduce speed in .1 m/s steps, with two separate loops bounded to 101 attempts.
    No feasible candidate gives result 8.
-   The engine computes times in float32, but HP products, sum and comparison in double.
+   Travel times are float32. Store the normal-pace cost `slowTime*baseCost`
+   as float32, then widen it before adding the double-precision
+   `fastTime*sprintCost` product. Compare that wider sum against current HP.
+   This rounding point can admit or reject a plan at an HP boundary and change
+   the ordering of feasible plans even when the random draws are unchanged.
 5. Sort feasible candidates by a comparison based on truncating
    `(timeA-timeB)*10000` to integer. Sort implementation/ties matter.
 6. In sorted order accept when an integer draw in [0,100) is strictly below
@@ -207,6 +216,12 @@ The runtime is mixed precision. Base target speed, minimum speed, blocking
 rates, spurt speed, initial HP, acceleration, slope correction and spurt
 feasibility have explicit float32 store boundaries and wider intermediate
 expressions. The exact expression order is in `retail_physics.rs`.
+
+Inward passing corridors also retain a wider final boundary comparison.
+`retail_lane.rs` stores the two `lane +/- corridorHalfWidth` edges as
+float32, then subtracts the inward offset without another float32 store
+before comparing peer lanes. Lane candidates and ordinary corridor bounds
+retain their existing float32 stores.
 
 Geometry interpolation retains unrounded x/z differences. Corner-end handling,
 Spot Struggle bonuses after slope correction, and skill-duration extension

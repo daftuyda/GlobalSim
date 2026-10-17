@@ -551,6 +551,8 @@ pub(crate) struct RetailRuntimeState {
     pub course_events_ready: bool,
     pub corner: i32,
     pub final_corner: bool,
+    pub last_straight_entered: bool,
+    pub last_straight_entry_tick: bool,
     pub pending_hp: f32,
     pub finished: bool,
     pub hp_empty_on_race: bool,
@@ -683,6 +685,8 @@ impl RaceSolver {
             course_events_ready: false,
             corner: 0,
             final_corner: false,
+            last_straight_entered: false,
+            last_straight_entry_tick: false,
             pending_hp: 0.,
             finished: false,
             hp_empty_on_race: false,
@@ -790,6 +794,7 @@ impl RaceSolver {
         self.activate_count_previous_tick = total - self.activate_total_at_tick_start;
         self.activate_total_at_tick_start = total;
         self.activated_ids_previous_tick = std::mem::take(&mut self.activated_ids_this_tick);
+        self.additional_turn_floor = i64::MIN;
         let retail = self.retail.as_mut().unwrap();
         if retail.finished {
             retail.after_goal_time += dt;
@@ -804,6 +809,11 @@ impl RaceSolver {
         if retail.course_events_ready {
             retail.slope.update(self.pos as f32, &self.course.slopes);
         }
+        retail.last_straight_entry_tick = retail.course_events_ready
+            && retail.final_corner
+            && !retail.last_straight_entered
+            && self.course.straights.last().is_some_and(|straight| self.pos >= straight.start);
+        retail.last_straight_entered |= retail.last_straight_entry_tick;
         self.hill_idx = retail.slope.region.map_or(-1, |i| i as i64);
         self.slope_per = retail.slope.value as f64;
         // The opening AI pass precedes the first course-event update.
@@ -1146,6 +1156,7 @@ impl RaceSolver {
         let retail = self.retail.as_ref().unwrap();
         self.moved_lane_this_tick = movement.step(
             MoveContext {
+                after_goal: finished && retail.after_goal_time >= 1.,
                 position: self.pos as f32,
                 power: self.horse.power as f32,
                 phase: self.phase,
