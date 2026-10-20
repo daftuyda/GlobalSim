@@ -6,7 +6,15 @@ Run the Rust test suite with:
 cargo test --release --locked
 ```
 
-Both default and `fast-alloc` release suites have **133 passing tests and 11 pre-existing failures**.
+The latest validated `fast-alloc` library suite has **138 passing tests and
+11 pre-existing failures**. The archived baseline has the same failure set.
+All **69 included strict accuracy fixtures pass**. The latest 95,062-race
+batch and its quarantine partition are described in [accuracy](ACCURACY.md).
+The full library suite is not green.
+[v75 release checks](../evidence/v75-release-validation.json).
+
+The earlier `fast-alloc` release suite had **136 passing tests and 11 pre-existing failures**.
+The earlier default-allocator accuracy build had 133 passing tests and the same 11 failures.
 The failure set is unchanged. Failures cover
 numerical reference comparisons, geometry, stamina and spurt behavior,
 lateral movement, and duel conditions.
@@ -16,9 +24,11 @@ lateral movement, and duel conditions.
 Unit tests, persistent-worker checks and [official-race benchmark results](ACCURACY.md)
 measure different aspects of the engine and should be considered together.
 
-The current accuracy build passes **63 captured regressions** and matches all
-audited observations in **203,572 of 203,572 captured official races**.
-[Current validation](../evidence/new-races-20261017-morning.json).
+The earlier Career candidate passed **67 captured regressions** under the earlier
+pre-finish checks. The separate practice benchmark recorded matches for
+**203,572 of 203,572 captured official races** under its earlier definitions;
+that full benchmark has not been rerun for the Career corrections.
+[Practice validation](../evidence/new-races-20261017-morning.json).
 
 JSON and binary output agree across 13 requests per frame mode, including
 changed skill data, invalid/empty tables, recovery and runner permutations.
@@ -93,7 +103,7 @@ coverage of that positive float32 range, not of all float64 values.
 To compare two persistent workers on your own inputs:
 
 ```powershell
-python tools/check_worker_parity.py --engine target/release/race_engine_rs_v2.exe --baseline path/to/previous-engine.exe --inputs examples/v74-race.jsonl
+python tools/check_worker_parity.py --engine target/release/race_engine_rs_v2.exe --baseline path/to/previous-engine.exe --inputs examples/v75-race.jsonl
 ```
 
 Add `--isolation` when supplying captured inputs with `skillData` and equipped
@@ -105,7 +115,7 @@ helper. Include full-frame requests that need no gate permutation, sparse and
 gate-reordered fallbacks, and alternating request modes. The helper changes
 encoding concurrency while retaining the same JSON contract.
 
-## Full captured-race validation
+## Historical v74 captured-race validation
 
 Full dataset validation covers **203,572 races**, 2,210,585 runners and 266,951,869 compared
 pre-finish runner/frame samples. It checks raw finish times, ordering, skill
@@ -151,6 +161,46 @@ expected official observations are checked separately.
 python tools/check_accuracy_regressions.py --engine target/release/race_engine_rs_v2.exe
 ```
 
+The checker now defaults to **strict observation validation**. It uses exact
+float32 timestamps, rejects duplicate or out-of-order simulated timestamps,
+checks runner counts and every supplied replay sample including post-finish
+movement, and compares skill/competition event order within the exposed streams.
+It also checks recorded durations, duplicate recipient observations, and extra
+recipient events when the fixture contains a complete recipient list. Fixtures
+with supplementary result fields, rushing state and blocker identities check
+those too. Reports list missing observation coverage explicitly.
+
+The historical pre-finish check remains available with `--legacy`. Before the
+subsequent event-order corrections and fixture additions, all 67
+fixtures pass it, while 63 pass the strict check. Four older fixtures still
+have time-zero skill-event ordering differences; movement and competition
+event sequences match their supplied observations. Three official Career
+fixtures cover adjusted-stat rounding and approximately equal guts/wisdom
+ranks. The separate 4,442-race Career audit has 4,031 strict matches, with
+410 startup discrepancies and one later runtime discrepancy.
+See [Career validation](CAREER-VALIDATION.md) for scope and test evidence.
+
+Dense engine output contains additional ticks between official samples; this
+checker does not claim identical recording cadence or compare hidden ticks.
+Global ordering between separate event streams and unexposed presentation
+result fields remain outside its scope. Some older fixtures contain only
+selected recipient observations or omit duration/state/result observations.
+`--fixtures DIRECTORY` selects another directory of captured fixture files.
+
+Run the validator mutation tests and rank checks with:
+
+```powershell
+python -m unittest discover -s tests -p test_accuracy_regressions.py
+python tools/check_career_team_rank.py --engine target/release/race_engine_rs_v2.exe --report target/career-ranks.json --native-inputs target/career-inputs.jsonl
+```
+
+The rank check compares 48 synthetic career races against equivalent pre-mood
+stat inputs and checks invalid ranks and worker recovery. It covers 9- and
+18-runner fields. The generated inputs also exercise ranked prepared-library
+runs with learned skills and overcap wisdom using `check_native_parity.py`.
+This is implementation consistency testing, not official career-race accuracy.
+[Rank, worker and prepared-API results](../evidence/career-team-rank-validation-20261018.json).
+
 The Rust suite also checks slope boundary inclusion, expiry without re-entry,
 crossing a boundary without landing exactly on it, the inclusive 150 m competition
 threshold, and HP and separation exits for duels after the finish. Parallel corpus timings
@@ -195,3 +245,14 @@ signed seed boundaries, checking exact float bits and subsequent RNG draws.
 ```powershell
 python tools/check_native_parity.py --library target/pgo/globalsim.dll --baseline path/to/reference-engine.exe --inputs path/to/races.jsonl --isolation
 ```
+
+## Latest intake
+
+The new 39,837-race practice batch has 39,834 observed matches after a natural
+corner-expiry correction. All five new Career captures pass, bringing that
+cohort to 4,031 strict matches out of 4,442. The previous 203,572 practice
+captures were not rerun for this intake. The prepared library agrees with the
+worker on 90 sequential runs and 24 concurrent runs, including the new corner
+fixture and three Career fixtures.
+[Findings and capture priorities](NEW-RACE-FINDINGS-20261018.md),
+[validation evidence](../evidence/new-races-20261018-combined.json).

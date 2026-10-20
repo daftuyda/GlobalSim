@@ -294,7 +294,11 @@ where V: Fn(&RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'stat
         Box::new(move |regions, arg, course, horse, extra| {
             let restricted = static_filter(regions, arg, course, horse, extra);
             let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
-                if field.is_none() {
+                // Live field predicates need a registered runner, not just a
+                // field. A detached solver has no rank or neighbour identity;
+                // reject every comparison (including !=) rather than inventing
+                // rank zero or dereferencing a missing/out-of-range index.
+                if !field.zip(s.field_index).is_some_and(|(f, i)| i < f.n) {
                     return false;
                 }
                 cmp(get_value(s, field), transform_arg(arg, s, field))
@@ -372,11 +376,10 @@ fn order_in_filter(rate: f64, band: fn(&RaceSolver) -> &std::cell::Cell<Option<f
         }
         let cell_fn = band;
         let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
-            let field = match field {
-                Some(f) => f,
-                None => return false,
+            let (field, idx) = match field.zip(s.field_index) {
+                Some((f, i)) if i < f.n => (f, i),
+                _ => return false,
             };
-            let idx = s.field_index.unwrap();
             let in_band = (field.order_of(idx) as f64) <= (rate * field.n as f64).round();
             if s.retail.is_some() {
                 matches!(cell_fn(s).get(), Some(start) if !start.is_nan())
@@ -394,11 +397,10 @@ fn order_out_filter(rate: f64, band: fn(&RaceSolver) -> &std::cell::Cell<Option<
         }
         let cell_fn = band;
         let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
-            let field = match field {
-                Some(f) => f,
-                None => return false,
+            let (field, idx) = match field.zip(s.field_index) {
+                Some((f, i)) if i < f.n => (f, i),
+                _ => return false,
             };
-            let idx = s.field_index.unwrap();
             // v69: out bands are inclusive, rank >= round(n*rate) (doc 13.189).
             let in_band = (field.order_of(idx) as f64) >= (rate * field.n as f64).round();
             if s.retail.is_some() {

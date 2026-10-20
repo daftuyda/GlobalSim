@@ -230,13 +230,59 @@ pub fn base_stat(raw: f64, motiv_coef: f64) -> f64 {
 }
 
 pub fn build_base_stats(desc: &HorseSpec, mood: i32) -> HorseParameters {
+    build_base_stats_with_team_rank(desc, mood, 0)
+}
+
+/// RaceParameter uses the first strictly greater threshold; rank zero has no bonus.
+/// This race bonus is distinct from the inclusive graduation reward lookup.
+pub fn team_rank_bonus(rank: i32) -> f32 {
+    if rank <= 0 { return 0.0; }
+    // race_single_mode_team_status, ordered by threshold then id.
+    for (threshold, bonus) in [(6, 50.), (11, 30.), (16, 20.), (21, 10.), (26, 0.), (99999, 0.)] {
+        if rank < threshold { return bonus; }
+    }
+    0.0
+}
+
+/// Raw -> overcap halving -> team bonus -> motivation -> base-stat clamp.
+pub fn ranked_base_stat(raw: f64, mood: i32, rank: i32) -> f32 {
+    let base = adjust_overcap(raw) as f32 + team_rank_bonus(rank);
+    crate::retail_initialization::initial_base_wisdom(base as f64, mood)
+}
+
+#[cfg(test)]
+mod team_rank_tests {
+    use super::*;
+
+    #[test]
+    fn team_rank_thresholds_and_stat_operation_order() {
+        for (rank, expected) in [(0, 0.), (1, 50.), (5, 50.), (6, 30.),
+            (10, 30.), (11, 20.), (15, 20.), (16, 10.), (20, 10.),
+            (21, 0.), (25, 0.), (26, 0.), (99999, 0.), (i32::MAX, 0.)] {
+            assert_eq!(team_rank_bonus(rank), expected);
+        }
+        // Half points survive; bonus is neither halved nor applied after mood.
+        assert_eq!(ranked_base_stat(1201., 0, 1), 1250.5);
+        assert_eq!(ranked_base_stat(1201., 2, 1), (1250.5_f32 * 1.04_f32));
+        assert_eq!(ranked_base_stat(1201., -2, 1), (1250.5_f32 * 0.96_f32));
+        assert_eq!(ranked_base_stat(9999., 2, 1), 2000.);
+        for raw in [0., 301., 1200., 1201., 2000., 9999.] {
+            for mood in -2..=2 {
+                assert_eq!(ranked_base_stat(raw, mood, 0).to_bits(),
+                    crate::retail_initialization::initial_base_wisdom(adjust_overcap(raw), mood).to_bits());
+            }
+        }
+    }
+}
+
+pub fn build_base_stats_with_team_rank(desc: &HorseSpec, mood: i32, rank: i32) -> HorseParameters {
     let motiv_coef = 1.0 + 0.02 * mood as f64;
     HorseParameters {
-        speed: crate::retail_initialization::initial_base_wisdom(adjust_overcap(desc.speed), mood) as f64,
-        stamina: crate::retail_initialization::initial_base_wisdom(adjust_overcap(desc.stamina), mood) as f64,
-        power: crate::retail_initialization::initial_base_wisdom(adjust_overcap(desc.power), mood) as f64,
-        guts: crate::retail_initialization::initial_base_wisdom(adjust_overcap(desc.guts), mood) as f64,
-        wisdom: crate::retail_initialization::initial_base_wisdom(adjust_overcap(desc.wisdom), mood) as f64,
+        speed: ranked_base_stat(desc.speed, mood, rank) as f64,
+        stamina: ranked_base_stat(desc.stamina, mood, rank) as f64,
+        power: ranked_base_stat(desc.power, mood, rank) as f64,
+        guts: ranked_base_stat(desc.guts, mood, rank) as f64,
+        wisdom: ranked_base_stat(desc.wisdom, mood, rank) as f64,
         strategy: desc.strategy,
         distance_aptitude: desc.distance_aptitude,
         surface_aptitude: desc.surface_aptitude,
@@ -246,7 +292,7 @@ pub fn build_base_stats(desc: &HorseSpec, mood: i32) -> HorseParameters {
         // Raw stamina, effective stats, skills and release duration are separate.
         // v69: Conserve Power uses the float32 mood-adjusted base, like every
         // other mood-adjusted stat (doc 13.186).
-        raw_power: crate::retail_initialization::initial_base_wisdom(adjust_overcap(desc.power), mood) as f64
+        raw_power: ranked_base_stat(desc.power, mood, rank) as f64
             + (desc.power - 1200.0).max(0.0) * 0.5,
     }
 }
@@ -261,16 +307,18 @@ pub fn build_adjusted_stats_for_mode(base: &HorseParameters, course: &CourseData
     // Extracted Global.SingleModeAdd* values; added after base-stat adjustments.
     let bonus = if single_mode { 400.0 } else { 0.0 };
     HorseParameters {
-        // Round after combining the course bonus and ground penalty. An
+        // Round after combining the course, ground and career adjustments. An
         // intermediate float store can change the adjusted stat when the
         // penalty crosses a float exponent boundary, affecting spurt speed.
-        speed: (((base.speed as f32 as f64 * race_course_modifier as f32 as f64
-            + GROUND_SPEED_MODIFIER[course.surface as usize][ground]) as f32)
-            + bonus as f32).clamp(1.,2000.) as f64,
+        speed: ((base.speed as f32 as f64 * race_course_modifier as f32 as f64
+            + GROUND_SPEED_MODIFIER[course.surface as usize][ground]
+            + bonus) as f32).clamp(1.,2000.) as f64,
         stamina: (base.stamina + bonus).clamp(1.0,2000.0),
         power: (base.power + GROUND_POWER_MODIFIER[course.surface as usize][ground] + bonus).clamp(1.0,2000.0),
         guts: (base.guts + bonus).clamp(1.0,2000.0),
-        wisdom: ((base.wisdom as f32 * ([11000.,10000.,8500.,7500.,6000.,4000.,2000.,1000.][base.strategy_aptitude as usize] * 0.0001_f32)) + bonus as f32).clamp(1.0,2000.0) as f64,
+        wisdom: ((base.wisdom as f32 as f64
+            * ([11000.,10000.,8500.,7500.,6000.,4000.,2000.,1000.][base.strategy_aptitude as usize] * 0.0001_f32) as f64
+            + bonus) as f32).clamp(1.0,2000.0) as f64,
         strategy: base.strategy,
         distance_aptitude: base.distance_aptitude,
         surface_aptitude: base.surface_aptitude,
@@ -577,6 +625,7 @@ pub struct RaceSolverBuilder {
     race_params: RaceParameters,
     horse_desc: Option<HorseSpec>,
     single_mode: bool,
+    team_rank: i32,
     gate_index: i32,
     rng: Rule30CARng,
     wisdom_seed: u32,
@@ -598,6 +647,7 @@ impl RaceSolverBuilder {
             race_params: RaceParameters::default(),
             horse_desc: None,
             single_mode: false,
+            team_rank: 0,
             gate_index: 0,
             rng: Rule30CARng::new(seed_lo, seed_hi),
             wisdom_seed: seed_lo,
@@ -620,6 +670,11 @@ impl RaceSolverBuilder {
 
     pub fn wisdom_checks(&mut self, enabled: bool) -> &mut Self {
         self.wisdom_checks = enabled;
+        self
+    }
+
+    pub fn team_rank(&mut self, rank: i32) -> &mut Self {
+        self.team_rank = rank;
         self
     }
 
@@ -768,7 +823,7 @@ impl RaceSolverBuilder {
     #[allow(clippy::type_complexity)]
     fn prepare(&mut self) -> CondResult<(HorseParameters, Vec<SkillData>, Vec<Vec<Region>>, Rule30CARng)> {
         let horse_desc = self.horse_desc.as_ref().expect("horse() must be called before build()");
-        let mut horse = build_base_stats(horse_desc, self.race_params.mood);
+        let mut horse = build_base_stats_with_team_rank(horse_desc, self.race_params.mood, self.team_rank);
         // HorseData.InitRunningStyleEx scans learned effects before triggers
         // and wisdom lotteries; type 6 is SkillAbilityNull at runtime.
         if horse.strategy == Strategy::Nige && self.skills.iter().any(|(sid, perspective, _)| {
@@ -785,10 +840,9 @@ impl RaceSolverBuilder {
 
         let mut trigger_horse = horse.clone();
         if self.retail_initialization.as_ref().is_some_and(|row|row.runtime_phase) {
-            use crate::retail_initialization::initial_base_wisdom;
             // v69: skill-condition base stats halve the excess over 1200 before mood,
             // like every other base stat (doc 13.189).
-            let base = |raw| initial_base_wisdom(adjust_overcap(raw), self.race_params.mood) as i32 as f64;
+            let base = |raw| ranked_base_stat(raw, self.race_params.mood, self.team_rank) as i32 as f64;
             trigger_horse.speed = base(horse_desc.speed);
             trigger_horse.stamina = base(horse_desc.stamina);
             trigger_horse.power = base(horse_desc.power);
@@ -889,7 +943,7 @@ impl RaceSolverBuilder {
         let ground = self.race_params.ground_condition;
 
         let mut skills = Vec::with_capacity(skilldata.len());
-        let base = build_base_stats(self.horse_desc.as_ref().unwrap(), self.race_params.mood);
+        let base = build_base_stats_with_team_rank(self.horse_desc.as_ref().unwrap(), self.race_params.mood, self.team_rank);
         let chance = (1.0 - 90.0 / base.wisdom).max(0.2);
         let mut wisdom_rngs: BTreeMap<String, Rule30CARng> = BTreeMap::new();
         let mut wisdom_picks: BTreeMap<String, bool> = BTreeMap::new();

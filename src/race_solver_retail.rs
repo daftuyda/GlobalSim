@@ -1219,11 +1219,12 @@ impl RaceSolver {
                 };
             let base = self.retail.as_mut().unwrap().acceleration.base(&config.physics, input);
             config.physics.acceleration_from_base_iter(base, self.start_dash,
-                // v69: the Conserve Power release and duel accelerations are summed after
-                // the skill acceleration modifiers, not in activation order (doc 13.188).
+                // Ordinary skill modifiers precede the duel bonus, then Conserve Power.
+                // Rounding after each addition matters when both bonuses overlap;
+                // the captured duel-conserve overlap fixtures distinguish the old order.
                 self.retail_accel_modifiers.values_except_tokens(&excluded)
-                    .chain(self.retail_accel_modifiers.value(cp))
-                    .chain(self.retail_accel_modifiers.value(4)),
+                    .chain(self.retail_accel_modifiers.value(4))
+                    .chain(self.retail_accel_modifiers.value(cp)),
             )
         };
         self.accel = acceleration as f64;

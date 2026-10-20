@@ -1,0 +1,251 @@
+{
+  "schema": "unresolved-race-diagnostic-followup-v1",
+  "createdUtc": "2026-10-20T08:17:50.199500+00:00",
+  "validatedEngineUnchanged": true,
+  "validatedEngine": {
+    "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\ordering-engine.exe",
+    "sha256": "2c7cfa86c8e2e5ff739452317cfc3977952560381f7e83b58f0ad5e9780b5b6a"
+  },
+  "canonicalValidation": {
+    "races": 95062,
+    "strictMatches": 94566,
+    "remaining": 496,
+    "countsChanged": false,
+    "baseline": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\evidence\\discrepancies-20261020.json",
+      "sha256": "be47acb761dd7007e64928d0fb88e0ebc7b10196c51859af9da4fe81d862f607"
+    }
+  },
+  "seedDiagnostics": {
+    "races": 524,
+    "seconds": 19.52523139998084,
+    "engineSha256": "2c7cfa86c8e2e5ff739452317cfc3977952560381f7e83b58f0ad5e9780b5b6a",
+    "errors": [],
+    "groups": {
+      "startup": {
+        "races": 492,
+        "uniqueInferredSeed": 492,
+        "sameAsCapturedSeed": 0,
+        "diagnosticStrictMatches": 491,
+        "unmatched": [
+          "8a664ff9d9a35614e5a7bdebbe59eee17e5621f76425d753d83b7caaf5945934"
+        ]
+      },
+      "control": {
+        "races": 32,
+        "uniqueInferredSeed": 32,
+        "sameAsCapturedSeed": 32,
+        "diagnosticStrictMatches": 32,
+        "unmatched": []
+      }
+    }
+  },
+  "packetCrosscheck": {
+    "startup": {
+      "races": 492,
+      "rawSeedVerified": 492,
+      "inferredSeedIsExposedIntegerInStartResponse": 0,
+      "endPacketPresent": 492,
+      "endPlayerRankExact": 492,
+      "endPlayerTimeExact": 490,
+      "inferredSeedIsExposedIntegerInEndResponse": 0,
+      "endTimeDifferences": {
+        "0": 490,
+        "1": 2
+      }
+    },
+    "control": {
+      "races": 32,
+      "rawSeedVerified": 32,
+      "inferredSeedIsExposedIntegerInStartResponse": 32,
+      "endPacketPresent": 32,
+      "endPlayerRankExact": 32,
+      "endPlayerTimeExact": 32,
+      "inferredSeedIsExposedIntegerInEndResponse": 0,
+      "endTimeDifferences": {
+        "0": 32
+      }
+    }
+  },
+  "newlyExposedPacingCase": {
+    "replaySha256": "8a664ff9d9a35614e5a7bdebbe59eee17e5621f76425d753d83b7caaf5945934",
+    "capturedSeed": 1012072510,
+    "diagnosticSeedMagnitude": 1180502289,
+    "firstRecordedDifferenceSeconds": 8.524791717529297,
+    "alreadyCountedInStartupGroup": true
+  },
+  "pacingCandidate": {
+    "adopted": false,
+    "name": "restoration-until-section",
+    "fixesFocusedCareerSeed": 488112673,
+    "strictFixturesPassed": 68,
+    "strictFixturesTotal": 69,
+    "regression": "pacemaker-restoration-after-selection-window"
+  },
+  "productionChanges": [],
+  "canonicalSeedChanges": 0,
+  "limitations": [
+    "Replay-derived seeds are diagnostic only, not independent predictive validation.",
+    "No verified rule derives the alternate seeds from available pre-race inputs.",
+    "Strict observations do not establish every hidden tick or complete game accuracy.",
+    "Two raw end times differ from replay-derived truncated times by one 0.0001-second unit.",
+    "The pacing variant that fixes one full race regresses an existing fixture and was rejected.",
+    "No full corpus rerun was needed: validated production source and binary remain unchanged."
+  ],
+  "artifacts": [
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\build\\identity.json",
+      "sha256": "5f8f9a26770bfb3d58d836e3c614773aaf24a67e2c82443153e935f17ff45bc6"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\delay-stream-inversion-4096.json",
+      "sha256": "64542e9537b6d31c7784a08e2e709f921730e63d2ad167c14af4529ce2a7b54b"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\startup-inferred-seed-diagnostic.json",
+      "sha256": "efd8d7982d4d03a467bf96f26d2fe4f52386866d4e3e01b280ad27dc190b9323"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\startup-inferred-seed-diagnostic.bin.gz",
+      "sha256": "ffb39fbcf6bf369117769ee57ae33c28c1d956d25270e095cb96db06da13807c"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\startup-streams\\identity.json",
+      "sha256": "0b204146032d57fc4cfa21c322784963473afa2bc5c6a7e7b5429a9899166c42"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\startup-streams\\results.jsonl",
+      "sha256": "2ce8628cd063208b75022b6ec4b5d72df6e7f3bfa9bcb5504b03534e71c3d581"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\startup-streams\\summary.json",
+      "sha256": "684dd2ed0ed376c32ec1b45846baa16dbb7967b0dece935cc43e388560a6e467"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\startup-packet-crosscheck.json",
+      "sha256": "ee3429cff4089c45a8319c36b1c16ed249ff8fea66c6595df4a34aa4781e4f74"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\career-inferred-pacing.json.gz",
+      "sha256": "8770a4261a40df27ad24080041508708ba6f0fc87fd3924c4a91d2c883835f08"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\pacemaker-probes\\summary.json",
+      "sha256": "a534b67a10da9318b74c87614d81b48584dabab040a5708aee2dac9f55c4c740"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\rounding-restoration-probes\\summary.json",
+      "sha256": "3ea077850e901241fd3501a76b2600b4d02755d86ca24ae86995d021581cc7ff"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\restoration-window-probes\\summary.json",
+      "sha256": "a457417061a4e3401b9606211bcb448b812d099b8913699da8360a57f5eef03e"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\restoration-current-window-probes\\summary.json",
+      "sha256": "4874d14a3cb27672e933c04a6ccdc28d5ccc7a486847a9aaead75924676c4219"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\forward-follow-probes\\summary.json",
+      "sha256": "1b5f6a6b74c3c7388197fbb0c68ef62fecadc40cc146e4cac6a93f3f5d6ffed2"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\restoration-window-fixtures.json",
+      "sha256": "e38748925272712ff7afb28f041ce0d0b240f98cdbd31b1e8862d6cea0b2ac04"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\live-collection-check.json",
+      "sha256": "f8c527a08d1a7ecef27796cd9c5df13f5a7bb98f4a0092c30ecb11408bdf6ed9"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\probe-build\\identity.json",
+      "sha256": "8d9ce4e382d00f73bcd49a3c498674578ba1a0cd4a349392d0a4e1ef4bb325d5"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\probe-build\\source.zip",
+      "sha256": "cc598fb5f648a6d39160eb38195c2557dbfd10ce330623a3b71d166b841d270a"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\forward-follow-probe-engine.exe",
+      "sha256": "70225689de4bbb151f4922d11e30a495d36b408a2b70911eb1798a9f210d7723"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\pace-probe-engine.exe",
+      "sha256": "3d3bb073e6358b9d3bfb3a522085873dc2a17ec1ed3bd47f0d264168591654c6"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\restoration-current-window-probe-engine.exe",
+      "sha256": "675f3f48112b197a77e977e4b8dd92e3bb1d63d709eca98090a9cd94aae749e6"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\restoration-window-probe-engine.exe",
+      "sha256": "59cce2378dae8157ec74c63c40fcc58d21e8f0273ba63b5ecd79ff4a08cdb168"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\rounding-restoration-probe-engine.exe",
+      "sha256": "ee91f8b47492db232dae51511b98c775b71ede7b5360246306b0020131b846ee"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\native-evidence\\pacemaker-create-gap.json",
+      "sha256": "86744c85dc4204dbe6b095458a3012c9552b8a7bbb6c62b197d1099de2acb55a"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\native-evidence\\pacemaker-create-gap.txt",
+      "sha256": "0c268eca3fcc289a65530efa0b533d0a1b6d3b741d3eb9d7ce5434cef80a4412"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\native-evidence\\position-pacemaker.json",
+      "sha256": "7e2ad074026c707a9c5d9f54aa1b4c8914c3c9ea2fed06e1a337b79c969e3887"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\native-evidence\\position-pacemaker.txt",
+      "sha256": "7ecbb28a6cc8033a95006274aa91a09725243f05d037ef17886cb510ae68b6af"
+    }
+  ],
+  "reproductionTools": [
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\add-followup-probes.py",
+      "sha256": "e01ef6fb4bf88baa7969fbefe22414260b229d544b559293f0e3f331452794cf"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\add-forward-follow-probes.py",
+      "sha256": "e8ec9827a3b1a8a12fc1f9d2b7fac4b29555e542085981ce4880933839aa72b9"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\add-restoration-window-probe.py",
+      "sha256": "08b96e6633930d3d68626e47d76c4d546721a2b690481c9386cd05f25b8adb63"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\audit-startup-streams.py",
+      "sha256": "3d4410a66aad52956ae7f92fb427cf87e0f850997a62a595e794637416c3db1a"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\check-probes.py",
+      "sha256": "3c6ebdef2eb6d71a2b266e2faf9342dd62d5d08607bab752b63d3c11bc8419ea"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\check-startup-packets.py",
+      "sha256": "3dcc24255c519b93ec8391bdb68748c76ca98a1600d8a53965bca206e653fa43"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\combine-restoration-probes.py",
+      "sha256": "30dde3172133f5a1597bd7993b7429c1175a5499d786d28b58f059936e98f5ba"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\inspect-delay-stream.py",
+      "sha256": "b163ed77e99d9547fb761178e94ccb6e80c184ad618cd644dddffa0b11b2d19f"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\prepare-pace-probes.py",
+      "sha256": "6ecf8b5109eb3fcadd6b0a005379738cb5c01af9d137862dcad6bad4f9e900c6"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\publish-followup.py",
+      "sha256": "8bde91a6194fb3fa4577b5100db8c5765197939d552b95ce81216c4b28cf8fe9"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020-followup\\reproduction\\run-pace-probes.py",
+      "sha256": "1a449cd3453d4386b2fa5c354e9eb8a84e28f3ca955f29e2605c0c7cd4c81daa"
+    }
+  ]
+}

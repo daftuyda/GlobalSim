@@ -93,6 +93,7 @@ pub struct TargetState {
     pub force_check: bool,
     pub force_in: bool,
     pub extra_outward: Option<f32>,
+    front_cache: Option<(Row, f32, f32, Option<usize>)>,
 }
 
 impl TargetState {
@@ -112,29 +113,51 @@ impl TargetState {
     }
 
     fn collect_cached(&mut self, c: &TargetContext, p: TargetParameters) {
-        let others = &self.cached;
-        self.side = Some(side_room_iter(c.owner.point, c.max_lane, others.iter().map(|r| r.point), p.block));
+        let owner = c.owner.point;
+        let mut side = SideRoom {
+            can_in: owner.lane > 0.0001,
+            can_out: owner.lane < c.max_lane,
+            in_space: owner.lane,
+            out_space: c.max_lane - owner.lane,
+            inner_blocker: None,
+            inner_blocker_index: None,
+        };
+        let mut front = None;
+        let mut nearest = f32::INFINITY;
+        let mut inner_nearby = false;
         self.visible.clear();
-        self.visible.extend(others
-            .iter()
-            .enumerate()
-            .filter(|(_, r)| {
-                is_visible(
-                    r.point.position - c.owner.point.position,
-                    r.point.lane - c.owner.point.lane,
-                    c.vision,
-                )
-            })
-            .map(|(i, _)| i));
-        self.force_in = c.empty_in_move
-            && c.phase < 1
-            && c.owner.point.lane >= p.force_in_threshold
-            && others.iter().any(|r| {
-                let gap = c.owner.point.lane - r.point.lane;
-                (r.point.position - c.owner.point.position).abs() < p.block.side_distance
-                    && gap > 0.
-                    && gap < p.block.side_lane
-            });
+        for (i, horse) in self.cached.iter().enumerate() {
+            let row = horse.point;
+            let position_gap = row.position - owner.position;
+            let lane_gap = row.lane - owner.lane;
+            if is_visible(position_gap, lane_gap, c.vision) { self.visible.push(i); }
+            if position_gap > 0. && position_gap < p.block.front_distance
+                && position_gap < nearest
+                && lane_gap.abs() <= front_lane_limit(position_gap, p.block) {
+                front = Some(i);
+                nearest = position_gap;
+            }
+            if !(position_gap.abs() >= p.block.side_distance) {
+                if lane_gap < 0. {
+                    side.in_space = side.in_space.min(-lane_gap);
+                    if -lane_gap < p.block.side_lane {
+                        side.can_in = false;
+                        side.inner_blocker = Some(row.lane);
+                        side.inner_blocker_index = Some(i);
+                    }
+                } else if lane_gap > 0. {
+                    side.out_space = side.out_space.min(lane_gap);
+                    if lane_gap < p.block.side_lane { side.can_out = false; }
+                }
+            }
+            let inward_gap = owner.lane - row.lane;
+            inner_nearby |= position_gap.abs() < p.block.side_distance
+                && inward_gap > 0. && inward_gap < p.block.side_lane;
+        }
+        self.side = Some(side);
+        self.front_cache = Some((owner, p.block.front_distance, p.block.front_lane, front));
+        self.force_in = c.empty_in_move && c.phase < 1
+            && owner.lane >= p.force_in_threshold && inner_nearby;
     }
 
     pub fn update_targets(
@@ -145,7 +168,16 @@ impl TargetState {
         p: TargetParameters,
     ) {
         assert_eq!(live.len(), self.cached.len());
-        let front = front_index_iter(c.owner.point, self.cached.iter().map(|r| r.point), p.block);
+        // Reuse the pre-movement query only while its owner and parameters
+        // still match. Immediate skill callbacks may have changed the owner.
+        let front = match self.front_cache {
+            Some((owner, distance, lane, front))
+                if owner.position.to_bits() == c.owner.point.position.to_bits()
+                    && owner.lane.to_bits() == c.owner.point.lane.to_bits()
+                    && distance.to_bits() == p.block.front_distance.to_bits()
+                    && lane.to_bits() == p.block.front_lane.to_bits() => front,
+            _ => front_index_iter(c.owner.point, self.cached.iter().map(|r| r.point), p.block),
+        };
         let eligible = |i: usize| {
             let row = self.cached[i];
             crate::overtaking::is_target_with_block_check(
@@ -708,6 +740,68 @@ pub fn resolve_overlaps_with_order(rows: &mut [Row], force_checks: &mut [bool], 
 mod tests {
     use super::*;
     use crate::json::Value;
+
+    #[test]
+    fn fused_lane_cache_matches_independent_queries_and_owner_changes() {
+        let p = TargetParameters {
+            block: BlockParameters { front_distance: 2., front_lane: 0.05,
+                side_distance: 1., side_lane: 1. / 18. },
+            force_in_threshold: 0.15, cooldown: 1., outward_normalize: 1.,
+            outward_coefficient: 0.1, outward_random: 0.1,
+        };
+        let mut seed = 91234567u32;
+        let mut draw = || {
+            seed = seed.wrapping_mul(1664525).wrapping_add(1013904223);
+            (seed >> 8) as f32 / (1u32 << 24) as f32
+        };
+        let side_bits = |s: SideRoom| (s.can_in, s.can_out, s.in_space.to_bits(),
+            s.out_space.to_bits(), s.inner_blocker.map(f32::to_bits), s.inner_blocker_index);
+        for case in 0..512 {
+            let owner = Horse { point: Row { position: 100., lane: 0.5 }, speed: 20., target: 22. };
+            let mut c = TargetContext {
+                lane_preference: 0, owner, phase: 0, max_lane: 1., vision: 20.,
+                first_move_point: 200., final_corner_start: None, empty_in_move: true,
+                previous_target: 0.5, fixed_goal: 0., has_hp: true, pace_down: false,
+            };
+            let mut rows: Vec<_> = (0..[0, 1, 2, 9, 18, 70][case % 6]).map(|_| Horse {
+                point: Row { position: 96. + draw() * 10., lane: 0.3 + draw() * 0.4 },
+                speed: 18. + draw() * 6., target: 18. + draw() * 6.,
+            }).collect();
+            if let Some(row) = rows.first_mut() {
+                row.point.position = [100., 101., 102., f32::NAN, f32::INFINITY][case % 5];
+            }
+            let points: Vec<_> = rows.iter().map(|h| h.point).collect();
+            let mut cached = TargetState::default();
+            cached.collect(&c, &rows, p);
+            assert_eq!(side_bits(cached.side.unwrap()), side_bits(side_room(owner.point, c.max_lane, &points, p.block)));
+            assert_eq!(cached.front_cache.unwrap().3, front_index(owner.point, &points, p.block));
+            let visible: Vec<_> = points.iter().enumerate().filter_map(|(i, row)|
+                is_visible(row.position - owner.point.position, row.lane - owner.point.lane, c.vision).then_some(i)).collect();
+            assert_eq!(cached.visible, visible);
+            let force = points.iter().any(|row| {
+                let gap = owner.point.lane - row.lane;
+                (row.position - owner.point.position).abs() < p.block.side_distance
+                    && gap > 0. && gap < p.block.side_lane
+            });
+            assert_eq!(cached.force_in, force);
+            let mut uncached = TargetState::default();
+            uncached.collect(&c, &rows, p);
+            uncached.front_cache = None;
+            // A callback can move the owner between collection and targeting;
+            // parameter changes must invalidate the query as well.
+            let mut changed = p;
+            match case % 4 {
+                1 => c.owner.point.position += 1.,
+                2 => c.owner.point.lane += 0.05,
+                3 => changed.block.front_lane *= 2.,
+                _ => {},
+            }
+            cached.update_targets(&c, &rows, 1. / 15., changed);
+            uncached.update_targets(&c, &rows, 1. / 15., changed);
+            assert_eq!(cached.targets, uncached.targets, "case {case}");
+            assert_eq!(cached.cooldown.to_bits(), uncached.cooldown.to_bits());
+        }
+    }
 
     #[test]
     fn visible_cone_preserves_captured_rounding_boundary() {

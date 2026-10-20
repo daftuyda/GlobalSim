@@ -70,9 +70,8 @@ impl PreparedRace {
                         ("skill_id", json::num(sid.parse::<f64>().unwrap_or(0.))),
                         ("level", json::num(*level as f64)),
                     ])).collect())),
-                    ("base_wisdom", json::num(retail_initialization::initial_base_wisdom(
-                        if horse.wisdom > 1200. { 1200. + (horse.wisdom - 1200.) * 0.5 } else { horse.wisdom },
-                        horse.mood) as f64)),
+                    ("base_wisdom", json::num(race_solver_builder::ranked_base_stat(
+                        horse.wisdom, horse.mood, horse.team_rank) as f64)),
                     ("running_style", json::num(Strategy::parse_str(&horse.strategy_str)?.base_running_style() as f64)),
                 ]))
             }).collect::<Result<Vec<_>, String>>()?;

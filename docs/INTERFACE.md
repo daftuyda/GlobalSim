@@ -7,10 +7,10 @@ The binary reads stdin until EOF and emits one compact JSON reply for each
 nonempty input line, flushing after each reply. Multiline pretty-printed JSON
 is not a request. No command-line mode flag is needed. Use the provided
 [default example](../examples/race.jsonl) or
-[benchmark example](../examples/v74-race.jsonl).
+[benchmark example](../examples/v75-race.jsonl).
 
 The example includes the skill table and settings used for the benchmark.
-`examples/v74-settings.json` lists switches separately;
+`examples/v75-settings.json` lists switches separately;
 `data/v70-skill-data.json` contains that table. The built-in `data/skill_data.json`
 is the legacy fallback: omitting `skillData` does not select the audited table.
 
@@ -33,10 +33,17 @@ accepts aliases/case variants.
 
 Optional runner fields include `mood` (default 0, normally -2 through +2),
 `gateIndex` (default array index), `popularity` (0), `teamId` (0), `charaId` (0),
-`fans` (0), `careerWins` (0), and `skills` (empty).
+`fans` (0), `careerWins` (0), `teamRank` (0), and `skills` (empty).
 Skills can be IDs or objects such as `{"skillId":"123456","level":1,"isUnique":false}`.
-Use real IDs from the skill table. Nonzero `teamRank` is rejected by the
-experimental runtime because that bonus integration is unvalidated.
+Use real IDs from the skill table. `teamRank` accepts nonnegative 32-bit integers;
+zero means no team bonus. The race bonus is +50 for ranks 1–5, +30 for 6–10,
++20 for 11–15, +10 for 16–20, and zero from 21 onward. It applies to each
+base stat after overcap halving and before motivation, including skill-lottery
+wisdom and team-stat skill values. Supply the captured rank rather than adding
+the bonus to raw stats yourself. The separate `singleMode` bonus remains +400
+at the adjusted-stat stage. Both JSON workers and the prepared API support ranks.
+Nonzero ranks have synthetic regression coverage; official career capture
+validation, including exact tier boundaries, remains outstanding.
 
 ## Optional request fields
 

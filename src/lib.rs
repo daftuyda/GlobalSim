@@ -18,6 +18,10 @@ mod binary_replay;
 mod api;
 mod ffi;
 pub use api::{PreparedRace, Simulation};
+#[cfg(feature = "external-geometry")]
+mod geometry_registry;
+#[cfg(feature = "external-geometry")]
+pub use geometry_registry::register_course_geometry;
 pub use replay_frames::ReplayFrames;
 mod race_field;
 mod race_parameters;
@@ -87,7 +91,11 @@ fn bundled_geometry(course_id: i32, distance: f32) -> Result<Rc<retail_geometry:
     GEOMETRY.with(|cache| {
         let key = (course_id, distance.to_bits());
         if let Some(value) = cache.borrow().get(&key) { return Ok(value.clone()); }
+        #[cfg(not(feature = "external-geometry"))]
         let value = Rc::new(retail_geometry::CourseGeometry::bundled(course_id, distance)?);
+        // External-geometry builds carry no captured assets; the host registers them.
+        #[cfg(feature = "external-geometry")]
+        let value = Rc::new(geometry_registry::course_geometry(course_id, distance)?);
         cache.borrow_mut().insert(key, value.clone());
         Ok(value)
     })
@@ -224,6 +232,7 @@ struct HorseInputSpec {
     mood: i32,
     gate_index: i32,
     popularity: i32,
+    team_rank: i32,
     skills: Vec<(String, i32, bool)>,
     team_id: i64, chara_id: i64, fans: f64, wins: f64,
 }
@@ -290,10 +299,13 @@ fn parse_race_spec(v: &Value) -> Result<RaceSpec, String> {
     let player_horse_index = player_index as usize;
     let mut horses = Vec::with_capacity(horses_raw.len());
     for (i, h) in horses_raw.iter().enumerate() {
-        if v.get("experimentalRetailRuntime").and_then(Value::as_bool) == Some(true)
-            && h.get("teamRank").map_or(false, |rank| rank.as_f64() != Some(0.0)) {
-            return Err(format!("runner {i}: experimental runtime requires teamRank=0; nonzero team-rank bonus integration is unvalidated"));
-        }
+        let team_rank = match h.get("teamRank") {
+            None => 0,
+            Some(value) => value.as_f64()
+                .filter(|n| n.is_finite() && n.fract() == 0.0 && *n >= 0.0 && *n <= i32::MAX as f64)
+                .map(|n| n as i32)
+                .ok_or_else(|| format!("runner {i}: teamRank must be a nonnegative 32-bit integer"))?,
+        };
         let mood = h.get("mood").and_then(Value::as_f64).map(|n| n as i32).unwrap_or(0);
         let gate_index = h.get("gateIndex").and_then(Value::as_f64).map(|n| n as i32).unwrap_or(i as i32);
         let skills_raw = opt_array(h, "skills");
@@ -314,6 +326,7 @@ fn parse_race_spec(v: &Value) -> Result<RaceSpec, String> {
             mood,
             gate_index,
             popularity: h.get("popularity").and_then(Value::as_i64).unwrap_or(0) as i32,
+            team_rank,
             skills,
             team_id: h.get("teamId").and_then(Value::as_f64).unwrap_or(0.0) as i64,
             chara_id: h.get("charaId").and_then(Value::as_f64).unwrap_or(0.0) as i64,
@@ -388,10 +401,11 @@ impl PreparedRoster {
                 else { team_totals.entry(other.team_id).or_insert([0.0; 5]) };
             for (i, raw) in [other.speed, other.stamina, other.power, other.guts, other.wisdom].iter().enumerate() {
                 if retail_runtime {
-                    let base = if *raw > 1200.0 { 1200.0 + (*raw - 1200.0) * 0.5 } else { *raw };
-                    total[i] = (total[i] as f32 + retail_initialization::initial_base_wisdom(base, other.mood)) as f64;
+                    total[i] = (total[i] as f32 + race_solver_builder::ranked_base_stat(*raw, other.mood, other.team_rank)) as f64;
                 } else {
-                    total[i] += race_solver_builder::base_stat(*raw, 1.0 + 0.02 * other.mood.clamp(-2, 2) as f64);
+                    total[i] += if other.team_rank == 0 {
+                        race_solver_builder::base_stat(*raw, 1.0 + 0.02 * other.mood.clamp(-2, 2) as f64)
+                    } else { race_solver_builder::ranked_base_stat(*raw, other.mood, other.team_rank) as f64 };
                 }
             }
             team_stats.push(own);
@@ -496,6 +510,7 @@ fn new_builder(
     b.num_umas(spec.horses.len() as i32);
     b.wisdom_checks(spec.wisdom_checks);
     b.single_mode(spec.single_mode);
+    b.team_rank(h.team_rank);
     let desc = HorseSpec {
         speed: h.speed,
         stamina: h.stamina,
@@ -559,10 +574,13 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let skill_events: Rc<RefCell<Vec<Value>>> = Rc::new(RefCell::new(Vec::new()));
     let conserve_power_events: Rc<RefCell<Vec<Value>>> = Rc::new(RefCell::new(Vec::new()));
     let kakari_start: Rc<RefCell<BTreeMap<usize, f64>>> = Rc::new(RefCell::new(BTreeMap::new()));
-    // (horse_index, skill_id) -> (activation time, isUnique, modeled duration), until the
+    // (horse_index, skill_id) -> (activation time, isUnique, modeled duration, ordinal), until the
     // deactivate hook finalizes the record retaining intended duration;
     // quantized expiry ticks are not the replay duration.
     let pending_sequence = Rc::new(Cell::new(0usize));
+    // Construction visits each horse separately, but the replay records the
+    // first startup pass across the field before any repeat-pass activation.
+    let startup_repeats = Rc::new(RefCell::new(BTreeSet::new()));
     let pending_skills: Rc<RefCell<BTreeMap<(usize, i64), (f64, bool, f64, usize)>>> = Rc::new(RefCell::new(BTreeMap::new()));
     // Whether a skill id can actually be built for this race. Some skills'
     // conditions reference tokens this engine doesn't implement and those
@@ -604,6 +622,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         let kstart = kakari_start.clone();
         let pending = pending_skills.clone();
         let sequence = pending_sequence.clone();
+        let repeats = startup_repeats.clone();
         builder.on_skill_activate = Some(Box::new(move |s, skill_id, perspective| {
             if perspective == race_solver::Perspective::Other { return; }
             if skill_id == "asitame" {
@@ -630,7 +649,11 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
                 Err(_) => return,
             };
             if s.remaining_skill_duration(skill_id, perspective) <= 0.0 {
+                let ordinal = sequence.get();
+                sequence.set(ordinal + 1);
+                if s.retail_startup_repeat { repeats.borrow_mut().insert(ordinal); }
                 events.borrow_mut().push(json::obj(vec![
+                    ("_activationOrder", json::num(ordinal as f64)),
                     ("horseIndex", json::num(horse_index as f64)),
                     ("skillId", json::num(sid as f64)),
                     ("t", json::num(s.accumulatetime.get())),
@@ -640,9 +663,10 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
                 return;
             }
             // Timed activations end when their last tracked effect ends.
-            // Preserve Python dictionary insertion order for unfinished effects.
+            // Keep their activation ordinal while waiting for duration finalization.
             let ordinal = pending.borrow().get(&(horse_index, sid)).map(|x| x.3)
                 .unwrap_or_else(|| { let n = sequence.get(); sequence.set(n + 1); n });
+            if s.retail_startup_repeat { repeats.borrow_mut().insert(ordinal); }
             pending.borrow_mut().insert(
                 (horse_index, sid),
                 (s.accumulatetime.get(), unique_ids.contains(skill_id), s.remaining_skill_duration(skill_id, perspective), ordinal),
@@ -675,11 +699,12 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
             if s.remaining_skill_duration(skill_id, perspective) > 0.0 {
                 return;
             }
-            let (start_t, is_unique, modeled_duration, _) = match pending2.borrow_mut().remove(&(horse_index, sid)) {
+            let (start_t, is_unique, modeled_duration, ordinal) = match pending2.borrow_mut().remove(&(horse_index, sid)) {
                 Some(v) => v,
                 None => return,
             };
             events2.borrow_mut().push(json::obj(vec![
+                ("_activationOrder", json::num(ordinal as f64)),
                 ("horseIndex", json::num(horse_index as f64)),
                 ("skillId", json::num(sid as f64)),
                 ("t", json::num(start_t)),
@@ -756,14 +781,21 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     // rank, gaps to the horse ahead/behind) -- not part of the original TS
     // engine, which has no notion of other horses at all.
     // Snapshot adjusted initial stat ranks before runtime skill expiry/changes.
-    // Stable ties preserve roster order, matching the exported rank fields.
+    // The result ranks treat approximately equal float stats as ties and
+    // resolve those by gate identity, including one-ULP mood differences.
     let parameter_orders: Vec<Vec<usize>> = (0..2).map(|stat| {
         let mut order: Vec<usize> = (0..solvers.len()).collect();
         let value = |i: usize| {
             let s = &solvers[i];
             retail_physics::bounded_stat(if stat == 0 { s.horse.guts as f32 } else { s.horse.wisdom as f32 })
         };
-        order.sort_by(|&a, &b| value(b).total_cmp(&value(a)));
+        retail_sort::comparison_sort(&mut order, |&a, &b| {
+            let (left, right) = (value(a), value(b));
+            let tolerance = (1e-6_f32 * left.abs().max(right.abs()))
+                .max(8.0 * f32::from_bits(1));
+            if (left - right).abs() < tolerance { a.cmp(&b) }
+            else { right.total_cmp(&left) }
+        });
         let mut ranks = vec![0; order.len()];
         for (rank, i) in order.into_iter().enumerate() { ranks[i] = rank; }
         ranks
@@ -827,27 +859,34 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         }
         // Type 5 is CompeteFight. Emit only real count increments, never every
         // active tick or a synthetic event when a horse crosses the finish.
-        for &i in &active {
-            if field.solvers[i].borrow().spot_struggle_started && !spot_started[i] {
+        if retail_runtime {
+            for (kind, i) in field.competition_starts.borrow_mut().drain(..) {
                 competition_events.push(json::obj(vec![
-                    ("t", json::num(t + dt)), ("type", json::num(4.0)),
-                    ("horseIndex", json::num(i as f64)),
-                ]));
-                spot_started[i] = true;
-            }
-        }
-        // Hypothesis companion: a runner may start a duel on its goal-crossing
-        // snapshot, after its finish is recorded; emit real count increments
-        // for every visited runner.
-        for &i in visited {
-            let count = field.solvers[i].borrow().compete_fight_count;
-            for _ in duel_counts[i]..count {
-                competition_events.push(json::obj(vec![
-                    ("t", json::num(t + dt)), ("type", json::num(5.0)),
+                    ("t", json::num(t + dt)), ("type", json::num(kind as f64)),
                     ("horseIndex", json::num(i as f64)),
                 ]));
             }
-            duel_counts[i] = count;
+        } else {
+            for &i in &active {
+                if field.solvers[i].borrow().spot_struggle_started && !spot_started[i] {
+                    competition_events.push(json::obj(vec![
+                        ("t", json::num(t + dt)), ("type", json::num(4.0)),
+                        ("horseIndex", json::num(i as f64)),
+                    ]));
+                    spot_started[i] = true;
+                }
+            }
+            // Include a duel started on a runner's goal-crossing snapshot.
+            for &i in visited {
+                let count = field.solvers[i].borrow().compete_fight_count;
+                for _ in duel_counts[i]..count {
+                    competition_events.push(json::obj(vec![
+                        ("t", json::num(t + dt)), ("type", json::num(5.0)),
+                        ("horseIndex", json::num(i as f64)),
+                    ]));
+                }
+                duel_counts[i] = count;
+            }
         }
         if player_last_spurt_t.is_none() && n > 0 && field.solvers[spec.player_horse_index].borrow().is_last_spurt {
             player_last_spurt_t = Some(t + dt);
@@ -940,8 +979,9 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let pending_final = pending_skills.borrow();
     let mut pending_ordered: Vec<_> = pending_final.iter().collect();
     pending_ordered.sort_by_key(|(_, value)| value.3);
-    for ((horse_index, sid), (start_t, is_unique, modeled_duration, _)) in pending_ordered {
+    for ((horse_index, sid), (start_t, is_unique, modeled_duration, ordinal)) in pending_ordered {
         skill_events.borrow_mut().push(json::obj(vec![
+            ("_activationOrder", json::num(*ordinal as f64)),
             ("horseIndex", json::num(*horse_index as f64)),
             ("skillId", json::num(*sid as f64)),
             ("t", json::num(*start_t)),
@@ -950,7 +990,21 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         ]));
     }
 
-    let skill_events_out = skill_events.borrow().clone();
+    let mut skill_events_out = skill_events.borrow().clone();
+    if retail_runtime {
+        // Durations are finalized on expiry, but replay records retain their
+        // activation order. Preserve callback order for simultaneous starts.
+        let repeats = startup_repeats.borrow();
+        let repeat = |event: &Value| event.get("_activationOrder").and_then(Value::as_f64)
+            .map_or(false, |ordinal| repeats.contains(&(ordinal as usize)));
+        skill_events_out.sort_by(|a, b| a.get_f64("t").unwrap().total_cmp(&b.get_f64("t").unwrap())
+            .then_with(|| repeat(a).cmp(&repeat(b)))
+            .then_with(|| a.get("_activationOrder").and_then(Value::as_f64).unwrap_or(f64::MAX)
+                .total_cmp(&b.get("_activationOrder").and_then(Value::as_f64).unwrap_or(f64::MAX))));
+    }
+    for event in &mut skill_events_out {
+        if let Value::Object(fields) = event { fields.remove("_activationOrder"); }
+    }
     let mut result = json::obj(vec![
         ("seed", json::num(spec.seed as f64)),
         ("scoreTelemetryVersion", json::num(3.0)),
@@ -1379,9 +1433,8 @@ pub fn run_worker() -> Result<(), String> {
                         ("skill_id",json::num(sid.parse::<f64>().unwrap_or(0.0))),
                         ("level",json::num(*level as f64))])).collect())),
                     // v9: the skill wisdom lottery sees Wit after the >1200 halving, then mood.
-                    ("base_wisdom",json::num(retail_initialization::initial_base_wisdom(
-                        if horse.wisdom > 1200.0 { 1200.0 + (horse.wisdom - 1200.0) * 0.5 } else { horse.wisdom },
-                        horse.mood as i32) as f64)),
+                    ("base_wisdom",json::num(race_solver_builder::ranked_base_stat(
+                        horse.wisdom, horse.mood, horse.team_rank) as f64)),
                     // v69: retail initialization sees the base style; Runaway (Oonige) keeps the Front
                     // Runner force-in coefficient and its random draw (doc 13.190).
                     ("running_style",json::num(Strategy::parse_str(&horse.strategy_str).unwrap().base_running_style() as f64))

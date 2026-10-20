@@ -379,6 +379,16 @@ struct SkillScanIndex {
     priority_zero: Vec<usize>,
     priority_one: Vec<usize>,
     windows: Vec<SkillScanWindow>,
+    inactive_zero: Vec<InactiveSkillRun>,
+    inactive_one: Vec<InactiveSkillRun>,
+    interval_start: f64,
+    interval_end: f64,
+}
+
+#[derive(Clone, Copy)]
+struct InactiveSkillRun {
+    count: usize,
+    numeric_floor: i64,
 }
 
 /// Small, immutable fields needed to dismiss an inactive retail detail. Keep
@@ -430,6 +440,7 @@ pub struct RaceSolver {
     random_any_request: f64,
     random_gold_request: f64,
     retail_initializing: bool,
+    pub(crate) retail_startup_repeat: bool,
     retail_stat_values: [Option<f32>; 5],
     pub(crate) random_gold_reservations: BTreeSet<String>,
     random_active_details: BTreeMap<(String, usize), Timer>,
@@ -745,6 +756,7 @@ impl RaceSolver {
             random_any_request: 0.0,
             random_gold_request: 0.0,
             retail_initializing,
+            retail_startup_repeat: false,
             retail_stat_values: [None; 5],
             random_gold_reservations: BTreeSet::new(),
             random_active_details: BTreeMap::new(),
@@ -963,7 +975,9 @@ impl RaceSolver {
         if solver.retail_initializing {
             let reservations = solver.random_gold_reservations.clone();
             let counted = solver.activate_count_last_frame;
+            solver.retail_startup_repeat = true;
             solver.process_skill_priority(None, None);
+            solver.retail_startup_repeat = false;
             solver.random_gold_reservations = reservations;
             solver.activate_count_last_frame += counted;
         }
@@ -1946,6 +1960,8 @@ impl RaceSolver {
         index.priority_zero.clear();
         index.priority_one.clear();
         index.windows.clear();
+        index.interval_start = 0.0;
+        index.interval_end = 0.0;
         for (i, skill) in self.pending_skills.iter().enumerate() {
             index.windows.push(SkillScanWindow {
                 start: skill.trigger.start,
@@ -1963,6 +1979,49 @@ impl RaceSolver {
                 0 => index.priority_zero.push(i),
                 1 => index.priority_one.push(i),
                 _ => {}
+            }
+        }
+    }
+
+    /// Trigger-window membership only changes when position crosses an endpoint.
+    /// Cache contiguous inactive runs, preserving every skipped skill's turn in
+    /// the additional-effect pass. Observers and removable entries stay active.
+    fn refresh_inactive_skill_runs(&mut self, pos: f64) {
+        let index = &mut self.skill_scan;
+        if index.windows.len() != self.pending_skills.len() || !pos.is_finite() {
+            index.inactive_zero.clear();
+            index.inactive_one.clear();
+            index.interval_start = 0.0;
+            index.interval_end = 0.0;
+            return;
+        }
+        if pos >= index.interval_start && pos < index.interval_end { return; }
+        let mut start = f64::NEG_INFINITY;
+        let mut end = f64::INFINITY;
+        for window in &index.windows {
+            for boundary in [window.start, window.end] {
+                if boundary <= pos { start = start.max(boundary); }
+                else if boundary > pos { end = end.min(boundary); }
+            }
+        }
+        index.interval_start = start;
+        index.interval_end = end;
+        for (indices, runs) in [(&index.priority_zero, &mut index.inactive_zero),
+                                (&index.priority_one, &mut index.inactive_one)] {
+            runs.clear();
+            let mut count = 0;
+            let mut numeric_floor = i64::MIN;
+            for &i in indices {
+                let w = index.windows[i];
+                if !(pos >= w.start && pos < w.end)
+                    && (w.retained || !(pos >= w.end)) && !w.observed {
+                    count += 1;
+                    numeric_floor = numeric_floor.max(w.numeric_id);
+                } else {
+                    count = 0;
+                    numeric_floor = i64::MIN;
+                }
+                runs.push(InactiveSkillRun { count, numeric_floor });
             }
         }
     }
@@ -2067,6 +2126,8 @@ impl RaceSolver {
     /// non-empty -- see `_do_activate_random_gold`, which can re-activate
     /// another still-pending skill out of order).
     fn process_pending_full(&mut self, pos: f64, field: Option<&RaceField>, priority:Option<i32>) {
+        let cached_runs = self.retail.is_some() && matches!(priority, Some(0 | 1));
+        if cached_runs { self.refresh_inactive_skill_runs(pos); }
         let mut activate_count_this_frame = 0;
         if self.retail.is_some() && priority.map_or(true, |p| p == 0) {
             self.additional_turn_floor = i64::MIN;
@@ -2077,6 +2138,18 @@ impl RaceSolver {
             _ => self.pending_skills.len(),
         };
         while remaining > 0 {
+            if cached_runs && self.unapplied_running_skills == 0
+                && self.pending_removal.is_empty() && self.random_gold_reservations.is_empty() {
+                let runs = if priority == Some(0) { &self.skill_scan.inactive_zero }
+                           else { &self.skill_scan.inactive_one };
+                if let Some(run) = runs.get(remaining - 1) {
+                    if run.count != 0 {
+                        remaining -= run.count;
+                        self.additional_turn_floor = self.additional_turn_floor.max(run.numeric_floor);
+                        if remaining == 0 { break; }
+                    }
+                }
+            }
             remaining -= 1;
             // Removing the current record cannot move any lower index, which
             // is why the original descending order also permits this index.
@@ -2643,6 +2716,13 @@ impl RaceSolver {
         if participants.len() < 2 || !participants.iter().any(|s| s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION) {
             return;
         }
+        // Replay records the cached group leader first, then the other gates.
+        // Keep the state-update loop independent of this recording order.
+        if self.retail.is_some() {
+            let mut events = field.competition_starts.borrow_mut();
+            events.push((4, front_idx));
+            events.extend(participants.iter().filter(|s| s.0 != front_idx).map(|s| (4, s.0)));
+        }
         for (j, _, _) in participants {
             if j == i { self.start_spot_struggle(); }
             else { field.solvers[j].borrow_mut().start_spot_struggle(); }
@@ -2883,10 +2963,12 @@ impl RaceSolver {
         self.duel_group.get_or_insert(group);
         peer.duel_group.get_or_insert(group);
         self.activate_retail_duel();
+        if self.retail.is_some() { field.competition_starts.borrow_mut().push((5, i)); }
         // Commit both entrants together: an earlier runner may have selected
         // an expired partner, but can still be invited by this later runner.
         if retail_partner && !peer.duel_active && peer.compete_fight_count == 0 {
             peer.activate_retail_duel();
+            field.competition_starts.borrow_mut().push((5, j));
         }
     }
 
@@ -3099,7 +3181,7 @@ mod movement_tests {
             full.skill_scan = SkillScanIndex {
                 pending_len: all.len(), prerequisites: all.clone(),
                 priority_zero: all.clone(), priority_one: all,
-                windows: Vec::new(),
+                windows: Vec::new(), ..Default::default()
             };
             full.process_skill_priority(priority, None);
             sparse.process_skill_priority(priority, None);
@@ -3172,7 +3254,7 @@ mod movement_tests {
                     s.unapplied_running_skills = 1;
                 }
             }
-            for pos in [f64::NAN, f64::NEG_INFINITY, 0., 100., 300., f64::INFINITY] {
+            for pos in [f64::NAN, f64::NEG_INFINITY, 0., 49., 50., 99., 100., 101., 150., 99., 100., 200., 299., 300., 301., f64::INFINITY] {
                 for s in [&mut indexed, &mut full] {
                     s.pos = pos;
                     s.additional_turn_floor = i64::MIN;
@@ -3348,6 +3430,54 @@ mod movement_tests {
             s.record_overtakes(1);
             assert_eq!(s.late_corner_overtakes, expected);
             assert_eq!(s.pending_overtakes, 1);
+        }
+    }
+
+    #[test]
+    fn rank_conditions_require_registered_runner() {
+        let field = RaceField::new((0..9).map(|i| solver(100.0 - i as f64, 0.0)).collect());
+        let mut detached = solver(100.0, 0.0);
+        let table = Box::leak(Box::new(build_conditions()));
+        let params = RaceParameters::default();
+        let extra = RaceParametersWithSkillId { params: &params, skill_id: "rank-context-regression".into() };
+        let mut expressions = Vec::new();
+        for name in ["order", "order_rate", "change_order_onetime"] {
+            for comparison in ["==", "!=", "<", "<=", ">", ">="] {
+                expressions.push(format!("{name}{comparison}0"));
+            }
+        }
+        for band in ["in20", "in40", "in50", "in80", "out20", "out40", "out50", "out70"] {
+            expressions.push(format!("order_rate_{band}_continue==1"));
+        }
+        for expression in expressions {
+            let op = crate::condition_parser::parse(table, &expression).unwrap();
+            let check = op.apply(&[Region::new(0.0, 2400.0)], detached.course,
+                &detached.horse, &extra).unwrap().1.unwrap();
+            for index in [None, Some(field.n), Some(usize::MAX)] {
+                detached.field_index = index;
+                assert!(!check(&detached, Some(&field)), "{expression}, index {index:?}");
+            }
+            detached.field_index = Some(0);
+            assert!(!check(&detached, None), "{expression}, no field");
+        }
+    }
+
+    #[test]
+    fn registered_rank_comparisons_keep_live_order() {
+        let field = RaceField::new((0..9).map(|i| solver(100.0 - i as f64, 0.0)).collect());
+        let table = Box::leak(Box::new(build_conditions()));
+        let params = RaceParameters::default();
+        let extra = RaceParametersWithSkillId { params: &params, skill_id: "rank-context-regression".into() };
+        let runner = field.solvers[2].borrow();
+        for (name, threshold) in [("order", 3), ("order_rate", 33)] {
+            for (comparison, expected) in [("==", true), ("!=", false), ("<", false),
+                ("<=", true), (">", false), (">=", true)] {
+                let expression = format!("{name}{comparison}{threshold}");
+                let op = crate::condition_parser::parse(table, &expression).unwrap();
+                let check = op.apply(&[Region::new(0.0, 2400.0)], runner.course,
+                    &runner.horse, &extra).unwrap().1.unwrap();
+                assert_eq!(check(&runner, Some(&field)), expected, "{expression}");
+            }
         }
     }
 

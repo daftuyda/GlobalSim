@@ -2,7 +2,7 @@
 
 ### High-fidelity race simulation for Umamusume Global
 
-**Version 74**
+**Version 75**
 
 GlobalSim is a detailed race simulation engine written in Rust, modeling the
 interactions that decide a race—from starting gates and positioning to skill
@@ -21,27 +21,32 @@ trajectories, finishing orders, and race events.
 - **Skill simulation:** activation conditions, timing, effect values, duration, cooldowns, and recipients.
 - **Detailed output:** finish times, placements, movement frames, and skill and competition events.
 
-## Improvements in v74
+## Improvements in v75
 
-Version 74 refines pacing, overtaking, lane selection, skill timing, course
-transitions, and final-sprint planning. Expanded coverage includes 203,572
-official race captures across 105 courses and fields of 9 to 18 runners.
+Version 75 adds Career team-rank bonuses, refines stat rounding and corner
+transitions, and preserves recorded skill and competition event order.
+It also improves movement-query efficiency, guards rank-dependent skill
+evaluation before a runner joins the field, and adds optional runtime loading
+of course geometry.
 
 ## Measured fidelity
 
-Results across **203,572 captured official Global races**:
+The latest validation covers **95,062 additional official race captures**:
 
 | Metric | Result |
 |---|---:|
-| Races matching every audited replay check | **203,572/203,572** |
-| Races with every finish time matching exactly | **203,572/203,572** |
-| Winner agreement | **203,572/203,572** |
-| Exact placement agreement | **2,210,585/2,210,585** |
-| Worst observed finish-time difference | **0 ms** |
+| Active races matching every strict observation check | **94,566/94,570** |
+| Active races with unresolved discrepancies | **4** |
+| Captures quarantined for seed/replay mismatches | **492** |
+| Included accuracy regression fixtures passing | **69/69** |
 
-These measurements describe the tested captures at their recorded precision and
+Quarantined captures are retained separately and are not counted as successful
+simulations. Before quarantine, the batch had 94,566 matches and 496 unresolved
+cases. The older 247,851 captures were not rerun for this validation.
+
+These measurements describe tested observations at their recorded precision and
 cadence. GlobalSim is an unofficial implementation and does not claim 1:1
-equivalence with the game across every race configuration.
+equivalence across every race configuration.
 See [benchmark methodology and coverage](docs/ACCURACY.md).
 
 ## Getting started
@@ -55,13 +60,13 @@ cargo build --release --locked
 Run the included example on Windows:
 
 ```powershell
-Get-Content examples/v74-race.jsonl | .\target\release\race_engine_rs_v2.exe
+Get-Content examples/v75-race.jsonl | .\target\release\race_engine_rs_v2.exe
 ```
 
 On Linux or macOS:
 
 ```sh
-./target/release/race_engine_rs_v2 < examples/v74-race.jsonl > results.jsonl
+./target/release/race_engine_rs_v2 < examples/v75-race.jsonl > results.jsonl
 ```
 
 The example includes the simulation settings and skill data used by the

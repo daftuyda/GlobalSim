@@ -78,6 +78,8 @@ pub struct RaceField {
     teams: Vec<i64>,
     characters: Vec<i64>,
     pub heal_history: RefCell<Vec<usize>>,
+    /// Current tick's actual competition activation order, before serialization.
+    pub(crate) competition_starts: RefCell<Vec<(i32, usize)>>,
     cached_heal_count: Cell<usize>,
     advantage_activations: RefCell<BTreeSet<(usize, i32)>>,
     previous_advantage_activations: RefCell<BTreeSet<(usize, i32)>>,
@@ -120,6 +122,7 @@ impl RaceField {
             player_horse_index: 0,
             strategies,
             teams, characters, heal_history: RefCell::new(Vec::new()),
+            competition_starts: RefCell::new(Vec::new()),
             cached_heal_count: Cell::new(0),
             advantage_activations: RefCell::new(initial),
             previous_advantage_activations: RefCell::new(BTreeSet::new()),

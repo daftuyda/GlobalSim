@@ -1,0 +1,130 @@
+{
+  "schema": "practice-edge-followup-v1",
+  "recordedUtc": "2026-10-18T00:34:14.346708+00:00",
+  "status": "Stopped at user request; two rounding cases corrected, one pacing case unresolved; full practice comparison incomplete.",
+  "engine": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\practice-three-20261018\\release\\race_engine_rs_v2.exe",
+    "sha256": "44ccacb4c9192302b26754d0c1f4b3ca9123b569cf504003bdacb9991e160c19"
+  },
+  "library": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\practice-three-20261018\\release\\globalsim.dll",
+    "sha256": "6e7be60c1487521f94d0942270fbc30b560658adbe5773581ecfac54d7381e5d"
+  },
+  "change": "Accumulate ordinary skill acceleration modifiers, then duel, then Conserve Power, retaining float32 rounding after each addition.",
+  "fixedReferenceSha256": [
+    "4544fe204ed91ab941776619ffff7ca1246f1e52bfc2aca7595e28800aea0eab",
+    "d981c69c4ef40edf3e273e75c3e12553274e913bd13ec562e0c49335a3f19f49"
+  ],
+  "remainingReferenceSha256": [
+    "4e6bb03980c8f95f329e49a57081dcbb50bac5356b9427bcaccc1bd95e90bc97"
+  ],
+  "fixtures": [
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\tests\\fixtures\\accuracy\\duel-conserve-overlap-position.json.gz",
+      "sha256": "247dff617ce81cd5c923fd43231b4b0f2cffb9a1dceeeef60c02bb35a31c9ad1"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\tests\\fixtures\\accuracy\\duel-conserve-overlap-finish.json.gz",
+      "sha256": "f52543f8b50fc585d0277010aad2e3a429b1e0b9852d1d160a22bf73adb00a43"
+    }
+  ],
+  "validation": {
+    "legacyFixtures": {
+      "passed": 69,
+      "total": 69
+    },
+    "strictFixtures": {
+      "passed": 65,
+      "total": 69,
+      "remaining": "Same four older time-zero skill-order cases; both new fixtures pass."
+    },
+    "rust": {
+      "passed": 136,
+      "failed": 11,
+      "note": "Same 11 preexisting failures."
+    },
+    "pythonValidatorTestsPassed": 7,
+    "native": {
+      "sequentialComparisons": 102,
+      "concurrentRuns": 24
+    },
+    "career": {
+      "cases": 4442,
+      "differences": {
+        "blockFrontHorseIndex": 411,
+        "finishTimes": 411,
+        "hp": 411,
+        "lane": 411,
+        "legacyChecks": 411,
+        "mechanicSequence(4, 5)": 411,
+        "missingFrame": 164,
+        "position": 411,
+        "result.finishOrder": 411,
+        "result.finishTimeRaw": 411,
+        "result.lastSpurtStartDistance": 411,
+        "result.startDelayTime": 410,
+        "skillDurationSequence": 411,
+        "skillMultiset": 411,
+        "skillSequence": 411,
+        "speed": 411,
+        "targetMultiset": 411,
+        "temptationMode": 407
+      },
+      "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\practice-three-20261018\\release\\race_engine_rs_v2.exe",
+      "engineSha256": "44ccacb4c9192302b26754d0c1f4b3ca9123b569cf504003bdacb9991e160c19",
+      "errors": 0,
+      "finishExact": 4031,
+      "fixed": 0,
+      "observationsExactIgnoringEventOrder": 4031,
+      "outputIdentical": 4442,
+      "passed": 4031,
+      "placementsExact": 4031,
+      "regressed": 0,
+      "seconds": 114.25047660002019,
+      "source": "D:\\UmamusumeData\\race-datasets\\career-20261018-combined",
+      "winnerExact": 4155
+    }
+  },
+  "practiceObservationScreen": {
+    "races": 51812,
+    "observedMatches": 51811,
+    "newRaces": 39837,
+    "newObservedMatches": 39836,
+    "olderControls": 11975,
+    "inheritedScores": 39827,
+    "engineSha256": "f8e0f9da71c8c35cebe3631f507f1c87fd7e2dc83a989831c39e6315e141baea",
+    "environment": {
+      "GS_NUMERIC": "accel-late-reverse"
+    },
+    "scope": "Completed diagnostic build screen implementing the same modifier order. Existing practice observation checks; not the strict fixture checker. Identical outputs inherit prior observation scores. Not a complete production corpus audit.",
+    "summary": {
+      "path": "D:\\UmamusumeData\\race-datasets\\practice-three-investigation-20261018\\broad-accel-late-reverse\\summary.json",
+      "sha256": "d696e04f7e8c765c90003e72696f6f2bd373a71df796701535b8ef51b0b39e6e"
+    }
+  },
+  "productionPairedPractice": {
+    "status": "partial; stopped at user request",
+    "requested": 243409,
+    "tested": 99864,
+    "identical": 99864,
+    "changed": 0,
+    "errors": 0,
+    "incompleteLines": 0,
+    "baselineEngineSha256": "508ab2a936f5d764b80155608a2a11cc330c380706390396a7faacb8408ff298",
+    "results": {
+      "path": "D:\\UmamusumeData\\race-datasets\\practice-three-investigation-20261018\\production-paired-corpus-final\\results.jsonl",
+      "sha256": "6ee20cd573c8e5616628602ccf4bf59a05a6fc673ce88bee400bb413ee97d1bd"
+    },
+    "identity": {
+      "path": "D:\\UmamusumeData\\race-datasets\\practice-three-investigation-20261018\\production-paired-corpus-final\\identity.json",
+      "sha256": "86d2f12c550f5a39b3571da54959d9bda469afd02cd61417d94ab5277f0a4635"
+    },
+    "scope": "Dense binary before/after comparison. Identical outputs preserve baseline behavior; this is not a fresh official-observation audit."
+  },
+  "limitations": [
+    "No proven solution for the pacing case.",
+    "No claim of universal game parity or completed full practice validation.",
+    "Diagnostic interventions are absent from the production engine.",
+    "Original intake report and previous full-corpus candidate registry are retained unchanged."
+  ]
+}

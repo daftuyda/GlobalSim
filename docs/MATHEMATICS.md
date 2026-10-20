@@ -15,7 +15,7 @@ In [`race_solver_builder.rs`](../src/race_solver_builder.rs):
 overcap(x) = x                         if x <= 1200
              1200 + (x - 1200)/2       otherwise
 moodFactor = f32(10000 + 200*clamp(mood,-2,2)) * f32(.0001)
-base(x) = clamp(f32(overcap(x))*moodFactor, 1, 2000)
+base(x) = clamp(f32(f32(overcap(x)) + teamBonus)*moodFactor, 1, 2000)
 careerBonus = 400 if singleMode else 0
 S = clamp(baseSpeed*courseModifier + groundSpeed + careerBonus, 1, 2000)
 T = clamp(baseStamina + careerBonus, 1, 2000)
@@ -24,15 +24,29 @@ G = clamp(baseGuts + careerBonus, 1, 2000)
 W = clamp(baseWisdom*strategyAptitude + careerBonus, 1, 2000)
 ```
 
+`teamBonus` is zero for an omitted/zero `teamRank`. Positive ranks use the
+first strictly greater `race_single_mode_team_status` threshold: 6 → 50,
+11 → 30, 16 → 20, 21 → 10, 26 → 0, 99999 → 0; an unmatched rank gives zero.
+This is the race stat lookup, separate from career graduation rewards.
+The bonus affects all five base stats, skill-condition base stats, wisdom
+lotteries, team-stat sums and the base component of Conserve Power. Saved raw
+stats remain unchanged. These rank rules have synthetic coverage; their exact
+boundaries still need official career captures.
+
 Odd excess stats retain half-points. For example, raw 1201 at mood +2 becomes
 approximately 1200.5 × 1.04 = 1248.52 before subsequent adjustments;
 The engine uses the float32 master-rate coefficient, not exact decimal arithmetic. Raw-stat conditions and
 special conserve-power inputs are separate from these adjusted values.
 For speed, multiply the float32 base stat and course coefficient in wider
-arithmetic, add the ground adjustment, then store that combined value as
-float32. Add the career bonus afterward. Rounding the course product before
-the ground adjustment can change the result when the penalty crosses a float
-exponent boundary.
+arithmetic, add the ground adjustment and Career bonus, then store the combined
+value as float32. Wisdom likewise combines its strategy-aptitude product and
+Career bonus before the float32 store. An intermediate store can change the
+adjusted stat across an exponent boundary and alter subsequent movement.
+
+Initial guts/wisdom result ranks compare bounded adjusted stats. Values `a,b`
+tie when `abs(a-b) < max(1e-6 * max(abs(a),abs(b)), 8 * min_subnormal_f32)`;
+the comparison uses float32 arithmetic and breaks ties by runner identity.
+Otherwise the larger stat ranks first.
 `raw_stamina = rawStamina*moodFactor`; the conserve-power input is
 `base(rawPower) + max(rawPower-1200,0)/2`.
 
@@ -131,7 +145,10 @@ limits speed using `r=clamp(gap/FrontBlockDistanceGap,0,1)` and
 
 Reconstructed acceleration multiplies power-root, hill coefficient, ground
 aptitude, distance aptitude and style/phase coefficient in that order, adds
-ordered skill modifiers, adds StartAccelAdd during start dash, and floors at 0.
+ordered ordinary skill modifiers, then the duel bonus and Conserve Power bonus,
+adds StartAccelAdd during start dash, and floors at 0. Each modifier addition
+rounds to float32; swapping the last two bonuses can change movement when they
+overlap. See the [captured overlap cases](PRACTICE-EDGE-CASES-20261018.md).
 Default phase deceleration values are -1.2, -.8, -1 m/s². Acceleration toward a
 target, deceleration from an excess speed and instantaneous current-speed
 effects are separate operations.

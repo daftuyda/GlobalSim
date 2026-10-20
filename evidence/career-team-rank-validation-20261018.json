@@ -1,0 +1,485 @@
+{
+  "scope": "Career team-rank implementation consistency and strict regression validation; not an official career parity claim",
+  "engineSha256": "e3169ef220b1a521762798f6a976b26b0d2e2ccdd20e1135db47ce74d34ebd49",
+  "rankTests": {
+    "scope": "synthetic rank/stat equivalence; not official capture parity",
+    "engineSha256": "e3169ef220b1a521762798f6a976b26b0d2e2ccdd20e1135db47ce74d34ebd49",
+    "equivalentRaces": 48,
+    "rejectedInvalidRanks": 12,
+    "recoveryChecks": 12,
+    "cases": [
+      {
+        "runners": 9,
+        "rank": 0,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 0,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 1,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 1,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 5,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 5,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 6,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 6,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 10,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 10,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 11,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 11,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 15,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 15,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 16,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 16,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 20,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 20,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 21,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 21,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 26,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 26,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 99999,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 9,
+        "rank": 99999,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 0,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 0,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 1,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 1,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 5,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 5,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 6,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 6,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 10,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 10,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 11,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 11,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 15,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 15,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 16,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 16,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 20,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 20,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 21,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 21,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 26,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 26,
+        "seed": 107922,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 99999,
+        "seed": 100003,
+        "equivalent": true
+      },
+      {
+        "runners": 18,
+        "rank": 99999,
+        "seed": 107922,
+        "equivalent": true
+      }
+    ]
+  },
+  "preparedWorkerParity": {
+    "library_sha256": "594ea9c897e29f40faf9178b0e1c9c689d913bbd3a63cecc0cd9c3eb98ae0430",
+    "baseline_sha256": "e3169ef220b1a521762798f6a976b26b0d2e2ccdd20e1135db47ce74d34ebd49",
+    "inputs_sha256": "490df1e02608defa7f8727bcc3552af46dacce2c546338a39d258a0800a631b2",
+    "modes": [
+      {
+        "all_frames": false,
+        "equivalent_runs": 72,
+        "errors": [
+          {
+            "case": "invalid-data",
+            "seed": 1470742559,
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "invalid-data",
+            "seed": 1470750448,
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "invalid-data",
+            "seed": 1470742559,
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "seed": 1470742559,
+            "error": "Missing retail initialization field 100141"
+          },
+          {
+            "case": "empty-data",
+            "seed": 1470750448,
+            "error": "Missing retail initialization field 100141"
+          },
+          {
+            "case": "empty-data",
+            "seed": 1470742559,
+            "error": "Missing retail initialization field 100141"
+          }
+        ]
+      },
+      {
+        "all_frames": true,
+        "equivalent_runs": 72,
+        "errors": [
+          {
+            "case": "invalid-data",
+            "seed": 1470742559,
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "invalid-data",
+            "seed": 1470750448,
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "invalid-data",
+            "seed": 1470742559,
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "seed": 1470742559,
+            "error": "Missing retail initialization field 100141"
+          },
+          {
+            "case": "empty-data",
+            "seed": 1470750448,
+            "error": "Missing retail initialization field 100141"
+          },
+          {
+            "case": "empty-data",
+            "seed": 1470742559,
+            "error": "Missing retail initialization field 100141"
+          }
+        ]
+      }
+    ],
+    "concurrent_equivalent_runs": 24,
+    "handle_isolation_and_recovery": true
+  },
+  "rankZeroWorkerParity": {
+    "input_cases": 63,
+    "isolation_cases": 11,
+    "modes": [
+      {
+        "dense": false,
+        "byte_identical_replies": 74,
+        "error_replies": [
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 110591"
+          }
+        ]
+      },
+      {
+        "dense": true,
+        "byte_identical_replies": 74,
+        "error_replies": [
+          {
+            "case": "invalid-data",
+            "error": "skill_data.json root must be an object"
+          },
+          {
+            "case": "empty-data",
+            "error": "Missing retail initialization field 110591"
+          }
+        ]
+      }
+    ],
+    "sha256": {
+      "engine": "e3169ef220b1a521762798f6a976b26b0d2e2ccdd20e1135db47ce74d34ebd49",
+      "baseline": "ddf76c49d142799e2dab511e72298a42c5feb70599badbe19dbbb0d49dbbd882"
+    }
+  },
+  "legacyCapturedFixtures": {
+    "passed": 63,
+    "total": 63
+  },
+  "strictReport": "career-strict-validation-20261018.json",
+  "strictCorpusRerun": false,
+  "rustTests": {
+    "passed": 135,
+    "failed": 11,
+    "preexistingFailures": [
+      "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+      "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+      "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+      "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+      "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+      "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+      "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+      "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+      "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+      "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+      "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+    ]
+  },
+  "validatorMutationTests": {
+    "passed": 7,
+    "alsoPassWithPythonOptimization": true
+  },
+  "careerRankTable": {
+    "rows": [
+      [
+        6,
+        50
+      ],
+      [
+        11,
+        30
+      ],
+      [
+        16,
+        20
+      ],
+      [
+        21,
+        10
+      ],
+      [
+        26,
+        0
+      ],
+      [
+        99999,
+        0
+      ]
+    ],
+    "selection": "rank zero has no bonus; first strictly greater threshold",
+    "officialBoundaryValidation": false
+  },
+  "sourceSha256": {
+    "src/lib.rs": "5fc7dbd4b71b8a3dadb8d807771e8eadeb078143204c5f5801b71e42d63750ce",
+    "src/api.rs": "d7faf7ac4dbf26f49b9780c4e3cfde60bda3f689e9a6f835b07f8d427c4bce2a",
+    "src/race_solver_builder.rs": "67cb562184e4df0160fee7f652bb654bdd7d5dea3729b10b1afca02446668db0",
+    "tools/check_accuracy_regressions.py": "3e1774ae5b2765070fa404bc02f5706da6a5f02225eeb222007fc6025399734e",
+    "tools/check_career_team_rank.py": "61767270618bbb37e9b87bfe0654e713214e3014ec415155ce0d09faf0998561",
+    "tests/test_accuracy_regressions.py": "dfaa27b666cc9552d824ad2f2533f7632d13234e44624b59509bfd9440aecce9"
+  }
+}

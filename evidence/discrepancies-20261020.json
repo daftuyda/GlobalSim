@@ -1,0 +1,237 @@
+{
+  "schema": "race-discrepancy-followup-v1",
+  "createdUtc": "2026-10-20T07:50:04.435201+00:00",
+  "scope": "Frozen new-races-20261020 cohort only; earlier 247851 races not rerun.",
+  "races": 95062,
+  "strictMatches": 94566,
+  "remaining": 496,
+  "fixed": 4681,
+  "regressions": 0,
+  "auditErrors": 0,
+  "engine": {
+    "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\ordering-engine.exe",
+    "sha256": "2c7cfa86c8e2e5ff739452317cfc3977952560381f7e83b58f0ad5e9780b5b6a"
+  },
+  "baseline": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\evidence\\new-races-20261020.json",
+    "sha256": "28151d1df55896c1ac096d2583c1ce5afce503a5e133519425efb15ac60903aa"
+  },
+  "transitions": {
+    "practice": {
+      "fixed": 4681,
+      "regressed": 0,
+      "remaining": 2,
+      "outputChanged": 4681
+    },
+    "career": {
+      "fixed": 0,
+      "regressed": 0,
+      "remaining": 494,
+      "outputChanged": 0
+    }
+  },
+  "strictFixtures": {
+    "passed": 69,
+    "total": 69
+  },
+  "unitTests": {
+    "profile": "debug, fast-alloc",
+    "passed": 138,
+    "failed": 11,
+    "failures": [
+      "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+      "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+      "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+      "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+      "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+      "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+      "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+      "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+      "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+      "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+      "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+    ],
+    "archivedBaselineHasSameFailures": true
+  },
+  "remainingFamilies": {
+    "careerStartup": 492,
+    "careerPacing": 2,
+    "practicePacing": 1,
+    "practiceRounding": 1
+  },
+  "startupPatterns": {
+    "races": 492,
+    "officialPlayerWins": 229,
+    "simulatedPlayerWins": 0,
+    "allRunnerStartDelaysDiffer": 492
+  },
+  "diagnosticVariantsAdopted": false,
+  "timing": {
+    "practiceAuditSeconds": 567.39141869999,
+    "careerAuditSeconds": 80.7360381000035,
+    "scope": "Separate audit wall times including concurrent workers, decode, scoring, evidence; not per-race latency."
+  },
+  "limitations": [
+    "Strict observations are not complete hidden-state or replay-byte equivalence.",
+    "Career start/end packets are provenance; no separate end-packet result audit added.",
+    "The external simulator shares discrepancies and is not an official oracle.",
+    "No verified correction for the remaining 496 races.",
+    "Existing unit failures remain; the library unit suite is not fully green."
+  ],
+  "artifacts": [
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\final-practice\\summary.json",
+      "sha256": "8773ffef9dece28555dee433b1a8fc216ea0af1636c57d7d98fa6c730b4e8e99"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\final-practice\\results.jsonl",
+      "sha256": "d0f836b2f298820e52122e5d132cd69950edb112be6093128c06abee0e53dc84"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\final-practice\\identity.json",
+      "sha256": "190f74e79776f6b8febf55ba9afe824c989a9c42fdc18d0585d46c716c8392a8"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\final-career\\summary.json",
+      "sha256": "d094e9dde4d0810e07f3d1a7e7e5a9723d4ef4af97c359492e8203a3e018f1dc"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\final-career\\results.jsonl",
+      "sha256": "403a38eea8da1bb135d75c3f9ee220543adea9b18756cfc28d7b25f2d1bb8eb3"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\final-career\\identity.json",
+      "sha256": "90c455a32e9fca590fb55c194d781980f93398b4fd25a11a0b1869496868d1d7"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\ordering-fixtures.json",
+      "sha256": "095314175c5264dbe6d05ba5d0e727a9a1a02fb67ede022c5f741140a605877a"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\ordering-practice\\summary.json",
+      "sha256": "d22e405507e0aa8d695190eb795a945acc22dfb956f05d8fdff44e96ef5feeca"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\focused-index.json",
+      "sha256": "60443983e9dc68d135ae8adb153f5c0ea7226169aa4b35c68c1c0396c2792375"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\diagnostic-current\\summary.json",
+      "sha256": "1313aa633604434b29bec634f6e63b55fb4f5431e3630f9d121329d232148519"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\numeric-probes\\summary.json",
+      "sha256": "ae013b85cc6a85c6215630ef5ac02b00b428ff83ecd0c2a2b8a0bf493f43e5a8"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\career-seed-rule-probe.json",
+      "sha256": "935298e741bf0b8fc242018e908b5a9bf04618e9c2436b074d2fb7b89a73f343"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\startup-patterns.json",
+      "sha256": "9613e032e193d3f5455ed1489d48ef18aa0d27ba4b0390f26a11a61e953bf60f"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\independent-comparison-v4\\provenance.json",
+      "sha256": "d094e5e7934d3ff69490842093a71201228f82bef8bf7d7afc43ce76fa19b9c1"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\discrepancies-20261020-unit-tests.log",
+      "sha256": "03a0fdd5ea46311f85546ad978274a8ed8f327400310a0632e24911f8171857e"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\discrepancy-baseline-tests-20261020-rerun.log",
+      "sha256": "fa92e38aecd7c0e4e95b2d77477890778ad3cd75b9622f31b93e3f145381f880"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\build\\identity.json",
+      "sha256": "5f8f9a26770bfb3d58d836e3c614773aaf24a67e2c82443153e935f17ff45bc6"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\build\\source.zip",
+      "sha256": "4e8bdc5b1c9c788ba112b05c856e4629b65321a612cd64c11d10dfeed4895d86"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\build\\startup-event-order.patch",
+      "sha256": "2ba19a4b19be4ed6367e1daf4b87a32b19cb85b65a5c779b1559c36006f317a0"
+    }
+  ],
+  "tools": [
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\add-numeric-probes.py",
+      "sha256": "751bfdcd3a081600881ab5e28090e6846392c17b15aae3a71b7e4d35c7e9545d"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\annotate-findings.py",
+      "sha256": "79be9c1ad4a46f31b3beb577bb7df84adcd7c2c240518077e5188153152c5c49"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\audit-career.py",
+      "sha256": "4e2ece5318e811265d46833763ba4d364f4c2b48d3a83ba88d7e5b4a9419c37a"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\audit-practice.py",
+      "sha256": "edaf6c68894e7a260a49925a9fed49ef2b3c2c1bd135385208cf26418260a750"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\check-sampled-strict.py",
+      "sha256": "f5fba2875695de962c18a0d6f4e7f631c5b0e4da403eb995f62a2d80132d78a6"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\compare-independent.py",
+      "sha256": "34c7d7ec75fa4371da7b333cda31c73e94a2835824147916fc35eb69a1d9e2ec"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\freeze-career.py",
+      "sha256": "f16ffd62d5b315dddd4c176b6ca981bd335bab471557e463ddb1c95b8f945eea"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\freeze-parallel.py",
+      "sha256": "d2a0e35f7048049b62434dd9cbaa1969a2b839ecbeae8012c2b51cd4716077bb"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\freeze-snapshot.py",
+      "sha256": "4449b56bb3a6169a5cc5e8b4ff58d0cbdd2ddb5c1225e6bc75b622f47a1cac2e"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\make-diagnostic.py",
+      "sha256": "9a2c880c17a5877c9c407f646df33f42a2a07bb8926ef1988c69dcf9c06c9c13"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\prepare-focused.py",
+      "sha256": "719496c5c6f5dbb080527f031bddc87a93c1e58a5e4e4da2cc5a954c28db036f"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\probe-career-seed-rules.py",
+      "sha256": "3cdb070a81bceb9aebcdd2656e96e5de5a05f0ac4c84e6a937942a8d39f6227d"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\publish-investigation.py",
+      "sha256": "ee327cb0da89e26e650b7de06835f536e5b6d22f6c72a1303ad7d4e75af9775b"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\recheck-career.py",
+      "sha256": "11c8d1f44caad6d81a6c3bbb0d323d9af4e24a576ba4cc383d3dd50bd6445346"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\run-audits.py",
+      "sha256": "fa9461aef9d35a35febf6e3af5f7c89602b6e082d1b848015a002862751fd0e2"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\run-focused.py",
+      "sha256": "eea609ab8938dca5d9c6c2a538f45b4a49d3e8bf4e5fa9c095202899f93c79bf"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\run-numeric-probes.py",
+      "sha256": "149afdb9a795eef0ff5b41666df4a15709bcaf332372d5c69f3dbd1b9a5479f0"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\summarize-audit.py",
+      "sha256": "f72d905a31dbd66eb293224550f60a56072e2609ea6fec1f3c8c46f3dbc890f1"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\discrepancies-20261020\\investigation-tools\\summarize-startup.py",
+      "sha256": "a7ce327ff43992289ad633b377d13d0c63adcf9cf75c91f3660c43982cb0b332"
+    }
+  ]
+}

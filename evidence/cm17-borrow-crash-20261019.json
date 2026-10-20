@@ -1,0 +1,103 @@
+{
+  "reportedDate": "2026-10-19",
+  "timezone": "Australia/Brisbane",
+  "title": "CM17 worker RefCell borrow panic in Spot Struggle peer scan",
+  "status": "Intermittent crash reported; user replayed all 11 arms (44,000 races) without recurrence. Cause and crashed binary source identity remain unconfirmed.",
+  "userReport": {
+    "field": "CM17",
+    "occurrences": 1,
+    "location": "src/race_solver.rs:2606",
+    "error": "RefCell borrow panic",
+    "rerun": "completed"
+  },
+  "buildIdentification": {
+    "reportedExecutable": "unknown",
+    "head": "efc2decdfeaff227ada0e9847f5deceb42c3b97f",
+    "lineMatches": [
+      "repository HEAD",
+      "archived deployed v74 source"
+    ],
+    "note": "Line 2606 happens to match a peer read in HEAD and the archived v74 source. The crashed binary is not tied to either snapshot, so this is a candidate mapping only.",
+    "archivedSource": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\.local\\deploy-globalsim-v74-20261017\\source\\src\\race_solver.rs",
+      "sha256": "1b4175b15b66a7c21522c73bc332214b06bc088a860893e4971b6818c599aa62"
+    },
+    "currentSource": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\src\\race_solver.rs",
+      "sha256": "f252223be5472da69d9532a66fa0be9a4c561ad4761bb47ed8902d2a6a4d2ccb"
+    },
+    "userClarification": "The crashed binary was built before the uncommitted GlobalSim working-tree changes."
+  },
+  "codeLocation": {
+    "function": "RaceSolver::update_spot_struggle",
+    "currentLine": 2675,
+    "operation": "field.solvers[j].borrow()",
+    "context": "Read strategy, position, lane and started state of peers while selecting the lead-competition group.",
+    "mappingStatus": "Candidate source location, not established crash attribution."
+  },
+  "findings": [
+    "An immutable RefCell borrow fails here if that peer already has an outstanding mutable borrow.",
+    "The loop reads self directly for j == field_index and borrows other runner cells.",
+    "RaceField::new assigns runner indices; inspected production stepping loops scope each runner borrow to its individual update.",
+    "No concrete borrow-lifetime defect was identified in the inspected path.",
+    "Skipping a failed peer borrow would change the competition participant scan and is not a justified correction."
+  ],
+  "validation": {
+    "spotStruggleTests": {
+      "passed": 7,
+      "failed": 0,
+      "log": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\rank-context-20261019\\cm17-spot-tests.log",
+        "sha256": "b7f208bbfc79db5e3ba2f92a475bb6845414deab315b9c9a2dcc6c5f764c233c"
+      }
+    },
+    "liveRosterCallbackTest": {
+      "passed": 1,
+      "failed": 0,
+      "log": {
+        "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\rank-context-20261019\\cm17-roster-test.log",
+        "sha256": "88c4092dce29635cd728276517b2e00f349c47dbd020b7a6e468e2592183b37b"
+      }
+    },
+    "scope": "The eight local tests cover the current checkout. Separately, the user reports 44,000 exact-block replays with no crash. Neither establishes the original borrow holder or original binary source."
+  },
+  "productionCodeChangedForThisReport": false,
+  "publishedExternally": false,
+  "userReplay": {
+    "arms": 11,
+    "races": 44000,
+    "racesPerBatch": 40,
+    "inputs": "User rebuilt the exact block inputs with the same seeds and lobbies.",
+    "crashes": 0,
+    "evidenceSource": "User report; not independently rerun here.",
+    "savedFailureInput": "No saved crashing input available."
+  },
+  "hypothesisReview": {
+    "processDependentState": {
+      "status": "Plausible, unconfirmed",
+      "assessment": "The reported replay outcome supports investigating state beyond individual race seeds and lobbies; it does not identify the specific mechanism."
+    },
+    "hashMapIteration": {
+      "status": "No supporting path found in inspected current or archived v74 source",
+      "locations": [
+        "src/condition_parser.rs:33",
+        "src/condition_parser.rs:226",
+        "src/condition_parser.rs:258"
+      ],
+      "assessment": "The HashMaps found in src are parser-cache lookup tables. They use keyed lookup/insertion and whole-cache clearing, not iteration to choose runners or activation order. Their keys include a static table address, used only as cache identity. This review cannot rule out differences in the unidentified crashed build."
+    },
+    "spotStrugglePeerMutation": {
+      "location": "src/race_solver.rs:2724",
+      "assessment": "The participant list is collected before mutation. The owner is handled via self, and each peer borrow is scoped to start_spot_struggle. That method updates local state/modifiers and does not call back into field scanning."
+    },
+    "duelPeerMutation": {
+      "location": "src/race_solver.rs:2953",
+      "assessment": "Peer reads during selection and history checks end before the mutable peer borrow. Activation updates local state/modifiers and does not invoke callbacks or recurse into peer scanning. No overlapping borrow established in the inspected path."
+    }
+  },
+  "nextOccurrenceEvidence": [
+    "Capture exact binary SHA256 and matching source revision/snapshot.",
+    "Capture full panic backtrace and worker command/API mode.",
+    "Capture failed request plus preceding requests in that worker and batch/arm identifiers, since process history may matter."
+  ]
+}

@@ -1,0 +1,993 @@
+{
+  "scope": "Official Career sampled observations, including post-finish samples and within-stream event order; not whole-game parity",
+  "source": "D:\\UmamusumeData\\race-datasets\\career-20261018",
+  "candidateAudit": "D:\\UmamusumeData\\race-datasets\\career-investigation-20261018\\leader-event-order",
+  "baselineEngineSha256": "e3169ef220b1a521762798f6a976b26b0d2e2ccdd20e1135db47ce74d34ebd49",
+  "baseline": {
+    "cases": 4437,
+    "strictPassed": 659,
+    "observationsIgnoringOrder": 3988
+  },
+  "candidate": {
+    "cases": 4437,
+    "differences": {
+      "blockFrontHorseIndex": 411,
+      "finishTimes": 411,
+      "hp": 411,
+      "lane": 411,
+      "legacyChecks": 411,
+      "mechanicSequence(4, 5)": 411,
+      "missingFrame": 164,
+      "position": 411,
+      "result.finishOrder": 411,
+      "result.finishTimeRaw": 411,
+      "result.lastSpurtStartDistance": 411,
+      "result.startDelayTime": 410,
+      "skillDurationSequence": 411,
+      "skillMultiset": 411,
+      "skillSequence": 411,
+      "speed": 411,
+      "targetMultiset": 411,
+      "temptationMode": 407
+    },
+    "engine": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\target\\career-investigation-20261018\\release\\race_engine_rs_v2.exe",
+    "engineSha256": "0d250f44c9939d79f0f95dca387c57f72f7c5b49ccf49d6e89caf21b4ab543cf",
+    "errors": 0,
+    "finishExact": 4026,
+    "fixed": 38,
+    "observationsExactIgnoringEventOrder": 4026,
+    "outputIdentical": 462,
+    "passed": 4026,
+    "placementsExact": 4026,
+    "regressed": 0,
+    "seconds": 44.95231760002207,
+    "source": "D:\\UmamusumeData\\race-datasets\\career-20261018",
+    "winnerExact": 4150
+  },
+  "fixes": {
+    "adjustedStatRounding": 34,
+    "approximateStatRanks": 4,
+    "orderingOnlyPreviously": 3329,
+    "orderingOnlyRemaining": 0,
+    "fixedReplayHashes": [
+      "45678e6f9e5345942441e4bd7f96b83b13c10a6d9ba929bf274e18bcaaa8504f",
+      "2d81861ff7a66d3419bad153250f9e6d866531701c0970a41b87c43ac5680378",
+      "61efe646832467ea8b308048276d1ea21f2e73f6ec4c8963636b8490d50cbeb9",
+      "16e95718265e6a8afeda97b02196c8a4d97485c054655aa6e59bf679b7576847",
+      "040e6317ad55527213694495a3c0025b9e79c17cc0b7e44ac1651e16777cd5f4",
+      "cb066f1922c6e3a9fe9376a81a2260f63c2a4fbe33a96917b37b853584fc89ef",
+      "68880ae669d87f5ec5b80b7a8ee116f69b362a878ade4e9f8f3e25f6372b35b9",
+      "d692836e87ad197f8682dd9052c131c1b51d104f01ad92fdb8a88808a09cf9de",
+      "1025c70f9fbd0bbc685c9fe15c31369141f4176ef8035a4a3c90da6da4693535",
+      "0525d19fc9a96489d3503fdaadf6a517497cff58b262369d6fc66f6e9d613782",
+      "0e967c82f1c58d9db61ebe86b4bd365f84ae7166fe38498df701010d7f012b56",
+      "0a1992a3d2bcbc5a026a8972aa05db8606b0fa0fc808422732406f64115e97f9",
+      "f568251a763cdac4d76ba2c2944b69607da6c135dd4196fd207bb4f8d2469681",
+      "fd25ee01f3449a0cfd5bc9b397fbf99a1325ea1fbe39b9f61131c60ad65eeb00",
+      "2acbf73090950f26ff7273b7b3b3104b36ecd327d037d961c3e233a6b696b2b0",
+      "557890bb0230b7525e2512fcb1c631912522ffe15d54238703e900f8e6b4c734",
+      "3eb37dff82e45cf26da77d7212f683ca5548bffdb77d43039b67f317b0bf6c79",
+      "4d9b708f09423146dfe865cacf5bdd735a0a7f7bd8f31a342dc7e4762047419f",
+      "eaaa834878dfaf071d1ee9bd05eb4da023ed089488cc2628a784da4339ed8dfd",
+      "dd6cd1730ca3fc6ca01941e3e8070b4caf5f9bc8be74b8723e788fff79480742",
+      "54fc557def8731cc49e7da67863d0345e601d01823b49e22d11db1f7f519a357",
+      "8acc69902ec7c036becf445cd6ce8baa2056730cb9d27dd75a1f6027b4afc162",
+      "76a0b7c8e0185292b38dd4a28f64f9226f3917c962fa326aac304df9e2f18502",
+      "10d83bda1505ebc5db717cfa2ea52b19c47729cf5dca36a29d576fe9b1287d86",
+      "8717290261ab83c872c5f243a2719786f9fcc486fa0b8235bd7c30a38bfe2021",
+      "60ba8adb65dc93e8f98f8f263845751d8c3144103c853afcd865cedc897d2b08",
+      "0e64194caec7cedb91a91714b35389f2e1996bed485f0a43a1012f34283dc7c2",
+      "8b6bd7dfcb1bb9733bce0b188f5f3f56c2fb4e52aaa57c4520b7557b59db8dea",
+      "842ffe6f1adb684ffb0ec809c5a0b81fd105637d3fde2d51e3a24fa953f5adfb",
+      "55784748e5a8e2e0d128eb84f15d2db7d1044b46ff5989d84f6e9ebb88d823c9",
+      "33c755b2d5c3386101ba34602c0c14f6a776aed5cc1eb1f3b10a27ed97790274",
+      "b1c01903d908bafc06477c09067c92a92ad3dff671480c5337ff57432c4809d1",
+      "ca5445e71d9427b633c6e9e62845cc18b6e8caae1e2a46dc96cd2ccfcb966ebd",
+      "fd7d969fa0d5f90e5fd83c444395d2ef92416ecaf9ec45f0d7da1d7612118143",
+      "aec4d75b1069aaefa1a058f831c1f192a54b8e90e81c2a8778dae2a7f55ed092",
+      "c2b4a5a8a4690bfb5713a2d49cca2d229c70f143812a63711968e998a87f6fb2",
+      "c140e1eefff0fac3e43fba0a4f00a03d8dad8210486ec077735f51d36ee8afaa",
+      "14f97232121c336ff23ec3e8b8cee6b4a319725f6d7917d05cb348b33dc5440d"
+    ]
+  },
+  "unresolved": {
+    "total": 411,
+    "startup": 410,
+    "laterRuntime": 1,
+    "startupRunnerCounts": {
+      "18": 138,
+      "16": 237,
+      "17": 5,
+      "15": 11,
+      "12": 3,
+      "14": 6,
+      "10": 4,
+      "13": 5,
+      "11": 1
+    },
+    "startupSimulatedPlayerPlaces": {
+      "9": 18,
+      "2": 107,
+      "7": 23,
+      "4": 72,
+      "3": 56,
+      "14": 5,
+      "10": 15,
+      "6": 41,
+      "15": 6,
+      "5": 30,
+      "16": 2,
+      "13": 5,
+      "18": 4,
+      "8": 15,
+      "12": 2,
+      "11": 7,
+      "17": 2
+    },
+    "startupOfficialPlayerPlaces": {
+      "6": 13,
+      "4": 30,
+      "2": 81,
+      "1": 163,
+      "3": 73,
+      "13": 1,
+      "5": 20,
+      "8": 3,
+      "7": 7,
+      "16": 1,
+      "12": 4,
+      "10": 5,
+      "9": 3,
+      "15": 2,
+      "14": 1,
+      "11": 2,
+      "18": 1
+    },
+    "startupContinueNums": {
+      "0": 410
+    },
+    "startupForceRunningStyle": {
+      "0": 410
+    },
+    "itemizedIndex": "D:\\UmamusumeData\\race-datasets\\career-investigation-20261018\\unresolved-index.json"
+  },
+  "externalComparison": {
+    "repository": "https://github.com/kachi-dev/uma-race-simulator",
+    "revision": "3633f199d0ccd0cee554f9254a1132c5aa3d1d3e",
+    "engineSha256": "cea7a2220ff315ff09e0bcaa47f623be91a6207dc70dfaf30f8445da4e6adf3b",
+    "cases": 421,
+    "byGroup": {
+      "control": {
+        "cases": 10,
+        "finishOrderExact": 10,
+        "exactFinishTimes": 10
+      },
+      "late": {
+        "cases": 1,
+        "finishOrderExact": 0,
+        "exactFinishTimes": 0
+      },
+      "startup": {
+        "cases": 410,
+        "finishOrderExact": 0,
+        "exactFinishTimes": 0
+      }
+    },
+    "adapterNote": "Separate external-loader copies only: null NPC card ID represented as zero; original character ID, seed, stats, skills and replay retained. Canonical corpus unchanged.",
+    "logSha256": "fa7a47609721570d2b01db0429885800e3b1a5ea7778653319ca6100f87aaf72",
+    "caveat": "Ten positive controls have exact outcomes but recording-cadence differences. This comparator is not an official oracle."
+  },
+  "regressionTests": {
+    "strictPassed": 62,
+    "total": 66,
+    "remaining": [
+      {
+        "case": "finished-lane-movement-affects-trailing-runner",
+        "differences": {
+          "skillSequence": 1,
+          "skillDurationSequence": 1
+        }
+      },
+      {
+        "case": "heal-history-later-caster",
+        "differences": {
+          "skillSequence": 1
+        }
+      },
+      {
+        "case": "pacemaker-returning-runaway-keeps-incumbent",
+        "differences": {
+          "skillSequence": 1,
+          "skillDurationSequence": 1
+        }
+      },
+      {
+        "case": "pacemaker-section-keeps-full-course-precision",
+        "differences": {
+          "skillSequence": 1,
+          "skillDurationSequence": 1
+        }
+      }
+    ],
+    "legacy": {
+      "engineSha256": "0d250f44c9939d79f0f95dca387c57f72f7c5b49ccf49d6e89caf21b4ab543cf",
+      "mode": "legacy-prefinish",
+      "passed": 66,
+      "total": 66,
+      "cases": [
+        {
+          "case": "additional-bonus-on-final-skill-tick",
+          "passed": true,
+          "runnerSamples": 910
+        },
+        {
+          "case": "additional-bonus-preserves-overtake-target",
+          "passed": true,
+          "runnerSamples": 923
+        },
+        {
+          "case": "adjoining-slope-boundary",
+          "passed": true,
+          "runnerSamples": 3982
+        },
+        {
+          "case": "career-adjusted-stat-rounding",
+          "passed": true,
+          "runnerSamples": 1350
+        },
+        {
+          "case": "career-guts-order-near-tie",
+          "passed": true,
+          "runnerSamples": 1385
+        },
+        {
+          "case": "career-wisdom-order-near-tie",
+          "passed": true,
+          "runnerSamples": 1517
+        },
+        {
+          "case": "continuous-rank-before-last-straight-entry-a",
+          "passed": true,
+          "runnerSamples": 818
+        },
+        {
+          "case": "continuous-rank-before-last-straight-entry-b",
+          "passed": true,
+          "runnerSamples": 819
+        },
+        {
+          "case": "cornerless-course-has-no-final-straight-entry",
+          "passed": true,
+          "runnerSamples": 671
+        },
+        {
+          "case": "course-11203-geometry-and-final-corner-lottery",
+          "passed": true,
+          "runnerSamples": 1563
+        },
+        {
+          "case": "duel-invites-finished-partner-second-roster",
+          "passed": true,
+          "runnerSamples": 918
+        },
+        {
+          "case": "duel-invites-finished-partner",
+          "passed": true,
+          "runnerSamples": 948
+        },
+        {
+          "case": "duel-joins-finished-group-01",
+          "passed": true,
+          "runnerSamples": 933
+        },
+        {
+          "case": "duel-joins-finished-group-02",
+          "passed": true,
+          "runnerSamples": 891
+        },
+        {
+          "case": "duel-joins-finished-group-03",
+          "passed": true,
+          "runnerSamples": 977
+        },
+        {
+          "case": "duel-joins-finished-group-04",
+          "passed": true,
+          "runnerSamples": 860
+        },
+        {
+          "case": "duel-joins-finished-group-05",
+          "passed": true,
+          "runnerSamples": 922
+        },
+        {
+          "case": "duel-warmup-completes-after-own-finish",
+          "passed": true,
+          "runnerSamples": 1148
+        },
+        {
+          "case": "final-corner-overtake-on-entry-tick",
+          "passed": true,
+          "runnerSamples": 2710
+        },
+        {
+          "case": "finished-lane-movement-affects-trailing-runner",
+          "passed": true,
+          "runnerSamples": 1709
+        },
+        {
+          "case": "front-block-excludes-rounded-boundary",
+          "passed": true,
+          "runnerSamples": 1319
+        },
+        {
+          "case": "front-block-inclusive-precision-boundary",
+          "passed": true,
+          "runnerSamples": 926
+        },
+        {
+          "case": "front-block-retains-close-boundary",
+          "passed": true,
+          "runnerSamples": 2039
+        },
+        {
+          "case": "front-block-retains-far-boundary",
+          "passed": true,
+          "runnerSamples": 2559
+        },
+        {
+          "case": "front-runner-cached-leader-distance-gate-second-course",
+          "passed": true,
+          "runnerSamples": 926
+        },
+        {
+          "case": "front-runner-cached-leader-distance-gate",
+          "passed": true,
+          "runnerSamples": 813
+        },
+        {
+          "case": "front-runner-ignores-runaways",
+          "passed": true,
+          "runnerSamples": 964
+        },
+        {
+          "case": "front-runner-no-eligible-lead",
+          "passed": true,
+          "runnerSamples": 959
+        },
+        {
+          "case": "front-runner-waits-for-lead",
+          "passed": true,
+          "runnerSamples": 935
+        },
+        {
+          "case": "heal-history-earlier-caster",
+          "passed": true,
+          "runnerSamples": 1047
+        },
+        {
+          "case": "heal-history-later-caster",
+          "passed": true,
+          "runnerSamples": 932
+        },
+        {
+          "case": "hp-percent-truncation-boundary",
+          "passed": true,
+          "runnerSamples": 1057
+        },
+        {
+          "case": "inward-passing-corridor-wide-comparison",
+          "passed": true,
+          "runnerSamples": 1445
+        },
+        {
+          "case": "last-straight-rank-change-after-entry",
+          "passed": true,
+          "runnerSamples": 708
+        },
+        {
+          "case": "late-corner-overtake-cached-state-a",
+          "passed": true,
+          "runnerSamples": 1387
+        },
+        {
+          "case": "late-corner-overtake-cached-state-b",
+          "passed": true,
+          "runnerSamples": 971
+        },
+        {
+          "case": "late-gate-activation-preserves-start-delay",
+          "passed": true,
+          "runnerSamples": 2945
+        },
+        {
+          "case": "lead-competition-partner-past-entry-cutoff",
+          "passed": true,
+          "runnerSamples": 1098
+        },
+        {
+          "case": "leader-gap-duration-rounding",
+          "passed": true,
+          "runnerSamples": 2451
+        },
+        {
+          "case": "new-activation-on-final-bonus-tick-1000",
+          "passed": true,
+          "runnerSamples": 726
+        },
+        {
+          "case": "new-activation-on-final-bonus-tick-1200",
+          "passed": true,
+          "runnerSamples": 881
+        },
+        {
+          "case": "new-activation-on-final-bonus-tick-1400",
+          "passed": true,
+          "runnerSamples": 828
+        },
+        {
+          "case": "pacemaker-handover-refresh-1800-a",
+          "passed": true,
+          "runnerSamples": 1696
+        },
+        {
+          "case": "pacemaker-handover-refresh-1800-b",
+          "passed": true,
+          "runnerSamples": 1708
+        },
+        {
+          "case": "pacemaker-handover-refresh-2100",
+          "passed": true,
+          "runnerSamples": 1334
+        },
+        {
+          "case": "pacemaker-handover",
+          "passed": true,
+          "runnerSamples": 1181
+        },
+        {
+          "case": "pacemaker-keeps-incumbent-in-range-large-field",
+          "passed": true,
+          "runnerSamples": 1945
+        },
+        {
+          "case": "pacemaker-keeps-incumbent-with-forward-group-in-range",
+          "passed": true,
+          "runnerSamples": 810
+        },
+        {
+          "case": "pacemaker-refresh-before-returning-forward-group",
+          "passed": true,
+          "runnerSamples": 708
+        },
+        {
+          "case": "pacemaker-refresh-restarts-count-consecutive-sections",
+          "passed": true,
+          "runnerSamples": 2174
+        },
+        {
+          "case": "pacemaker-refresh-restarts-count-one-section",
+          "passed": true,
+          "runnerSamples": 1784
+        },
+        {
+          "case": "pacemaker-restoration-after-selection-window",
+          "passed": true,
+          "runnerSamples": 843
+        },
+        {
+          "case": "pacemaker-restoration-at-section-boundary-1000",
+          "passed": true,
+          "runnerSamples": 656
+        },
+        {
+          "case": "pacemaker-restoration-at-section-boundary-1200",
+          "passed": true,
+          "runnerSamples": 747
+        },
+        {
+          "case": "pacemaker-retains-incumbent-under-later-style-leader",
+          "passed": true,
+          "runnerSamples": 985
+        },
+        {
+          "case": "pacemaker-returning-runaway-keeps-incumbent",
+          "passed": true,
+          "runnerSamples": 2068
+        },
+        {
+          "case": "pacemaker-section-keeps-full-course-precision",
+          "passed": true,
+          "runnerSamples": 2984
+        },
+        {
+          "case": "pacing-gap-2500-float-rounding",
+          "passed": true,
+          "runnerSamples": 1946
+        },
+        {
+          "case": "speed-stat-ground-penalty-rounding-2200",
+          "passed": true,
+          "runnerSamples": 2179
+        },
+        {
+          "case": "speed-stat-ground-penalty-rounding-2300",
+          "passed": true,
+          "runnerSamples": 2240
+        },
+        {
+          "case": "spurt-guts-product-retains-wide-precision",
+          "passed": true,
+          "runnerSamples": 1650
+        },
+        {
+          "case": "spurt-normal-cost-rounding-accepts-plan",
+          "passed": true,
+          "runnerSamples": 2310
+        },
+        {
+          "case": "spurt-normal-cost-rounding-rejects-plan",
+          "passed": true,
+          "runnerSamples": 2117
+        },
+        {
+          "case": "stacked-vision-debuffs-remove-visible-corridor",
+          "passed": true,
+          "runnerSamples": 2930
+        },
+        {
+          "case": "straight-entry-clears-overlapping-corner",
+          "passed": true,
+          "runnerSamples": 974
+        },
+        {
+          "case": "visible-cone-width-rounding-boundary",
+          "passed": true,
+          "runnerSamples": 1843
+        }
+      ]
+    },
+    "rank": {
+      "scope": "synthetic rank/stat equivalence; not official capture parity",
+      "engineSha256": "0d250f44c9939d79f0f95dca387c57f72f7c5b49ccf49d6e89caf21b4ab543cf",
+      "equivalentRaces": 48,
+      "rejectedInvalidRanks": 12,
+      "recoveryChecks": 12,
+      "cases": [
+        {
+          "runners": 9,
+          "rank": 0,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 0,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 1,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 1,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 5,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 5,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 6,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 6,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 10,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 10,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 11,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 11,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 15,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 15,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 16,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 16,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 20,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 20,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 21,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 21,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 26,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 26,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 99999,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 9,
+          "rank": 99999,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 0,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 0,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 1,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 1,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 5,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 5,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 6,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 6,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 10,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 10,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 11,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 11,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 15,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 15,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 16,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 16,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 20,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 20,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 21,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 21,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 26,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 26,
+          "seed": 107922,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 99999,
+          "seed": 100003,
+          "equivalent": true
+        },
+        {
+          "runners": 18,
+          "rank": 99999,
+          "seed": 107922,
+          "equivalent": true
+        }
+      ]
+    },
+    "native": {
+      "library_sha256": "72d3bff64c842d017c567af5e7f57ff786490657940a141203009c9f9e125dc0",
+      "baseline_sha256": "0d250f44c9939d79f0f95dca387c57f72f7c5b49ccf49d6e89caf21b4ab543cf",
+      "inputs_sha256": "490df1e02608defa7f8727bcc3552af46dacce2c546338a39d258a0800a631b2",
+      "modes": [
+        {
+          "all_frames": false,
+          "equivalent_runs": 72,
+          "errors": [
+            {
+              "case": "invalid-data",
+              "seed": 1470742559,
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "invalid-data",
+              "seed": 1470750448,
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "invalid-data",
+              "seed": 1470742559,
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "empty-data",
+              "seed": 1470742559,
+              "error": "Missing retail initialization field 100141"
+            },
+            {
+              "case": "empty-data",
+              "seed": 1470750448,
+              "error": "Missing retail initialization field 100141"
+            },
+            {
+              "case": "empty-data",
+              "seed": 1470742559,
+              "error": "Missing retail initialization field 100141"
+            }
+          ]
+        },
+        {
+          "all_frames": true,
+          "equivalent_runs": 72,
+          "errors": [
+            {
+              "case": "invalid-data",
+              "seed": 1470742559,
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "invalid-data",
+              "seed": 1470750448,
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "invalid-data",
+              "seed": 1470742559,
+              "error": "skill_data.json root must be an object"
+            },
+            {
+              "case": "empty-data",
+              "seed": 1470742559,
+              "error": "Missing retail initialization field 100141"
+            },
+            {
+              "case": "empty-data",
+              "seed": 1470750448,
+              "error": "Missing retail initialization field 100141"
+            },
+            {
+              "case": "empty-data",
+              "seed": 1470742559,
+              "error": "Missing retail initialization field 100141"
+            }
+          ]
+        }
+      ],
+      "concurrent_equivalent_runs": 24,
+      "handle_isolation_and_recovery": true
+    },
+    "nativeCaptured": {
+      "library_sha256": "72d3bff64c842d017c567af5e7f57ff786490657940a141203009c9f9e125dc0",
+      "baseline_sha256": "0d250f44c9939d79f0f95dca387c57f72f7c5b49ccf49d6e89caf21b4ab543cf",
+      "inputs_sha256": "b22bda2e326cd0b8aedb0283b9e4dc229181dda31a60df888ac79a2452b90eda",
+      "modes": [
+        {
+          "all_frames": false,
+          "equivalent_runs": 9,
+          "errors": []
+        },
+        {
+          "all_frames": true,
+          "equivalent_runs": 9,
+          "errors": []
+        }
+      ]
+    },
+    "pythonTests": {
+      "validator": 7,
+      "careerImporter": 4,
+      "corpusLibrary": 14
+    },
+    "rust": {
+      "passed": 135,
+      "failed": 11,
+      "failures": [
+        "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+        "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+        "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+        "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+        "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+        "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+        "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+        "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+        "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+        "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+        "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+      ],
+      "previous": {
+        "passed": 135,
+        "failed": 11,
+        "preexistingFailures": [
+          "hp_policy::retail_tests::integrated_hp_drain_and_heals_match_python_bits",
+          "hp_policy::retail_tests::spurt_policy_uses_shared_stream_and_current_hp",
+          "race_solver::movement_tests::duel_partner_hp_and_former_participant_exit_rules",
+          "race_solver::movement_tests::duel_warmup_checks_order_and_retains_eligible_rival",
+          "race_solver::retail_impl::tests::complete_isolated_races_match_python_tick_bits",
+          "race_solver::retail_impl::tests::whole_field_races_match_python_tick_bits",
+          "retail_geometry::tests::captured_gates_and_per_runner_width_changes",
+          "retail_geometry::tests::python_port_vectors_match_bits_for_all_captured_courses",
+          "retail_lane::tests::lateral_acceleration_and_permissions_match_python_bits",
+          "retail_physics::tests::python_port_vectors_match_every_float32_bit",
+          "retail_spurt::tests::search_matches_python_plans_and_shared_draw_counts"
+        ]
+      }
+    }
+  },
+  "sourceSha256": {
+    "src\\lib.rs": "c77803c2b2f1c81034cd71638596716dfd6761e78a304b5cb5e1798da5496c57",
+    "src\\race_field.rs": "b8e8204540756371eabe4eb96ec66a979549e1746ca40e17428c6dbe6d02a285",
+    "src\\race_solver.rs": "99b19db7390708df882d0400343610c5cbc7ce9e106aa380a10d0d6284a4474a",
+    "src\\race_solver_builder.rs": "60ebd7ad82661f0bf54e2b9bfb7309a745ee78fa5a585a7f0403e480966a5820"
+  },
+  "corpusManifestSha256": "da062a0e1a42202faa3cb0e528e615cece9e4ba5237133ebd5571c1704d6adbb",
+  "candidateResultsSha256": "8e2608856bb360cc417d95fb3ca2e5771783fd9aa28124f6a1931f72866135f3"
+}

@@ -1,35 +1,46 @@
 # Performance
 
-The v73 prepared Rust API averages **4.83 ms per seed with every frame retained**
-on the measured nine-runner, 1600 m Monte Carlo workload. Including complete
-binary packet encoding averages **4.93 ms**. These calls run inside the host
-application and reuse race preparation across seeds.
-
-The Python binding and command-line worker have additional interface costs.
-An earlier paired test on the same workload measured **5.72 ms through Python**
-and **5.85 ms through the binary worker**. These interfaces were not retimed for
-v73; the sub-5 ms measurement applies to direct Rust integration.
+The prepared Rust API averages **4.62 ms per seed with every frame retained**
+on the measured nine-runner, 1600 m workload. Including complete binary packet
+encoding averages **5.05 ms**. These measurements use a portable profile-guided
+release build with the fast allocator and reuse race preparation across seeds.
 
 ## Prepared Rust calls
 
-| Interface | Average per race | Work included |
-|---|---:|---|
-| Owned numeric replay | 4.83 ms | Fresh seed state, simulation, every frame, results and cleanup |
-| Binary packet in memory | 4.93 ms | All of the above plus complete binary encoding |
+| Workload | Output | v74 baseline | Optimized | Change in mean time |
+|---|---|---:|---:|---:|
+| 9 runners, 1600 m | Owned numeric replay | 4.74 ms | 4.62 ms | 2.6% lower |
+| 9 runners, 1600 m | Binary packet in memory | 4.98 ms | 5.05 ms | 1.4% higher |
+| 18 runners, 1200 m | Owned numeric replay | 10.26 ms | 9.89 ms | 3.6% lower |
+| 18 runners, 1200 m | Binary packet in memory | 10.23 ms | 10.00 ms | 2.2% lower |
 
-Two trials per mode, 300 measured races per trial, five warmups per trial.
-Each trial cycles through the same 30 seeds. Preparation is excluded and cost
-about 4 ms once per trial. Every frame is generated; the numeric mode returns
-an owned result and exposes borrowed runner samples. Binary mode constructs the
-complete packet in memory. Neither mode includes pipe transfer or application
-analysis. Alternating before/after trials measured 4.899 ms and 4.825 ms for
-numeric output, respectively, a 1.5% decrease. Binary output measured 4.929 ms
-and 4.932 ms, a 0.1% increase. These small changes do not establish a speedup;
-both averages remain below 5 ms on this workload after the accuracy corrections.
-[Rust measurements](../evidence/parity-performance.json).
+Both builds used the same compiler settings and profile-training inputs. Each
+initial comparison used four alternating trials per build and output mode, with
+480 measured races and five warmups per trial. The nine-runner binary case also
+received six trials of 720 measured races per build because its initial means
+were inconsistent. Its reported mean includes **all** initial and follow-up
+trials; there is no demonstrated speedup for that case.
 
-The [prepared API guide](IN-PROCESS.md) covers Rust, C and Python integration,
-ownership, threading, builds and reproducible benchmark commands.
+Trials cycle through the same 30 seeds. Timing includes fresh seed state,
+simulation, every frame, results and cleanup; binary mode also includes encoding
+the complete packet. One-time preparation, pipe transfer and application analysis
+are excluded. Both builds ran on the same performance core at above-normal
+process priority while background collection continued. The engine does not set
+CPU affinity or process priority automatically.
+
+The engine caches inactive skill runs between trigger boundaries and combines
+visibility and blocking queries over the cached field. Stateful skill observers,
+pending effects and callbacks retain their existing evaluation order. These
+changes reduce simulation work; they do not reduce replay detail.
+
+The optimized build matches the baseline byte for byte on **203,572 race
+inputs**, including every replay frame, result and event. All 63 captured
+regression fixtures also pass.
+
+These two workloads do not establish a universal latency or a guaranteed
+percentage improvement. See the [measurements and validation](../evidence/v74-skill-movement-performance.json)
+for every trial and the [prepared API guide](IN-PROCESS.md) for integration,
+ownership, threading and benchmark commands.
 
 ## Binary worker and Python binding
 

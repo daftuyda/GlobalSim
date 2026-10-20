@@ -115,6 +115,31 @@ As with other native libraries, an unrecoverable allocation failure or engine
 panic terminates the host process. The worker interface provides process isolation
 when that is required by the application.
 
+## External course geometry
+
+Captured course geometry (`data/course_geometry`) is most of the binary. Hosts
+that load one course at a time, such as a WebAssembly page, can build without
+it:
+
+```toml
+[dependencies]
+globalsim = { package = "race_engine_rs", path = "../GlobalSim", features = ["external-geometry"] }
+```
+
+Register a course's geometry before preparing a race on it. Pass the file's
+exact contents; identity is still verified on use, and a race on a course that
+was never registered fails with an error instead of substituting another track.
+
+```rust
+let json = std::fs::read_to_string("data/course_geometry/10606.json")?;
+globalsim::register_course_geometry(10606, json);
+let mut race = globalsim::PreparedRace::new(&input)?;
+```
+
+The default build is unchanged and keeps every captured course embedded. With
+the feature on, a wasm32 build of a thin bridge crate is about 2.2 MB instead
+of 36 MB, and its results match the native worker exactly.
+
 ## Build and measure
 
 Train on representative inputs for both worker and prepared paths:

@@ -1,0 +1,3651 @@
+{
+  "engineSha256": "e3169ef220b1a521762798f6a976b26b0d2e2ccdd20e1135db47ce74d34ebd49",
+  "mode": "strict-observations-v1",
+  "passed": 0,
+  "total": 63,
+  "cases": [
+    {
+      "case": "additional-bonus-on-final-skill-tick",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            3,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            3,
+            "201522",
+            0.0
+          ],
+          "index": 2,
+          "expectedCount": 85,
+          "actualCount": 85
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            3,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            3,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 2,
+          "expectedCount": 85,
+          "actualCount": 85
+        }
+      ],
+      "counts": {
+        "officialFrames": 109,
+        "runnerSamples": 981,
+        "postFinishSamples": 71,
+        "skillEvents": 85
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "additional-bonus-preserves-overtake-target",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            8,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            8,
+            "201522",
+            0.0
+          ],
+          "index": 13,
+          "expectedCount": 93,
+          "actualCount": 93
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            8,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            8,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 13,
+          "expectedCount": 93,
+          "actualCount": 93
+        }
+      ],
+      "counts": {
+        "officialFrames": 111,
+        "runnerSamples": 999,
+        "postFinishSamples": 76,
+        "skillEvents": 93
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "adjoining-slope-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            0,
+            "201522",
+            0.0
+          ],
+          "index": 1,
+          "expectedCount": 170,
+          "actualCount": 170
+        }
+      ],
+      "counts": {
+        "officialFrames": 283,
+        "runnerSamples": 5094,
+        "postFinishSamples": 1112,
+        "skillEvents": 170
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "competition event observations absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "continuous-rank-before-last-straight-entry-a",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            4,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            4,
+            "201521",
+            0.0
+          ],
+          "index": 9,
+          "expectedCount": 114,
+          "actualCount": 114
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            4,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            4,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 9,
+          "expectedCount": 114,
+          "actualCount": 114
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            5,
+            8.724591255187988
+          ],
+          "actual": [
+            4,
+            4,
+            8.724591255187988
+          ],
+          "index": 0,
+          "expectedCount": 4,
+          "actualCount": 4
+        }
+      ],
+      "counts": {
+        "officialFrames": 99,
+        "runnerSamples": 891,
+        "postFinishSamples": 73,
+        "skillEvents": 114
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "continuous-rank-before-last-straight-entry-b",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            0,
+            "201522",
+            0.0
+          ],
+          "index": 1,
+          "expectedCount": 118,
+          "actualCount": 118
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            0,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            0,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 1,
+          "expectedCount": 118,
+          "actualCount": 118
+        }
+      ],
+      "counts": {
+        "officialFrames": 104,
+        "runnerSamples": 936,
+        "postFinishSamples": 117,
+        "skillEvents": 118
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "cornerless-course-has-no-final-straight-entry",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "210052",
+            0.3330000042915344
+          ],
+          "actual": [
+            0,
+            "201311",
+            0.46619999408721924
+          ],
+          "index": 7,
+          "expectedCount": 53,
+          "actualCount": 53
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            2,
+            "210052",
+            0.3330000042915344,
+            40000
+          ],
+          "actual": [
+            0,
+            "201311",
+            0.46619999408721924,
+            30000
+          ],
+          "index": 7,
+          "expectedCount": 53,
+          "actualCount": 53
+        }
+      ],
+      "counts": {
+        "officialFrames": 82,
+        "runnerSamples": 738,
+        "postFinishSamples": 67,
+        "skillEvents": 53
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "course-11203-geometry-and-final-corner-lottery",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            1,
+            "201521",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 93,
+          "actualCount": 93
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            1,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            1,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 3,
+          "expectedCount": 93,
+          "actualCount": 93
+        }
+      ],
+      "counts": {
+        "officialFrames": 205,
+        "runnerSamples": 1845,
+        "postFinishSamples": 282,
+        "skillEvents": 93
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-invites-finished-partner-second-roster",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            1,
+            "201522",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 76,
+          "actualCount": 76
+        }
+      ],
+      "counts": {
+        "officialFrames": 112,
+        "runnerSamples": 1008,
+        "postFinishSamples": 90,
+        "skillEvents": 76
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-invites-finished-partner",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            3,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            4,
+            "200432",
+            0.0
+          ],
+          "index": 5,
+          "expectedCount": 83,
+          "actualCount": 83
+        }
+      ],
+      "counts": {
+        "officialFrames": 114,
+        "runnerSamples": 1026,
+        "postFinishSamples": 78,
+        "skillEvents": 83
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-joins-finished-group-01",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            1,
+            "202051",
+            0.0
+          ],
+          "index": 2,
+          "expectedCount": 85,
+          "actualCount": 85
+        }
+      ],
+      "counts": {
+        "officialFrames": 112,
+        "runnerSamples": 1008,
+        "postFinishSamples": 75,
+        "skillEvents": 85
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-joins-finished-group-02",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0
+          ],
+          "index": 8,
+          "expectedCount": 95,
+          "actualCount": 95
+        }
+      ],
+      "counts": {
+        "officialFrames": 139,
+        "runnerSamples": 1251,
+        "postFinishSamples": 360,
+        "skillEvents": 95
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-joins-finished-group-03",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            3,
+            "200432",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 96,
+          "actualCount": 96
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            2,
+            7.858793258666992
+          ],
+          "actual": [
+            4,
+            1,
+            7.858793258666992
+          ],
+          "index": 0,
+          "expectedCount": 7,
+          "actualCount": 7
+        }
+      ],
+      "counts": {
+        "officialFrames": 118,
+        "runnerSamples": 1062,
+        "postFinishSamples": 85,
+        "skillEvents": 96
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-joins-finished-group-04",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            1,
+            "201522",
+            0.0
+          ],
+          "index": 2,
+          "expectedCount": 87,
+          "actualCount": 87
+        }
+      ],
+      "counts": {
+        "officialFrames": 116,
+        "runnerSamples": 1044,
+        "postFinishSamples": 184,
+        "skillEvents": 87
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-joins-finished-group-05",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            7,
+            "210051",
+            6.1937971115112305
+          ],
+          "actual": [
+            3,
+            "200562",
+            10.589386940002441
+          ],
+          "index": 18,
+          "expectedCount": 84,
+          "actualCount": 84
+        }
+      ],
+      "counts": {
+        "officialFrames": 119,
+        "runnerSamples": 1071,
+        "postFinishSamples": 149,
+        "skillEvents": 84
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "duel-warmup-completes-after-own-finish",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            4,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            4,
+            "201522",
+            0.0
+          ],
+          "index": 5,
+          "expectedCount": 163,
+          "actualCount": 163
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            4,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            4,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 5,
+          "expectedCount": 163,
+          "actualCount": 163
+        }
+      ],
+      "counts": {
+        "officialFrames": 106,
+        "runnerSamples": 1272,
+        "postFinishSamples": 124,
+        "skillEvents": 163
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "final-corner-overtake-on-entry-tick",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0
+          ],
+          "index": 8,
+          "expectedCount": 155,
+          "actualCount": 155
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            6,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 8,
+          "expectedCount": 155,
+          "actualCount": 155
+        }
+      ],
+      "counts": {
+        "officialFrames": 232,
+        "runnerSamples": 3480,
+        "postFinishSamples": 770,
+        "skillEvents": 155
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "finished-lane-movement-affects-trailing-runner",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            6,
+            "202252",
+            0.0
+          ],
+          "index": 13,
+          "expectedCount": 120,
+          "actualCount": 120
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            6,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            6,
+            "202252",
+            0.0,
+            -1
+          ],
+          "index": 13,
+          "expectedCount": 120,
+          "actualCount": 120
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            13,
+            8.058592796325684
+          ],
+          "actual": [
+            4,
+            10,
+            8.058592796325684
+          ],
+          "index": 0,
+          "expectedCount": 11,
+          "actualCount": 11
+        }
+      ],
+      "counts": {
+        "officialFrames": 141,
+        "runnerSamples": 2115,
+        "postFinishSamples": 406,
+        "skillEvents": 120
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-block-excludes-rounded-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            1,
+            "200152",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 105,
+          "actualCount": 105
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            0,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            1,
+            "200152",
+            0.0,
+            -1
+          ],
+          "index": 3,
+          "expectedCount": 105,
+          "actualCount": 105
+        }
+      ],
+      "counts": {
+        "officialFrames": 157,
+        "runnerSamples": 1413,
+        "postFinishSamples": 94,
+        "skillEvents": 105
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-block-inclusive-precision-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            4,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            5,
+            "200262",
+            0.0
+          ],
+          "index": 7,
+          "expectedCount": 95,
+          "actualCount": 95
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            4,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            5,
+            "200262",
+            0.0,
+            -1
+          ],
+          "index": 7,
+          "expectedCount": 95,
+          "actualCount": 95
+        }
+      ],
+      "counts": {
+        "officialFrames": 112,
+        "runnerSamples": 1008,
+        "postFinishSamples": 82,
+        "skillEvents": 95
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-block-retains-close-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            7,
+            "200152",
+            0.0
+          ],
+          "index": 12,
+          "expectedCount": 123,
+          "actualCount": 123
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            6,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            7,
+            "200152",
+            0.0,
+            -1
+          ],
+          "index": 12,
+          "expectedCount": 123,
+          "actualCount": 123
+        }
+      ],
+      "counts": {
+        "officialFrames": 263,
+        "runnerSamples": 2367,
+        "postFinishSamples": 328,
+        "skillEvents": 123
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-block-retains-far-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            11,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            12,
+            "201532",
+            0.0
+          ],
+          "index": 17,
+          "expectedCount": 179,
+          "actualCount": 179
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            11,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            12,
+            "201532",
+            0.0,
+            -1
+          ],
+          "index": 17,
+          "expectedCount": 179,
+          "actualCount": 179
+        }
+      ],
+      "counts": {
+        "officialFrames": 187,
+        "runnerSamples": 3366,
+        "postFinishSamples": 807,
+        "skillEvents": 179
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-runner-cached-leader-distance-gate-second-course",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            0,
+            "201521",
+            0.0
+          ],
+          "index": 0,
+          "expectedCount": 88,
+          "actualCount": 88
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            4,
+            7.925393104553223
+          ],
+          "actual": [
+            4,
+            0,
+            7.925393104553223
+          ],
+          "index": 0,
+          "expectedCount": 8,
+          "actualCount": 8
+        }
+      ],
+      "counts": {
+        "officialFrames": 119,
+        "runnerSamples": 1071,
+        "postFinishSamples": 145,
+        "skillEvents": 88
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-runner-cached-leader-distance-gate",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            0,
+            "202051",
+            0.0
+          ],
+          "index": 0,
+          "expectedCount": 85,
+          "actualCount": 85
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            7,
+            7.925393104553223
+          ],
+          "actual": [
+            4,
+            5,
+            7.925393104553223
+          ],
+          "index": 0,
+          "expectedCount": 7,
+          "actualCount": 7
+        }
+      ],
+      "counts": {
+        "officialFrames": 98,
+        "runnerSamples": 882,
+        "postFinishSamples": 69,
+        "skillEvents": 85
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-runner-ignores-runaways",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            5,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            5,
+            "201521",
+            0.0
+          ],
+          "index": 6,
+          "expectedCount": 90,
+          "actualCount": 90
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            8,
+            8.258392333984375
+          ],
+          "actual": [
+            4,
+            5,
+            8.258392333984375
+          ],
+          "index": 0,
+          "expectedCount": 5,
+          "actualCount": 5
+        }
+      ],
+      "counts": {
+        "officialFrames": 143,
+        "runnerSamples": 1287,
+        "postFinishSamples": 323,
+        "skillEvents": 90
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-runner-no-eligible-lead",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            5,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            5,
+            "201522",
+            0.0
+          ],
+          "index": 7,
+          "expectedCount": 88,
+          "actualCount": 88
+        }
+      ],
+      "counts": {
+        "officialFrames": 118,
+        "runnerSamples": 1062,
+        "postFinishSamples": 103,
+        "skillEvents": 88
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "front-runner-waits-for-lead",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            5,
+            "201591",
+            5.0615997314453125
+          ],
+          "actual": [
+            3,
+            "200562",
+            9.723588943481445
+          ],
+          "index": 17,
+          "expectedCount": 90,
+          "actualCount": 90
+        }
+      ],
+      "counts": {
+        "officialFrames": 111,
+        "runnerSamples": 999,
+        "postFinishSamples": 64,
+        "skillEvents": 90
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "heal-history-earlier-caster",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            4,
+            "201592",
+            5.0615997314453125
+          ],
+          "actual": [
+            7,
+            "201072",
+            5.128199577331543
+          ],
+          "index": 14,
+          "expectedCount": 106,
+          "actualCount": 106
+        }
+      ],
+      "counts": {
+        "officialFrames": 161,
+        "runnerSamples": 1449,
+        "postFinishSamples": 402,
+        "skillEvents": 106
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "competition event observations absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "heal-history-later-caster",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            7,
+            "210052",
+            0.1998000144958496
+          ],
+          "actual": [
+            7,
+            "200362",
+            0.46619999408721924
+          ],
+          "index": 13,
+          "expectedCount": 105,
+          "actualCount": 105
+        }
+      ],
+      "counts": {
+        "officialFrames": 139,
+        "runnerSamples": 1251,
+        "postFinishSamples": 319,
+        "skillEvents": 105
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "competition event observations absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "hp-percent-truncation-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            0,
+            "201522",
+            0.0
+          ],
+          "index": 4,
+          "expectedCount": 152,
+          "actualCount": 152
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            0,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            0,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 4,
+          "expectedCount": 152,
+          "actualCount": 152
+        }
+      ],
+      "counts": {
+        "officialFrames": 104,
+        "runnerSamples": 1248,
+        "postFinishSamples": 191,
+        "skillEvents": 152
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "inward-passing-corridor-wide-comparison",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            5,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            5,
+            "201521",
+            0.0
+          ],
+          "index": 9,
+          "expectedCount": 217,
+          "actualCount": 217
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            5,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            5,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 9,
+          "expectedCount": 217,
+          "actualCount": 217
+        }
+      ],
+      "counts": {
+        "officialFrames": 91,
+        "runnerSamples": 1638,
+        "stateSamples": 1638,
+        "postFinishSamples": 193,
+        "skillEvents": 217,
+        "supplementaryResultValues": 126
+      },
+      "coverageGaps": [
+        "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "last-straight-rank-change-after-entry",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "210052",
+            9.656989097595215
+          ],
+          "actual": [
+            0,
+            "201012",
+            9.989988327026367
+          ],
+          "index": 21,
+          "expectedCount": 86,
+          "actualCount": 86
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            2,
+            "210052",
+            9.656989097595215,
+            48000
+          ],
+          "actual": [
+            0,
+            "201012",
+            9.989988327026367,
+            36000
+          ],
+          "index": 21,
+          "expectedCount": 86,
+          "actualCount": 86
+        }
+      ],
+      "counts": {
+        "officialFrames": 90,
+        "runnerSamples": 810,
+        "postFinishSamples": 102,
+        "skillEvents": 86
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "late-corner-overtake-cached-state-a",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            1,
+            "201522",
+            0.0
+          ],
+          "index": 1,
+          "expectedCount": 114,
+          "actualCount": 114
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            1,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            1,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 1,
+          "expectedCount": 114,
+          "actualCount": 114
+        }
+      ],
+      "counts": {
+        "officialFrames": 201,
+        "runnerSamples": 1809,
+        "postFinishSamples": 422,
+        "skillEvents": 114
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "late-corner-overtake-cached-state-b",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            0,
+            "202331",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 117,
+          "actualCount": 117
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            0,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            0,
+            "202331",
+            0.0,
+            -1
+          ],
+          "index": 3,
+          "expectedCount": 117,
+          "actualCount": 117
+        }
+      ],
+      "counts": {
+        "officialFrames": 119,
+        "runnerSamples": 1071,
+        "postFinishSamples": 100,
+        "skillEvents": 117
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "late-gate-activation-preserves-start-delay",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            2,
+            "201522",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 125,
+          "actualCount": 125
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            2,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            2,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 3,
+          "expectedCount": 125,
+          "actualCount": 125
+        }
+      ],
+      "counts": {
+        "officialFrames": 290,
+        "runnerSamples": 3480,
+        "postFinishSamples": 535,
+        "skillEvents": 125
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "lead-competition-partner-past-entry-cutoff",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            11,
+            "210052",
+            4.795200347900391
+          ],
+          "actual": [
+            2,
+            "201591",
+            5.0615997314453125
+          ],
+          "index": 9,
+          "expectedCount": 91,
+          "actualCount": 91
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            11,
+            "210052",
+            4.795200347900391,
+            40000
+          ],
+          "actual": [
+            2,
+            "201591",
+            5.0615997314453125,
+            30000
+          ],
+          "index": 9,
+          "expectedCount": 91,
+          "actualCount": 91
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            2,
+            12.720582008361816
+          ],
+          "actual": [
+            4,
+            1,
+            12.720582008361816
+          ],
+          "index": 0,
+          "expectedCount": 2,
+          "actualCount": 2
+        }
+      ],
+      "counts": {
+        "officialFrames": 81,
+        "runnerSamples": 1215,
+        "postFinishSamples": 117,
+        "skillEvents": 91
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "leader-gap-duration-rounding",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            16,
+            "200362",
+            4.329001426696777
+          ],
+          "actual": [
+            7,
+            "201142",
+            10.056588172912598
+          ],
+          "index": 22,
+          "expectedCount": 200,
+          "actualCount": 200
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            16,
+            "200362",
+            4.329001426696777,
+            66000
+          ],
+          "actual": [
+            7,
+            "201142",
+            10.056588172912598,
+            0
+          ],
+          "index": 22,
+          "expectedCount": 200,
+          "actualCount": 200
+        }
+      ],
+      "counts": {
+        "officialFrames": 158,
+        "runnerSamples": 2844,
+        "postFinishSamples": 393,
+        "skillEvents": 200
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "new-activation-on-final-bonus-tick-1000",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0
+          ],
+          "index": 7,
+          "expectedCount": 83,
+          "actualCount": 83
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            6,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 7,
+          "expectedCount": 83,
+          "actualCount": 83
+        }
+      ],
+      "counts": {
+        "officialFrames": 92,
+        "runnerSamples": 828,
+        "postFinishSamples": 102,
+        "skillEvents": 83
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "new-activation-on-final-bonus-tick-1200",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0
+          ],
+          "index": 5,
+          "expectedCount": 89,
+          "actualCount": 89
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            6,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            6,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 5,
+          "expectedCount": 89,
+          "actualCount": 89
+        }
+      ],
+      "counts": {
+        "officialFrames": 112,
+        "runnerSamples": 1008,
+        "postFinishSamples": 127,
+        "skillEvents": 89
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "new-activation-on-final-bonus-tick-1400",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            7,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            8,
+            "201521",
+            0.0
+          ],
+          "index": 11,
+          "expectedCount": 86,
+          "actualCount": 86
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            7,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            8,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 11,
+          "expectedCount": 86,
+          "actualCount": 86
+        }
+      ],
+      "counts": {
+        "officialFrames": 99,
+        "runnerSamples": 891,
+        "postFinishSamples": 63,
+        "skillEvents": 86
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-handover-refresh-1800-a",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "210052",
+            3.2634012699127197
+          ],
+          "actual": [
+            8,
+            "200441",
+            5.0615997314453125
+          ],
+          "index": 21,
+          "expectedCount": 186,
+          "actualCount": 186
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            2,
+            "210052",
+            3.2634012699127197,
+            71999
+          ],
+          "actual": [
+            8,
+            "200441",
+            5.0615997314453125,
+            35999
+          ],
+          "index": 21,
+          "expectedCount": 186,
+          "actualCount": 186
+        }
+      ],
+      "counts": {
+        "officialFrames": 140,
+        "runnerSamples": 2240,
+        "postFinishSamples": 544,
+        "skillEvents": 186
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-handover-refresh-1800-b",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            14,
+            "210052",
+            1.997999668121338
+          ],
+          "actual": [
+            13,
+            "201312",
+            2.264400005340576
+          ],
+          "index": 18,
+          "expectedCount": 181,
+          "actualCount": 181
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            14,
+            "210052",
+            1.997999668121338,
+            71999
+          ],
+          "actual": [
+            13,
+            "201312",
+            2.264400005340576,
+            53999
+          ],
+          "index": 18,
+          "expectedCount": 181,
+          "actualCount": 181
+        }
+      ],
+      "counts": {
+        "officialFrames": 137,
+        "runnerSamples": 2192,
+        "postFinishSamples": 484,
+        "skillEvents": 181
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-handover-refresh-2100",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            5,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            6,
+            "200192",
+            0.0
+          ],
+          "index": 9,
+          "expectedCount": 97,
+          "actualCount": 97
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            5,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            6,
+            "200192",
+            0.0,
+            -1
+          ],
+          "index": 9,
+          "expectedCount": 97,
+          "actualCount": 97
+        }
+      ],
+      "counts": {
+        "officialFrames": 175,
+        "runnerSamples": 1575,
+        "postFinishSamples": 241,
+        "skillEvents": 97
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-handover",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "201591",
+            7.459194183349609
+          ],
+          "actual": [
+            7,
+            "200352",
+            13.453180313110352
+          ],
+          "index": 12,
+          "expectedCount": 99,
+          "actualCount": 99
+        }
+      ],
+      "counts": {
+        "officialFrames": 168,
+        "runnerSamples": 1512,
+        "postFinishSamples": 331,
+        "skillEvents": 99
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "recorded skill durations absent",
+        "time-zero visual recipient sentinels absent",
+        "visual recipient observations cover only a subset of casts",
+        "competition event observations absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-keeps-incumbent-in-range-large-field",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            13,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            14,
+            "200262",
+            0.0
+          ],
+          "index": 20,
+          "expectedCount": 177,
+          "actualCount": 177
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            13,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            14,
+            "200262",
+            0.0,
+            -1
+          ],
+          "index": 20,
+          "expectedCount": 177,
+          "actualCount": 177
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            5,
+            7,
+            56.27745819091797
+          ],
+          "actual": [
+            5,
+            6,
+            56.27745819091797
+          ],
+          "index": 5,
+          "expectedCount": 14,
+          "actualCount": 14
+        }
+      ],
+      "counts": {
+        "officialFrames": 152,
+        "runnerSamples": 2736,
+        "postFinishSamples": 791,
+        "skillEvents": 177
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-keeps-incumbent-with-forward-group-in-range",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            8,
+            "200452",
+            7.658993721008301
+          ],
+          "actual": [
+            0,
+            "200382",
+            11.122185707092285
+          ],
+          "index": 15,
+          "expectedCount": 78,
+          "actualCount": 78
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            8,
+            "200452",
+            7.658993721008301,
+            36000
+          ],
+          "actual": [
+            0,
+            "200382",
+            11.122185707092285,
+            0
+          ],
+          "index": 15,
+          "expectedCount": 78,
+          "actualCount": 78
+        }
+      ],
+      "counts": {
+        "officialFrames": 138,
+        "runnerSamples": 1242,
+        "postFinishSamples": 432,
+        "skillEvents": 78
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-refresh-before-returning-forward-group",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            2,
+            "202331",
+            0.0
+          ],
+          "index": 7,
+          "expectedCount": 102,
+          "actualCount": 102
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            2,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            2,
+            "202331",
+            0.0,
+            -1
+          ],
+          "index": 7,
+          "expectedCount": 102,
+          "actualCount": 102
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            7,
+            9.05759048461914
+          ],
+          "actual": [
+            4,
+            3,
+            9.05759048461914
+          ],
+          "index": 0,
+          "expectedCount": 7,
+          "actualCount": 7
+        }
+      ],
+      "counts": {
+        "officialFrames": 95,
+        "runnerSamples": 855,
+        "postFinishSamples": 147,
+        "skillEvents": 102
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-refresh-restarts-count-consecutive-sections",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            10,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            11,
+            "200432",
+            0.0
+          ],
+          "index": 11,
+          "expectedCount": 204,
+          "actualCount": 204
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            10,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            11,
+            "200432",
+            0.0,
+            -1
+          ],
+          "index": 11,
+          "expectedCount": 204,
+          "actualCount": 204
+        }
+      ],
+      "counts": {
+        "officialFrames": 142,
+        "runnerSamples": 2556,
+        "postFinishSamples": 382,
+        "skillEvents": 204
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-refresh-restarts-count-one-section",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            5,
+            "201312",
+            6.659996032714844
+          ],
+          "actual": [
+            0,
+            "200561",
+            11.055585861206055
+          ],
+          "index": 32,
+          "expectedCount": 201,
+          "actualCount": 201
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            5,
+            "201312",
+            6.659996032714844,
+            53999
+          ],
+          "actual": [
+            0,
+            "200561",
+            11.055585861206055,
+            0
+          ],
+          "index": 32,
+          "expectedCount": 201,
+          "actualCount": 201
+        }
+      ],
+      "counts": {
+        "officialFrames": 129,
+        "runnerSamples": 2064,
+        "postFinishSamples": 280,
+        "skillEvents": 201
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-restoration-after-selection-window",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            7,
+            "210052",
+            12.720582008361816
+          ],
+          "actual": [
+            4,
+            "200461",
+            14.385578155517578
+          ],
+          "index": 18,
+          "expectedCount": 80,
+          "actualCount": 80
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            7,
+            "210052",
+            12.720582008361816,
+            60000
+          ],
+          "actual": [
+            4,
+            "200461",
+            14.385578155517578,
+            26999
+          ],
+          "index": 18,
+          "expectedCount": 80,
+          "actualCount": 80
+        }
+      ],
+      "counts": {
+        "officialFrames": 102,
+        "runnerSamples": 918,
+        "postFinishSamples": 75,
+        "skillEvents": 80
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-restoration-at-section-boundary-1000",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            2,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            2,
+            "201521",
+            0.0
+          ],
+          "index": 2,
+          "expectedCount": 62,
+          "actualCount": 62
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            2,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            2,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 2,
+          "expectedCount": 62,
+          "actualCount": 62
+        }
+      ],
+      "counts": {
+        "officialFrames": 82,
+        "runnerSamples": 738,
+        "postFinishSamples": 82,
+        "skillEvents": 62
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-restoration-at-section-boundary-1200",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            6,
+            "201311",
+            4.0626020431518555
+          ],
+          "actual": [
+            4,
+            "200831",
+            7.059595108032227
+          ],
+          "index": 15,
+          "expectedCount": 83,
+          "actualCount": 83
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            6,
+            "201311",
+            4.0626020431518555,
+            36000
+          ],
+          "actual": [
+            4,
+            "200831",
+            7.059595108032227,
+            0
+          ],
+          "index": 15,
+          "expectedCount": 83,
+          "actualCount": 83
+        }
+      ],
+      "counts": {
+        "officialFrames": 91,
+        "runnerSamples": 819,
+        "postFinishSamples": 72,
+        "skillEvents": 83
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-retains-incumbent-under-later-style-leader",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            7,
+            "200452",
+            2.6640005111694336
+          ],
+          "actual": [
+            7,
+            "201601",
+            2.6640005111694336
+          ],
+          "index": 13,
+          "expectedCount": 138,
+          "actualCount": 138
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            7,
+            "200452",
+            2.6640005111694336,
+            53999
+          ],
+          "actual": [
+            7,
+            "201601",
+            2.6640005111694336,
+            53999
+          ],
+          "index": 13,
+          "expectedCount": 138,
+          "actualCount": 138
+        }
+      ],
+      "counts": {
+        "officialFrames": 150,
+        "runnerSamples": 1350,
+        "postFinishSamples": 365,
+        "skillEvents": 138
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-returning-runaway-keeps-incumbent",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            9,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            9,
+            "201521",
+            0.0
+          ],
+          "index": 14,
+          "expectedCount": 185,
+          "actualCount": 185
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            9,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            9,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 14,
+          "expectedCount": 185,
+          "actualCount": 185
+        }
+      ],
+      "counts": {
+        "officialFrames": 145,
+        "runnerSamples": 2320,
+        "postFinishSamples": 252,
+        "skillEvents": 185
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacemaker-section-keeps-full-course-precision",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "200532",
+            0.0
+          ],
+          "actual": [
+            0,
+            "201521",
+            0.0
+          ],
+          "index": 1,
+          "expectedCount": 202,
+          "actualCount": 202
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            0,
+            "200532",
+            0.0,
+            -1
+          ],
+          "actual": [
+            0,
+            "201521",
+            0.0,
+            -1
+          ],
+          "index": 1,
+          "expectedCount": 202,
+          "actualCount": 202
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            14,
+            22.97705841064453
+          ],
+          "actual": [
+            4,
+            8,
+            22.97705841064453
+          ],
+          "index": 0,
+          "expectedCount": 7,
+          "actualCount": 7
+        }
+      ],
+      "counts": {
+        "officialFrames": 216,
+        "runnerSamples": 3888,
+        "postFinishSamples": 904,
+        "skillEvents": 202
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "pacing-gap-2500-float-rounding",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            9,
+            "210051",
+            7.059595108032227
+          ],
+          "actual": [
+            0,
+            "200561",
+            14.984976768493652
+          ],
+          "index": 21,
+          "expectedCount": 125,
+          "actualCount": 125
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            9,
+            "210051",
+            7.059595108032227,
+            100000
+          ],
+          "actual": [
+            0,
+            "200561",
+            14.984976768493652,
+            0
+          ],
+          "index": 21,
+          "expectedCount": 125,
+          "actualCount": 125
+        }
+      ],
+      "counts": {
+        "officialFrames": 195,
+        "runnerSamples": 2340,
+        "postFinishSamples": 394,
+        "skillEvents": 125
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "speed-stat-ground-penalty-rounding-2200",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            8,
+            "210052",
+            7.991992950439453
+          ],
+          "actual": [
+            5,
+            "200891",
+            11.85478401184082
+          ],
+          "index": 19,
+          "expectedCount": 99,
+          "actualCount": 99
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            8,
+            "210052",
+            7.991992950439453,
+            88000
+          ],
+          "actual": [
+            5,
+            "200891",
+            11.85478401184082,
+            0
+          ],
+          "index": 19,
+          "expectedCount": 99,
+          "actualCount": 99
+        }
+      ],
+      "counts": {
+        "officialFrames": 191,
+        "runnerSamples": 2865,
+        "postFinishSamples": 686,
+        "skillEvents": 99
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "speed-stat-ground-penalty-rounding-2300",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            9,
+            "200362",
+            4.262401580810547
+          ],
+          "actual": [
+            11,
+            "200891",
+            9.190790176391602
+          ],
+          "index": 13,
+          "expectedCount": 106,
+          "actualCount": 106
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            9,
+            "200362",
+            4.262401580810547,
+            68999
+          ],
+          "actual": [
+            11,
+            "200891",
+            9.190790176391602,
+            0
+          ],
+          "index": 13,
+          "expectedCount": 106,
+          "actualCount": 106
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            8,
+            8.258392333984375
+          ],
+          "actual": [
+            4,
+            7,
+            8.258392333984375
+          ],
+          "index": 0,
+          "expectedCount": 7,
+          "actualCount": 7
+        }
+      ],
+      "counts": {
+        "officialFrames": 199,
+        "runnerSamples": 2985,
+        "postFinishSamples": 745,
+        "skillEvents": 106
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "spurt-guts-product-retains-wide-precision",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            0,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            5,
+            "200142",
+            0.0
+          ],
+          "index": 3,
+          "expectedCount": 120,
+          "actualCount": 120
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            0,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            5,
+            "200142",
+            0.0,
+            -1
+          ],
+          "index": 3,
+          "expectedCount": 120,
+          "actualCount": 120
+        }
+      ],
+      "counts": {
+        "officialFrames": 138,
+        "runnerSamples": 1932,
+        "postFinishSamples": 282,
+        "skillEvents": 120
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "spurt-normal-cost-rounding-accepts-plan",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "200531",
+            0.0
+          ],
+          "actual": [
+            1,
+            "201522",
+            0.0
+          ],
+          "index": 4,
+          "expectedCount": 127,
+          "actualCount": 127
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            1,
+            "200531",
+            0.0,
+            -1
+          ],
+          "actual": [
+            1,
+            "201522",
+            0.0,
+            -1
+          ],
+          "index": 4,
+          "expectedCount": 127,
+          "actualCount": 127
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            3,
+            8.058592796325684
+          ],
+          "actual": [
+            4,
+            1,
+            8.058592796325684
+          ],
+          "index": 0,
+          "expectedCount": 2,
+          "actualCount": 2
+        }
+      ],
+      "counts": {
+        "officialFrames": 248,
+        "runnerSamples": 2976,
+        "postFinishSamples": 666,
+        "skillEvents": 127
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "spurt-normal-cost-rounding-rejects-plan",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            3,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            4,
+            "200152",
+            0.0
+          ],
+          "index": 8,
+          "expectedCount": 118,
+          "actualCount": 118
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            3,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            4,
+            "200152",
+            0.0,
+            -1
+          ],
+          "index": 8,
+          "expectedCount": 118,
+          "actualCount": 118
+        }
+      ],
+      "counts": {
+        "officialFrames": 298,
+        "runnerSamples": 2682,
+        "postFinishSamples": 565,
+        "skillEvents": 118
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "stacked-vision-debuffs-remove-visible-corridor",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            14,
+            "201601",
+            0.0
+          ],
+          "actual": [
+            15,
+            "200431",
+            0.0
+          ],
+          "index": 17,
+          "expectedCount": 235,
+          "actualCount": 235
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            14,
+            "201601",
+            0.0,
+            -1
+          ],
+          "actual": [
+            15,
+            "200431",
+            0.0,
+            -1
+          ],
+          "index": 17,
+          "expectedCount": 235,
+          "actualCount": 235
+        }
+      ],
+      "counts": {
+        "officialFrames": 232,
+        "runnerSamples": 3712,
+        "postFinishSamples": 782,
+        "skillEvents": 235
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "straight-entry-clears-overlapping-corner",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            1,
+            "210051",
+            7.1927947998046875
+          ],
+          "actual": [
+            6,
+            "201692",
+            13.053581237792969
+          ],
+          "index": 17,
+          "expectedCount": 124,
+          "actualCount": 124
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            1,
+            "210051",
+            7.1927947998046875,
+            71999
+          ],
+          "actual": [
+            6,
+            "201692",
+            13.053581237792969,
+            0
+          ],
+          "index": 17,
+          "expectedCount": 124,
+          "actualCount": 124
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            4,
+            7,
+            8.191792488098145
+          ],
+          "actual": [
+            4,
+            3,
+            8.191792488098145
+          ],
+          "index": 0,
+          "expectedCount": 4,
+          "actualCount": 4
+        }
+      ],
+      "counts": {
+        "officialFrames": 144,
+        "runnerSamples": 1296,
+        "postFinishSamples": 322,
+        "skillEvents": 124
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    },
+    {
+      "case": "visible-cone-width-rounding-boundary",
+      "passed": false,
+      "differences": {
+        "skillSequence": 1,
+        "skillDurationSequence": 1,
+        "mechanicSequence(4, 5)": 1
+      },
+      "examples": [
+        {
+          "field": "skillSequence",
+          "expected": [
+            10,
+            "210051",
+            4.395601272583008
+          ],
+          "actual": [
+            8,
+            "201591",
+            5.0615997314453125
+          ],
+          "index": 23,
+          "expectedCount": 131,
+          "actualCount": 131
+        },
+        {
+          "field": "skillDurationSequence",
+          "expected": [
+            10,
+            "210051",
+            4.395601272583008,
+            71999
+          ],
+          "actual": [
+            8,
+            "201591",
+            5.0615997314453125,
+            53999
+          ],
+          "index": 23,
+          "expectedCount": 131,
+          "actualCount": 131
+        },
+        {
+          "field": "mechanicSequence(4, 5)",
+          "expected": [
+            5,
+            13,
+            76.72317504882812
+          ],
+          "actual": [
+            5,
+            8,
+            76.72317504882812
+          ],
+          "index": 1,
+          "expectedCount": 6,
+          "actualCount": 6
+        }
+      ],
+      "counts": {
+        "officialFrames": 134,
+        "runnerSamples": 2010,
+        "postFinishSamples": 167,
+        "skillEvents": 131
+      },
+      "coverageGaps": [
+        "rushing state and blocker identity absent from some fixture frames",
+        "time-zero visual recipient sentinels absent",
+        "supplementary result fields absent",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output"
+      ]
+    }
+  ],
+  "scope": "Every supplied observation in the 63 regression fixtures; not a full corpus or hidden-state audit",
+  "baselineEngineSha256": "ddf76c49d142799e2dab511e72298a42c5feb70599badbe19dbbb0d49dbbd882",
+  "baselineSameObservations": true,
+  "totals": {
+    "officialFrames": 9188,
+    "runnerSamples": 108621,
+    "postFinishSamples": 19191,
+    "skillEvents": 7544,
+    "stateSamples": 1638,
+    "supplementaryResultValues": 126
+  },
+  "differenceCounts": {
+    "skillSequence": 63,
+    "skillDurationSequence": 47,
+    "mechanicSequence(4, 5)": 14
+  },
+  "validatorSha256": "3e1774ae5b2765070fa404bc02f5706da6a5f02225eeb222007fc6025399734e",
+  "fixturesSha256": {
+    "additional-bonus-on-final-skill-tick.json.gz": "be69b983d018184c1abc635a55e4edbb20b0e6cbecdbb8a6908e4a37dbc42e91",
+    "additional-bonus-preserves-overtake-target.json.gz": "d5b1df798dc8e93efa1093ad3a6d9be56eb2ec95ac0012e29c27c3fe9370c957",
+    "adjoining-slope-boundary.json.gz": "a8045e22176019a592735ec8554a6294406e1eb2fb2eff70486fa8bf297fdfa2",
+    "continuous-rank-before-last-straight-entry-a.json.gz": "30cacef038d21eb1190795c28572ff8472e3341d458f99d15a11c496fdb96f29",
+    "continuous-rank-before-last-straight-entry-b.json.gz": "ac79f4aacab12d5585d6727c41078ad510c621aa96ea260de3cdb5c127310d2f",
+    "cornerless-course-has-no-final-straight-entry.json.gz": "77ed2ee4326f05e876e8885df2cccc3bc440c7774b2c49aa91e663eaea98ff9c",
+    "course-11203-geometry-and-final-corner-lottery.json.gz": "dfe7d49482c89c2c0af383b7f8201230d9cee8aaa1cea66fbe6fc20a505cebea",
+    "duel-invites-finished-partner-second-roster.json.gz": "1e348238396bf5147d78c184d5eb0f04b1f493080fca1ed86b7debdfbfebed37",
+    "duel-invites-finished-partner.json.gz": "dcf0756091616d1d71862dcf9c2a254672a92dab031cf908560df11514a058a5",
+    "duel-joins-finished-group-01.json.gz": "1fe4ef68fdbb1e743e907b40b11eb0250ae599fdc6412d51815f83b52834ea47",
+    "duel-joins-finished-group-02.json.gz": "450ad6a27542c9662f6796ece886645af9b6a89dc167723bb8c99f903a911e0d",
+    "duel-joins-finished-group-03.json.gz": "ad8c988547ee9244c9a470963e63e578d0aa63a8620042b99fd58eb3f49879e3",
+    "duel-joins-finished-group-04.json.gz": "23fe573707139303629672310b5114d3dc4205e707fc0262d3265d912a285f95",
+    "duel-joins-finished-group-05.json.gz": "0f39fb2b242c5bcc9235f9fe73a96cb128d3e1888c1da0a75b1182b36607a734",
+    "duel-warmup-completes-after-own-finish.json.gz": "ab8c08546a9551b126ace31681fe049567d558ccfdf0b8b8181b54fb4b342f17",
+    "final-corner-overtake-on-entry-tick.json.gz": "ffc5617ed523c149b7d1aae984af8efc8c9f4a1b7dcb835b8b05a5ffb67c6e25",
+    "finished-lane-movement-affects-trailing-runner.json.gz": "5af53d5392919c3b37ef10c4d1bc925c9b2ebd26740e261d9281bc659890fe40",
+    "front-block-excludes-rounded-boundary.json.gz": "71f555c072dfcac45ad8e8ae77bd55cf6ed4138248942522b3a7b53438b0917c",
+    "front-block-inclusive-precision-boundary.json.gz": "e02d5f8b67963e41d808f369bdff5bb9a42a24798c144e7ff0904b8041de2e77",
+    "front-block-retains-close-boundary.json.gz": "03136c5a9189b59b51e9a5e9c21891c9df6707fd81dbb660eef13a5ccf4ec297",
+    "front-block-retains-far-boundary.json.gz": "c878c02f51982c4f25b49e53dd079dc11f171a0bd3557635922e02231aedf9da",
+    "front-runner-cached-leader-distance-gate-second-course.json.gz": "f8ce7b7f1dc45f460597fe71c6e0bd9b64955e5aa3521a80ebcbcbe322d77550",
+    "front-runner-cached-leader-distance-gate.json.gz": "30d5d21c984b3ef42056dc44026261644720dfc71f752cb7e4a64b9df05e5e1c",
+    "front-runner-ignores-runaways.json.gz": "a8c3fd459c3116017ef345a5629c33ca8d4a375c5b0e899232134abef3da975a",
+    "front-runner-no-eligible-lead.json.gz": "351403b483542eca8cf8aa8990e6095d7bdfc8be530b414ef9a8898321416232",
+    "front-runner-waits-for-lead.json.gz": "ba20186fd9d1079dc9db681ac6e230b1961f0135daf5e0cb17fc403d9b7599d1",
+    "heal-history-earlier-caster.json.gz": "c114e6ea5991b856c4ae1295385f3f798006d46fc20aa19385a5e97f1bcf6548",
+    "heal-history-later-caster.json.gz": "42662660dab0692826cc3d26aed63f1917ed1a48d6631b5942f34b99c4f4deaf",
+    "hp-percent-truncation-boundary.json.gz": "be1628103a1937ab9923bf6fa6cc36fe5ca37b5ac9bc703bed45398f12b53b1d",
+    "inward-passing-corridor-wide-comparison.json.gz": "030e8f6cde10163394e6f640ff87b2df4e389c45382385593f9e2745de489c41",
+    "last-straight-rank-change-after-entry.json.gz": "955af5d5bff662006c3c9b21243eb25084530df5012e2fb057a2233eaefda21f",
+    "late-corner-overtake-cached-state-a.json.gz": "154aa0e23fe93c49a32f4e9f4f5fc5e73202cec040f1602d76079e26b93f2b35",
+    "late-corner-overtake-cached-state-b.json.gz": "e09f444a0fb6255238ed5c68194dd1e2f0cfe6375c68437529b6cf803fe9b276",
+    "late-gate-activation-preserves-start-delay.json.gz": "722e1d32779d443f8bf85b7994d1bb845accbe20f2a30d7295fe2593e9e6bdc2",
+    "lead-competition-partner-past-entry-cutoff.json.gz": "c0c87582c2dc5da5315933dfbe6a20361465120d9157eacb795f7255fc66961e",
+    "leader-gap-duration-rounding.json.gz": "b0bab0a121c53cd5f0fe37755f6621c6f528c4918753e58275599dfcd41fd708",
+    "new-activation-on-final-bonus-tick-1000.json.gz": "b94ccfd2fb461a6e1ea296832859a0e51e91de9268e2e54b52adc879401eebbf",
+    "new-activation-on-final-bonus-tick-1200.json.gz": "267108a72748155118bae39f86975937aabb3482d23fa341df41c075410bc3c1",
+    "new-activation-on-final-bonus-tick-1400.json.gz": "cab4ebf652c7ba38cb5a3774be667da07bdae3e6077436dc7ea0f58d89ccd928",
+    "pacemaker-handover-refresh-1800-a.json.gz": "82ee16faa233634af9466709e3eae63f45577f51e5d0c9d44fb403640cecc6aa",
+    "pacemaker-handover-refresh-1800-b.json.gz": "ac6d7885a20f1344bc0cbf81c9da1f62c2c899e59c3901ae810aafb7da786ef8",
+    "pacemaker-handover-refresh-2100.json.gz": "5e81db5054452224eb2643cdaa4c6fe58463c88667ee716afdd461c712f9e4a3",
+    "pacemaker-handover.json.gz": "e5969e461961873eec84f068c0bc48144240d0d96c9807878f6721b12879c263",
+    "pacemaker-keeps-incumbent-in-range-large-field.json.gz": "12ecee2ab2389ffa39f528583094d8cfd37069a94171a94f4ce2eb9d8ac64b8c",
+    "pacemaker-keeps-incumbent-with-forward-group-in-range.json.gz": "a309e7a60912d9b729002e67b8074a7eae49af506e67904c339c518c91752c63",
+    "pacemaker-refresh-before-returning-forward-group.json.gz": "98088bc68ebc2022b9111035db352e8ff981670fc2b9430f5af6c5bc15fb6576",
+    "pacemaker-refresh-restarts-count-consecutive-sections.json.gz": "79f747d60645a71764ed6e6745c8caf8d198551905751b39961511228f774c5c",
+    "pacemaker-refresh-restarts-count-one-section.json.gz": "159f472549f5df0d0ba1a9618a375126f294cea54e579b0747989ed19e9de0d7",
+    "pacemaker-restoration-after-selection-window.json.gz": "12c7c3efc1fbc1b7ec9176e7f7ca5de99bc5ec7c8a256ea2ac46e7ea8306aa57",
+    "pacemaker-restoration-at-section-boundary-1000.json.gz": "2ae4ada563e95c3a20a2f7b3daff5cf901c9bc5c8438cf87c46991aaffd5d74b",
+    "pacemaker-restoration-at-section-boundary-1200.json.gz": "f72d184315ce7f240199f73a8f62384a63eb6daa30f5a2d191086a1513279721",
+    "pacemaker-retains-incumbent-under-later-style-leader.json.gz": "7039f75d44bc68286b784f0574bf9e6352222299fce332ae8f6d8d42a1416f7b",
+    "pacemaker-returning-runaway-keeps-incumbent.json.gz": "51f317b5ee28636d0396fe11623a10d159dcb7f665119fa1614ae2d28866e73a",
+    "pacemaker-section-keeps-full-course-precision.json.gz": "27367f4ae0036e37a94e1c7fb121ef023f0af0eb683df830f87f9ef3396201cf",
+    "pacing-gap-2500-float-rounding.json.gz": "3077627955f9a9d379b384ebdbaf930e88a2bef0012948b314fdd77dc653f1d9",
+    "speed-stat-ground-penalty-rounding-2200.json.gz": "6498a6fdab13c89a63058f24c472de13260e4d246332f514adcb11f67e92edbe",
+    "speed-stat-ground-penalty-rounding-2300.json.gz": "bae3fe34a8c1cc5038c6c00f20435371318009372551d5974f4c5d322b00dd47",
+    "spurt-guts-product-retains-wide-precision.json.gz": "cf9c242fcddad5385dc2efed856863c401840585c4d95d25b504401effa7fc54",
+    "spurt-normal-cost-rounding-accepts-plan.json.gz": "263a1fd05154d709f221e97e4260dfd6f20cee5d657b5e950a6a58c07a2cdfb9",
+    "spurt-normal-cost-rounding-rejects-plan.json.gz": "06b8d3c0ced7dc52cdf5ab49e716497c3a4d9b9c36df6be22185630276b3a879",
+    "stacked-vision-debuffs-remove-visible-corridor.json.gz": "8e23b312390b785ef46e0d8ae71b9c9afecf0cccc0cc2a6b2c0d166adc49741e",
+    "straight-entry-clears-overlapping-corner.json.gz": "54faecfb57f0655a06553d2e799e6848566df30326c1bd673f0bf25232b9e829",
+    "visible-cone-width-rounding-boundary.json.gz": "bb7b21be97d20268ed699ef1d86229f0182b6c5b5afb2fa0044da159407f39d6"
+  }
+}

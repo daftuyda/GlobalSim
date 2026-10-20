@@ -171,7 +171,8 @@ pub struct CourseGeometry {
     rotation_fix: Quaternion,
     initial_lane_max: f32,
     lane_max_changes: Vec<(f32, f32)>,
-    corner_events: Vec<(f32, f32, i32, bool)>,
+    // start, end, corner ID, persistent final-corner flag, explicit straight exit
+    corner_events: Vec<(f32, f32, i32, bool, bool)>,
     pub final_corner_half: Option<(f32, f32)>,
     pub first_move_lane_point: f32,
     pub empty_in_move: bool,
@@ -310,7 +311,7 @@ impl CourseGeometry {
                     if values.len() >= 2 && id >= 4 && distance - boundary <= 1000. {
                         final_corner_half = Some((boundary + (end - boundary) * 0.5, end));
                     }
-                    corner_events.push((boundary, end, id, id >= 4 && distance - end <= 1000.));
+                    corner_events.push((boundary, end, id, id >= 4 && distance - end <= 1000., false));
                 }
                 if kind == 0. && first_corner.map_or(true, |previous|boundary < previous) {
                     first_corner = Some(boundary);
@@ -338,9 +339,12 @@ impl CourseGeometry {
         // EventStraightChange clears CurCorner even when the recorded corner
         // length extends beyond the straight's entry. Preserve the final-
         // corner flag, which is a separate persistent state.
-        for (start, end, _, _) in &mut corner_events {
+        for (start, end, _, _, straight_clears) in &mut corner_events {
             for &entry in &straight_entries {
-                if entry >= *start && entry < *end { *end = entry; }
+                if entry >= *start && entry <= *end {
+                    *end = entry;
+                    *straight_clears = true;
+                }
             }
         }
         lane_max_changes.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
@@ -366,13 +370,15 @@ impl CourseGeometry {
 
     pub fn corner_state_at(&self, distance: f32, ready: bool) -> (i32, bool) {
         if ready {
-            for &(start, end, number, final_corner) in self.corner_events.iter().rev() {
+            for &(start, end, number, final_corner, straight_clears) in self.corner_events.iter().rev() {
                 if distance >= start {
-                    // v76: the server leaves a corner at its end distance (distance >= end), unlike
-                    // the client's _UpdateCornerEnd (end >= distance keeps it). Official races
-                    // expansion-01-0274 and pacemaker-dirt-01-0018 cast corner==0 skills on the
-                    // tick a runner stands exactly on the end (1099.0 m on 10611).
-                    return (if distance < end { number } else { 0 }, final_corner);
+                    // Natural expiry retains the corner at its exact end distance.
+                    // An explicit straight-entry event clears it at the boundary,
+                    // including when that event coincides with the natural end.
+                    // Captures distinguish 450 m on 11102 (natural) from 1099 m
+                    // on 10611 (straight entry).
+                    let active = distance < end || (!straight_clears && distance == end);
+                    return (if active { number } else { 0 }, final_corner);
                 }
             }
         }
@@ -578,6 +584,18 @@ mod tests {
             (1250.,(4,true)), (1414.,(0,true))] {
             assert_eq!(geometry.corner_state_at(pos,true), expected);
         }
+    }
+
+    #[test]
+    fn natural_corner_end_and_explicit_straight_have_distinct_boundaries() {
+        let geometry = CourseGeometry::bundled(11102, 1800.).unwrap();
+        let before = f32::from_bits(450.0_f32.to_bits() - 1);
+        let after = f32::from_bits(450.0_f32.to_bits() + 1);
+        assert_eq!(geometry.corner_state_at(before, true), (1, false));
+        assert_eq!(geometry.corner_state_at(450., true), (1, false));
+        assert_eq!(geometry.corner_state_at(after, true), (0, false));
+        assert_eq!(geometry.corner_state_at(f32::from_bits(600.0_f32.to_bits()-1), true), (2, false));
+        assert_eq!(geometry.corner_state_at(600., true), (0, false));
     }
 
     #[test]

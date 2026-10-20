@@ -23,6 +23,10 @@ panic = "abort"
 [features]
 # Use the platform allocator unless explicitly building for lower latency.
 fast-alloc = ["dep:mimalloc"]
+# Leave the captured course geometry assets (data/course_geometry, most of the
+# binary's size) out of the build; hosts register a course's geometry at
+# runtime with `register_course_geometry` before preparing a race on it.
+external-geometry = []
 
 [dependencies]
 mimalloc = { version = "0.1.52", optional = true, default-features = false }
