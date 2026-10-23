@@ -432,8 +432,13 @@ fn skill_rarity_from_i32(v: i32) -> CondResult<SkillRarity> {
     }
 }
 
+#[derive(Clone)]
 pub struct SkillData {
     pub anyskill_nodes: Vec<usize>,
+    pub stateful_check: bool,
+    /// Precondition closures with mutable observation state cannot cross seeds.
+    /// Separate from `stateful_check`, which controls main-condition visit order.
+    pub stateful_prerequisite: bool,
     pub detail_index: usize,
     pub skill_id: String,
     pub perspective: Perspective,
@@ -447,6 +452,12 @@ pub struct SkillData {
     pub cooldown_key: String,
     pub effects: Vec<SkillEffect>,
 }
+
+/// Skill data built for one runner, reused by later seeds of a prepared race.
+/// Keyed by skill, perspective, level and repeat count, plus the inputs that
+/// select a build path: the trigger strategy and the retail flags.
+pub(crate) type SkillDataCache = std::rc::Rc<std::cell::RefCell<
+    std::collections::HashMap<(String, Perspective, i32, usize, u8, bool, bool), Vec<SkillData>>>>;
 
 type SampledTriggerIndex<'a> = BTreeMap<(&'a str, usize, &'a str), Vec<&'a crate::retail_initialization::Trigger>>;
 
@@ -478,6 +489,7 @@ fn build_skill_data(
     ignore_null_effects: bool,
     retail: Option<&crate::retail_initialization::HorseInitialization>,
     sampled: Option<&SampledTriggerIndex<'_>>,
+    used_samples: &std::cell::Cell<bool>,
 ) -> CondResult<Vec<SkillData>> {
     debug_assert_eq!(retail.is_some(), sampled.is_some());
     let skills = skills_table();
@@ -508,20 +520,27 @@ fn build_skill_data(
     let mut triggers: Vec<SkillData> = Vec::new();
     for (alt_index,alt) in def.alternatives.iter().enumerate() {
         let parse = |expression:&str,column:&str| condition_parser::parse_with_retail_runtime(
-            conditions,expression,sampled.map(|index| sampled_triggers_for(index, skill_id, alt_index, column)),
+            conditions,expression,sampled.map(|index| {
+                let triggers = sampled_triggers_for(index, skill_id, alt_index, column);
+                if !triggers.is_empty() { used_samples.set(true); }
+                triggers
+            }),
             retail.is_some_and(|row|row.runtime_phase));
         let mut full: Vec<Region> = whole_course.to_vec();
         let mut prerequisite: activation_conditions::OptCond = None;
+        let mut stateful_prerequisite = false;
         if let Some(precondition) = alt.precondition.as_deref() {
             if !precondition.is_empty() {
                 let pre = parse(precondition,"precondition")?;
+                crate::activation_conditions::take_stateful_check();
                 let (pre_regions, pre_check) = pre.apply(whole_course, course, horse, &extra)?;
+                stateful_prerequisite = crate::activation_conditions::take_stateful_check();
                 if pre_regions.is_empty() {
                     continue;
                 }
                 let bounds = Region::new(pre_regions[0].start, whole_course.last().unwrap().end);
                 full = rmap_one(&full, |r| r.intersect(&bounds));
-                prerequisite = Some(Box::new(move |s, field| {
+                prerequisite = Some(std::rc::Rc::new(move |s, field| {
                     pre_regions.iter().any(|r| r.start <= s.pos && s.pos < r.end)
                         && pre_check.as_ref().is_none_or(|check| check(s, field))
                 }));
@@ -530,8 +549,10 @@ fn build_skill_data(
 
         let op = parse(&alt.condition,"condition")?;
         crate::activation_conditions::take_anyskill_nodes();
+        crate::activation_conditions::take_stateful_check();
         let (mut regions, mut extra_condition) = op.apply(&full, course, horse, &extra)?;
         let anyskill_nodes = crate::activation_conditions::take_anyskill_nodes();
+        let stateful_check = crate::activation_conditions::take_stateful_check();
         if regions.is_empty() {
             continue;
         }
@@ -541,7 +562,7 @@ fn build_skill_data(
             let end = regions.iter().map(|r| r.end).fold(f64::NEG_INFINITY, f64::max);
             let windows = regions;
             let check = extra_condition;
-            extra_condition = Some(Box::new(move |s, field| {
+            extra_condition = Some(std::rc::Rc::new(move |s, field| {
                 windows.iter().any(|r| r.start <= s.pos && s.pos < r.end)
                     && check.as_ref().is_none_or(|f| f(s, field))
             }));
@@ -553,6 +574,8 @@ fn build_skill_data(
             let rarity = if (3..=5).contains(&rarity_raw) { 3 } else { rarity_raw };
             triggers.push(SkillData {
                 anyskill_nodes,
+                stateful_check,
+                stateful_prerequisite,
                 detail_index: alt_index,
                 skill_id: skill_id.to_string(),
                 perspective,
@@ -584,6 +607,8 @@ fn build_skill_data(
     let after_end = vec![Region::new(9999.0, 9999.0)];
     triggers.insert(0, SkillData {
         anyskill_nodes: Vec::new(),
+        stateful_check: false,
+        stateful_prerequisite: false,
         detail_index: 0,
         skill_id: skill_id.to_string(),
         perspective,
@@ -591,7 +616,7 @@ fn build_skill_data(
         wisdom_check: def.wisdom_check,
         sample_policy: crate::activation_sample_policy::SamplePolicy::Immediate,
         regions: after_end,
-        extra_condition: Some(Box::new(|_s, _f| false)),
+        extra_condition: Some(std::rc::Rc::new(|_s, _f| false)),
         prerequisite: None,
         cooldown: 0.0, cooldown_key: skill_id.to_string(),
         effects,
@@ -637,6 +662,7 @@ pub struct RaceSolverBuilder {
     pub retail_initialization: Option<crate::retail_initialization::HorseInitialization>,
     pub on_skill_activate: Option<SkillHook>,
     pub on_skill_deactivate: Option<SkillHook>,
+    pub(crate) skill_cache: Option<SkillDataCache>,
 }
 
 impl RaceSolverBuilder {
@@ -659,6 +685,7 @@ impl RaceSolverBuilder {
             retail_initialization: None,
             on_skill_activate: None,
             on_skill_deactivate: None,
+            skill_cache: None,
         }
     }
 
@@ -761,6 +788,8 @@ impl RaceSolverBuilder {
                 let spurt_start = vec![Region::new(phase_start(course.distance, 2), course.distance)];
                 skilldata.push(SkillData {
                     anyskill_nodes: Vec::new(),
+                    stateful_check: false,
+                    stateful_prerequisite: false,
                     detail_index: 0,
                     skill_id: "asitame".to_string(),
                     perspective: Perspective::Self_,
@@ -770,7 +799,7 @@ impl RaceSolverBuilder {
                     regions: spurt_start,
                     prerequisite: None,
         cooldown: 0.0, cooldown_key: "asitame".to_string(),
-                    extra_condition: Some(Box::new(|s, _f| s.is_last_spurt && s.horse.raw_power > 1200.0 && s.conserve_release_reaches_threshold())),
+                    extra_condition: Some(std::rc::Rc::new(|s, _f| s.is_last_spurt && s.horse.raw_power > 1200.0 && s.conserve_release_reaches_threshold())),
                     effects: vec![SkillEffect {
                         effect_type: SkillType::Accel,
                         base_duration: 3.0 / (course.distance / 1000.0),
@@ -791,6 +820,8 @@ impl RaceSolverBuilder {
                 let spurt_start = vec![Region::new(phase_start(course.distance, 2), course.distance)];
                 skilldata.push(SkillData {
                     anyskill_nodes: Vec::new(),
+                    stateful_check: false,
+                    stateful_prerequisite: false,
                     detail_index: 0,
                     skill_id: "staminasyoubu".to_string(),
                     perspective: Perspective::Self_,
@@ -800,7 +831,7 @@ impl RaceSolverBuilder {
                     regions: spurt_start,
                     prerequisite: None,
         cooldown: 0.0, cooldown_key: "staminasyoubu".to_string(),
-                    extra_condition: Some(Box::new(|s, _f| s.horse.raw_stamina > 1200.0 && s.current_speed >= s.last_spurt_speed)),
+                    extra_condition: Some(std::rc::Rc::new(|s, _f| s.horse.raw_stamina > 1200.0 && s.current_speed >= s.last_spurt_speed)),
                     effects: vec![SkillEffect {
                         effect_type: SkillType::TargetSpeed,
                         base_duration: 9999.0,
@@ -853,8 +884,26 @@ impl RaceSolverBuilder {
         // identity once, keeping each expression's original node order.
         let sampled = self.retail_initialization.as_ref().map(index_sampled_triggers);
         let mut skilldata: Vec<SkillData> = Vec::new();
+        let retail = self.retail_initialization.as_ref();
+        let mut repeats: std::collections::HashMap<(&str, Perspective, i32), usize> = Default::default();
         for (skill_id, perspective, level) in &self.skills {
-            skilldata.extend(build_skill_data(&trigger_horse, &self.race_params, course, &whole_course, self.conditions, skill_id, *perspective, *level, false, self.retail_initialization.as_ref(), sampled.as_ref())?);
+            let repeat = repeats.entry((skill_id.as_str(), *perspective, *level)).or_default();
+            let key = (skill_id.clone(), *perspective, *level, *repeat, trigger_horse.strategy as u8,
+                retail.is_some(), retail.is_some_and(|row| row.runtime_phase));
+            *repeat += 1;
+            if let Some(cached) = self.skill_cache.as_ref().and_then(|cache| cache.borrow().get(&key).cloned()) {
+                skilldata.extend(cached);
+                continue;
+            }
+            let used_samples = std::cell::Cell::new(false);
+            let built = build_skill_data(&trigger_horse, &self.race_params, course, &whole_course, self.conditions, skill_id, *perspective, *level, false, retail, sampled.as_ref(), &used_samples)?;
+            // Seed-sampled windows and checks with their own state stay per seed.
+            if let Some(cache) = &self.skill_cache {
+                if !used_samples.get() && built.iter().all(|sd| !sd.stateful_check && !sd.stateful_prerequisite) {
+                    cache.borrow_mut().insert(key, built.clone());
+                }
+            }
+            skilldata.extend(built);
         }
         // Usage 13 uses displayed raw stats, not adjusted stats or green buffs.
         let raw_max = [horse_desc.speed, horse_desc.stamina, horse_desc.power, horse_desc.guts, horse_desc.wisdom]
@@ -947,6 +996,7 @@ impl RaceSolverBuilder {
         let chance = (1.0 - 90.0 / base.wisdom).max(0.2);
         let mut wisdom_rngs: BTreeMap<String, Rule30CARng> = BTreeMap::new();
         let mut wisdom_picks: BTreeMap<String, bool> = BTreeMap::new();
+        let table = skills_table();
         for (sd, windows) in skilldata.into_iter().zip(triggers) {
             let mut normal_enabled = true;
             if let Some(enabled)=self.retail_initialization.as_ref().and_then(|row|row.skill_enabled.get(&sd.skill_id)) {
@@ -961,12 +1011,14 @@ impl RaceSolverBuilder {
                 if !*wisdom_picks.entry(sd.cooldown_key.clone()).or_insert_with(|| rng.random() < chance) { continue; }
             }
             let trig = Region::new(windows[0].start, windows.last().unwrap().end);
+            let definition = table.get(&sd.skill_id);
             skills.push(crate::race_solver::PendingSkill {
                 anyskill_nodes: sd.anyskill_nodes,
+                stateful_check: sd.stateful_check,
                 random_activation_order: None,
                 detail_index: sd.detail_index,
-                priority: skills_table().get(&sd.skill_id).map_or(0,|s|s.priority),
-                has_green_tag: skills_table().get(&sd.skill_id).is_some_and(|s| s.has_green_tag),
+                priority: definition.map_or(0,|s|s.priority),
+                has_green_tag: definition.is_some_and(|s| s.has_green_tag),
                 cooldown_key: if sd.cooldown_key.is_empty() { sd.skill_id.clone() } else { sd.cooldown_key },
                 numeric_skill_id: sd.skill_id.parse().ok(),
                 skill_id: sd.skill_id,
@@ -979,8 +1031,8 @@ impl RaceSolverBuilder {
                 // played: a condition whose static filter alone determines
                 // whether it holds, with no further per-tick check needed.
                 extra_condition: if normal_enabled {
-                    sd.extra_condition.unwrap_or_else(|| Box::new(|_s, _f| true))
-                } else { Box::new(|_s, _f| false) },
+                    sd.extra_condition.unwrap_or_else(|| std::rc::Rc::new(|_s, _f| true))
+                } else { std::rc::Rc::new(|_s, _f| false) },
                 effects: sd.effects,
                 prerequisite: sd.prerequisite,
                 prerequisite_satisfied: false,
@@ -995,7 +1047,6 @@ impl RaceSolverBuilder {
             first_index.entry(skill.skill_id.clone()).or_insert(index);
             skill.random_activation_order = Some(first_index[&skill.skill_id]);
         }
-        let table = skills_table();
         // Stable, like sort_by_key; each key is looked up once.
         skills.sort_by_cached_key(|skill| (
             table.get(&skill.skill_id).is_some_and(|def| def.priority == 1),

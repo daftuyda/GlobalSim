@@ -7,8 +7,9 @@ Requests remain one JSON object per line. The default output is JSON.
 Use `retainAllFrames: true` to return every simulation frame. With the default
 `false`, the usual replay selection and finish samples apply. Both formats
 preserve results, events, runner order, precision, and simulation behavior.
-Binary output uses one simulation thread; `GLOBALSIM_REPLAY_WORKER` does not
-start an encoding helper in this mode.
+Binary output uses one simulation thread unless a `seeds` request sets
+`threads`; `GLOBALSIM_REPLAY_WORKER` does not start an encoding helper in this mode.
+With `omitFrames: true` a packet carries zero frames.
 
 ## Packet layout
 

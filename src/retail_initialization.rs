@@ -253,6 +253,112 @@ pub fn initialize(seed:i32,horses:&[Value],course:&Value,skills:&Value,parameter
     Ok(Initialization {horses:rows,stages,rng})
 }
 
+/// One skill definition's seed-independent facts, read as `initialize` reads them.
+struct SkillFacts {
+    /// Random condition terms in visit order: alternative, column, name, argument.
+    random_terms: Vec<(usize, &'static str, String, i32)>,
+    wisdom_checked: bool,
+    /// Start-delay factors, `1 - removal`, of always-active alternatives.
+    delay_factors: Vec<f32>,
+}
+
+/// Decoded skill facts for one skill table. Clear it whenever the table changes.
+#[derive(Default)]
+pub struct SkillFactsCache(std::collections::HashMap<String, std::rc::Rc<SkillFacts>>);
+
+impl SkillFactsCache {
+    pub fn clear(&mut self) { self.0.clear(); }
+
+    fn facts(&mut self, skills: &Value, sid: &str) -> Result<std::rc::Rc<SkillFacts>, String> {
+        if let Some(facts) = self.0.get(sid) { return Ok(facts.clone()); }
+        let skill = field(skills, sid)?;
+        let alternatives = skill.get_array("alternatives")?;
+        let mut random_terms = Vec::new();
+        for (alternative, alt) in alternatives.iter().enumerate() {
+            for column in ["precondition", "condition"] {
+                for (name, operator, argument) in terms(alt.get(column).and_then(Value::as_str).unwrap_or("")) {
+                    if !name.contains("random") { continue; }
+                    if operator != "==" { return Err(format!("Untraced retail random operator: {name}{operator}")); }
+                    random_terms.push((alternative, column, name, argument));
+                }
+            }
+        }
+        let wisdom_checked = skill.get_i64("wisdomCheck")? == 1;
+        let mut delay_factors = Vec::new();
+        for alt in alternatives {
+            if alt.get_str("condition")? != "always==1"
+                || !alt.get("precondition").and_then(Value::as_str).unwrap_or("").is_empty() { continue; }
+            for effect in alt.get_array("effects")? {
+                if effect.get_i64("type")? == 10 && effect.get_i64("target")? == 1 {
+                    let removal = (10000.0 - effect.get_f64("modifier")?) as f32 / 10000.0;
+                    delay_factors.push(1.0 - removal);
+                }
+            }
+        }
+        let facts = std::rc::Rc::new(SkillFacts { random_terms, wisdom_checked, delay_factors });
+        self.0.insert(sid.to_string(), facts.clone());
+        Ok(facts)
+    }
+}
+
+/// `initialize` with each skill's definition decoded once per table. Draws and
+/// arithmetic keep the same order. If any skill fails to decode, the original
+/// path runs instead so that its error, or its result, is exactly reproduced.
+pub fn initialize_cached(seed:i32,horses:&[Value],course:&Value,skills:&Value,parameters:&Value,
+    cache:&mut SkillFactsCache)->Result<Initialization,String> {
+    let mut decoded = Vec::with_capacity(horses.len());
+    for horse in horses {
+        let Ok(entries) = horse.get_array("skills") else { return initialize(seed,horses,course,skills,parameters) };
+        let mut row = Vec::with_capacity(entries.len());
+        for entry in entries {
+            let Ok(sid) = skill_id(entry) else { return initialize(seed,horses,course,skills,parameters) };
+            let Ok(facts) = cache.facts(skills, &sid) else { return initialize(seed,horses,course,skills,parameters) };
+            row.push((sid, facts));
+        }
+        decoded.push(row);
+    }
+    let mut rng=RetailRandom::new(seed);
+    let mut rows:Vec<HorseInitialization>=(0..horses.len()).map(|_|HorseInitialization::default()).collect();
+    for (skills,row) in decoded.iter().zip(rows.iter_mut()) {
+        for (sid,facts) in skills {
+            for (alternative,column,name,argument) in &facts.random_terms {
+                let draw_start=rng.draw_count;
+                let windows=sample_trigger(name,*argument,&mut rng,course)?;
+                row.triggers.push(Trigger {skill_id:sid.clone(),alternative:*alternative,field:(*column).into(),
+                    name:name.clone(),argument:*argument,windows,draw_start,draw_end:rng.draw_count});
+            }
+        }
+    }
+    let mut stages=BTreeMap::from([("after_triggers".into(),rng.draw_count)]);
+    let styles=["","RunningOut","Proceding","Insertion","Chasing"];
+    for (horse,row) in horses.iter().zip(rows.iter_mut()) {
+        let style=horse.get_i64("running_style")?;
+        let coefficient=if (1..=4).contains(&style) {number(parameters,&format!("forceInMoveTargetSpeedAdd{}",styles[style as usize]))?} else {0.0};
+        let span=number(parameters,"forceInMoveTargetSpeedAddRandomRange")?;
+        let offset=if coefficient>0.0 {rng.real(0.0,span)} else if coefficient<0.0 {rng.real(-span,0.0)} else {0.0};
+        row.force_in_move_coefficient=coefficient+offset;
+    }
+    stages.insert("after_ai".into(),rng.draw_count);
+    for ((horse,skills),row) in horses.iter().zip(&decoded).zip(rows.iter_mut()) {
+        let chance=(100.0-9000.0/number(horse,"base_wisdom")?).max(20.0);
+        for (sid,facts) in skills {
+            let enabled=!facts.wisdom_checked || chance>rng.real(0.0,100.0);
+            row.skill_enabled.insert(sid.clone(),enabled);
+        }
+    }
+    stages.insert("after_wisdom".into(),rng.draw_count);
+    for (skills,row) in decoded.iter().zip(rows.iter_mut()) {
+        let mut multiplier=1.0f32;
+        for (sid,facts) in skills {
+            if !row.skill_enabled[sid] {continue;}
+            for factor in &facts.delay_factors { multiplier*=factor; }
+        }
+        row.start_delay=rng.real(0.0,number(parameters,"startDelayMax")?)*multiplier;
+    }
+    stages.insert("after_delays".into(),rng.draw_count);
+    Ok(Initialization {horses:rows,stages,rng})
+}
+
 struct PreparedTrigger {
     skill_id: String,
     alternative: usize,
@@ -413,6 +519,8 @@ mod tests {
     #[test]
     fn prepared_initialization_preserves_draws_and_float_bits_across_seeds() {
         let data = crate::json::parse(include_str!("../tests/fixtures/retail_initialization_official.json")).unwrap();
+        // One cache serves every case, as the worker reuses it across requests.
+        let mut cache = SkillFactsCache::default();
         for case in data.get_array("cases").unwrap() {
             let course = field(field(&data, "courses").unwrap(), case.get_str("course_id").unwrap()).unwrap();
             let horses = case.get_array("horses").unwrap();
@@ -420,8 +528,11 @@ mod tests {
             let parameters = field(&data, "parameters").unwrap();
             let prepared = PreparedInitialization::new(horses, course, skills, parameters).unwrap();
             for seed in [i32::MIN, -71, 0, 71, i32::MAX, case.get_i64("seed").unwrap() as i32] {
+              for cached in [false, true] {
                 let mut expected = initialize(seed, horses, course, skills, parameters).unwrap();
-                let mut actual = prepared.initialize(seed).unwrap();
+                let mut actual = if cached {
+                    initialize_cached(seed, horses, course, skills, parameters, &mut cache).unwrap()
+                } else { prepared.initialize(seed).unwrap() };
                 assert_eq!(actual.stages, expected.stages);
                 for (a, b) in actual.horses.iter().zip(&expected.horses) {
                     assert_eq!(a.skill_enabled, b.skill_enabled);
@@ -441,7 +552,16 @@ mod tests {
                     }
                 }
                 for _ in 0..64 { assert_eq!(actual.rng.next_int(), expected.rng.next_int()); }
+              }
             }
+            // An undecodable skill defers to the uncached path and its error.
+            let mut broken = horses.to_vec();
+            if let Some(crate::json::Value::Object(horse)) = broken.first_mut() {
+                horse.insert("skills".into(), crate::json::parse(r#"[{"skill_id":999999999,"level":1}]"#).unwrap());
+            }
+            let error = initialize(7, &broken, course, skills, parameters).err();
+            assert!(error.is_some());
+            assert_eq!(initialize_cached(7, &broken, course, skills, parameters, &mut cache).err(), error);
         }
     }
     #[test]

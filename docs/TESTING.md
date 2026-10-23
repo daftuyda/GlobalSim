@@ -6,7 +6,33 @@ Run the Rust test suite with:
 cargo test --release --locked
 ```
 
-The library suite passes in full: **155 of 155 tests** with `fast-alloc`, and
+## Version 76 checks
+
+- 160 Rust tests pass with the default fast allocator and with the platform
+  allocator (`cargo test --release --locked --no-default-features --lib`).
+- 27 Python validation tests pass (`python -m unittest discover -s tests`).
+- All 81 official captured-race regression fixtures pass.
+- 1,995 seed-sampling comparisons pass across binary, JSON, JSON helper, sparse
+  and full-frame modes, serial and concurrent batches, results-only output,
+  invalid inputs and recovery.
+- Prepared-library comparisons pass for 279 runs per frame mode, plus 24
+  concurrent runs and handle isolation/recovery.
+- Complete binary outputs are unchanged for all 470,350 frozen corpus races.
+  This preserves existing Career failures as well as successful observations.
+
+Two new Rust regressions exercise stateful preconditions across repeated prepared
+runs and reused seed threads. Both fail on the original optimization and pass
+with fresh state per race. See [v76 validation](V76-VALIDATION.md).
+
+The reusable worker check accepts JSONL input cases:
+
+```sh
+python tools/check_seed_sampling.py --engine path/to/candidate --baseline path/to/baseline --inputs path/to/cases.jsonl --report path/to/results.json
+```
+
+## Earlier validation
+
+The preceding library suite passed in full: **155 of 155 tests** with `fast-alloc`, and
 all **81 included strict accuracy fixtures pass**. The latest boundary unit
 test and three captured fixtures cover the [passing-corridor rounding
 correction](CORRIDOR-FIX-20261023.md). The preceding three unit tests and

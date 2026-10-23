@@ -1,11 +1,64 @@
 # Performance
 
+## Version 76
+
+Full-replay worker requests averaged **4.62 ms for 9 runners**, **5.36 ms for
+12 runners**, and **10.68 ms for 18 runners** on the measured workloads.
+The paired comparison uses the current pre-rewrite engine, including the latest
+accuracy fixes, as its baseline.
+
+| Workload | Current baseline | v76 | Reduction in mean time |
+|---|---:|---:|---:|
+| 9 runners, 1600 m | 4.839 ms | 4.619 ms | 4.5% |
+| 12 runners, 1200 m | 5.660 ms | 5.356 ms | 5.4% |
+| 18 runners, 1600 m | 11.554 ms | 10.681 ms | 7.6% |
+| Varied 81-capture workload | 9.080 ms | 8.798 ms | 3.1% |
+
+Worker timing includes request transfer, parsing, simulation, all replay frames,
+binary encoding and complete reply transfer. Client JSON encoding, decoding and
+comparison are excluded. Each fixed-roster group cycles through 30 seeds for
+240 measured requests per build; the varied group has 648. Five warmup requests
+precede each group. Build order alternates for each request, and every complete
+reply is compared byte for byte.
+
+The prepared Rust API excludes input preparation and pipe transfer:
+
+| Workload | Output | Baseline | v76 | Reduction in mean time |
+|---|---|---:|---:|---:|
+| 9 runners, 1600 m | Owned numeric replay | 3.888 ms | 3.890 ms | -0.06% |
+| 12 runners, 1200 m | Owned numeric replay | 4.630 ms | 4.524 ms | 2.3% |
+| 18 runners, 1600 m | Owned numeric replay | 9.574 ms | 8.988 ms | 6.1% |
+| 9 runners, 1600 m | Complete binary packet | 3.909 ms | 3.836 ms | 1.9% |
+| 12 runners, 1200 m | Complete binary packet | 4.826 ms | 4.690 ms | 2.8% |
+| 18 runners, 1600 m | Complete binary packet | 9.848 ms | 9.154 ms | 7.0% |
+
+Prepared timing includes fresh seed state, simulation, owned results and cleanup;
+binary mode also includes packet encoding. There are four alternating trials of
+180 measured races per build, mode and workload, with five warmups per trial.
+The nine-runner numeric result is effectively unchanged; there is no demonstrated
+speedup for that mode.
+
+Both builds use portable profile-guided compilation, the fast allocator, the same
+81 training inputs, Rust 1.97.1 and Windows on an Intel Core i7-14700K. Trials run
+on logical CPU 2 at above-normal priority while background collection continues.
+The engine does not set affinity or priority itself. These are individual race
+latencies with all frames retained, not parallel throughput or results-only
+timings. Larger rosters, longer courses, different skills and system load change
+the result. The ordinary release build is not the PGO build measured here.
+
+The final PGO engine preserves every binary output across the frozen 470,350-race
+corpus. Existing Career discrepancies remain unchanged. See
+[all timing trials](../evidence/v76-performance.json),
+[release validation](V76-VALIDATION.md), and the [prepared API](IN-PROCESS.md).
+
+## Historical v74 prepared measurements
+
 The prepared Rust API averages **4.62 ms per seed with every frame retained**
 on the measured nine-runner, 1600 m workload. Including complete binary packet
 encoding averages **5.05 ms**. These measurements use a portable profile-guided
 release build with the fast allocator and reuse race preparation across seeds.
 
-## Prepared Rust calls
+### Prepared Rust calls
 
 | Workload | Output | v74 baseline | Optimized | Change in mean time |
 |---|---|---:|---:|---:|
@@ -80,11 +133,11 @@ case does not establish sub-5 ms performance for larger fields or longer races.
 ## Build and output options
 
 ```powershell
-cargo build --release --locked --features fast-alloc
+cargo build --release --locked
 ```
 
-Omit `--features fast-alloc` to use the platform allocator. The optional mimalloc
-allocator requires a C toolchain; its [license](../licenses/mimalloc.txt) and
+The fast allocator is the default `fast-alloc` feature; add `--no-default-features`
+to use the platform allocator. The mimalloc allocator requires a C toolchain; its [license](../licenses/mimalloc.txt) and
 [binding license](../licenses/mimalloc-rust.txt) are included. Allocator gains
 were measured on Windows.
 
@@ -115,6 +168,12 @@ Independent seeds can also run concurrently, using separate prepared handles on
 separate threads or separate persistent workers. Report batch throughput and
 individual request latency separately. The existing worker-pool benchmark is
 `tools/benchmark_throughput.py`.
+
+For sampling one setup across seeds, send a worker request with `seeds` and
+optionally `threads` (see [Interface](INTERFACE.md#seed-sampling)). `omitFrames`
+provides results-only output when trajectories are unnecessary. Parallel batch
+throughput and omitted-frame timings must be reported separately from the
+full-replay individual race timings above.
 
 See [Testing](TESTING.md) for regression coverage and [Accuracy](ACCURACY.md) for
 the limits of the engine's reconstruction.

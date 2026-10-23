@@ -445,10 +445,15 @@ impl CourseGeometry {
         // sqrt, corrected movement after the multiply). Selected on 19,047
         // dense single-tick official samples where the correction is active
         // (engine-exact input): 18,487 -> 18,580 exact; see analysis/.
-        let world_distance = ((dx as f64 * dx as f64 + dz as f64 * dz as f64).sqrt()) as f32;
+        let squared = dx as f64 * dx as f64 + dz as f64 * dz as f64;
         let allowed = movement * self.distance_to_world;
-        if world_distance > allowed {
-            movement = (movement as f64 * (allowed as f64 / world_distance as f64)) as f32;
+        // A float's square is exact in double, and the rounded square root is
+        // monotonic: at or below it, the stored norm cannot exceed `allowed`.
+        if !(allowed >= 0. && squared <= allowed as f64 * allowed as f64) {
+            let world_distance = squared.sqrt() as f32;
+            if world_distance > allowed {
+                movement = (movement as f64 * (allowed as f64 / world_distance as f64)) as f32;
+            }
         }
         Ok((distance + movement, current))
     }

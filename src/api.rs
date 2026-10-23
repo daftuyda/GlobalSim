@@ -35,12 +35,21 @@ impl PreparedRace {
     /// Preparation cost is separate from per-seed simulation cost.
     pub fn new(input: &str) -> Result<Self, String> {
         initialize_tables()?;
-        let (input, gate_perm) = gate_order(json::parse(input)?)?;
+        Self::prepare(json::parse(input)?, None)
+    }
+
+    /// Prepare a parsed request. `skills`, when given, must be the decoded
+    /// table of the request's `skillData` (or of the bundled table).
+    pub(crate) fn prepare(input: Value, skills: Option<Rc<SkillTable>>) -> Result<Self, String> {
+        let (input, gate_perm) = gate_order(input)?;
         let raw_skills = match input.get("skillData") {
             Some(data) => data,
             None => bundled_skills()?,
         };
-        let skills = Rc::new(load_skill_value(raw_skills)?);
+        let skills = match skills {
+            Some(skills) => skills,
+            None => Rc::new(load_skill_value(raw_skills)?),
+        };
         let spec = parse_race_spec(&input)?;
         let course = bundled_courses()?.get(&spec.course_id.to_string())
             .ok_or("Missing retail course")?;
@@ -86,6 +95,12 @@ impl PreparedRace {
     /// Run one independent seed with every mutable solver, RNG, timer and
     /// activation observer rebuilt. The result owns its complete selected replay.
     pub fn run(&mut self, seed: i64) -> Result<Simulation, String> {
+        self.run_value(seed, true).map(|value| Simulation { value })
+    }
+
+    /// `run` as the worker's reply value. Without `capture_frames` the reply
+    /// carries no replay frames or frame metadata; every other key is unchanged.
+    pub(crate) fn run_value(&mut self, seed: i64, capture_frames: bool) -> Result<Value, String> {
         self.spec.seed = seed;
         let initialization = self.initialization.as_ref().map(|plan| {
             let seed = i32::try_from(seed).map_err(|_| "Retail seed must be a signed 32-bit integer".to_string())?;
@@ -93,13 +108,14 @@ impl PreparedRace {
         }).transpose()?;
         let mut value = race_solver_builder::with_skills(self.skills.clone(), || run_race(
             &self.spec, conditions(), initialization.as_ref(), self.retail_sections, self.retail_runtime,
-            self.world_geometry.clone(), self.startup_pass, self.retain_all_frames, None, &mut self.roster))?;
+            self.world_geometry.clone(), self.startup_pass, self.retain_all_frames, capture_frames, None,
+            &mut self.roster))?;
         if let Value::Object(map) = &mut value {
             map.insert("experimentalRetailInitialization".into(), Value::Bool(initialization.is_some()));
             if let Some(signature) = &self.signature { map.insert("dataSignature".into(), signature.clone()); }
         }
         if let Some(perm) = &self.gate_perm { restore_request_order(&mut value, perm); }
-        Ok(Simulation { value })
+        Ok(value)
     }
 }
 

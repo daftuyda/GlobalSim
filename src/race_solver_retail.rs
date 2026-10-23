@@ -121,6 +121,7 @@ mod tests {
                 let id = (990000 + i).to_string();
                 PendingSkill {
                     anyskill_nodes: Vec::new(),
+                    stateful_check: false,
                     random_activation_order: None,
                     detail_index: 0,
                     priority: x.get_i64("priority").unwrap_or(0) as i32,
@@ -130,7 +131,7 @@ mod tests {
                     perspective: Perspective::Self_,
                     rarity: if x.get_i64("rarity").unwrap_or(1)==2 {SkillRarity::Gold} else {SkillRarity::White},
                     trigger: trigger.clone(),
-                    extra_condition: Box::new(|_, _| true),
+                    extra_condition: std::rc::Rc::new(|_, _| true),
                     prerequisite: None,
                     prerequisite_satisfied: false,
                     cooldown: x.get_f64("cooldown").unwrap(),
@@ -558,10 +559,14 @@ pub(crate) struct RetailRuntimeState {
     pub finished: bool,
     pub hp_empty_on_race: bool,
     pub after_goal_time: f32,
+    /// Course-constant phase starts and target-speed sections.
+    phase_boundaries: [f32; 4],
+    sections: retail_physics::SectionIndex,
 }
 
 impl RaceSolver {
-    pub(crate) fn collect_retail_duel_proximity(&mut self, rows: &[(f32, f32, bool)], dt: f32) {
+    /// `any_straight` is whether any row is on the final straight.
+    pub(crate) fn collect_retail_duel_proximity(&mut self, rows: &[(f32, f32, bool)], any_straight: bool, dt: f32) {
         let r = self.retail.as_mut().unwrap();
         r.duel_preupdate_speed = r.observed_speed;
         let index = self.field_index.unwrap();
@@ -571,7 +576,7 @@ impl RaceSolver {
         r.duel_preupdate_finished = position >= self.course.distance as f32 && !crossing;
         r.duel_preupdate_final_straight = straight || crossing;
         // With no runner on the final straight, every pair below is removed.
-        if !straight && !rows.iter().any(|row| row.2) {
+        if !straight && !any_straight {
             self.duel_proximity.retain(|&j, _| j >= rows.len());
             return;
         }
@@ -699,6 +704,8 @@ impl RaceSolver {
             finished: false,
             hp_empty_on_race: false,
             after_goal_time: 0.,
+            phase_boundaries: retail_physics::phase_boundaries(distance),
+            sections: retail_physics::SectionIndex::new(distance),
         });
         Ok(())
     }
@@ -945,11 +952,12 @@ impl RaceSolver {
     }
 
     pub(super) fn step_forward_retail(&mut self, dt: f32, field: Option<&RaceField>) -> f64 {
-        self.step_forward_retail_with_roster(dt, field, None)
+        self.step_forward_retail_with_roster(dt, field, None, None)
     }
 
     pub(crate) fn step_forward_retail_with_roster(
         &mut self, dt: f32, field: Option<&RaceField>, roster: Option<&[retail_lane::Horse]>,
+        sorted: Option<(&[usize], &[usize])>,
     ) -> f64 {
         self.retail.as_mut().unwrap().live_roster_dirty = false;
         let mut roster = roster;
@@ -1070,11 +1078,12 @@ impl RaceSolver {
             // Rushing callbacks may mutate solver state. Otherwise neither
             // rushing nor conserve accumulation changes any context field.
             let context = if transition == 0 { context } else { self.retail_lane_context() };
-            self.lane_target = self.retail.as_mut().unwrap().lane.target(
+            self.lane_target = self.retail.as_mut().unwrap().lane.target_sorted(
             &context,
             &others,
             config.lane,
             &mut *config.random.borrow_mut(),
+            sorted,
             ) as f64;
         }
         self.retail.as_mut().unwrap().live_horses = others;
@@ -1105,8 +1114,7 @@ impl RaceSolver {
         if self.spot_struggle_active && self.spot_struggle_timer.get() >= 0. {
             self.retail_target_modifiers.remove(1);
         }
-        let (section_index, target_phase) = retail_physics::target_speed_indices(
-            self.pos as f32, self.course.distance as f32);
+        let (section_index, target_phase) = self.retail.as_mut().unwrap().sections.indices(self.pos as f32);
         let base = if self.is_last_spurt {
             self.last_spurt_speed
         } else {
@@ -1278,7 +1286,7 @@ impl RaceSolver {
         if !finished && !self.hp.has_remaining_hp() {
             self.retail.as_mut().unwrap().hp_empty_on_race = true;
         }
-        let phase = retail_physics::phase_boundaries(self.course.distance as f32)
+        let phase = self.retail.as_ref().unwrap().phase_boundaries
         .iter()
         .filter(|&&boundary| self.pos >= boundary as f64)
         .count();

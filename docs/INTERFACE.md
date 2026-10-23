@@ -71,6 +71,24 @@ Flags select simulation behavior. Geometry requires a
 bundled geometry asset for that course. Oversized grids are custom behavior
 with no official oversized-field benchmark. Defaults apply when a setting is omitted from the request.
 
+## Seed sampling
+
+The worker accepts three sampling keys. They are removed before the request is
+read as a race.
+
+| Field | Default / purpose |
+|---|---|
+| `seeds` | Absent. A non-empty array: one reply per entry, in order, each identical to the request sent alone with that `seed` |
+| `threads` | 1. Threads that share one `seeds` batch (1–256; 0 uses every core) |
+| `omitFrames` | false. true omits `frames`, `finishFrames`, `rawFrameCount`, `framesDownsampled` and `gateFrameNeeded` and skips capturing them. Binary packets then carry zero frames |
+
+A batch reply that fails, including a seed outside the retail 32-bit range, is
+an `{"error":...}` reply in that seed's place, so a reader always receives one
+reply per seed. A malformed sampling key returns one error reply. The worker
+also keeps the most recent setup (the request minus `seed`) prepared once it
+repeats, so lone requests that change only `seed` reuse it too. Every reply
+matches the per-request path byte for byte.
+
 ## Reply
 
 `results` retains runner-array identity and contains the finish/rank metadata;

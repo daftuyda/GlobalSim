@@ -145,10 +145,20 @@ synchronous path. The helper's replay buffer retains at most 16 MiB between
 requests, separately from the main response buffer. The default worker uses
 one thread.
 
+Seed sampling (`src/seed_sampling.rs`) reuses a prepared race while requests
+change only `seed`. A setup's first lone request takes the per-request path;
+when that setup repeats, or arrives as a `seeds` batch, it is prepared with the
+worker's decoded skill table. A `threads` batch runs on persistent threads
+that each keep their own prepared setup and take seeds from a shared counter.
+The main thread writes replies in seed order and flushes before waiting. Any
+seed the prepared path cannot run, including preparation and run errors, is
+answered by the per-request path, so error text never depends on caching. The
+replay encoder thread keeps every request on the per-request path.
+
 `GLOBALSIM_OUTPUT=binary-v1` writes length-prefixed metadata and little-endian
-float64 frame records on one thread. JSON remains the default. The optional
-`fast-alloc` Cargo feature selects mimalloc; the normal build uses the platform
-allocator. Neither option changes simulation rules.
+float64 frame records on one thread. JSON remains the default. The default
+`fast-alloc` Cargo feature selects mimalloc; `--no-default-features` uses the
+platform allocator. Neither option changes simulation rules.
 
 This binary produces simulation results and replay observations. Encoding the game's `race_scenario`,
 persisting results, granting rewards, and playback/UI are outside this package.
@@ -174,6 +184,10 @@ The CLI entry point in [main.rs](../src/main.rs) calls `run_worker` in
 `Simulation` results. It reuses parsed inputs, immutable skill tables, geometry,
 roster facts and decoded initialization rules across seeds. Each run creates
 fresh RNG streams, sampled triggers, mutable solvers, timers and observers.
+Compiled skill data is reused only when neither the main condition nor its
+precondition contains mutable observation state, and no sampled trigger was used.
+Stateful preconditions are rebuilt per race without changing the main-condition
+flag that controls cooldown evaluation order.
 
 Prepared skill tables are installed in a thread-local scope for the duration of
 the run and restored afterward. The worker retains its existing installed-table

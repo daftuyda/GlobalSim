@@ -1,0 +1,170 @@
+{
+  "synthetic": true,
+  "description": "Supported HP-empty precondition on a single runner. Identical race and seed repeated; every run must match a fresh baseline.",
+  "engineSha256": "b2488bfaa052adb1503b4b8a37a0f990fc777b4c7672d65e39dfba43259619f0",
+  "inputSha256": "e74f43e9b6453b9ca1381821125942a42b7d09e274cf992115e9d77fb7e629b0",
+  "runs": [
+    {
+      "mode": "repeated-worker",
+      "run": 0,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    },
+    {
+      "mode": "repeated-worker",
+      "run": 1,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    },
+    {
+      "mode": "repeated-worker",
+      "run": 2,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    },
+    {
+      "mode": "repeated-worker",
+      "run": 3,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    },
+    {
+      "mode": "serial-seed-batch",
+      "run": 0,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    },
+    {
+      "mode": "serial-seed-batch",
+      "run": 1,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    },
+    {
+      "mode": "serial-seed-batch",
+      "run": 2,
+      "matchesBaseline": true,
+      "expectedSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ],
+      "actualSkills": [
+        {
+          "duration": 15.59999942779541,
+          "horseIndex": 0,
+          "isUnique": 0,
+          "skillId": 999999,
+          "t": 118.81246948242188
+        }
+      ]
+    }
+  ],
+  "regressionReproduced": false
+}

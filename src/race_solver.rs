@@ -207,7 +207,7 @@ impl CompensatedAccumulator {
     }
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum Perspective {
     Self_ = 1,
     Other = 2,
@@ -333,6 +333,9 @@ pub struct PendingSkill {
     pub effects: Vec<SkillEffect>,
     /// v75: is_activate_any_skill trigger nodes of this detail's main condition.
     pub anyskill_nodes: Vec<usize>,
+    /// The main condition keeps state between checks, so retail visits must
+    /// evaluate it even while the cooldown already prevents activation.
+    pub stateful_check: bool,
     /// Cooldown-map lookup for `cooldown_key`, valid while the solver's
     /// cooldown generation is unchanged. Timer values are still read live.
     pub(crate) cooldown_cache: CooldownCache,
@@ -340,13 +343,17 @@ pub struct PendingSkill {
 
 pub(crate) struct CooldownCache {
     generation: Cell<u64>,
+    /// Readiness is monotonic within a generation: cooldown timers and the
+    /// elapsed time only advance, and every reset bumps the generation.
+    ready: Cell<bool>,
     state: RefCell<CooldownState>,
 }
 
 impl Default for CooldownCache {
     fn default() -> Self {
         // No solver reaches this generation, so the first use looks up.
-        CooldownCache { generation: Cell::new(u64::MAX), state: RefCell::new(CooldownState::Blocked) }
+        CooldownCache { generation: Cell::new(u64::MAX), ready: Cell::new(false),
+            state: RefCell::new(CooldownState::Blocked) }
     }
 }
 
@@ -611,6 +618,9 @@ pub struct RaceSolver {
     pub spot_struggle_started: bool,
     spot_struggle_distance_exited: bool,
     spot_struggle_cutoff_latched: bool,
+    /// Every same-style runner has passed the entry cutoff; positions never
+    /// decrease, so no group can start and the entry scan is skipped.
+    spot_struggle_entry_closed: bool,
     spot_struggle_timer: Timer,
     spot_struggle_modifier: f64,
     compete_spurt_active: bool,
@@ -895,6 +905,7 @@ impl RaceSolver {
             spot_struggle_started: false,
             spot_struggle_distance_exited: false,
             spot_struggle_cutoff_latched: false,
+            spot_struggle_entry_closed: false,
             spot_struggle_timer: new_timer_value(0.0),
             spot_struggle_modifier: 0.0,
             compete_spurt_active: false,
@@ -1419,13 +1430,17 @@ impl RaceSolver {
             self.behind_near_lane_set1_timer.set(0.0);
             return;
         }
-        let ahead_gap = field.distance_to_ahead(i, self.pos);
-        let ahead_lane_gap = field.lane_gap_to_ahead(i, self.lane);
+        // The same neighbors and gaps as distance_to_*/lane_gap_to_*.
+        let (ahead, behind) = field.ranked_neighbors(i);
+        let point = |j: usize| { let other = field.solvers[j].borrow(); (other.pos, other.lane) };
+        let (ahead, behind) = (ahead.map(point), behind.map(point));
+        let ahead_gap = ahead.map(|(pos, _)| (pos - self.pos).max(0.0));
+        let ahead_lane_gap = ahead.map(|(_, lane)| lane - self.lane);
         let near_ahead = ahead_gap.is_some() && ahead_gap.unwrap().abs() <= 2.5 && ahead_lane_gap.unwrap().abs() <= 0.0556_f32 as f64;
         self.infront_near_lane_timer.set(if near_ahead { self.infront_near_lane_timer.get() + dt } else { 0.0 });
 
-        let behind_gap = field.distance_to_behind(i, self.pos);
-        let behind_lane_gap = field.lane_gap_to_behind(i, self.lane);
+        let behind_gap = behind.map(|(pos, _)| (self.pos - pos).max(0.0));
+        let behind_lane_gap = behind.map(|(_, lane)| self.lane - lane);
         let near_behind = behind_gap.is_some() && behind_gap.unwrap().abs() <= 2.5 && behind_lane_gap.unwrap().abs() <= 0.0556_f32 as f64;
         self.behind_near_lane_timer.set(if near_behind { self.behind_near_lane_timer.get() + dt } else { 0.0 });
         // Global Skill.BehindNearParamArray[0], distinct from the narrow timer.
@@ -2087,7 +2102,13 @@ impl RaceSolver {
         } else {
             self.process_pending_full(self.pos, field, priority);
         }
-        if self.retail.is_some() && (priority.is_none() || priority == Some(0)) {
+        if self.retail.is_some() && (priority.is_none() || priority == Some(0))
+            && self.random_gold_request <= 0.0 && self.random_any_request <= 0.0 {
+            // Neither selection can reserve anything without a request.
+            self.random_gold_reservations.clear();
+            self.random_gold_request = 0.0;
+            self.random_any_request = 0.0;
+        } else if self.retail.is_some() && (priority.is_none() || priority == Some(0)) {
             self.random_gold_reservations = self.select_random_gold(self.random_gold_request, false, &BTreeSet::new())
                 .into_iter().map(|sk| sk.skill_id).collect();
             let excluded = self.random_gold_reservations.clone();
@@ -2239,12 +2260,20 @@ impl RaceSolver {
                     assert!(sk.windows.len() == 1 && sk.windows[0].start.to_bits() == sk.trigger.start.to_bits()
                         && sk.windows[0].end.to_bits() == sk.trigger.end.to_bits());
                 }
-                let fires = (reserved || (pos >= w.start && pos < w.end
+                let field_ok = || field.is_some() || sk.effects.iter().all(|ef| ef.target == 1);
+                let fires = if reserved {
+                    field_ok() && self.pending_cooldown_ready(sk)
+                } else if pos >= w.start && pos < w.end
                     && (sk.prerequisite.is_none() || sk.prerequisite_satisfied)
-                    && (w.single || sk.windows.iter().any(|r| r.start <= pos && pos < r.end))
-                    && (sk.extra_condition)(self, field)))
-                    && (field.is_some() || sk.effects.iter().all(|ef| ef.target == 1))
-                    && self.pending_cooldown_ready(sk);
+                    && (w.single || sk.windows.iter().any(|r| r.start <= pos && pos < r.end)) {
+                    if sk.stateful_check {
+                        (sk.extra_condition)(self, field) && field_ok() && self.pending_cooldown_ready(sk)
+                    } else {
+                        // A blocked cooldown rejects the activation whatever a
+                        // stateless condition returns, so test it first.
+                        self.pending_cooldown_ready(sk) && (sk.extra_condition)(self, field) && field_ok()
+                    }
+                } else { false };
                 if fires && self.fire_pending_skill(i, field) {
                     activate_count_this_frame += 1;
                 }
@@ -2377,18 +2406,27 @@ impl RaceSolver {
         if cache.generation.get()!=self.cooldown_generation {
             *cache.state.borrow_mut()=self.cooldown_state(&skill.cooldown_key);
             cache.generation.set(self.cooldown_generation);
+            cache.ready.set(false);
+        } else if cache.ready.get() {
+            return true;
         }
-        self.cooldown_state_ready(&cache.state.borrow())
+        let ready=self.cooldown_state_ready(&cache.state.borrow());
+        cache.ready.set(ready);
+        ready
     }
 
     fn start_expired_skill_cooldowns(&mut self) {
         if self.waiting_skill_cooldowns.is_empty() { return; }
         // Keys are unique, so a matching entry is the one `get` would find.
-        let expired: Vec<_> = self.waiting_skill_cooldowns.iter().filter(|(_, (sid, detail, _))| {
+        let is_expired = |(sid, detail, _): &(String, usize, f64)| {
             !self.running_skills.iter().any(|r| r.detail_index == *detail && r.skill_id == *sid)
                 && !self.random_active_details.iter()
                     .any(|((id, d), t)| d == detail && id == sid && t.get() < 0.0)
-        }).map(|(key,(_,_,duration))|(key.clone(),*duration)).collect();
+        };
+        // Usually every waiting skill is still running; skip the collection.
+        if !self.waiting_skill_cooldowns.values().any(is_expired) { return; }
+        let expired: Vec<_> = self.waiting_skill_cooldowns.iter().filter(|(_, value)| is_expired(value))
+            .map(|(key,(_,_,duration))|(key.clone(),*duration)).collect();
         for (key,duration) in expired {
             self.start_skill_cooldown(key.clone(),duration);
             self.waiting_skill_cooldowns.remove(&key);
@@ -2793,7 +2831,7 @@ impl RaceSolver {
         // of this `step()` call -- read its own fields directly rather
         // than re-entering its `RefCell` via `field.solvers[j]`.
         // Without a same-style rival the group below can never reach two.
-        if field.exact_style_count(strategy) < 2 {
+        if self.spot_struggle_entry_closed || field.exact_style_count(strategy) < 2 {
             return;
         }
         let sample = |j: usize| if j == i {
@@ -2808,6 +2846,8 @@ impl RaceSolver {
         let mut front_idx: Option<usize> = None;
         let mut front_pos = f64::NEG_INFINITY;
         let mut front_lane = 0.;
+        let entry_end = self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION;
+        let mut group_late = true;
         for j in 0..field.n {
             let (j_strategy, j_pos, j_lane, started) = sample(j);
             // The distance gate follows the cached overall leader's live position.
@@ -2819,6 +2859,7 @@ impl RaceSolver {
             if j_strategy == strategy {
                 if started { return; }
                 group_len += 1;
+                group_late &= !(j_pos < entry_end);
                 // v6: the group front is chosen by the cached (previous-update) field
                 // order, not by live position; positions below remain live.
                 if front_idx.map_or(true, |f| field.order_of(j) < field.order_of(f)) {
@@ -2827,6 +2868,11 @@ impl RaceSolver {
                     front_idx = Some(j);
                 }
             }
+        }
+        // Entry needs a participant before the cutoff (`early` below).
+        if group_late {
+            self.spot_struggle_entry_closed = true;
+            return;
         }
         if group_len < 2 || race_front < 150.0 {
             return;
@@ -3026,8 +3072,6 @@ impl RaceSolver {
             }
             return;
         }
-        // CompeteFight.TargetOrderPer=50, using percentage-order half-up rounding.
-        let top_half = field.order_of(i) <= ((field.n + 1) / 2).max(1);
         // A finisher can complete its warmup while a nearby partner is still
         // on the final straight. The proximity cache retains a pair only while
         // at least one pre-movement position remains inside that straight.
@@ -3040,41 +3084,55 @@ impl RaceSolver {
             if self.retail.is_none() { self.duel_proximity.clear(); }
             return;
         }
+        // CompeteFight.TargetOrderPer=50, using percentage-order half-up rounding.
+        let top_half = field.order_of(i) <= ((field.n + 1) / 2).max(1);
         let (pos, lane) = (self.pos, self.lane);
         let retail_cache = self.retail.is_some();
         let mut proximity = if retail_cache { std::mem::take(&mut self.duel_proximity) } else { BTreeMap::new() };
         let mut nearby = None;
         let mut eligible = None;
         let mut ready: Option<usize> = None;
-        for j in 0..field.n {
+        let qualifies = |other: &RaceSolver, j: usize| self.hp.hp_ratio_remaining() >= 0.15 && other.hp.hp_ratio_remaining() >= 0.15
+            // v34: retail gates on the observed speed (current-speed
+            // effects included), as Hakuraku rust-v1.0.31 case t1 shows.
+            && (other.retail.as_ref().map_or(other.current_speed, |r| r.duel_preupdate_speed as f64)
+                - self.retail.as_ref().map_or(self.current_speed, |r| r.duel_preupdate_speed as f64)).abs()
+                <= 0.6000000238418579
+            && (top_half || field.order_of(j) <= ((field.n + 1) / 2).max(1));
+        if retail_cache {
             // Retail entries outside the proximity cache have no effect here.
-            if j == i || (retail_cache && !proximity.contains_key(&j)) {
-                continue;
-            }
-            let other = field.solvers[j].borrow();
+            // Visit only cached pairs, in the same ascending index order.
             // Retail runners can invite a finished partner while their own
             // entry window is open. Proximity, speed, HP and duel history still
             // apply; finishing alone does not disqualify the selected partner.
-            if !retail_cache && (other.pos >= self.course.distance
-                    || (other.compete_fight_count > 0 && !other.duel_active)) {
-                continue;
-            }
-            let dist_gap = other.pos - pos;
-            let lane_gap = other.lane - lane;
-            if if retail_cache { proximity.contains_key(&j) } else { dist_gap.abs() <= 3.0 && lane_gap.abs() <= DUEL_LANE_GAP } {
-                if !retail_cache { proximity.insert(j, (self.duel_proximity.get(&j).copied().unwrap_or(0.0) + dt).min(2.0)); }
+            for (&j, &time) in &proximity {
+                if j == i || j >= field.n { continue; }
                 nearby.get_or_insert(j);
-                if self.hp.hp_ratio_remaining() >= 0.15 && other.hp.hp_ratio_remaining() >= 0.15
-                    // v34: retail gates on the observed speed (current-speed
-                    // effects included), as Hakuraku rust-v1.0.31 case t1 shows.
-                    && (other.retail.as_ref().map_or(other.current_speed, |r| r.duel_preupdate_speed as f64)
-                        - self.retail.as_ref().map_or(self.current_speed, |r| r.duel_preupdate_speed as f64)).abs()
-                        <= 0.6000000238418579
-                    && (top_half || field.order_of(j) <= ((field.n + 1) / 2).max(1)) {
+                if qualifies(&field.solvers[j].borrow(), j) {
                     eligible.get_or_insert(j);
-                    if proximity[&j] >= 2.0
-                        && ready.map_or(true, |best| proximity[&j] > proximity[&best]) {
+                    if time >= 2.0 && ready.map_or(true, |best| time > proximity[&best]) {
                         ready = Some(j);
+                    }
+                }
+            }
+        } else {
+            for j in 0..field.n {
+                if j == i { continue; }
+                let other = field.solvers[j].borrow();
+                if other.pos >= self.course.distance || (other.compete_fight_count > 0 && !other.duel_active) {
+                    continue;
+                }
+                let dist_gap = other.pos - pos;
+                let lane_gap = other.lane - lane;
+                if dist_gap.abs() <= 3.0 && lane_gap.abs() <= DUEL_LANE_GAP {
+                    proximity.insert(j, (self.duel_proximity.get(&j).copied().unwrap_or(0.0) + dt).min(2.0));
+                    nearby.get_or_insert(j);
+                    if qualifies(&other, j) {
+                        eligible.get_or_insert(j);
+                        if proximity[&j] >= 2.0
+                            && ready.map_or(true, |best| proximity[&j] > proximity[&best]) {
+                            ready = Some(j);
+                        }
                     }
                 }
             }
@@ -3243,10 +3301,10 @@ mod movement_tests {
             skill_id: "999903".into(), numeric_skill_id: Some(999903), has_green_tag: false,
             perspective: Perspective::Self_, rarity: SkillRarity::White,
             trigger: Region::new(0.0, 2400.0), extra_condition: check.unwrap(),
-            prerequisite: Some(Box::new(|s, _| s.phase == 0)), prerequisite_satisfied: false,
+            prerequisite: Some(std::rc::Rc::new(|s, _| s.phase == 0)), prerequisite_satisfied: false,
             cooldown: 1.0, cooldown_key: "999903".into(),
             windows: vec![Region::new(0.0, 2400.0)], effects: vec![], anyskill_nodes: nodes,
-            cooldown_cache: Default::default(),
+            stateful_check: true, cooldown_cache: Default::default(),
         });
         s.skill_cooldowns.insert("999903".into(), f64::INFINITY);
         s.cooldown_generation += 1;
@@ -3290,17 +3348,17 @@ mod movement_tests {
                     numeric_skill_id: id.parse().ok(), skill_id: id.clone(),
                     has_green_tag: false, perspective: Perspective::Self_, rarity: SkillRarity::Unique,
                     trigger: Region::new(0.0, if i == 3 { 150.0 } else { 2400.0 }),
-                    extra_condition: Box::new(move |_, _| {
+                    extra_condition: std::rc::Rc::new(move |_, _| {
                         check.borrow_mut().push(('c', i));
                         matches!(i, 1 | 4)
                     }),
-                    prerequisite: Some(Box::new(move |s, _| {
+                    prerequisite: Some(std::rc::Rc::new(move |s, _| {
                         before.borrow_mut().push(('p', i));
                         i != 4 || s.phase > 0
                     })),
                     prerequisite_satisfied: false, cooldown: 0.0, cooldown_key: id,
                     windows: vec![Region::new(0.0, 2400.0)], effects: vec![], anyskill_nodes: vec![100 + i],
-                    cooldown_cache: Default::default(),
+                    stateful_check: true, cooldown_cache: Default::default(),
                 });
             }
             s.activate_count[0] = 1;
@@ -3370,11 +3428,11 @@ mod movement_tests {
                     has_green_tag: false, perspective: Perspective::Self_,
                     rarity: if i % 2 == 0 { SkillRarity::White } else { SkillRarity::Unique },
                     trigger: Region::new(start, end), windows: vec![Region::new(start, end)],
-                    extra_condition: Box::new(move |_, _| { check.borrow_mut().push(i); i % 3 == 0 }),
+                    extra_condition: std::rc::Rc::new(move |_, _| { check.borrow_mut().push(i); i % 3 == 0 }),
                     prerequisite: None, prerequisite_satisfied: false,
                     cooldown: 0., cooldown_key: id, effects: vec![],
                     anyskill_nodes: if matches!(i, 1 | 3) { vec![i] } else { vec![] },
-                    cooldown_cache: Default::default(),
+                    stateful_check: true, cooldown_cache: Default::default(),
                 });
             }
             s.activate_count[0] = 2;
@@ -3873,7 +3931,7 @@ mod movement_tests {
             if retail {
                 let snapshot = [(2399.0, 0.0, true), (2401.0, 0.1, false)];
                 for cell in &field.solvers {
-                    cell.borrow_mut().collect_retail_duel_proximity(&snapshot, 0.0666);
+                    cell.borrow_mut().collect_retail_duel_proximity(&snapshot, snapshot.iter().any(|row| row.2), 0.0666);
                 }
                 field.solvers[0].borrow_mut().duel_proximity.insert(1, 2.0);
             }

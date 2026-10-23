@@ -17,11 +17,12 @@ dependency can be declared as:
 
 ```toml
 [dependencies]
-globalsim = { package = "race_engine_rs", path = "../GlobalSim", features = ["fast-alloc"] }
+globalsim = { package = "race_engine_rs", path = "../GlobalSim" }
 ```
 
-The optional `fast-alloc` feature selects the library's global allocator. An
-application that supplies its own global allocator should omit this feature.
+The default `fast-alloc` feature makes mimalloc the global allocator. An
+application that supplies its own global allocator must disable it with
+`default-features = false`.
 
 ```rust
 use globalsim::PreparedRace;
@@ -56,7 +57,7 @@ independent handles can use different tables concurrently.
 ## Shared library and Python
 
 ```powershell
-cargo build --release --locked --features fast-alloc
+cargo build --release --locked
 ```
 
 This builds the command-line engine and `globalsim.dll` on Windows,

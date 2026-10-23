@@ -25,7 +25,9 @@ pub type CondResult<T> = Result<T, String>;
 /// explicitly rather than stored on `RaceSolver` so no self-referential
 /// pointer/unsafe is needed anywhere in this port; every call site that has
 /// a `RaceField` already has it in scope to pass down.
-pub type DynCond = Box<dyn Fn(&RaceSolver, Option<&RaceField>) -> bool>;
+/// Shared so that seed-independent skill data can be reused across seeds;
+/// a check that keeps state between calls is rebuilt for every solver.
+pub type DynCond = std::rc::Rc<dyn Fn(&RaceSolver, Option<&RaceField>) -> bool>;
 pub type OptCond = Option<DynCond>;
 pub type FilterFn = Box<dyn Fn(&[Region], f64, &CourseData, &HorseParameters, &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> + Send + Sync>;
 
@@ -99,7 +101,7 @@ pub(crate) fn retail_phase_condition() -> &'static Condition {
     static CONDITION: std::sync::OnceLock<Condition> = std::sync::OnceLock::new();
     CONDITION.get_or_init(|| {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
-            Box::new(move |regions,arg,_,_,_| Ok((regions.to_vec(),Some(Box::new(move |s,_| {
+            Box::new(move |regions,arg,_,_,_| Ok((regions.to_vec(),Some(std::rc::Rc::new(move |s,_| {
                 compare(s.retail.as_ref().map_or(0.,|r|r.phase as f64),arg)
             })))))
         }
@@ -114,7 +116,7 @@ pub(crate) fn retail_distance_rate_condition() -> &'static Condition {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, course, _, _| {
                 let threshold = ((arg as f32 / 100.0 * course.distance as f32) + 0.5) as i32;
-                Ok((regions.to_vec(), Some(Box::new(move |s, _| {
+                Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, _| {
                     compare(s.pos as i32 as f64, threshold as f64)
                 }))))
             })
@@ -130,7 +132,7 @@ pub(crate) fn retail_remaining_distance_condition() -> &'static Condition {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, course, _, _| {
                 let distance = course.distance;
-                Ok((regions.to_vec(), Some(Box::new(move |s, _| {
+                Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, _| {
                     compare(distance - s.pos.floor(), arg)
                 }))))
             })
@@ -145,7 +147,7 @@ pub(crate) fn retail_final_corner_half_condition() -> &'static Condition {
     CONDITION.get_or_init(|| {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
-                Ok((regions.to_vec(), Some(Box::new(move |s, _| {
+                Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, _| {
                     s.final_corner_half_value().map_or(false, |value| compare(value as i32 as f64, arg))
                 }))))
             })
@@ -162,7 +164,7 @@ pub(crate) fn retail_corner_condition(final_flag: bool) -> &'static Condition {
     slot.get_or_init(|| {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C, final_flag: bool) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
-                Ok((regions.to_vec(), Some(Box::new(move |s, _| compare(s.corner_value(final_flag) as f64, arg)))))
+                Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, _| compare(s.corner_value(final_flag) as f64, arg)))))
             })
         }
         immediate().eq(filter(|a,b|a==b,final_flag)).neq(filter(|a,b|a!=b,final_flag))
@@ -175,7 +177,7 @@ pub(crate) fn retail_slope_condition() -> &'static Condition {
     CONDITION.get_or_init(|| {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
-                Ok((regions.to_vec(), Some(Box::new(move |s, _| compare(s.slope_type() as f64, arg)))))
+                Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, _| compare(s.slope_type() as f64, arg)))))
             })
         }
         immediate().eq(filter(|a,b|a==b)).neq(filter(|a,b|a!=b))
@@ -188,7 +190,7 @@ pub(crate) fn retail_furlong_condition() -> &'static Condition {
     CONDITION.get_or_init(|| {
         fn filter<C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static>(compare: C) -> FilterFn {
             Box::new(move |regions, arg, _, _, _| {
-                Ok((regions.to_vec(), Some(Box::new(move |s, _| {
+                Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, _| {
                     compare((((s.pos as f32 + 0.5) * 0.005).floor()) as f64, arg)
                 }))))
             })
@@ -293,7 +295,7 @@ where V: Fn(&RaceSolver, Option<&RaceField>) -> f64 + Copy + Send + Sync + 'stat
           C: Fn(f64, f64) -> bool + Copy + Send + Sync + 'static {
         Box::new(move |regions, arg, course, horse, extra| {
             let restricted = static_filter(regions, arg, course, horse, extra);
-            let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
+            let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, field: Option<&RaceField>| {
                 // Live field predicates need a registered runner, not just a
                 // field. A detached solver has no rank or neighbour identity;
                 // reject every comparison (including !=) rather than inventing
@@ -328,7 +330,7 @@ fn lane_type_value(s: &RaceSolver, _field: Option<&RaceField>) -> f64 {
 fn behind_in_condition() -> Condition {
     fn mk(cmp: fn(f64, f64) -> bool) -> FilterFn {
         Box::new(move |regions, arg, _course, _horse, _extra| {
-            let check: DynCond = Box::new(move |s, field| {
+            let check: DynCond = std::rc::Rc::new(move |s, field| {
                 // Last place rejects every comparison, including ==0.
                 field.and_then(|f| s.field_index.and_then(|i| f.lane_gap_to_behind(i, s.lane)))
                     .map(|gap| cmp(if gap > 0.0 { 1.0 } else { 0.0 }, arg)).unwrap_or(false)
@@ -375,7 +377,7 @@ fn order_in_filter(rate: f64, band: fn(&RaceSolver) -> &std::cell::Cell<Option<f
             return Err("order_in_filter expects arg==1".to_string());
         }
         let cell_fn = band;
-        let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
+        let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, field: Option<&RaceField>| {
             let (field, idx) = match field.zip(s.field_index) {
                 Some((f, i)) if i < f.n => (f, i),
                 _ => return false,
@@ -396,7 +398,7 @@ fn order_out_filter(rate: f64, band: fn(&RaceSolver) -> &std::cell::Cell<Option<
             return Err("order_out_filter expects arg==1".to_string());
         }
         let cell_fn = band;
-        let check: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
+        let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, field: Option<&RaceField>| {
             let (field, idx) = match field.zip(s.field_index) {
                 Some((f, i)) if i < f.n => (f, i),
                 _ => return false,
@@ -486,7 +488,7 @@ fn accumulatetime_condition() -> Condition {
     // Client floors the float32 race clock; there is no distance restriction.
     fn mk(cmp: fn(f64, f64) -> bool) -> FilterFn {
         Box::new(move |regions, arg, _course, _horse, _extra| {
-            let check: DynCond = Box::new(move |s, _field| {
+            let check: DynCond = std::rc::Rc::new(move |s, _field| {
                 cmp((s.accumulatetime.get() as f32).floor() as f64, arg)
             });
             Ok((regions.to_vec(), Some(check)))
@@ -608,14 +610,14 @@ fn down_slope_random_filter_eq(regions: &[Region], one: f64, course: &CourseData
 }
 
 fn hp_per_filter_lte(regions: &[Region], hp_per: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
-    let check: DynCond = Box::new(move |s, _field| if s.retail.is_some() {
+    let check: DynCond = std::rc::Rc::new(move |s, _field| if s.retail.is_some() {
         hp_condition_percent(s) <= hp_per
     } else { s.hp.hp_ratio_remaining() <= hp_per / 100. });
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn hp_per_filter_gte(regions: &[Region], hp_per: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
-    let check: DynCond = Box::new(move |s, _field| if s.retail.is_some() {
+    let check: DynCond = std::rc::Rc::new(move |s, _field| if s.retail.is_some() {
         hp_condition_percent(s) >= hp_per
     } else { s.hp.hp_ratio_remaining() >= hp_per / 100. });
     Ok((regions.to_vec(), Some(check)))
@@ -635,7 +637,7 @@ fn hp_condition_percent(s: &RaceSolver) -> f64 {
 // Python filter's docstring.
 fn is_activate_heal_skill_filter_eq(regions: &[Region], flag: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let want = flag == 1.0;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| (s.activate_count_heal > 0) == want);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| (s.activate_count_heal > 0) == want);
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -646,6 +648,16 @@ thread_local! {
 
 pub fn take_anyskill_nodes() -> Vec<usize> {
     ANYSKILL_NODES.with(|log| std::mem::take(&mut *log.borrow_mut()))
+}
+
+thread_local! {
+    /// Set while applying one condition when a check it creates keeps state
+    /// between calls (builder log). Other checks only read solver/field state.
+    static STATEFUL_CHECK: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+pub fn take_stateful_check() -> bool {
+    STATEFUL_CHECK.with(|flag| flag.replace(false))
 }
 
 fn is_activate_any_skill_filter_eq(regions: &[Region], one: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
@@ -660,7 +672,7 @@ fn is_activate_any_skill_filter_eq(regions: &[Region], one: f64, _c: &CourseData
     ANYSKILL_NODES.with(|log| log.borrow_mut().push(node));
     let own_id: i64 = _e.skill_id.parse().unwrap_or(i64::MAX);
     let _ = own_id;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| {
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| {
         if s.retail.is_some() && !s.anyskill_result.borrow().is_empty() {
             // v75: the skill pass updates this trigger at every check of its detail
             // (RaceSolver::observe_anyskill); this reads that check's result.
@@ -695,7 +707,7 @@ fn is_activate_other_skill_detail_filter_eq(regions: &[Region], one: f64, _c: &C
         return Err("is_activate_other_skill_detail expects arg==1".to_string());
     }
     let skill_id = extra.skill_id.clone();
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.used_skills.contains(&skill_id));
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.used_skills.contains(&skill_id));
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -712,9 +724,9 @@ fn is_badstart_filter_eq(regions: &[Region], flag: f64, _c: &CourseData, _h: &Ho
         return Err("is_badstart expects 0 or 1".to_string());
     }
     let check: DynCond = if flag != 0.0 {
-        Box::new(|s: &RaceSolver, _field: Option<&RaceField>| s.start_delay > 0.08)
+        std::rc::Rc::new(|s: &RaceSolver, _field: Option<&RaceField>| s.start_delay > 0.08)
     } else {
-        Box::new(|s: &RaceSolver, _field: Option<&RaceField>| s.start_delay <= 0.08)
+        std::rc::Rc::new(|s: &RaceSolver, _field: Option<&RaceField>| s.start_delay <= 0.08)
     };
     Ok((regions.to_vec(), Some(check)))
 }
@@ -791,7 +803,8 @@ fn is_hp_empty_onetime_filter_eq(regions: &[Region], one: f64, _c: &CourseData, 
         return Err("is_hp_empty_onetime expects arg==1".to_string());
     }
     let previous_hp = std::cell::Cell::new(None::<f64>);
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| {
+    STATEFUL_CHECK.with(|flag| flag.set(true));
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| {
         if s.retail.is_none() { return !s.hp.has_remaining_hp(); }
         let hp = match &s.hp { crate::hp_policy::HpPolicy::Game(hp) => hp.hp, _ => return false };
         let previous = previous_hp.get().unwrap_or(hp);
@@ -812,7 +825,7 @@ fn is_lastspurt_filter_eq(regions: &[Region], one: f64, course: &CourseData, _h:
     // fire on the flag's first frame. The plan itself is still (re)calculated
     // in the movement update. Early corpus casts of is_lastspurt skills:
     // 47 one-frame-late -> 0 (475 -> 613 matched).
-    let check: DynCond = Box::new(|s: &RaceSolver, _field: Option<&RaceField>| s.is_last_spurt
+    let check: DynCond = std::rc::Rc::new(|s: &RaceSolver, _field: Option<&RaceField>| s.is_last_spurt
         || (s.phase >= 2 && s.retail.as_ref().is_some_and(|r| {
             let spurt = &r.spurt;
             matches!(spurt.result, 1 | 2) && spurt.start > 0. && !spurt.pending
@@ -844,26 +857,26 @@ fn is_last_straight_onetime_filter_eq(regions: &[Region], one: f64, course: &Cou
     let trigger = Region::new(last_start, last_start + 10.0);
     // A one-time entry condition must not become true on a later tick when
     // the runner's rank changes while still inside the distance window.
-    let check: DynCond = Box::new(|s, _| s.retail.as_ref()
+    let check: DynCond = std::rc::Rc::new(|s, _| s.retail.as_ref()
         .map_or(true, |r| r.last_straight_entry_tick));
     Ok((rmap_one(regions, |r| r.intersect(&trigger)), Some(check)))
 }
 
 fn is_temptation_filter_eq(regions: &[Region], b: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| (s.is_kakari as i64 as f64) == b);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| (s.is_kakari as i64 as f64) == b);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn is_used_skill_id_filter_eq(regions: &[Region], skill_id: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let want = format!("{}", skill_id as i64);
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.used_skills.contains(&want));
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.used_skills.contains(&want));
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn lastspurt_condition() -> Condition {
     fn mk(cmp: fn(f64, f64) -> bool) -> FilterFn {
         Box::new(move |regions, arg, _, _, _| {
-            let check: DynCond = Box::new(move |s, _| s.last_spurt_calc_count > 0 &&
+            let check: DynCond = std::rc::Rc::new(move |s, _| s.last_spurt_calc_count > 0 &&
                 cmp(match s.last_spurt_calc_result { 1 => 2.0, 2 => 1.0, _ => 0.0 }, arg));
             Ok((regions.to_vec(), Some(check)))
         })
@@ -1007,26 +1020,26 @@ fn or_default_num_umas(v: Option<i32>) -> i64 {
 fn post_number_filter_eq(regions: &[Region], post: f64, _c: &CourseData, _h: &HorseParameters, extra: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let num_umas = or_default_num_umas(extra.params.num_umas);
     let post = post as i64;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| gate_block(s.gate_index as i64, num_umas) == post);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| gate_block(s.gate_index as i64, num_umas) == post);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn post_number_filter_lte(regions: &[Region], post: f64, _c: &CourseData, _h: &HorseParameters, extra: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let num_umas = or_default_num_umas(extra.params.num_umas);
     let post = post as i64;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| gate_block(s.gate_index as i64, num_umas) <= post);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| gate_block(s.gate_index as i64, num_umas) <= post);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn post_number_filter_gte(regions: &[Region], post: f64, _c: &CourseData, _h: &HorseParameters, extra: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let num_umas = or_default_num_umas(extra.params.num_umas);
     let post = post as i64;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| gate_block(s.gate_index as i64, num_umas) >= post);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| gate_block(s.gate_index as i64, num_umas) >= post);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn random_lot_filter_eq(regions: &[Region], lot: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| (s.random_lot as f64) < lot);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| (s.random_lot as f64) < lot);
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -1118,7 +1131,7 @@ fn last_straight_random_filter_eq(regions: &[Region], one: f64, course: &CourseD
 
 fn temptation_count_filter_eq(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.temptation_count == n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.temptation_count == n);
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -1142,7 +1155,7 @@ fn up_slope_random_later_half_filter_eq(regions: &[Region], one: f64, course: &C
 
 fn compete_fight_count_filter_gt(regions: &[Region], arg: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     // Count actual mechanic activations; the solver controls duel eligibility.
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.compete_fight_count as f64 > arg);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.compete_fight_count as f64 > arg);
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -1172,25 +1185,25 @@ fn change_order_up_middle_static(regions: &[Region], _a: f64, course: &CourseDat
 
 fn activate_count_all_filter_lte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count.iter().sum::<i32>() <= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count.iter().sum::<i32>() <= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn activate_count_all_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count.iter().sum::<i32>() >= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count.iter().sum::<i32>() >= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn activate_count_end_after_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count[2] >= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count[2] >= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn activate_count_heal_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count_heal >= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count_heal >= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -1198,19 +1211,19 @@ fn activate_count_heal_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _
 // DISTANCE half, not a phase. See the Python filter's docstring.
 fn activate_count_later_half_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count_later_half >= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count_later_half >= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn activate_count_middle_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count[1] >= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count[1] >= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
 fn activate_count_start_filter_gte(regions: &[Region], n: f64, _c: &CourseData, _h: &HorseParameters, _e: &RaceParametersWithSkillId) -> CondResult<(Vec<Region>, OptCond)> {
     let n = n as i32;
-    let check: DynCond = Box::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count[0] >= n);
+    let check: DynCond = std::rc::Rc::new(move |s: &RaceSolver, _field: Option<&RaceField>| s.activate_count[0] >= n);
     Ok((regions.to_vec(), Some(check)))
 }
 
@@ -1252,7 +1265,7 @@ fn lv_visiblehorse(s: &RaceSolver, field: Option<&RaceField>) -> f64 {
 fn bashin_condition(ahead: bool) -> Condition {
     fn mk(ahead: bool, cmp: fn(f64, f64) -> bool) -> FilterFn {
         Box::new(move |regions, arg, _course, _horse, _extra| {
-            let check: DynCond = Box::new(move |s, field| {
+            let check: DynCond = std::rc::Rc::new(move |s, field| {
                 // Client CheckActivate rejects missing neighbours for every
                 // comparator; they are not an infinitely distant opponent.
                 let gap = field.and_then(|f| s.field_index.and_then(|i| {
@@ -1433,7 +1446,7 @@ impl Op {
                     (None, None) => Ok((rightval, None)),
                     (Some(cond), None) | (None, Some(cond)) => Ok((rightval, Some(cond))),
                     (Some(lc), Some(rc)) => {
-                        let combined: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| lc(s, field) && rc(s, field));
+                        let combined: DynCond = std::rc::Rc::new(move |s: &RaceSolver, field: Option<&RaceField>| lc(s, field) && rc(s, field));
                         Ok((rightval, Some(combined)))
                     }
                 }
@@ -1442,9 +1455,9 @@ impl Op {
                 let (leftval, leftcond) = left.apply_sampled(regions, course, horse, extra, sampled)?;
                 let (rightval, rightcond) = right.apply_sampled(regions, course, horse, extra, sampled)?;
                 let merged = union(&leftval, &rightval);
-                let lc = leftcond.unwrap_or_else(|| Box::new(|_: &RaceSolver, _: Option<&RaceField>| true));
-                let rc = rightcond.unwrap_or_else(|| Box::new(|_: &RaceSolver, _: Option<&RaceField>| true));
-                let combined: DynCond = Box::new(move |s: &RaceSolver, field: Option<&RaceField>| {
+                let lc = leftcond.unwrap_or_else(|| std::rc::Rc::new(|_: &RaceSolver, _: Option<&RaceField>| true));
+                let rc = rightcond.unwrap_or_else(|| std::rc::Rc::new(|_: &RaceSolver, _: Option<&RaceField>| true));
+                let combined: DynCond = std::rc::Rc::new(move |s: &RaceSolver, field: Option<&RaceField>| {
                     (leftval.iter().any(|r| r.start <= s.pos && s.pos < r.end) && lc(s, field))
                         || (rightval.iter().any(|r| r.start <= s.pos && s.pos < r.end) && rc(s, field))
                 });
@@ -1574,7 +1587,7 @@ pub fn build_conditions() -> BTreeMap<String, Condition> {
         Ok((if extra.params.chara_ids.as_ref().is_some_and(|ids| !ids.contains(&(arg as i64))) { regions.to_vec() } else { vec![] }, None))
     })));
     c.insert("is_other_character_activate_advantage_skill".into(), immediate().eq(Box::new(|regions, arg, _, _, _| {
-        Ok((regions.to_vec(), Some(Box::new(move |s, field| arg.fract() == 0.0 && field.is_some_and(|f| f.other_advantage_active(s, arg as i32))))))
+        Ok((regions.to_vec(), Some(std::rc::Rc::new(move |s, field| arg.fract() == 0.0 && field.is_some_and(|f| f.other_advantage_active(s, arg as i32))))))
     })));
     c.insert("remain_distance_viewer_id".into(), live_simple(|s,f| f.unwrap().viewer_remaining(s)));
     c.insert("is_overtake".into(), live_simple(is_overtaking_value));

@@ -16,6 +16,7 @@ mod replay_worker;
 mod replay_frames;
 mod binary_replay;
 mod api;
+mod seed_sampling;
 mod ffi;
 pub use api::{PreparedRace, Simulation};
 #[cfg(feature = "external-geometry")]
@@ -372,6 +373,8 @@ struct PreparedRoster {
     skill_counts: Rc<BTreeMap<String, i32>>,
     chara_ids: Rc<BTreeSet<i64>>,
     team_stats: Vec<[f64; 5]>,
+    /// Per runner, skill data that does not depend on the seed.
+    skill_data: Vec<race_solver_builder::SkillDataCache>,
 }
 
 impl PreparedRoster {
@@ -414,7 +417,8 @@ impl PreparedRoster {
             if horse.team_id != 0 { team_stats[i] = team_totals[&horse.team_id]; }
         }
         Ok(Self { retail_runtime, styles, style_counts, favorite_style,
-            skill_counts: Rc::new(skill_counts), chara_ids: Rc::new(chara_ids), team_stats })
+            skill_counts: Rc::new(skill_counts), chara_ids: Rc::new(chara_ids), team_stats,
+            skill_data: (0..spec.horses.len()).map(|_| Default::default()).collect() })
     }
 }
 
@@ -533,6 +537,7 @@ fn new_builder(
     b.roster_conditions(same_style_count, favorite_matches, roster.skill_counts.clone(), h.popularity,
                         roster.chara_ids.clone(), other_style_counts);
     b.race_context = race_solver::RaceContext { team_id: h.team_id, chara_id: h.chara_id, fans: h.fans, wins: h.wins, team_stats: Some(roster.team_stats[i]) };
+    b.skill_cache = Some(roster.skill_data[i].clone());
     b.horse(desc);
     // Fully Charged is observed in Global; later stamina systems remain opt-in.
     b.with_asiwotameru();
@@ -566,7 +571,8 @@ fn is_usable(
 fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_conditions::Condition>,
             retail: Option<&retail_initialization::Initialization>, retail_sections:bool,
             retail_runtime:bool, world_geometry:Option<Rc<retail_geometry::CourseGeometry>>,
-            startup_pass:bool, retain_all_frames:bool, replay_worker: Option<&mut replay_worker::ReplayWorker>,
+            startup_pass:bool, retain_all_frames:bool, capture_frames:bool,
+            replay_worker: Option<&mut replay_worker::ReplayWorker>,
             prepared_roster: &mut Option<PreparedRoster>) -> Result<Value, String> {
     let course = course_data::get_course(spec.course_id);
     let dt=if retail_runtime {0.0666_f32 as f64} else {DT};
@@ -816,7 +822,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let mut finished_step: Vec<Option<f64>> = vec![None; n];
     let mut frames = replay_worker::FrameCollector::new(replay_worker, n)?;
     // Most fields finish within this many ticks; longer races grow as before.
-    frames.reserve(((course.distance.max(0.) / 15.5 / dt) as usize).min(1 << 14) + 128);
+    if capture_frames { frames.reserve(((course.distance.max(0.) / 15.5 / dt) as usize).min(1 << 14) + 128); }
     let mut competition_events: Vec<Value> = Vec::new();
     let mut duel_counts: Vec<i32> = field.solvers.iter().map(|s| s.borrow().compete_fight_count).collect();
     let mut spot_started: Vec<bool> = field.solvers.iter().map(|s| s.borrow().spot_struggle_started).collect();
@@ -826,7 +832,8 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let mut player_last_spurt_t: Option<f64> = None;
 
     // Serialize the actual initialized retail state before advancing the first tick.
-    if retail_runtime {
+    // Samples only read state, so results-only runs skip them.
+    if retail_runtime && capture_frames {
         frames.capture(0., |i| {
             let s = field.solvers[i].borrow();
             let blocker = s.retail.as_ref().and_then(|r| r.front_blocker)
@@ -920,7 +927,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         // here left late finishers' frames stuck mid-track while their
         // results still reported the later time, producing a warp/speed-
         // burst right at the line (matches race_runner.py's fix).
-        frames.capture(t, |i| {
+        if capture_frames { frames.capture(t, |i| {
                 let s = field.solvers[i].borrow();
                 let hp_val = s.hp.hp_value().map(|v| v.max(0.0)).unwrap_or(0.0);
                 let blocker = if retail_runtime || finished[i].is_none() {
@@ -931,7 +938,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
                  hp_val, s.lane,
                  if retail_runtime || finished[i].is_none() { s.rushing_mode as f64 } else { 0.0 },
                  blocker as f64]
-            })?;
+            })?; }
     }
 
     for i in 0..n {
@@ -993,7 +1000,8 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         ]));
     }
 
-    let mut skill_events_out = skill_events.borrow().clone();
+    // Solvers no longer step, so no hook can record another event.
+    let mut skill_events_out = std::mem::take(&mut *skill_events.borrow_mut());
     if retail_runtime {
         // Durations are finalized on expiry, but replay records retain their
         // activation order. Preserve callback order for simultaneous starts.
@@ -1081,7 +1089,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
             ])).collect::<Vec<_>>()
         }).collect())),
         ("competitionEvents", json::arr(competition_events)),
-        ("conservePowerEvents", json::arr(conserve_power_events.borrow().clone())),
+        ("conservePowerEvents", json::arr(std::mem::take(&mut *conserve_power_events.borrow_mut()))),
         ("playerLastSpurtTime", json::num(player_last_spurt_t.unwrap_or(t))),
         ("playerHorseIndex", json::num(spec.player_horse_index as f64)),
     ]);
@@ -1111,6 +1119,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         }
     }
     match frames.finish()? {
+        _ if !capture_frames => Ok(result),
         replay_worker::CollectedFrames::Numeric(frames) => Ok(encode_frames(result, frames, retain_all_frames)),
         replay_worker::CollectedFrames::Encoded(frames) => {
             if let Value::Object(map) = &mut result {
@@ -1380,6 +1389,12 @@ pub fn run_worker() -> Result<(), String> {
     // as proof that skill definitions are unchanged.
     let mut last_skill_data: Option<Value> = None;
     let mut request_parser = json::RequestParser::default();
+    // Decoded retail initialization facts for `last_skill_data`'s table.
+    let mut skill_facts = retail_initialization::SkillFactsCache::default();
+    // Repeated setups reuse prepared races (see seed_sampling). The replay
+    // encoder thread keeps every request on the per-request path.
+    let mut setups = seed_sampling::SetupCache::default();
+    let mut pool = seed_sampling::SeedPool::default();
     loop {
         line.clear();
         if reader.read_line(&mut line).map_err(|e| e.to_string())? == 0 {
@@ -1391,107 +1406,161 @@ pub fn run_worker() -> Result<(), String> {
         // A bad spec must not take the worker down with it: report the error
         // as a JSON reply and keep serving. The caller treats an "error" key
         // as a failed run and falls back to the Python engine for that race.
-        let outcome = (|| -> Result<Value, String> {
-            let spec_json = request_parser.parse(&line)?;
-            // v23: the retail runtime runs the field in gate order (see gate_order).
-            let (spec_json, gate_perm) = gate_order(spec_json)?;
-            let skill_data = match spec_json.get("skillData") {
-                Some(data) => data,
-                None => bundled_skills()?,
-            };
-            let changed = !last_skill_data.as_ref().is_some_and(|old| old.bitwise_eq(skill_data));
-            if changed {
-                // Decode successfully before installing or updating the cache.
-                let skills = load_skill_value(skill_data)?;
-                race_solver_builder::init_skills(skills);
-            }
-            if changed || matches!(skill_data, Value::Shared(_)) {
-                // Adopt equivalent parsed data too, so the next exact-text hit
-                // can use shared identity after a whitespace/key-order change.
-                last_skill_data = Some(skill_data.clone());
-            }
-            let spec = parse_race_spec(&spec_json)?;
-            let retail_runtime=spec_json.get("experimentalRetailRuntime").and_then(Value::as_bool)==Some(true);
-            if spec.trace_conserve_power && !retail_runtime {
-                return Err("traceConservePower requires experimentalRetailRuntime".into());
-            }
-            let startup_pass = match spec_json.get("experimentalRetailStartup") {
-                None => false,
-                Some(value) => value.as_bool().ok_or("experimentalRetailStartup must be a boolean")?,
-            };
-            if startup_pass && !retail_runtime {
-                return Err("experimentalRetailStartup requires the experimental runtime".into());
-            }
-            let world_geometry=if spec_json.get("experimentalRetailGeometry").and_then(Value::as_bool)==Some(true) {
-                if !retail_runtime || spec.experimental_grid {
-                    return Err("World geometry requires the experimental runtime and standard starting grid".into());
+        let parsed = request_parser.parse(&line).and_then(|mut request| {
+            let sampling = seed_sampling::Sampling::take(&mut request)?;
+            Ok((request, sampling))
+        });
+        let prepared = replay_worker.is_none();
+        let written = match parsed {
+            Err(e) => write_reply(Err(e), binary_output, &mut response, &mut binary_packet, replay_worker.as_mut(), &mut out),
+            Ok((request, sampling)) => match sampling.seeds {
+                Some(seeds) if prepared && sampling.threads > 1 && seeds.len() > 1 => {
+                    let first = seed_sampling::with_seed(&request, &seeds[0]);
+                    pool.run(first, seeds.clone(), sampling.threads, sampling.capture_frames, binary_output, |event| match event {
+                        seed_sampling::Event::Reply(_, Some(packet)) => out.write_all(&packet).map_err(|e| e.to_string()),
+                        seed_sampling::Event::Reply(index, None) => {
+                            let reply = legacy_reply(seed_sampling::with_seed(&request, &seeds[index]), sampling.capture_frames,
+                                conditions, &mut last_skill_data, &mut skill_facts, replay_worker.as_mut());
+                            write_reply(reply, binary_output, &mut response, &mut binary_packet, replay_worker.as_mut(), &mut out)
+                        }
+                        seed_sampling::Event::Idle => out.flush().map_err(|e| e.to_string()),
+                    })
                 }
-                Some(bundled_geometry(spec.course_id,
-                    course_data::get_course(spec.course_id).distance as f32)?)
-            } else {None};
-            let retail_sections=spec_json.get("experimentalRetailSections").and_then(Value::as_bool)==Some(true);
-            let retail=if spec_json.get("experimentalRetailInitialization").and_then(Value::as_bool)==Some(true) || retail_sections || retail_runtime {
-                let input_horses:Vec<_>=spec.horses.iter().map(|horse| json::obj(vec![
-                    ("skills",Value::Array(horse.skills.iter().map(|(sid,level,_)|json::obj(vec![
-                        ("skill_id",json::num(sid.parse::<f64>().unwrap_or(0.0))),
-                        ("level",json::num(*level as f64))])).collect())),
-                    // v9: the skill wisdom lottery sees Wit after the >1200 halving, then mood.
-                    ("base_wisdom",json::num(race_solver_builder::ranked_base_stat(
-                        horse.wisdom, horse.mood, horse.team_rank) as f64)),
-                    // v69: retail initialization sees the base style; Runaway (Oonige) keeps the Front
-                    // Runner force-in coefficient and its random draw (doc 13.190).
-                    ("running_style",json::num(Strategy::parse_str(&horse.strategy_str).unwrap().base_running_style() as f64))
-                ])).collect();
-                let raw_courses=bundled_courses()?;
-                let raw_skills=match spec_json.get("skillData") {
-                    Some(value) => value,
-                    None => bundled_skills()?,
-                };
-                let parameters=bundled_parameters()?;
-                let seed=i32::try_from(spec.seed).map_err(|_|"Retail seed must be a signed 32-bit integer")?;
-                Some(retail_initialization::initialize(seed,&input_horses,
-                    raw_courses.get(&spec.course_id.to_string()).ok_or("Missing retail course")?,raw_skills,
-                    parameters.get("parameters").ok_or("Missing retail parameters")?)?)
-            } else {None};
-            let retain_all_frames = spec_json.get("retainAllFrames").and_then(Value::as_bool)==Some(true);
-            let encoder = if retain_all_frames && gate_perm.is_none() { replay_worker.as_mut() } else { None };
-            let mut result=run_race(&spec, conditions,retail.as_ref(),retail_sections,retail_runtime,world_geometry,startup_pass,retain_all_frames,encoder,&mut None)?;
-            if let Value::Object(map)=&mut result {
-                map.insert("experimentalRetailInitialization".into(),Value::Bool(retail.is_some()));
-            }
-            if let (Value::Object(map), Some(signature)) = (&mut result, spec_json.get("dataSignature")) {
-                map.insert("dataSignature".to_string(), signature.clone());
-            }
-            if let Some(perm) = &gate_perm {
-                restore_request_order(&mut result, perm);
-            }
-            Ok(result)
-        })();
-        let mut reply = match outcome {
-            Ok(v) => v,
-            Err(e) => json::obj(vec![("error", Value::String(e))]),
+                Some(seeds) => seeds.iter().try_for_each(|seed| {
+                    let request = seed_sampling::with_seed(&request, seed);
+                    let reply = match prepared.then(|| setups.reply(&request, true, sampling.capture_frames)).flatten() {
+                        Some(reply) => Ok(reply),
+                        None => legacy_reply(request, sampling.capture_frames, conditions, &mut last_skill_data,
+                            &mut skill_facts, replay_worker.as_mut()),
+                    };
+                    write_reply(reply, binary_output, &mut response, &mut binary_packet, replay_worker.as_mut(), &mut out)?;
+                    out.flush().map_err(|e| e.to_string())
+                }),
+                None => {
+                    // A lone request prepares its setup only once that setup repeats.
+                    let reply = match prepared.then(|| setups.reply(&request, false, sampling.capture_frames)).flatten() {
+                        Some(reply) => Ok(reply),
+                        None => legacy_reply(request, sampling.capture_frames, conditions, &mut last_skill_data,
+                            &mut skill_facts, replay_worker.as_mut()),
+                    };
+                    write_reply(reply, binary_output, &mut response, &mut binary_packet, replay_worker.as_mut(), &mut out)
+                }
+            },
         };
-        if binary_output {
-            binary_replay::encode(&mut reply, &mut response, &mut binary_packet);
-        } else {
-            json::to_string_into(&reply, &mut response);
-        }
-        if let (Some(worker), Value::Object(map)) = (&mut replay_worker, &mut reply) {
-            if let Some(Value::EncodedReplayFrames(frames)) = map.remove("frames") {
-                worker.recycle(frames);
-            }
-        }
-        if binary_output {
-            out.write_all(&binary_packet).map_err(|e| e.to_string())?;
-            if binary_packet.capacity() > 16 * 1024 * 1024 { binary_packet = Vec::new(); }
-        } else {
-            response.push('\n');
-            out.write_all(response.as_bytes()).map_err(|e| e.to_string())?;
-        }
+        written?;
         out.flush().map_err(|e| e.to_string())?;
         if response.capacity() > 16 * 1024 * 1024 {
             response = String::new();
         }
+    }
+    Ok(())
+}
+
+/// One request on the per-request path: tables and roster built for this
+/// request alone, with the worker's skill table and retail facts reused.
+fn legacy_reply(spec_json: Value, capture_frames: bool,
+    conditions: &'static BTreeMap<String, activation_conditions::Condition>, last_skill_data: &mut Option<Value>,
+    skill_facts: &mut retail_initialization::SkillFactsCache,
+    replay_worker: Option<&mut replay_worker::ReplayWorker>) -> Result<Value, String> {
+    // v23: the retail runtime runs the field in gate order (see gate_order).
+    let (spec_json, gate_perm) = gate_order(spec_json)?;
+    let skill_data = match spec_json.get("skillData") {
+        Some(data) => data,
+        None => bundled_skills()?,
+    };
+    let changed = !last_skill_data.as_ref().is_some_and(|old| old.bitwise_eq(skill_data));
+    if changed {
+        skill_facts.clear();
+        // Decode successfully before installing or updating the cache.
+        let skills = load_skill_value(skill_data)?;
+        race_solver_builder::init_skills(skills);
+    }
+    if changed || matches!(skill_data, Value::Shared(_)) {
+        // Adopt equivalent parsed data too, so the next exact-text hit
+        // can use shared identity after a whitespace/key-order change.
+        *last_skill_data = Some(skill_data.clone());
+    }
+    let spec = parse_race_spec(&spec_json)?;
+    let retail_runtime=spec_json.get("experimentalRetailRuntime").and_then(Value::as_bool)==Some(true);
+    if spec.trace_conserve_power && !retail_runtime {
+        return Err("traceConservePower requires experimentalRetailRuntime".into());
+    }
+    let startup_pass = match spec_json.get("experimentalRetailStartup") {
+        None => false,
+        Some(value) => value.as_bool().ok_or("experimentalRetailStartup must be a boolean")?,
+    };
+    if startup_pass && !retail_runtime {
+        return Err("experimentalRetailStartup requires the experimental runtime".into());
+    }
+    let world_geometry=if spec_json.get("experimentalRetailGeometry").and_then(Value::as_bool)==Some(true) {
+        if !retail_runtime || spec.experimental_grid {
+            return Err("World geometry requires the experimental runtime and standard starting grid".into());
+        }
+        Some(bundled_geometry(spec.course_id,
+            course_data::get_course(spec.course_id).distance as f32)?)
+    } else {None};
+    let retail_sections=spec_json.get("experimentalRetailSections").and_then(Value::as_bool)==Some(true);
+    let retail=if spec_json.get("experimentalRetailInitialization").and_then(Value::as_bool)==Some(true) || retail_sections || retail_runtime {
+        let input_horses:Vec<_>=spec.horses.iter().map(|horse| json::obj(vec![
+            ("skills",Value::Array(horse.skills.iter().map(|(sid,level,_)|json::obj(vec![
+                ("skill_id",json::num(sid.parse::<f64>().unwrap_or(0.0))),
+                ("level",json::num(*level as f64))])).collect())),
+            // v9: the skill wisdom lottery sees Wit after the >1200 halving, then mood.
+            ("base_wisdom",json::num(race_solver_builder::ranked_base_stat(
+                horse.wisdom, horse.mood, horse.team_rank) as f64)),
+            // v69: retail initialization sees the base style; Runaway (Oonige) keeps the Front
+            // Runner force-in coefficient and its random draw (doc 13.190).
+            ("running_style",json::num(Strategy::parse_str(&horse.strategy_str).unwrap().base_running_style() as f64))
+        ])).collect();
+        let raw_courses=bundled_courses()?;
+        let raw_skills=match spec_json.get("skillData") {
+            Some(value) => value,
+            None => bundled_skills()?,
+        };
+        let parameters=bundled_parameters()?;
+        let seed=i32::try_from(spec.seed).map_err(|_|"Retail seed must be a signed 32-bit integer")?;
+        Some(retail_initialization::initialize_cached(seed,&input_horses,
+            raw_courses.get(&spec.course_id.to_string()).ok_or("Missing retail course")?,raw_skills,
+            parameters.get("parameters").ok_or("Missing retail parameters")?,skill_facts)?)
+    } else {None};
+    let retain_all_frames = spec_json.get("retainAllFrames").and_then(Value::as_bool)==Some(true);
+    let encoder = if retain_all_frames && capture_frames && gate_perm.is_none() { replay_worker } else { None };
+    let mut result=run_race(&spec, conditions,retail.as_ref(),retail_sections,retail_runtime,world_geometry,startup_pass,retain_all_frames,capture_frames,encoder,&mut None)?;
+    if let Value::Object(map)=&mut result {
+        map.insert("experimentalRetailInitialization".into(),Value::Bool(retail.is_some()));
+    }
+    if let (Value::Object(map), Some(signature)) = (&mut result, spec_json.get("dataSignature")) {
+        map.insert("dataSignature".to_string(), signature.clone());
+    }
+    if let Some(perm) = &gate_perm {
+        restore_request_order(&mut result, perm);
+    }
+    Ok(result)
+}
+
+/// Write one reply (an error becomes an `"error"` reply). The caller flushes.
+fn write_reply(outcome: Result<Value, String>, binary_output: bool, response: &mut String, binary_packet: &mut Vec<u8>,
+    replay_worker: Option<&mut replay_worker::ReplayWorker>, out: &mut impl Write) -> Result<(), String> {
+    let mut reply = match outcome {
+        Ok(v) => v,
+        Err(e) => json::obj(vec![("error", Value::String(e))]),
+    };
+    if binary_output {
+        binary_replay::encode(&mut reply, response, binary_packet);
+    } else {
+        json::to_string_into(&reply, response);
+    }
+    if let (Some(worker), Value::Object(map)) = (replay_worker, &mut reply) {
+        if let Some(Value::EncodedReplayFrames(frames)) = map.remove("frames") {
+            worker.recycle(frames);
+        }
+    }
+    if binary_output {
+        out.write_all(binary_packet).map_err(|e| e.to_string())?;
+        if binary_packet.capacity() > 16 * 1024 * 1024 { *binary_packet = Vec::new(); }
+    } else {
+        response.push('\n');
+        out.write_all(response.as_bytes()).map_err(|e| e.to_string())?;
     }
     Ok(())
 }

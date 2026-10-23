@@ -1,6 +1,29 @@
 # Benchmark results and coverage
 
-## Version 75
+## Version 76
+
+The frozen corpus contains 470,350 official captures. The final optimized engine
+produces byte-identical complete binary replies for every input compared with
+the preceding audited engine. Each reconstructed input must also match its
+frozen input hash. This preserves all strict observation outcomes, including
+known discrepancies; it is not 470,350 official-race passes.
+
+| Group | Strict matches | Total | Unresolved |
+|---|---:|---:|---:|
+| Practice, including quarantine | 457,989 | 457,989 | 0 |
+| Career, including quarantine | 11,153 | 12,361 | 1,208 |
+| Active captures, both types | 469,141 | 469,551 | 410 |
+| Quarantined captures, both types | 1 | 799 | 798 |
+
+The last two rows partition the first two. One practice capture remains
+quarantined even though it now passes; quarantine was not changed for this
+release. All 81 captured regression fixtures pass. The synthetic HP-empty
+precondition test is separate and is not counted as an official capture.
+
+See [v76 validation](V76-VALIDATION.md) and
+[machine-readable results](../evidence/v76-release-validation.json).
+
+## Historical Version 75
 
 The latest batch contains 95,062 additional official races: 90,283 practice
 and 4,779 Career races. Strict validation records **94,566 matches and 496

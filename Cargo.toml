@@ -21,7 +21,9 @@ codegen-units = 1
 panic = "abort"
 
 [features]
-# Use the platform allocator unless explicitly building for lower latency.
+default = ["fast-alloc"]
+# mimalloc as the global allocator: lower latency (needs a C compiler). Build
+# with --no-default-features to use the platform allocator instead.
 fast-alloc = ["dep:mimalloc"]
 # Leave the captured course geometry assets (data/course_geometry, most of the
 # binary's size) out of the build; hosts register a course's geometry at

@@ -94,22 +94,117 @@ pub struct TargetState {
     pub force_in: bool,
     pub extra_outward: Option<f32>,
     front_cache: Option<(Row, f32, f32, Option<usize>)>,
+    /// Owner index when `cached` is exactly the position-sorted roster's rows.
+    sorted_owner: Option<usize>,
 }
 
 impl TargetState {
     pub fn collect(&mut self, c: &TargetContext, others: &[Horse], p: TargetParameters) {
         self.cached.clear();
         self.cached.extend_from_slice(others);
+        self.sorted_owner = None;
         self.collect_cached(c, p);
     }
 
+    /// `sorted` optionally gives the roster ordered by position, with each
+    /// runner's place in that order, for a scan limited to nearby runners.
     pub(crate) fn collect_roster(
         &mut self, c: &TargetContext, roster: &[Horse], owner: usize, p: TargetParameters,
+        sorted: Option<(&[usize], &[usize])>,
     ) {
         self.cached.clear();
         self.cached.extend_from_slice(&roster[..owner]);
         self.cached.extend_from_slice(&roster[owner + 1..]);
-        self.collect_cached(c, p);
+        self.sorted_owner = None;
+        match sorted {
+            Some((order, slot)) if roster.len() <= 128
+                && roster[owner].point.position.to_bits() == c.owner.point.position.to_bits() => {
+                self.collect_nearby(c, p, roster, owner, order, slot);
+                self.sorted_owner = Some(owner);
+            }
+            _ => self.collect_cached(c, p),
+        }
+        #[cfg(test)] {
+            let mut indexed = TargetState { cached: self.cached.clone(), ..Default::default() };
+            indexed.collect_cached(c, p);
+            assert_eq!(indexed.visible, self.visible);
+            assert_eq!(format!("{:?}", indexed.side), format!("{:?}", self.side));
+            assert_eq!(format!("{:?}", indexed.front_cache), format!("{:?}", self.front_cache));
+            assert_eq!(indexed.force_in, self.force_in);
+        }
+    }
+
+    /// `collect_cached` over the position-sorted roster. Float subtraction is
+    /// monotonic, so each direction stops at the first runner beyond every
+    /// query's reach. Ties and overwrites keep the indexed scan's choices:
+    /// the lowest-index nearest front runner and the last inner blocker.
+    fn collect_nearby(&mut self, c: &TargetContext, p: TargetParameters, roster: &[Horse],
+        owner_index: usize, order: &[usize], slot: &[usize]) {
+        let owner = c.owner.point;
+        let mut side = SideRoom {
+            can_in: owner.lane > 0.0001,
+            can_out: owner.lane < c.max_lane,
+            in_space: owner.lane,
+            out_space: c.max_lane - owner.lane,
+            inner_blocker: None,
+            inner_blocker_index: None,
+        };
+        let mut front: Option<usize> = None;
+        let mut nearest = f32::INFINITY;
+        let mut inner_nearby = false;
+        let mut visible = 0_u128;
+        let mut visit = |j: usize, position_gap: f32| {
+            let i = j - usize::from(j > owner_index);
+            let row = roster[j].point;
+            let lane_gap = row.lane - owner.lane;
+            if is_visible(position_gap, lane_gap, c.vision) { visible |= 1 << i; }
+            if position_gap > 0. && position_gap < p.block.front_distance
+                && (position_gap < nearest || (position_gap == nearest && front.is_some_and(|f| i < f)))
+                && lane_gap.abs() <= front_lane_limit(position_gap, p.block) {
+                front = Some(i);
+                nearest = position_gap;
+            }
+            if !(position_gap.abs() >= p.block.side_distance) {
+                if lane_gap < 0. {
+                    side.in_space = side.in_space.min(-lane_gap);
+                    if -lane_gap < p.block.side_lane {
+                        side.can_in = false;
+                        if side.inner_blocker_index.map_or(true, |k| i > k) {
+                            side.inner_blocker = Some(row.lane);
+                            side.inner_blocker_index = Some(i);
+                        }
+                    }
+                } else if lane_gap > 0. {
+                    side.out_space = side.out_space.min(lane_gap);
+                    if lane_gap < p.block.side_lane { side.can_out = false; }
+                }
+            }
+            let inward_gap = owner.lane - row.lane;
+            inner_nearby |= position_gap.abs() < p.block.side_distance
+                && inward_gap > 0. && inward_gap < p.block.side_lane;
+        };
+        let reach = c.vision.max(p.block.front_distance).max(p.block.side_distance);
+        let at = slot[owner_index];
+        for &j in &order[at + 1..] {
+            let gap = roster[j].point.position - owner.position;
+            if gap > reach { break; }
+            visit(j, gap);
+        }
+        // Earlier rows never lead; only equal positions can still be visible.
+        for &j in order[..at].iter().rev() {
+            let gap = roster[j].point.position - owner.position;
+            if gap < 0. && !(gap > -p.block.side_distance) { break; }
+            visit(j, gap);
+        }
+        self.visible.clear();
+        while visible != 0 {
+            self.visible.push(visible.trailing_zeros() as usize);
+            visible &= visible - 1;
+        }
+        self.side = Some(side);
+        self.front_cache = Some((owner, p.block.front_distance, p.block.front_lane, front));
+        self.force_in = c.empty_in_move && c.phase < 1
+            && owner.lane >= p.force_in_threshold && inner_nearby;
     }
 
     fn collect_cached(&mut self, c: &TargetContext, p: TargetParameters) {
@@ -227,6 +322,19 @@ impl TargetState {
         p: TargetParameters,
         rng: &mut impl RandomSource,
     ) -> f32 {
+        self.target_sorted(c, live, p, rng, None)
+    }
+
+    /// `target` given the position-sorted roster passed to `collect_roster`
+    /// this tick (order, then each runner's place in it), if any.
+    pub(crate) fn target_sorted(
+        &mut self,
+        c: &TargetContext,
+        live: &[Horse],
+        p: TargetParameters,
+        rng: &mut impl RandomSource,
+        sorted: Option<(&[usize], &[usize])>,
+    ) -> f32 {
         let side = self
             .side
             .expect("Collect retail lane cache before target search");
@@ -270,7 +378,7 @@ impl TargetState {
                 targets: &self.targets,
                 side,
             }
-            .target();
+            .target_sorted(sorted.zip(self.sorted_owner).map(|((order, slot), owner)| (order, slot, owner)));
             let extra = self.extra_outward.or_else(|| {
                 if c.fixed_goal != 0. {
                     Some(c.fixed_goal)
@@ -362,6 +470,10 @@ pub fn is_visible(gap: f32, lane_gap: f32, vision: f32) -> bool {
     // Store the distance ratio, then keep the width expression wide until
     // its final float32 store. Intermediate float rounding can admit a
     // runner just outside the cone and close an otherwise clear corridor.
+    // The width grows with the ratio, which is at most one here. Rows wider
+    // than the full-distance width cannot qualify; skip their division.
+    let widest = ((1_f64 * 0.6388888955116272_f32 as f64 + 0.1111111119389534_f32 as f64) * 0.5) as f32;
+    if lane_gap.abs() > widest { return false; }
     let ratio = gap / vision;
     let width = ((ratio as f64 * 0.6388888955116272_f32 as f64
         + 0.1111111119389534_f32 as f64) * 0.5) as f32;
@@ -603,6 +715,22 @@ impl MoveState {
 
 impl<T: PointRow> PassingSearch<'_, T> {
     pub fn target(&self) -> f32 {
+        self.target_sorted(None)
+    }
+
+    /// `sorted` gives the cached rows' roster sorted by position, each roster
+    /// index's place in that order, and the owner's roster index. Crowd
+    /// steps then visit only rows up to 3 m ahead, keeping the same choice.
+    fn target_sorted(&self, sorted: Option<(&[usize], &[usize], usize)>) -> f32 {
+        #[cfg(test)] if sorted.is_some() {
+            let indexed = self.target_sorted_unchecked(None);
+            assert_eq!(self.target_sorted_unchecked(sorted).to_bits(), indexed.to_bits());
+            return indexed;
+        }
+        self.target_sorted_unchecked(sorted)
+    }
+
+    fn target_sorted_unchecked(&self, sorted: Option<(&[usize], &[usize], usize)>) -> f32 {
         let lane = self.owner.lane;
         const EDGE: f32 = 0.055555559694767_f32;
         const STRAIGHT: f32 = 0.0555555559694767_f32;
@@ -651,9 +779,8 @@ impl<T: PointRow> PassingSearch<'_, T> {
                     let live = self.live[edge].point();
                     let cached = self.cached[edge].point();
                     let mut next: Option<usize> = None;
-                    for (j, row) in self.cached.iter().enumerate() {
-                        let row = row.point();
-                        let position_gap = row.position - cached.position;
+                    let mut check = |j: usize, position_gap: f32| {
+                        let row = self.cached[j].point();
                         let lane_gap = direction * (row.lane - cached.lane);
                         if (0. ..=3.).contains(&position_gap)
                             && lane_gap > 0.
@@ -662,13 +789,38 @@ impl<T: PointRow> PassingSearch<'_, T> {
                         {
                             // Python max retains the first entry on equal
                             // live lane; do not let a sort choose the last.
-                            if next.is_none()
-                                || direction * self.live[j].point().lane
-                                    > direction * self.live[next.unwrap()].point().lane
-                            {
+                            let lane = direction * self.live[j].point().lane;
+                            if next.map_or(true, |k| {
+                                let best = direction * self.live[k].point().lane;
+                                lane > best || (lane == best && j < k)
+                            }) {
                                 next = Some(j);
                             }
                         }
+                    };
+                    match sorted {
+                        // Float subtraction is monotonic: later rows only
+                        // grow the gap; earlier rows can only tie at zero.
+                        Some((order, slot, owner)) => {
+                            let at = slot[edge + usize::from(edge >= owner)];
+                            for &f in &order[at + 1..] {
+                                if f == owner { continue; }
+                                let j = f - usize::from(f > owner);
+                                let gap = self.cached[j].point().position - cached.position;
+                                if gap > 3. { break; }
+                                check(j, gap);
+                            }
+                            for &f in order[..at].iter().rev() {
+                                if f == owner { continue; }
+                                let j = f - usize::from(f > owner);
+                                let gap = self.cached[j].point().position - cached.position;
+                                if gap < 0. { break; }
+                                check(j, gap);
+                            }
+                        }
+                        None => for (j, row) in self.cached.iter().enumerate() {
+                            check(j, row.point().position - cached.position);
+                        },
                     }
                     match next {
                         Some(i) => edge = i,

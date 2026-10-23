@@ -38,6 +38,70 @@ pub fn target_speed_indices(position: f32, distance: f32) -> (usize, usize) {
     (section, if section < 4 { 0 } else if section < 16 { 1 } else { 2 })
 }
 
+/// `target_speed_indices` for one course without a division per call. Each
+/// section's first float position is found once with the same expression;
+/// the quotient is monotonic in position, so counting crossed starts gives
+/// the identical section. Positions only advance, so the last one is kept.
+#[derive(Clone, Copy, Debug)]
+pub struct SectionIndex {
+    distance: f32,
+    /// `starts[k - 1]` is the least position whose section is at least `k`.
+    starts: Option<[f32; 23]>,
+    current: usize,
+}
+
+impl SectionIndex {
+    pub fn new(distance: f32) -> Self {
+        let length = distance / 24.;
+        let section = |position: f32| target_speed_indices(position, distance).0;
+        let starts = (length > 0. && length.is_finite()).then(|| std::array::from_fn(|i| {
+            let k = i + 1;
+            let mut start = k as f32 * length;
+            while start > 0. && section(start) >= k { start = f32::from_bits(start.to_bits() - 1); }
+            while section(start) < k { start = f32::from_bits(start.to_bits() + 1); }
+            start
+        }));
+        Self { distance, starts, current: 0 }
+    }
+
+    pub fn indices(&mut self, position: f32) -> (usize, usize) {
+        let Some(starts) = &self.starts else { return target_speed_indices(position, self.distance) };
+        let mut section = self.current;
+        while section > 0 && !(position >= starts[section - 1]) { section -= 1; }
+        while section < 23 && position >= starts[section] { section += 1; }
+        self.current = section;
+        (section, if section < 4 { 0 } else if section < 16 { 1 } else { 2 })
+    }
+}
+
+#[cfg(test)]
+mod section_index_tests {
+    use super::{target_speed_indices, SectionIndex};
+    #[test]
+    fn cached_sections_match_the_quotient_at_every_boundary() {
+        for distance in [1000_f32, 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2500., 3000., 3200., 3600.] {
+            let mut index = SectionIndex::new(distance);
+            let length = distance / 24.;
+            let mut positions = vec![-1., 0., f32::NAN, f32::INFINITY, distance, distance + 30.];
+            for k in 0..=25 {
+                let center = k as f32 * length;
+                let mut value = center;
+                for _ in 0..4 { value = f32::from_bits(value.to_bits().saturating_sub(1)); }
+                for _ in 0..9 { positions.push(value); value = f32::from_bits(value.to_bits() + 1); }
+            }
+            positions.extend((0..4000).map(|i| i as f32 * distance / 3900.));
+            // Ascending visits use the cached section; the reversed pass
+            // exercises recomputation after an unexpected backward query.
+            let mut ordered = positions.clone();
+            ordered.sort_by(f32::total_cmp);
+            for position in ordered.iter().chain(ordered.iter().rev()).chain(&positions) {
+                assert_eq!(index.indices(*position), target_speed_indices(*position, distance),
+                    "distance {distance} position {position}");
+            }
+        }
+    }
+}
+
 /// UpdateAI's float countdown; exact zero gives a whole movement tick.
 /// `dt` is zero for startup or a positive tick. None suppresses AI and movement.
 /// Official server observations retain a double-precision crossing ratio,

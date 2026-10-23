@@ -62,6 +62,8 @@ pub(crate) fn is_skill_demerit(kind: i32, value: f64) -> bool {
     }
 }
 
+fn base_style(s: Strategy) -> usize { if s == Strategy::Oonige { 1 } else { s as usize } }
+
 pub struct RaceField {
     retail_block: Option<crate::retail_lane::BlockParameters>,
     retail_tick: RefCell<retail_impl::TickBuffers>,
@@ -75,6 +77,11 @@ pub struct RaceField {
     /// currently mid-`step()` and thus already mutably borrowed -- without
     /// re-entering that `RefCell`.
     strategies: Vec<Strategy>,
+    /// Runners per exact strategy value, fixed with `strategies`.
+    style_counts: [usize; 6],
+    /// Highest base style ranked ahead of each runner (0 for the leader),
+    /// refreshed with the order in `update`.
+    style_ahead: RefCell<Vec<usize>>,
     teams: Vec<i64>,
     characters: Vec<i64>,
     pub heal_history: RefCell<Vec<usize>>,
@@ -117,7 +124,9 @@ impl RaceField {
         for (i, s) in solvers.iter_mut().enumerate() {
             s.field_index = Some(i);
         }
-        let strategies = solvers.iter().map(|s| s.horse.strategy).collect();
+        let strategies: Vec<Strategy> = solvers.iter().map(|s| s.horse.strategy).collect();
+        let mut style_counts = [0; 6];
+        for &strategy in &strategies { style_counts[strategy as usize] += 1; }
         let teams = solvers.iter().map(|s| s.race_context.team_id).collect();
         let characters = solvers.iter().map(|s| s.race_context.chara_id).collect();
         let retail_block = solvers.first().and_then(|s| s.retail.as_ref().map(|r|r.config.lane.block));
@@ -135,6 +144,8 @@ impl RaceField {
             order_band_thresholds: [0.2, 0.4, 0.5, 0.7, 0.8].map(|rate| (rate * n as f64).round()),
             player_horse_index: 0,
             strategies,
+            style_counts,
+            style_ahead: RefCell::new(vec![0; n]),
             teams, characters, heal_history: RefCell::new(Vec::new()),
             competition_starts: RefCell::new(Vec::new()),
             competition_roster_rank,
@@ -198,9 +209,22 @@ impl RaceField {
         let RankBuffers { positions, indices: idx, ranks: rank_of } = &mut *buffers;
         positions.clear();
         positions.extend(self.solvers.iter().map(|s| s.borrow().pos));
-        idx.clear();
-        idx.extend(0..self.n);
-        idx.sort_by(|&a, &b| positions[b].partial_cmp(&positions[a]).unwrap());
+        // Equivalent to a stable descending sort of 0..n: ties keep index order.
+        // Start from an earlier order, which is nearly sorted already.
+        if idx.len() != self.n {
+            idx.clear();
+            idx.extend(0..self.n);
+        }
+        for k in 1..idx.len() {
+            let i = idx[k];
+            let mut m = k;
+            while m > 0 && positions[i].partial_cmp(&positions[idx[m - 1]]).unwrap()
+                .then(idx[m - 1].cmp(&i)) == std::cmp::Ordering::Greater {
+                idx[m] = idx[m - 1];
+                m -= 1;
+            }
+            idx[m] = i;
+        }
         rank_of.clear();
         rank_of.resize(self.n, 0);
         for (rank, &i) in idx.iter().enumerate() {
@@ -219,22 +243,31 @@ impl RaceField {
         std::mem::swap(&mut *self.rank_of.borrow_mut(), rank_of);
         // v9: the section pacemaker is chosen from the preceding rank pass (live positions).
         let stale_order = std::mem::replace(&mut *self.order.borrow_mut(), std::mem::take(idx));
+        {
+            let mut style_ahead = self.style_ahead.borrow_mut();
+            let mut highest = 0;
+            for &i in self.order.borrow().iter() {
+                style_ahead[i] = highest;
+                highest = highest.max(base_style(self.strategies[i]));
+            }
+        }
         if let Some(previous) = self.previous_positions.borrow().as_ref() {
+            let ranks = self.rank_of.borrow();
+            let order = self.order.borrow();
             for i in 0..self.n {
-                let distance = self.solvers[i].borrow().course.distance;
-                if previous[i] >= distance { continue; }
-                let improved = prev[i] > self.rank_of.borrow()[i];
+                if previous[i] >= self.solvers[i].borrow().course.distance { continue; }
+                let mut solver = self.solvers[i].borrow_mut();
+                let improved = prev[i] > ranks[i];
                 let mut event = improved;
                 if event {
-                    let target = self.order.borrow()[self.rank_of.borrow()[i]];
-                    let now = self.solvers[i].borrow().accumulatetime.get();
+                    let target = order[ranks[i]];
+                    let now = solver.accumulatetime.get();
                     let mut cooldowns = self.overtake_cooldowns.borrow_mut();
                     event = now >= *cooldowns.get(&(i, target)).unwrap_or(&-1.0);
                     if event { cooldowns.insert((i, target), now + 6.0); }
                 }
-                let mut solver=self.solvers[i].borrow_mut();
                 if event {solver.overtake_target_no_order_up_time=0.0;}
-                if prev[i]<self.rank_of.borrow()[i] {solver.overtake_target_no_order_down_time=0.0;}
+                if prev[i]<ranks[i] {solver.overtake_target_no_order_down_time=0.0;}
                 solver.record_overtakes(usize::from(event));
             }
         }
@@ -456,7 +489,7 @@ impl RaceField {
 
     /// Runners with exactly this style, fixed when the field is built.
     pub(crate) fn exact_style_count(&self, strategy: Strategy) -> usize {
-        self.strategies.iter().filter(|&&s| s == strategy).count()
+        self.style_counts[strategy as usize]
     }
 
     pub fn order_of(&self, i: usize) -> usize {
@@ -483,6 +516,13 @@ impl RaceField {
         let order = self.order.borrow();
         let position = |index: usize| if index == i { my_pos } else { self.solvers[index].borrow().pos };
         (position(order[0]), position(order[self.n - 1]))
+    }
+
+    /// Runners directly ahead of and behind `i` in the cached rank order.
+    pub fn ranked_neighbors(&self, i: usize) -> (Option<usize>, Option<usize>) {
+        let r = self.rank_of.borrow()[i];
+        let order = self.order.borrow();
+        ((r > 1).then(|| order[r - 2]), (r < self.n).then(|| order[r]))
     }
 
     pub fn distance_to_ahead(&self, i: usize, my_pos: f64) -> Option<f64> {
@@ -660,13 +700,11 @@ impl RaceField {
     }
 
     pub fn ordinary_front_runner_count(&self) -> usize {
-        self.strategies.iter().filter(|&&s| s == Strategy::Nige).count()
+        self.style_counts[Strategy::Nige as usize]
     }
 
     pub fn later_style_ahead(&self, i: usize, strategy: Strategy) -> bool {
-        let base = |s: Strategy| if s == Strategy::Oonige { 1 } else { s as usize };
-        self.order.borrow().iter().take(self.order_of(i) - 1)
-            .any(|&j| base(self.strategies[j]) > base(strategy))
+        self.style_ahead.borrow()[i] > base_style(strategy)
     }
 
     pub fn pacemaker_is_later_style_ahead(&self, i: usize, strategy: Strategy) -> bool {

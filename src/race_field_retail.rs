@@ -66,6 +66,27 @@ fn blocking_sample_sorted(owner: usize, rows: &[(f32, f32, bool)], order: &[usiz
     (front, side)
 }
 
+/// Sort runner indices by position, starting from the previous order.
+/// Runners rarely swap between ticks, so insertion sort is near linear.
+/// Callers that depend on tie order break ties explicitly by index.
+fn resort_by_position(order: &mut Vec<usize>, slot: &mut Vec<usize>, rows: &[(f32, f32, bool)]) {
+    if order.len() != rows.len() {
+        order.clear();
+        order.extend(0..rows.len());
+    }
+    for k in 1..order.len() {
+        let i = order[k];
+        let mut m = k;
+        while m > 0 && rows[order[m - 1]].0 > rows[i].0 {
+            order[m] = order[m - 1];
+            m -= 1;
+        }
+        order[m] = i;
+    }
+    slot.resize(rows.len(), 0);
+    for (k, &i) in order.iter().enumerate() { slot[i] = k; }
+}
+
 /// Reverse passing membership for the current ordered movement pass. A row
 /// changes only after its owner moves, or after a peer-mutating callback.
 #[derive(Default)]
@@ -152,13 +173,16 @@ pub(super) struct TickBuffers {
     overlap_order: Vec<usize>,
     by_position: Vec<usize>,
     slot: Vec<usize>,
+    before_order: Vec<usize>,
+    before_slot: Vec<usize>,
     passing: PassingSnapshot,
 }
 
 impl RaceField {
     pub(super) fn step_all_retail(&self, dt: f32, indices: &[usize]) {
         let mut buffers = self.retail_tick.borrow_mut();
-        let TickBuffers { before: rows, roster, advanced, overlaps, flags, overlap_order, by_position, slot, passing } = &mut *buffers;
+        let TickBuffers { before: rows, roster, advanced, overlaps, flags, overlap_order, by_position, slot,
+            before_order, before_slot, passing } = &mut *buffers;
         rows.clear();
         roster.clear();
         for cell in &self.solvers {
@@ -177,9 +201,13 @@ impl RaceField {
                 target: s.target_speed as f32,
             });
         }
+        // Lane caches scan only nearby runners when positions can be ordered.
+        let before_sorted = rows.iter().all(|row| row.0.is_finite());
+        if before_sorted { resort_by_position(before_order, before_slot, rows); }
+        let any_straight = rows.iter().any(|row| row.2);
         for &i in indices {
             let mut s = self.solvers[i].borrow_mut();
-            s.collect_retail_duel_proximity(&rows, dt);
+            s.collect_retail_duel_proximity(&rows, any_straight, dt);
             let position = s.pos as f32;
             let r = s.retail.as_mut().unwrap();
             if let Some(geometry) = &r.config.geometry {
@@ -187,7 +215,8 @@ impl RaceField {
             }
             let context = s.retail_lane_context();
             let r = s.retail.as_mut().unwrap();
-            r.lane.collect_roster(&context, roster, i, r.config.lane);
+            r.lane.collect_roster(&context, roster, i, r.config.lane,
+                before_sorted.then_some((&before_order[..], &before_slot[..])));
         }
         for &i in indices {
             self.solvers[i]
@@ -212,13 +241,7 @@ impl RaceField {
         }
         // Positions are finite during a race; otherwise keep the indexed scan.
         let sorted = rows.iter().all(|row| row.0.is_finite());
-        if sorted {
-            by_position.clear();
-            by_position.extend(0..rows.len());
-            by_position.sort_by(|&a, &b| rows[a].0.partial_cmp(&rows[b].0).unwrap());
-            slot.resize(rows.len(), 0);
-            for (k, &i) in by_position.iter().enumerate() { slot[i] = k; }
-        }
+        if sorted { resort_by_position(by_position, slot, rows); }
         for &i in indices {
             let block = self.retail_block.unwrap();
             let (front, side) = if sorted {
@@ -243,7 +266,8 @@ impl RaceField {
         for &i in indices {
             let (elapsed, dirty) = {
                 let mut s = self.solvers[i].borrow_mut();
-                let elapsed = s.step_forward_retail_with_roster(dt, Some(self), Some(roster));
+                let elapsed = s.step_forward_retail_with_roster(dt, Some(self), Some(roster),
+                    before_sorted.then_some((&before_order[..], &before_slot[..])));
                 roster[i] = s.retail_live_horse();
                 if indexed_passing { passing.update(i, &s.retail.as_ref().unwrap().lane.targets); }
                 (elapsed, s.retail.as_ref().unwrap().live_roster_dirty)

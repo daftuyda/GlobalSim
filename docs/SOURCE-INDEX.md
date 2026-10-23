@@ -240,3 +240,9 @@ Function: `encode`. See the [protocol](BINARY-REPLAY.md).
 - [check_native_parity.py](../tools/check_native_parity.py): seeds, tables, frames,
   ownership, errors and concurrent-handle regression checks.
 - [train_native.py](../tools/train_native.py): prepared-library compiler profiling.
+
+## [seed_sampling.rs](../src/seed_sampling.rs)
+
+Worker seed-batch validation, prepared-setup reuse, persistent seed threads and
+ordered replies. Regression tests cover repeated seeds, mutable precondition
+isolation, changed setup data, and invalid sampling controls.
