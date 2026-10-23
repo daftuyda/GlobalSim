@@ -80,6 +80,8 @@ pub struct RaceField {
     pub heal_history: RefCell<Vec<usize>>,
     /// Current tick's actual competition activation order, before serialization.
     pub(crate) competition_starts: RefCell<Vec<(i32, usize)>>,
+    // Recording uses the initial framework roster order for invited partners.
+    competition_roster_rank: Vec<usize>,
     cached_heal_count: Cell<usize>,
     advantage_activations: RefCell<BTreeSet<(usize, i32)>>,
     previous_advantage_activations: RefCell<BTreeSet<(usize, i32)>>,
@@ -95,11 +97,23 @@ pub struct RaceField {
     section_pacemaker: Cell<Option<(usize, usize)>>,
     pm_count: Cell<usize>,
     pm_handed: Cell<bool>,
+    // Reused storage for the per-tick pacemaker candidate list.
+    pacemaker_active: RefCell<Vec<usize>>,
 }
 
 impl RaceField {
     pub fn new(mut solvers: Vec<RaceSolver>) -> RaceField {
         let n = solvers.len();
+        // Runaways retain the Front Runner base-style roster. Other base
+        // styles are excluded before the framework's initial comparison sort.
+        let mut recording_order: Vec<_> = (0..n).filter(|&i|
+            matches!(solvers[i].horse.strategy, Strategy::Nige | Strategy::Oonige)).collect();
+        crate::retail_sort::comparison_sort(&mut recording_order, |&a, &b|
+            solvers[b].pos.total_cmp(&solvers[a].pos));
+        let mut competition_roster_rank = vec![0; n];
+        for (rank, i) in recording_order.into_iter().enumerate() {
+            competition_roster_rank[i] = rank;
+        }
         for (i, s) in solvers.iter_mut().enumerate() {
             s.field_index = Some(i);
         }
@@ -123,6 +137,7 @@ impl RaceField {
             strategies,
             teams, characters, heal_history: RefCell::new(Vec::new()),
             competition_starts: RefCell::new(Vec::new()),
+            competition_roster_rank,
             cached_heal_count: Cell::new(0),
             advantage_activations: RefCell::new(initial),
             previous_advantage_activations: RefCell::new(BTreeSet::new()),
@@ -137,9 +152,37 @@ impl RaceField {
             section_pacemaker: Cell::new(None),
             pm_count: Cell::new(0),
             pm_handed: Cell::new(false),
+            pacemaker_active: RefCell::new(Vec::new()),
         };
         field.update();
         field
+    }
+
+    /// Captured CompeteTop records put Runaways before ordinary Front Runners,
+    /// then the cached group leader before its invited partners. Partner ties
+    /// retain the initial base-style roster permutation, including framework
+    /// swaps for groups larger than sixteen. This only orders observations:
+    /// state updates and random draws keep their existing execution order.
+    pub(crate) fn order_competition_records(&self) {
+        let mut events = self.competition_starts.borrow_mut();
+        if !events.iter().any(|&(kind, _)| kind == 4) { return; }
+        let mut leaders = [None; 6];
+        let mut spots = Vec::new();
+        for &(kind, i) in events.iter() {
+            if kind != 4 { continue; }
+            leaders[self.strategies[i] as usize].get_or_insert(i);
+            spots.push((kind, i));
+        }
+        spots.sort_by_key(|&(_, i)| (
+            self.strategies[i] != Strategy::Oonige,
+            leaders[self.strategies[i] as usize] != Some(i),
+            self.competition_roster_rank[i],
+        ));
+        // Preserve duel event slots and their actual activation sequence.
+        let mut ordered = spots.into_iter();
+        for event in events.iter_mut().filter(|event| event.0 == 4) {
+            *event = ordered.next().unwrap();
+        }
     }
 
     /// Recompute live order/rank from each solver's current `pos`. Call
@@ -411,6 +454,11 @@ impl RaceField {
         }
     }
 
+    /// Runners with exactly this style, fixed when the field is built.
+    pub(crate) fn exact_style_count(&self, strategy: Strategy) -> usize {
+        self.strategies.iter().filter(|&&s| s == strategy).count()
+    }
+
     pub fn order_of(&self, i: usize) -> usize {
         self.rank_of.borrow()[i]
     }
@@ -668,9 +716,11 @@ impl RaceField {
         // effect can still observe restoration of the forward group.
         // Once restored, late ticks need neither allocation nor style scans.
         if previous.is_some() && section as f32 >= end && !self.pm_handed.get() { return; }
-        let active: Vec<_> = order.iter().copied().filter(|&i| {
+        let mut active = self.pacemaker_active.take();
+        active.clear();
+        active.extend(order.iter().copied().filter(|&i| {
             let h=self.solvers[i].borrow(); h.pos < h.course.distance
-        }).collect();
+        }));
         let forward=active.iter().map(|&i|style(i)).min().unwrap();
         let leader=*active.iter().find(|&&i|style(i)==forward).unwrap();
         let (mut selected, old_section)=previous.unwrap_or((leader,0));
@@ -721,9 +771,15 @@ impl RaceField {
         if !entering_section && (self.pm_handed.get() || self.pm_count.get()>=threshold)
             && (style(overall)==forward || (leader != selected
                 && active.iter().position(|&i|i==leader) < active.iter().position(|&i|i==selected))) {
-            self.section_pacemaker.set(Some((leader,section)));
+            // Restore the nearest forward-style runner ahead of the incumbent.
+            // Selecting the group leader can skip another returning runner and
+            // change the live gap observed during gate-ordered movement.
+            let returning = active.iter().copied().take_while(|&i| i != selected)
+                .filter(|&i| style(i) == forward).last().unwrap_or(leader);
+            self.section_pacemaker.set(Some((returning,section)));
             self.pm_count.set(0);self.pm_handed.set(false);
         }
+        self.pacemaker_active.replace(active);
     }
 
     fn leading_eligible(&self) -> Option<usize> {

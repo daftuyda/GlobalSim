@@ -136,6 +136,7 @@ mod tests {
                     cooldown: x.get_f64("cooldown").unwrap(),
                     cooldown_key: id,
                     windows: vec![trigger],
+                    cooldown_cache: Default::default(),
                     effects: vec![SkillEffect {
                         effect_type: match x.get_i64("type").unwrap() {
                             27 => SkillType::TargetSpeed,
@@ -358,7 +359,7 @@ mod tests {
         assert_eq!(s.slope_per, -20000.);
     }
     #[test]
-    fn complete_isolated_races_match_python_tick_bits() {
+    fn complete_isolated_races_match_snapshot_tick_bits() {
         let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_solver_port.json"))
         .unwrap();
         let course = course();
@@ -421,7 +422,7 @@ mod tests {
     }
 
     #[test]
-    fn whole_field_races_match_python_tick_bits() {
+    fn whole_field_races_match_snapshot_tick_bits() {
         let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_field_port.json"))
         .unwrap();
         let course = course();
@@ -569,6 +570,11 @@ impl RaceSolver {
         let crossing = std::mem::take(&mut r.duel_goal_crossing_snapshot);
         r.duel_preupdate_finished = position >= self.course.distance as f32 && !crossing;
         r.duel_preupdate_final_straight = straight || crossing;
+        // With no runner on the final straight, every pair below is removed.
+        if !straight && !rows.iter().any(|row| row.2) {
+            self.duel_proximity.retain(|&j, _| j >= rows.len());
+            return;
+        }
         let config = &self.retail.as_ref().unwrap().config;
         // Keep surviving entries in place; each timer depends only on its own
         // preceding value and this immutable pre-movement snapshot.
@@ -646,7 +652,8 @@ impl RaceSolver {
             distance,
         ) as f64;
         self.kakari_start = start as f64;
-        let rushing = RushingState::new(config.rushing, self.horse.strategy as usize, start);
+        let rushing = RushingState::new_at_section(config.rushing, self.horse.strategy as usize,
+                                                 distance, row.rushing_section);
         let lane_max = config
             .geometry
             .as_ref()
@@ -656,6 +663,7 @@ impl RaceSolver {
         self.hill_idx = -1;
         self.slope_per = 0.;
         self.is_downhill_mode = false;
+        self.cooldown_generation += 1;
         self.retail = Some(RetailRuntimeState {
             skill_cooldowns: BTreeMap::new(),
             config,

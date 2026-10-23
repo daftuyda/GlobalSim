@@ -30,6 +30,14 @@ sampled in sections 2–9. Its constructor consumes duration draws even if the
 runner does not rush. The reconstructed path has different ordered consumers
 in initialization and [`retail_states.rs`](../src/retail_states.rs).
 
+The reconstructed rushing entry compares `distance / (courseDistance / 24)`
+with `startSection - 1`, using float32 arithmetic. Preserve this quotient:
+comparing distance with a multiplied metre boundary can delay entry by one
+tick at a rounding edge, changing which consumer receives the next random
+draw. A captured 1600 m race exercises this at 399.9999694824219 m, where the
+section quotient rounds to exactly 6. An absent rushing section never starts
+rushing or consumes its activation draw.
+
 Rushing affects pacing and HP state, not just an animation. Its timers,
 exit checks and shared random draws can influence later skill outcomes.
 Downhill acceleration mode likewise has enter/exit checks and timers; being
@@ -91,6 +99,12 @@ incumbent restores the forward pacemaker and clears handover state, even if a
 different running style still leads the race. If that pass coincides with a
 new section, restoration occurs on the following tick.
 
+Restoration selects the nearest runner of the forward group ahead of the
+incumbent in the preceding ranking, rather than jumping to that group's leader.
+This distinction matters when several forward runners have passed the incumbent:
+pace checks observe live positions during gate-ordered movement, so choosing a
+different runner can change whether a follower enters or leaves pace-down.
+
 A change of overall leader alone does not trigger restoration while the forward
 group's leader remains behind the incumbent. Section-based selection stops at
 the configured end section (section 10). Restoration remains available after
@@ -118,11 +132,13 @@ precision until the final float32 width is stored. Intermediate rounding can
 change which runners obstruct a passing corridor at the cone's boundary.
 The inward passing route uses a separate corridor test. Its half-width is
 `C = 0.04444444924592972f` and its inward offset is
-`S = 0.0555555559694767f`. Store `lane - C` and `lane + C` as float32,
-then subtract `S` in wider arithmetic and compare peer lanes against those
-unrounded bounds. The selected lane itself remains float32. Rounding the
-final bounds too early can admit a runner just outside the corridor and
-change the chosen passing direction.
+`S = 0.0555555559694767f`. Evaluate `lane - C - S` and `lane + C - S`
+in float64, then round each completed bound once to float32. Compare peer
+lanes inclusively against those stored bounds. The selected lane also remains
+float32. Rounding an unshifted edge before subtracting `S` can exclude a
+blocker exactly on the final corridor boundary and change the passing direction.
+Three captured races and an adjacent-float boundary test support this rule;
+see the [corridor correction](CORRIDOR-FIX-20261023.md).
 The final-corner outward preference does not disable passing or force an
 unconditional fixed lane. Finished runners are excluded where the relevant
 blocking/competition checks require active rivals.
@@ -166,6 +182,14 @@ also determine the group's distance and lane checks.
 Each invited partner must be before the section-6 entry cutoff. The cached
 group leader may already be beyond it when an eligible partner starts the
 competition; that does not admit other partners beyond their entry cutoff.
+
+Competition recording is separate from these state updates. When both styles
+start in one tick, Runaway records precede ordinary Front Runner records. Each
+group records its cached leader first, then partners in the initial Front
+Runner base-style roster order, which includes Runaways. Framework comparison
+sort tie swaps matter when that roster exceeds sixteen runners. Other styles
+are excluded before sorting. Duel event slots retain their activation order.
+See the [captured ordering checks](PRACTICE-FIXES-20261022.md).
 
 In the detailed runtime, duel entry first selects the longest-standing eligible
 nearby partner, then checks that partner's duel history. A selected partner

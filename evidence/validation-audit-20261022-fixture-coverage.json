@@ -1,0 +1,3146 @@
+{
+  "races": 73,
+  "dimensions": {
+    "runners": {
+      "12": 10,
+      "14": 1,
+      "15": 6,
+      "16": 8,
+      "17": 1,
+      "18": 8,
+      "9": 39
+    },
+    "mode": {
+      "career": 5,
+      "practice": 68
+    },
+    "course": {
+      "10102": 1,
+      "10104": 1,
+      "10207": 2,
+      "10301": 3,
+      "10304": 1,
+      "10305": 3,
+      "10401": 1,
+      "10405": 1,
+      "10406": 1,
+      "10501": 2,
+      "10502": 1,
+      "10503": 1,
+      "10505": 1,
+      "10506": 1,
+      "10507": 2,
+      "10602": 11,
+      "10605": 1,
+      "10606": 1,
+      "10607": 1,
+      "10612": 1,
+      "10701": 1,
+      "10702": 2,
+      "10703": 3,
+      "10708": 3,
+      "10801": 3,
+      "10802": 1,
+      "10808": 2,
+      "10809": 1,
+      "10810": 1,
+      "10812": 1,
+      "10901": 4,
+      "10906": 1,
+      "10911": 2,
+      "10912": 1,
+      "10914": 1,
+      "11001": 1,
+      "11004": 2,
+      "11102": 4,
+      "11203": 1,
+      "11303": 1
+    },
+    "strategy": {
+      "Nige": 211,
+      "Oikomi": 137,
+      "Sasi": 209,
+      "Senkou": 307
+    },
+    "mechanicEvents": {
+      "4": 74,
+      "5": 338,
+      "6": 231
+    },
+    "runtimeFlags": {
+      "experimentalLaterStaminaMechanics=False": 73,
+      "experimentalRetailGeometry=True": 73,
+      "experimentalRetailInitialization=True": 73,
+      "experimentalRetailRuntime=True": 73,
+      "experimentalRetailSections=True": 73
+    }
+  },
+  "equippedSkillIds": 529,
+  "activatedSkillIds": 451,
+  "equippedDefinitionVersions": 529,
+  "racesWithBranchObservations": 0,
+  "equippedBranchVersions": 564,
+  "observedBranchVersions": 0,
+  "equippedButUnobservedBranches": [
+    {
+      "skillId": "100021",
+      "definitionSha256": "26f18f59a8f5f4de9e60ac89c3ee096487d40ba87bab33724a7444694af75d77",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100041",
+      "definitionSha256": "d31d6a4daf35bf983c9b7d6e272caa993e28c5b9b71704acbe1102e076d0b3a0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100051",
+      "definitionSha256": "1faf6f693e9ff98f510aaa94f02b7fda0fdbe2a640c54e5354bea442585e1c25",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100061",
+      "definitionSha256": "d48eeb02fdcdf83a2914b6748091affa754b52010024380121ed952963639ffa",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100071",
+      "definitionSha256": "8cd561f234ae259064931c66e648f99e83b39f98dbf853ea7b82f10ace51272f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100081",
+      "definitionSha256": "c874782d6eafdc28fd14caaa53815cf03becd7129f5a56ea3d7066b3c43abc7d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100091",
+      "definitionSha256": "c2f03fe323ab6bdcfe92ca9aacf3c59466b5e048db6a9e96fb0aa977330b077b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100101",
+      "definitionSha256": "ba4f2504df73e6eb56ceb4000b8ea7de4594bb1b1e879c74c18d5462a6707ea2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100111",
+      "definitionSha256": "acb10757e89ae980fb9c500bdb7f5442481fed1e31987a169d8d6b35979bff0f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100121",
+      "definitionSha256": "14152f3ca42938c1be217128aaaa05eea5bfb5e0f04cf1a48fd473aed0540962",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100141",
+      "definitionSha256": "85b8a9bcd0533fc068cba9985becd3c6ba63906399d611f4bcc4f54aa0c17361",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100161",
+      "definitionSha256": "a3f5463f63ccd13097691e68d993123608d730df8769deded1c009eed63216b1",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100161",
+      "definitionSha256": "a3f5463f63ccd13097691e68d993123608d730df8769deded1c009eed63216b1",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "100171",
+      "definitionSha256": "881c9ef712200a62b35eaf30c7d3c820b417a2c4ba4716fad5e23d8df927eb94",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100181",
+      "definitionSha256": "d411706933fd412b77f681e4cc9ee45fb73ad2ce7c13d95142010fc282ef0bbf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100191",
+      "definitionSha256": "4e7fbdf2ef14271a42227de3c3121ca762f95354d618d4040a463a86d79f9efe",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100201",
+      "definitionSha256": "96a99ff98108aac1e1e28d5ef125a082911626854c3477762b26ca7b38b44ba2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100211",
+      "definitionSha256": "a9771d3daf1572a561d0b899ad5a8abe55fc6fe4ce93f00f95ace44a5270a61a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100221",
+      "definitionSha256": "535d86e14e3ff2d75c46be286f602da956ec9179be4908479530fe2a9f74b132",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100231",
+      "definitionSha256": "e94a729fab60cb904476d68d82b0a1f4c7b88f90861437c82232a01f9f55b37c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100231",
+      "definitionSha256": "e94a729fab60cb904476d68d82b0a1f4c7b88f90861437c82232a01f9f55b37c",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "100241",
+      "definitionSha256": "1400ab02a60cd97ffd677528a2e39095bf8fc605bdb866529bd22ba310c3265e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100271",
+      "definitionSha256": "c063366fce3cf3076bc871a3562358418c28f4860e5026340b99dfb72f8f47ab",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100281",
+      "definitionSha256": "5d24d09469ff1f06b3d6f663ad7058ba74afede7d1c2637878138987e6d46f8a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100291",
+      "definitionSha256": "79f3b24cd665f0a1269a750412760a55fc34f66a7f76187ee9e028c44926c218",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100321",
+      "definitionSha256": "842ea85278709c4d02485cedbcd926127b4579b906a35b778921d1201d2291f8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100331",
+      "definitionSha256": "1b6c61ec9855799f8e23dca6fb0589ba43f680adf0cc3dce49991e3d34200f99",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100331",
+      "definitionSha256": "1b6c61ec9855799f8e23dca6fb0589ba43f680adf0cc3dce49991e3d34200f99",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "100341",
+      "definitionSha256": "f5eccdec24fcfbf26ffdc35e1544be72d3671e364dc133410f10ff58745000cc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100371",
+      "definitionSha256": "a1996472093a943ee17c41c4aa138338e571375726016ed15e8f8b04ca787eaf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100371",
+      "definitionSha256": "a1996472093a943ee17c41c4aa138338e571375726016ed15e8f8b04ca787eaf",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "100381",
+      "definitionSha256": "2f1cb6e86d55d7963d6bd84c87fd156f860d4131216f93ae37f539cad7dcb447",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100401",
+      "definitionSha256": "8ce065ba530b26eeaba5aa2a7905e5df58dd7285a5113285b05141a7c3556d2c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100411",
+      "definitionSha256": "dc5c6a47884658dafdd8627388e313d7d4937222fa30cde40a42cb0e84303d13",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100421",
+      "definitionSha256": "516248b26a57c7a6f2c5ba47fe0a9130538359d8ed45facdbe52615d52288983",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100421",
+      "definitionSha256": "516248b26a57c7a6f2c5ba47fe0a9130538359d8ed45facdbe52615d52288983",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "100451",
+      "definitionSha256": "949b7abfa83f4ff041b3fac828fcf1fab6237bbab92d8ea12cef5c5470bc9361",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100461",
+      "definitionSha256": "4b5e2a4758cac6b9d953130c26046a639b18cb46a2fc96bec85f155bcbe9cc53",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100471",
+      "definitionSha256": "79aa0ae281be64d899725a07b517e2e8b5b027a329c42ee0dd72380477967ed4",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100471",
+      "definitionSha256": "79aa0ae281be64d899725a07b517e2e8b5b027a329c42ee0dd72380477967ed4",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "100501",
+      "definitionSha256": "d046f722f66ad5e88c5eb0f9e1e5496ddca4cf608f1e30f21257fb130525d321",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100511",
+      "definitionSha256": "a6cafdff7d3a10b62738ceac6f741321e81ae0a208f3a1bb389f140458760836",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100521",
+      "definitionSha256": "21ebc7469b2e20d75c88f40c35356ea765d90d731d0dcad52ea8666326dc3d30",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100531",
+      "definitionSha256": "5ad561576425c88f7fcaf8c545e427627acaa8b60a32ce897442ea847128c8cf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100561",
+      "definitionSha256": "887f4231d6ac6e73c102a5efc2fcdc88c960f21369147b6d370267eb9d8b0c49",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100591",
+      "definitionSha256": "b89bed4c67db510391015f72dcde5069b95db8260635208cb1e82682b4acafd3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100601",
+      "definitionSha256": "2e3842dfd8973c3f6636e0261b99cac2ea120f700d6c9ff3b123a4f0feeffb14",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100611",
+      "definitionSha256": "93b8b299547ea9f657d2f219c972689f57103c98e69405108e38a46125b57750",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100641",
+      "definitionSha256": "9b45b0288580eaaee088cc657234b13dc912c7d0bec7a02be0fdbd4336e59f81",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100681",
+      "definitionSha256": "57893041fda48a584205d62ab87f6a7d10f582197d49ee9adf7deaa3c01cdf73",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100681",
+      "definitionSha256": "57893041fda48a584205d62ab87f6a7d10f582197d49ee9adf7deaa3c01cdf73",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "10071",
+      "definitionSha256": "2fcf07a2439eece24ed5ad7849f24f0d36f0d758dd7c7c9a8bd408381135df3e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100711",
+      "definitionSha256": "1d0c4f2b0444d3625a8439de895c92430a8fb697ad188f28311e2d87dd934458",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100741",
+      "definitionSha256": "2d69fb01db53d1fa92071f563b8bac01a3a8226dc0b8cc9d6c3e8024b214de57",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "10081",
+      "definitionSha256": "c6d9db1727df83cb4ec3ad163532a3f1f7da68c4dd72ba0623fa6bd45f63cac7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100871",
+      "definitionSha256": "ee4c7552409f400a462fe5cbac7ed7d6f40b555d1d98120967e31a23911d79a5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "10091",
+      "definitionSha256": "c821dba393bc2a362628848ad0fd5d8342d51e796deb7a039f7308ad3c77d425",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "100981",
+      "definitionSha256": "99319f07ead13ecb99ef4162966e6a935de1545d035101edd052d103d8646cd8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "101001",
+      "definitionSha256": "e66336a5c9aca0664d616d66b0ee27317ed8f5e664c384be70cfe29d2b34dabb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "101001",
+      "definitionSha256": "e66336a5c9aca0664d616d66b0ee27317ed8f5e664c384be70cfe29d2b34dabb",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "10141",
+      "definitionSha256": "777906b0f6239a822b30a6b6619698051044bc7092442b56a42698f7f13bccdb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "10241",
+      "definitionSha256": "d3b88a67652ef989bc68e27681fbabf0132638fde47fd711d2425ff706525701",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "10411",
+      "definitionSha256": "775440466a5684b61220e9dfe5ff7a2b34cbe11f9421b09a7f8efab525494dc5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "10521",
+      "definitionSha256": "38caf933444f6cb8c32d2892c5768e34c7b16f6271437a4a8c9b32fc30613310",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "10611",
+      "definitionSha256": "3da6f7c07d2a187aa3bcb8763c4a5408185ebd930039f167526771898108cc36",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110041",
+      "definitionSha256": "51cdc9e7d19c391ddeb0f0527f895d5c49378e9a560bc76b3493cc5edff9e557",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110051",
+      "definitionSha256": "82b8d0ada717d7081b9de4121ffc62437bb88f3e4691ddac825d9d64efe74458",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110061",
+      "definitionSha256": "b920c02104cfedf04d9cccf10490808081771ea7bb5f50557bc7919fcac14903",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110071",
+      "definitionSha256": "adf8826627f4598499ec3b92e5606236fcfa7ede084f00daff147f090e73a0fd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110081",
+      "definitionSha256": "357c7290c53d5973776e7b5b56e4343eba9c59bd13ac764e54fa916e11aadd1d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110081",
+      "definitionSha256": "357c7290c53d5973776e7b5b56e4343eba9c59bd13ac764e54fa916e11aadd1d",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "110091",
+      "definitionSha256": "41ae90ae11be57fb75b4e5ad13fbb54166d1ef69023b9cb2810fa075649c7e6b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110091",
+      "definitionSha256": "41ae90ae11be57fb75b4e5ad13fbb54166d1ef69023b9cb2810fa075649c7e6b",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "110101",
+      "definitionSha256": "ac03da4b542db5d01aca9919be5e6b13bf14d767f7e573ba78094c8889d4ab3c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110101",
+      "definitionSha256": "ac03da4b542db5d01aca9919be5e6b13bf14d767f7e573ba78094c8889d4ab3c",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "110111",
+      "definitionSha256": "e72b5cfc7e5bb8625cf7df48be9401b2f457ff308c14fe34f9dee22315ebbe65",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110131",
+      "definitionSha256": "38b0d636763f5830da021d38381f0fc9df8ac7d8fafb0015cb6e8c684971ce2a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110141",
+      "definitionSha256": "6748b2161194447313b0c9ccf941b611b8e21641b7f488d062d20ebe51d2c996",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110151",
+      "definitionSha256": "617e8672c7278596dd662086f9454b650d1f1f7db1610cbe97ac9eb6682d3917",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110151",
+      "definitionSha256": "617e8672c7278596dd662086f9454b650d1f1f7db1610cbe97ac9eb6682d3917",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "110171",
+      "definitionSha256": "2cd6e3df9d672f580c45aa7f78427e8b4c9ac97c94ec050680496cc9d8c43ef8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110181",
+      "definitionSha256": "dde721f5eea40aa027f9bb083551f3eb8703d0574baa5f24eedc834f0c913e6e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110191",
+      "definitionSha256": "bdf98293dfd12877b6ecf2d66773b5c00c1577db88db010aca5ef1a2df3b1786",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110211",
+      "definitionSha256": "8a18bd06d99c223c9f2d9dde03a5352580d6da7e00348848a08cea948514b168",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110231",
+      "definitionSha256": "699b9def34a78c54dac3e927e8b163524c9e41dfaac7c4c0aab2d99c94ffdd83",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110241",
+      "definitionSha256": "302c3fe341312a8c8da435760a515eb8af1bfb9ac1fedda30fb5c6408cf26beb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110241",
+      "definitionSha256": "302c3fe341312a8c8da435760a515eb8af1bfb9ac1fedda30fb5c6408cf26beb",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "110261",
+      "definitionSha256": "077eeb28a529c14404955d7f33224c49007d2a37113269b8199952a50d8c69d9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110301",
+      "definitionSha256": "b60e2cc6d97455a3fc039241bbda510fc5be212446a7e84910f5e9f6d93d09e0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110341",
+      "definitionSha256": "ba90749b45bc166d78f089d78f0be8ec736a3fc36ff1a22635387e4d642ce09b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110371",
+      "definitionSha256": "55f7524a28a943b38949c0d2c9bffd059f2ea10ad2fedc8c396bcec7ccf83050",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110381",
+      "definitionSha256": "ae6f5f4607d77b4cdfd1cd786265b103b35cc011f5a7a18c4b5cd60d9ff4c7fa",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110401",
+      "definitionSha256": "55f276053d7cbd580df78567cc9709199d9f287ac0ca3571e956ecd432255dde",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110461",
+      "definitionSha256": "f261966686e39d55b1fbb856c081d76111e68ac9b515c592b3cc612b80c44d7f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110461",
+      "definitionSha256": "f261966686e39d55b1fbb856c081d76111e68ac9b515c592b3cc612b80c44d7f",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "110521",
+      "definitionSha256": "75db941b0dbfee527688567ae869bb1a53a0939489cbaa7ab7f494d2beb79583",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110591",
+      "definitionSha256": "0655ed1e8d11b3d6bc3ef09e4122c257e48e3be98bf04ab749c823f00201b9b8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "110611",
+      "definitionSha256": "84ef8104c9a60a731064cdc27851fea4ab003b16ff52acabf03281b690cf6c12",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "120011",
+      "definitionSha256": "ab9cac3c0b344a34dce5de73406ea00214fbddf58bf6aeab7113989541a6de58",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "120011",
+      "definitionSha256": "ab9cac3c0b344a34dce5de73406ea00214fbddf58bf6aeab7113989541a6de58",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "200011",
+      "definitionSha256": "1d4e63db95764a3898e7b37cb3aec414fa929b41e5aacb8897aca75515cbf3f8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200012",
+      "definitionSha256": "8031e1310667a88523224e2f92d926f8f16c867af05d44d3a548560b10e70a4b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200021",
+      "definitionSha256": "2ae928e4c369a70a0b5fd9c1702740027105cf8581e92fdd27f1ca9b63812816",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200022",
+      "definitionSha256": "cfb443aef69180323818937ce6e74b847efa1f50b8282a2b75b278107c27e782",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200031",
+      "definitionSha256": "0baac51c1b17e4f34255382e1973ca34cc4080a17bcf93edb7750ff4a2a9f0e9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200032",
+      "definitionSha256": "e5187c45ee7688144f510566d9fda8d4cbc399d59424642aa6757db7dc730d15",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200041",
+      "definitionSha256": "600f5723b31ac9bf7be52f7a27aba175c267e269dcda3d3411187be9b41b45e2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200042",
+      "definitionSha256": "119fce91344f30c37749ee7fb6356fccfda13baa2294a6506258cdb3bee08a53",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200052",
+      "definitionSha256": "65b9fef9d86e0d2a706520b45cfe775564a76593b034f230eb40c791ee01064a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200061",
+      "definitionSha256": "a39a892db3a1eef3a2d06fb82cef36208eafbf02acdb29e5a16f649474a222c2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200062",
+      "definitionSha256": "13e5889b96b86eb78d04ecaf4034cb881a36f9ef4ecd37d1d6dce4084b4ab13f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200072",
+      "definitionSha256": "f8cd0ac89f32a599de64769bf17c0be7d3fc970218db45aa7c8fae12b257110e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200081",
+      "definitionSha256": "012a659942e09584fa4c79f6729b2f6c75b8a4eac5de4db068da846fccc45646",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200082",
+      "definitionSha256": "386e954bf961490de14ba14aeb70db094efd264e4bb6f6a4f268f1ee3e57988b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200092",
+      "definitionSha256": "fb26b33c3fb4fa95d84c0f4bbe0562247c6bb8680455bd4313b2044cd5e4a94b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200102",
+      "definitionSha256": "e192d5edc3668e221c8ace4ca9811f14156e561683da6f27208fab13946f6761",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200112",
+      "definitionSha256": "e626aac68fe7ea49d61a204d07aa668527ae772463e851525d73399db475396e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200122",
+      "definitionSha256": "30d173f6bfd7aa7e90a695f98174126da2b27c09535ca836740387e0fe607d54",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200131",
+      "definitionSha256": "4679335b6a0e22cdc1a88e6d3f9cd62876f5d437d04801842363e34a2a6c0087",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200132",
+      "definitionSha256": "5778d8aa34dbcb58d69ddf1603e395a37dc685e07a08facef2b964bfddd27516",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200141",
+      "definitionSha256": "0ab0e34c27192891b4130f4d5390da1c4b941292d575033b1b90c762f0805a30",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200142",
+      "definitionSha256": "48a0a94bafc665b4776f7e239adb19abfc345e5631b7fa15b1a2557da88cbe3c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200151",
+      "definitionSha256": "a546a49e7a3fecc128f616adc6c466bc01f67dc889eb8c306d5923e2150b7dbd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200152",
+      "definitionSha256": "d704bf67b796cdd36051000e348397fccedee32e0e5c972c5eaf35a6734e40fd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200154",
+      "definitionSha256": "c3786a079439e63e118e667c0d00aed2dee14044374f072ff2c569e6371974cb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200161",
+      "definitionSha256": "8ff17d8fc43cfb59158c87590557880ea42afe077de3f2d2153faf9276a01f16",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200162",
+      "definitionSha256": "ed282cfde4b3bf209151a005fe3174012de5b2e931967c7d3fbb9f4cabbe99c4",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200171",
+      "definitionSha256": "adf541c8f42abacd5500761fe421805c653d942b0b107c29fb47de1ca446f4d8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200172",
+      "definitionSha256": "7d835ca322db86877c7e45117f9846116cec383d5d96e387a2b0e93a96b90d62",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200174",
+      "definitionSha256": "ae48a8721f1d6412a664de8b69dad71c19ea2673b279dce4bf91bfa0b1edd8d3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200182",
+      "definitionSha256": "83dcf7afff4383b0cdeb97d08e6b7d126b8dc30a08d7900b18b879d8303e5267",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200191",
+      "definitionSha256": "3405a5752a0a903d9adbf1c300e74ba2f52b945b01e8c0ebe59324948d75c9da",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200192",
+      "definitionSha256": "2032a081851223836326027589d7b802ab3154a875c3716ebcb05aab7d0293db",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200201",
+      "definitionSha256": "43602019906ae101825b85859fa01fb9380d0780193efc90203525666e5f075a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200202",
+      "definitionSha256": "94544471d7af967aa52aeb48d74756d0746a6c810f30a4a1835134ae043ecac8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200211",
+      "definitionSha256": "19ea016a05028a5baeca6687804538fab7677838c917e59419b99dd72751c975",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200212",
+      "definitionSha256": "026c58ff001a263097cdedd268bb6fcd35c7f739088e2a269096eedc0f9f578d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200221",
+      "definitionSha256": "6295c690b9b330e2ca1a6fd7ffda59271afe6f310054f76f8e6c152112e1afbb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200222",
+      "definitionSha256": "3961e16e9f281b82adcd3be3e4ccea961079006c4aaa97d5c1f5634ee42b77ab",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200231",
+      "definitionSha256": "23bd458dd13c5685e0fd9393a47c302579e5ff0b13ad40a3fabe5cd35a59b128",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200232",
+      "definitionSha256": "aac3e90e86feece0153bd21007b8ae70417d7cd1e709ba2f0dc2a10b41b7fe82",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200241",
+      "definitionSha256": "54afac39df3986d270cba0610681416d0694e0ae6dccab0c8da5299b4d6e4c54",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200242",
+      "definitionSha256": "8fa9b2c4f655535a9bfeb3f6ab79318394a3fc6d87b484b821c206522a01bd04",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200252",
+      "definitionSha256": "14502e12313f2acd7dab982cef106ab0322fee455badb0b867a3a91e264d60f9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200261",
+      "definitionSha256": "265796eb3d733a3b92eccfd2c6b579b9ee39d438c8573229c3516b2f032a4322",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200262",
+      "definitionSha256": "2ed2151e82572607175324a8491cdee0f3ec46a84468890c2c08f72f8fe185c0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200272",
+      "definitionSha256": "e175f9ae776966d32453317d62094cca5957f8bb70b09a2197d814ff4662656f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200281",
+      "definitionSha256": "49a4ffdd23f9092dc28776f662062caa24ccb4870b214045cd785435c241771f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200282",
+      "definitionSha256": "f92d1340da614f46b1174e20f9b8d310a01d4900f202d1f310c9afaee54b8ab0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200292",
+      "definitionSha256": "c12c40c16c5a082f39353c9251965fb3e4d97fa2dd87256cc08aef61fb33864a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200302",
+      "definitionSha256": "424198136f9ae34478bd095e0d2fb87fbb3456ef9226ad1bc55fbc7895c897aa",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200311",
+      "definitionSha256": "dbf8fde9e426cb07a02606cbf80f2bea0e25743363632c49a1b5a51a97b8051b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200331",
+      "definitionSha256": "5f7d0af429be1c310cdc7f8ce4bb4666cb7ee2956d96cfce0577bab74764d45e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200332",
+      "definitionSha256": "79e3331b4c4a98f5143e956de23a5674b3d3a6394c4849285ca4f051dde02d67",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200341",
+      "definitionSha256": "cccc78a390c6c0f1b9f46e305c9d7ba8814f1c34959354b571cc38820943acfb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200342",
+      "definitionSha256": "cefd832ee3a160b6b5fc8dd1e9146ed7ce634c356d3080abdd7914d9c14a9db7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200351",
+      "definitionSha256": "e722dd4b041a8fe28d433d419c76997ec6ec72aa9bed9bd5053a2a84279c4cc4",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200352",
+      "definitionSha256": "412c10977accc45773720d98769c29008b8db7210ec343cb03d0397da1dac291",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200361",
+      "definitionSha256": "d3789c7c26c8af388229fe3ca7873acb1667a566435007dbb9b92014e264d771",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200362",
+      "definitionSha256": "5d2afb116a667190ba5d14774eff12b636238c834f04567f989fdc7a492ec1c2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200371",
+      "definitionSha256": "ebc9e1d4c96664e9e202dc14b74d69f278b646656a23ab368417460076084d96",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200372",
+      "definitionSha256": "1f838e5f03fd20a264ece6e607f8bcfd2cb527e0010a293fab78be0632d91090",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200381",
+      "definitionSha256": "67c692b27c63ef34de5c98d865dc71d221c0f4e1ddbe6b5521cb8da8c0c7fcef",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200382",
+      "definitionSha256": "7ac2dce8191a62d7556a58a6a7303a1ad518c68feaa58d1e832dd52ad6eab3f6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200391",
+      "definitionSha256": "de2510cb9891118cc01d5681f05f5860b50dadd94926a876769fa3613f3ec47c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200431",
+      "definitionSha256": "128bd2ca7c2ac455053f4adfb7e7a7941397bf40a4dddc1cb6260db567041842",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200432",
+      "definitionSha256": "9eb5106d5b816bf2794475761e5bc5498454df928779ed95602f5478999f84a9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200433",
+      "definitionSha256": "91952d51d9919cfc4bffcc1154b3b62a94103fe446b8a72eac2f78bd9bd15248",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200441",
+      "definitionSha256": "b2685c4983d5841393cc218ad68c438dbd47523767029228ce4c4d9b96ff1299",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200442",
+      "definitionSha256": "efd70132ffd28b8574c22d35eee2fd8a35c6e8de5a5839c0bcb10295368f313d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200451",
+      "definitionSha256": "3297b97fd0c752988c31ba4e61bb559f28ede53ff91e795c91389f19f4b77c39",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200452",
+      "definitionSha256": "0c027d743fb5ffd0f899a6fe49a69022849866905772451670be6bb381f2d893",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200461",
+      "definitionSha256": "8502db19f2535f8dfd322b4e9e9eb7c07c92d7da974ed45a6200e2f0840732ed",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200462",
+      "definitionSha256": "d97e4b7e7917d90a215c78e4b7517bff384cb8260fe7f6fb585f3317373ebfe2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200471",
+      "definitionSha256": "71251a78591d14f7aea3f1b5f60514db38dde439403fba09d5de646707b7dc99",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200472",
+      "definitionSha256": "e3e97c254a3933e8a17cac741a5ac75dbe7ef856350097d7c8767b2db9cde7c7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200481",
+      "definitionSha256": "ba8b6b5a60cd7c9c13904d2c30e5b120dfbb642961d328a139e2b4a7300864a8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200482",
+      "definitionSha256": "1ce80df8df6415bcbc5e820719565666fe9c195d6a6015b37d45801d978549c5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200491",
+      "definitionSha256": "d55561554ba88785805350f818876902aec63c8684adbf105b44f48106ed73f7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200492",
+      "definitionSha256": "e121158191e65962766120dbba0d207e62e4787a25c843a085304fc685573851",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200501",
+      "definitionSha256": "42b9223b53e10c726e4fd25e7a443d4a69a93b6a97541fb934af0fc05a589585",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200502",
+      "definitionSha256": "175ddcfe78ce9a82394294549eb06dec39ed02f06195e89fb3e10b799c2a5bb6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200511",
+      "definitionSha256": "97bb99ec37d1d3a37fc8c5ee61810a60f3d480d4ac88cff3614da67e0ad58462",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200512",
+      "definitionSha256": "589342d04131d2af88b7d0561fb3b3c20689e25b65964dc7ece043db1b92af1b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200531",
+      "definitionSha256": "021befe7cb1bfb32c741f950872263d0e2ad77729c90452f2da86e0e83947a4f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200532",
+      "definitionSha256": "97ecc74076fcb8a3290ffc76a37f20db93b43ba5171420f0d4ec05703c2f10cf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200541",
+      "definitionSha256": "395af325c71ed1afa3ece8b462f9c9f9c56a6cf4605a121db480742fcf30313c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200542",
+      "definitionSha256": "9ef9fc1ad340779997f141b4708653ce640b402f06997accecea082c3ca28a2d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200551",
+      "definitionSha256": "c66c72a0d047ffa7838db766acf30c02d4ca27a3dfac762bbc563df6b94c493c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200552",
+      "definitionSha256": "ebd507d950b8787abf48d37181d8b4859cae69568148e34de9a34cf4fddefb74",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200561",
+      "definitionSha256": "097f8ab5751bb5a605d50af194e860edfde29f8479010315264953cb545bdff6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200562",
+      "definitionSha256": "8509502cc7a082fb5e67e7e787e705fb851c61a4424569b539c3e9db4f5ccb02",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200571",
+      "definitionSha256": "0464f06293d059c57eebda67079007dcd3b6badaf3de9618e71afdc64474a513",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200572",
+      "definitionSha256": "581c97fc25d2de7ed33adb2b4a9e51edfd86e189febf4137390b3ce2907e434d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200581",
+      "definitionSha256": "076303d654e404ff4c3c10e34a5d353f29045d3b672a06f167fb4ac99a236ded",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200582",
+      "definitionSha256": "dd2c5d707b30299653be75a3ba83c1368a90a91501622130bfc99ee8ed7f35d0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200591",
+      "definitionSha256": "2cd9aa775af8e86ea2455241c92367abcd3801dbdce4fc97a9c461fd0a6ccccb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200592",
+      "definitionSha256": "111d5f351c263ef6bebe3214426c479955557589748b287ab9fb02a2cee6bedd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200601",
+      "definitionSha256": "693bab5883e5a1bbd0432d0f4bdc696ab06edeced84d0a527fa78e6fb0af76ec",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200602",
+      "definitionSha256": "574f49c4894a7d9656db517de9b9d2e89bc68bd338e2c0a5749d89595bf44736",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200611",
+      "definitionSha256": "78a13768309589a8f17caefe68305689b71828b8edcf871780e19399b7c28c2b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200612",
+      "definitionSha256": "75a0ccf44846a0bf1fb2fb0c8b3d00275bd5749be6fa2b8fcef58be860e5a2a9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200621",
+      "definitionSha256": "a1daec4d53c0a564ab8cb1873412d18481194fefc9d177367a4ebd61a91d45dc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200622",
+      "definitionSha256": "3b1f2d40bbe917f66dbdd564f32dc38eb94b6cde6d2dca952b57e3bc9f644ba3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200631",
+      "definitionSha256": "9777be2910cae586b0e3691566efeeeebe2388b060ceb6c3d9830f463dadf85d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200632",
+      "definitionSha256": "a1ac7471d66380560a4708f4e0854ce30a935435bb4563a7047ce49410819fed",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200641",
+      "definitionSha256": "f2c7fcc3c717cc009176e042c2f232b30507cfb1ef5fe65494d969c2fe86c9bf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200642",
+      "definitionSha256": "a0c052ce1a55627af7c016b9da455f11e2e2f8624aca7bda25c907344ee32733",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200651",
+      "definitionSha256": "e6dd672377bb82839a3a711c23f00543a0d70dd238dfd49c9887db9ae79cb834",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200652",
+      "definitionSha256": "1b80df842a97d84b94fd7826afb2706e6ab77d998cb8b8de9d8f6357a17ad78a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200662",
+      "definitionSha256": "ac2dd638098fa27840f37b18f3675e38c2ea92f0d8d970fa99e61f8682c17a16",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200671",
+      "definitionSha256": "9abb88e6f4f8578fc4f1c0b5f73477410c43f957a8f53638170d0551d525234c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200672",
+      "definitionSha256": "7b9e49262159761d3367ce15735950c320713c0a8592022a29dc8abbdd6a4aa6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200681",
+      "definitionSha256": "c1809023fb41afbfb69ce1f12aad62b96f251c8ba6432bb87ad3b13679b8c085",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200682",
+      "definitionSha256": "7c31198c3359386510d86acaf2887bfe2ff07a92f7e3d6070a8d6519baa1c586",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200691",
+      "definitionSha256": "1f696759b72c465ccb218ec6335d27c991e9686388f0be84ae4d021fc24b90c5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200692",
+      "definitionSha256": "de5a0be5dcc02223cb12008310702d881c89f60d79422c48a61732ff9f2db99d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200701",
+      "definitionSha256": "dcdae6206efada5ac1c50b3d3ea1c5d12b2435c912528023b019e0d802e9a355",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200702",
+      "definitionSha256": "04c93ed90727882cf9291649d7860451986646cecb124375533b772ef9044cc0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200711",
+      "definitionSha256": "c540392f0746881795c51fb8beb1e842effd7362b277e94d40f3c10c769ffc2a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200712",
+      "definitionSha256": "c34fb840fe9ac4f946af7d534689c05fb8505d8a54d344e977a71136bbdc6614",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200721",
+      "definitionSha256": "d7960a4ab0d8173e8980e3d10957b76dd770b5b458149ffb990463c1bb1e4d51",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200722",
+      "definitionSha256": "bd9560f27705d0e14ae4b0b736081510893930b05ee55ec7198fc3e93e31e6b6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200731",
+      "definitionSha256": "43eda11e66295e135c2048602f1af3d079fcde1f13c446a2944ae2d4d191e631",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200732",
+      "definitionSha256": "513e5898f30a687f299d97c819189727a38f22d084dec8510631226a3453e0c9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200741",
+      "definitionSha256": "8a45d2a54f1e4ac99d0435673ac09cb0bd5e1fc3fdf3509bf65bc208d73a934b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200742",
+      "definitionSha256": "02f6a6b06db3fb3be22f7398ac973f89a9a0408e76b82222fb7f3c8da6c32cb6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200751",
+      "definitionSha256": "540ac1ac67e063b7ab608909c8fd6d12c1fc4c405166977cced25add313694b1",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200752",
+      "definitionSha256": "a1081fd640c23ac8619c153960df6070a96459f7e01a127dd0495547bcdc0b59",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200761",
+      "definitionSha256": "0483027f8ba9e97f0d10ff06f1779baf531e8e26dcdd8ea4dfb9c7b26ad53a4d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200762",
+      "definitionSha256": "edd0bd110b99cc104f44e74b2cde662fcb12d6bc6ab7934b53659dd018015a51",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200771",
+      "definitionSha256": "1ad7f6ea97f7beefbe0aa7b30051de22b118a61b7c8c4b9e95c25ae5b0033b3a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200772",
+      "definitionSha256": "cd1ab3b005211c8be109b3d0aa31f454067e1eddd8228924b0989cd1ec472f0f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200781",
+      "definitionSha256": "3c9f46dbbcfb60c79977c71bfcc8030147714cebb8170f5bba3621d914e38455",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200801",
+      "definitionSha256": "11e0fe847093488ea6f25c0d70972baac960a97ac0d6cb6bdc06f4aaadaed022",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200811",
+      "definitionSha256": "88b0c976c9c726f71f9928fd88ee368466ab7dc9971bb5613b3cd19f3ab793c6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200831",
+      "definitionSha256": "563be4fde3424c774ea61035c19f8d021361bdee4c6c3699544b42ef34e9f4ff",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200841",
+      "definitionSha256": "b5537ef5821a631d4692a22141ab6ff19426c090f74d48288bdacca852f40602",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200851",
+      "definitionSha256": "ceacfe1d4299b34fe34e36c5d7507527e1f5d3f4996da5eb5840f3c30bce0fea",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200861",
+      "definitionSha256": "4a0ede789f25be866d3183398406571b65ae2463d5d6c663469b2f6dc2721d40",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200871",
+      "definitionSha256": "55c33593d039979f3f253befd71cf04c7b44518eb34b87ff0db63a948ce1460a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200881",
+      "definitionSha256": "4486e7c3d9f7a014ab14c9c5e89cd939825d89449dd438d8bf794a1bc82f6fc9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200891",
+      "definitionSha256": "78892697a15a2c799359fc44e838cc4def35b113ec6bb51b254cfa97ac752c58",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200901",
+      "definitionSha256": "003995a113ae6ca48ca71a8f60d5cd2fb591167c225f1e60eafa9ffb04c008bd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200911",
+      "definitionSha256": "938e75cdec47b4f9823ac1018fb8c3c2d00a30abe36279b193713f8df95b5acf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200921",
+      "definitionSha256": "524893b092aa003a66c155d79e5a88d3aed29ab01af86a162438761fa358d5c7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200931",
+      "definitionSha256": "9e0a1ff73c6dd7dcd1cf10fb33bdba4f573dabd803a906b378e6010435466b2d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200941",
+      "definitionSha256": "60b6710a6f0cc48175b22e5c1431e8c1b0d37d750d51a55f63288d3844d53adb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200951",
+      "definitionSha256": "6244d88bc697362652331d6b910a35c4858cca4a90c8163c8d62f3d894d38fff",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200952",
+      "definitionSha256": "1cc29297491e9bc59494a2c52e14a8aeff1f4d1f3cf55d63a864f5357c50f9c8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200961",
+      "definitionSha256": "43f15eb7d8d818210cb8a854abadf3062eeffa25ea8d79de957712fa784be21e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200962",
+      "definitionSha256": "290485a2446ea068cd382e19ece22de0d2756614ab659b7703e37cb38f940a80",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200963",
+      "definitionSha256": "25474d0cf1a93d43dcfe93e5cc71f9574e31a221efb32d670b74fca77ec2ad90",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200971",
+      "definitionSha256": "4fdef69f5650d117f17d5d0cd7b2247b647cdda7360200ca32fc2c1784f010dc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200972",
+      "definitionSha256": "4703b114ada59c64c725741368dfc12b00795b84d263a35f8fb818bbe8bdcf1b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200981",
+      "definitionSha256": "3d8274230ce3fbd13f09b77737980b104fc7e3d1c3f0df107c72e7bb3444c017",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200982",
+      "definitionSha256": "39503891965f0540e1773c752a78298b52b2bb61072bff365a66e366798a25c3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200991",
+      "definitionSha256": "f5ba17718a41bac950ba915b75b7300694ed7c737cf479f633f4206f6e044a8c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "200992",
+      "definitionSha256": "2e8547e0d78e7849e74547822ce951fd82878af0456bf8661b8e4792dde0ca0d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201001",
+      "definitionSha256": "d1f0f4933640b0824ae5f94b6419a0c320b8414ceb1d8ef74652b4a1a3c3b879",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201002",
+      "definitionSha256": "9c37b765186357f1e7fa8b62f7d71d3f2a4d3fd59946abf7dcbc6601085e0f62",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201011",
+      "definitionSha256": "7a762d8a76a058b607302b946825bab252c33536de5479ed54a2df69a0a0bae0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201012",
+      "definitionSha256": "4321b15fa9be19115ce65748e02fe985800782f816c32e9f69061b9cad291fdb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201022",
+      "definitionSha256": "bb4d1f7d199245fd9e522b0a1244a57e5cbffd74a55d3decfe2d41f59ebe2794",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201031",
+      "definitionSha256": "ac4b079ecee1dbc01f55d54eb0c8682a6c24fa5fb81c06fb532025d1736cd073",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201032",
+      "definitionSha256": "15cc040fa2e3574b6a28887e73dc0bc8e13d75536021c88518a193d2166aed3b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201041",
+      "definitionSha256": "fbe382eb287f3d3c3ea02643e467feca256420087b8be713104e359cd2397b9d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201042",
+      "definitionSha256": "cd6ead40aedd4c66e0245edca5ac0d5f3abf350057cb7f3a841ea5a93db4eb01",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201051",
+      "definitionSha256": "945a02d053e1f7aed4f908639b25cb48c9c43b15e77c81dda261859a314751f9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201052",
+      "definitionSha256": "256ab3b778960d3fa9e39a2d6d7317d5e0080226e74690e73cd858f4488141de",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201061",
+      "definitionSha256": "4145623bc39e2bbd806de469fd09fbf86b93c9f63791432fb52e8816695f10c7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201062",
+      "definitionSha256": "9517abf30a14091afce115dbe4c26dd903bcbde3498c02e3237b868968e63292",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201071",
+      "definitionSha256": "23898b336938d0a6483ac4faff9d29e8406f8ea420f0c635c351442312bccf41",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201072",
+      "definitionSha256": "ba3d0cb89b9803c3bb70cf2fa2561e362d05c9d0772993fab0d050ec57d7bf51",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201082",
+      "definitionSha256": "b7040fc8da95b4253604c4525f68ada438c1e365bbba0a84b8b98125bfaf2d2c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201091",
+      "definitionSha256": "19e9d7af065636018791c59c92219e827072989e16909cfd234147e0e49c1286",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201092",
+      "definitionSha256": "9d6e10ea07e066753dc1fb07cedc57a51d575010d317039e078e7a5526bb77f9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201101",
+      "definitionSha256": "562dd67ce37be0e7606c03cd759626a02d0e1d47f036f997e98d7c9d98debe7b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201102",
+      "definitionSha256": "60f5d23b045d4a7d801fd57b90dab734a0330f2bf6ee3dd2163bfc4c9131a12d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201111",
+      "definitionSha256": "ae71fbbb377d6dc8152081a270fb62f5571af152dce0773a3a1f1ae710235d03",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201112",
+      "definitionSha256": "d492774432afb76c99d0d3750522944638dbc0b83f664ea5f5a9fbd76d455c2a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201121",
+      "definitionSha256": "f6bd7cfd0906719f5c354db2ec593bd031260b2ef5e5cf7f3d5a19d66ed33e4f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201122",
+      "definitionSha256": "153261683ff6de88853b8eec5935f0efeb320210d4c5d941d47b3ccd17a98f34",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201132",
+      "definitionSha256": "d7c7fe68ffbfa558ff08294706ee5dd0a84dba90d1260c2ecc37bce17317d06f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201142",
+      "definitionSha256": "fe7ab20d499d80387150f9cfc0635dfe75f0d0ec62007a6ac9ec29bbf29801bf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201151",
+      "definitionSha256": "3bbfb8a9200b5fef49ca2ccc724d46198905203513dd67b3390590a8326e6b59",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201152",
+      "definitionSha256": "1772b1ec6afe3f605295e79b29c715f2f6f7c1365f09a3f4e65c0e9bac36ac37",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201161",
+      "definitionSha256": "4566121b368edefd903243871d3afd8351e2c11b827f6f8554d58ef80b91af26",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201162",
+      "definitionSha256": "18991891b037c91dae9f3c5047b10bc9334d9058f624c24a64c679dc15f952c7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201171",
+      "definitionSha256": "3e7642fa331d92238a1075abf270d5ecc255eea03c6bde0d48a068ce4354d2b3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201172",
+      "definitionSha256": "362031b7d4d1926868568085cddc5a77a9f827e00985ba12917aa2a98f7e2390",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201173",
+      "definitionSha256": "28f24b7da5f66ebab250564d40d37ca11a1bf34551a1d77f4a93aa30dab11c73",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201181",
+      "definitionSha256": "b641e5b9fae860c82021a84134d95d3aeb8f3147d8e883192942a8bb879d4d84",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201182",
+      "definitionSha256": "d455eaf92d6b7b6908010e0cb356c8f7f15a37c0ca4804d6d172f4d80500e617",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201191",
+      "definitionSha256": "6394a94605b64b8f29b536c08080d35bb06d6fafcef656f8a1826e1f65db34b8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201192",
+      "definitionSha256": "78ab547c069c1ab0ae17c1b6132252e781d7cf37e4cb33755b8d73bde3b3477d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201201",
+      "definitionSha256": "30343409d720d978737ea22d0d1de4549a7bc6b15c0efb71c3676bf2eeafce79",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201202",
+      "definitionSha256": "6c2329e83ed07ac829c8c09728f103ec9397dd12b9882953c3274db9b9da4764",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201211",
+      "definitionSha256": "15c36cc7242439265f52a0edd85b829d80d216bdf7d7285296e593088bcfddcb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201212",
+      "definitionSha256": "a9c112e63ffb4bb75e4ad51c3bc21d6a87f380ea7d146f3e337763d460e4fcbc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201221",
+      "definitionSha256": "a1d1f5cd31ec6473e65be68118ed388b5459ed4707e3b553a2718f75583515c0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201222",
+      "definitionSha256": "73c56da8b15f8bf2d4d74967956c9f800706204ad84d68a2680de3d4c8774dff",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201232",
+      "definitionSha256": "49ff2a80cd5010e986dcee41d92746ab18e14a8f17be4f9dd5589e9ef2531f05",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201241",
+      "definitionSha256": "81eaba09ec8f5d153fe7842b3ba462e80d6842c3a9e22c052cbd738b856c25cc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201242",
+      "definitionSha256": "5e4f01bd7aee9624141ed3baa5c3f9fe7155586e291263c3058f581625534305",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201251",
+      "definitionSha256": "566de46eadb948cdf6b9fc153f8fc9e7a3c2514f0ed3fe16294ea4930ed850b9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201252",
+      "definitionSha256": "cc43d8b779d142acdd103d5898795f5427d12181705caad8b404ee5542f5e3c7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201262",
+      "definitionSha256": "2d94981800918788b6af2c4d562e3c0e2b9d80233e4f23c7e1a0a27a51a560b1",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201271",
+      "definitionSha256": "21721f194a3fb8a5e3969881692c56d3388b1c02f92d9a1bf32b68a421dce151",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201272",
+      "definitionSha256": "ed07601d10be2329f4c4f98b900dca0e437ade4a786d83121bc5a01f49acd2d7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201281",
+      "definitionSha256": "4956cd1fa00eaab5a847738e5aef1d9ff9849f3163c215c3ce8b31daca685b5d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201282",
+      "definitionSha256": "218ba3c4169d2fb27a17998d6e16c5f9b8fd5f6696ba4f07f1086bf753f01836",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201292",
+      "definitionSha256": "1548229858e35af4fe3eb88860d643b875c4ce734c14e9a101ea874a86a3eeba",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201302",
+      "definitionSha256": "3a40599f7a22d5a951a3cd7ecdbd08265db60e010aa8515615da7f52a35c410c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201311",
+      "definitionSha256": "69a694e6afbb13864f5ba3fba5976fc39d8c7552ef2c228891dbe9ea27fb464e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201312",
+      "definitionSha256": "3192b14184aef8d1c64fdff2b0bf8b453fe09a34f4b1d38eda2c0dc4e8eabf4d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201321",
+      "definitionSha256": "30d0c8738f665638eb8dac41cee72eec6b5c59148c458cc9fc1242035fd4a620",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201322",
+      "definitionSha256": "8c3c1e200627c57579c311581dd339903e67ad29ad43f57bf02bd9640f64a3f4",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201332",
+      "definitionSha256": "d912fbf3bf436bbef00b8fc30cfbe6d62818c65924c7ae0cedb7dcd7b3ebf983",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201341",
+      "definitionSha256": "0e08691e3b0d9d77eed704ea73367f8067f3acdb7c0f7a9a4e2944d45155f8bc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201342",
+      "definitionSha256": "4278b052a96b853d02ff998aa20f3689d2bbeae96c96926a0a508ff5a6cebab8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201351",
+      "definitionSha256": "cb2971c1b830bbed740992686c745a29f95c642e68f57c343a94cf9cbb36cd1f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201352",
+      "definitionSha256": "03dc28030ece23d92b662c04a56876294d8ba530c044fe49d8fb2658f0f87d8d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201361",
+      "definitionSha256": "eb08cbe891bf57425cf9dbe18ccc839c0be7add94ffc75d5f7805bc96142aeb6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201362",
+      "definitionSha256": "ca3e6d444040782c24ac8db4be070ab700cbe5ec76236bd539ef79d3f6fe352e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201371",
+      "definitionSha256": "a9f8a43e081b3a6bc4b3a8e6aa88dc61a29fb5037192739e059debb08c9814b0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201372",
+      "definitionSha256": "60723fb87fcbf35587d6493a17fcb071fab60edb7ed91e86ef32837c9069f030",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201381",
+      "definitionSha256": "05801d101032a86071b6e6297b40f85115fb3915fdcbdda116048e92bb168673",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201382",
+      "definitionSha256": "4086549ad9057bd0b907080d2e47f0ebe5da8c8eb6cb9dda4366c2c9a5439533",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201391",
+      "definitionSha256": "78254445bd378c917aab1605428217980b063586fda0595598494e3f6d21669d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201392",
+      "definitionSha256": "6a88da4f3ebaa6ed16688b474d862b9d26529dcb573efe49932f9dd2784859da",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201401",
+      "definitionSha256": "dba418c65c276b9ea3912beb1a1e7a1533dca69ae5ce4be93b8895067879d619",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201402",
+      "definitionSha256": "3eac60a95e405b7d78b0db2594ab97992e8c24794f8f1f984ae54e0ec055b73a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201412",
+      "definitionSha256": "f83c29ba0f6387ed6d2e7734a16a4e0f148bb8c137e253fef29435d2a9a98bc7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201422",
+      "definitionSha256": "6dd065b2cc6cd60a3c65a22469514ef8aea9e4144ec4cb0d877cdc0e69581846",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201431",
+      "definitionSha256": "66bcee5971c4b5911923179a4c36a834c8f8a47b59326bed867ee1c7ee78ba77",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201432",
+      "definitionSha256": "53dd965bb547a8a685a7e4f4208ecd2fa02701332d3d7366f43e32a53ed98888",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201441",
+      "definitionSha256": "8207918a7961d2b7e893956be0b5ae8bdf60cc70ce5a81566633391535e7455f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201442",
+      "definitionSha256": "3483c009f2bf2fba6d608a49076286a008251d9cd3bdc634fc4c2536718a54ff",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201451",
+      "definitionSha256": "c0f4c8940adef627d3a28618eb8959e53a6396050b6f152b671f56d791d6bc53",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201452",
+      "definitionSha256": "ead744ca0ce70adad594921e4563575ef076cd84e5b3548e4f3bdafe0a1144d9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201461",
+      "definitionSha256": "50ec25872689fd0a69186884c4cfa5b798e864b0241712e81e9a343ffc250b54",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201462",
+      "definitionSha256": "de47b1cbbe935ca6b25846cce359ea5074819451a5b8341420f5e0f279269ba3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201471",
+      "definitionSha256": "d0e4044645ed1fc63744481cebbf136fca09fd991f08375adad6019ffaf912bb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201472",
+      "definitionSha256": "d890a1be84dad54af986b0aba42e4035853c0cbb6d261a0f8692ee694b2f55b0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201481",
+      "definitionSha256": "c9989859ca0615c1b87bff9a91879b15226e897a60d140d12121b88544cc061e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201482",
+      "definitionSha256": "fef0812e0118b37352ee96c31c1dde773041e480ca8c5eff54b9b92d52c4fdf5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201491",
+      "definitionSha256": "6eca0e7b42f4b72a2cb24c814577c477c51007f8e6a38caddad15f3c4357a77e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201492",
+      "definitionSha256": "17aa0b6b8a7d96f32c23d6d4f871c1e2bcf83f73e96f95e7c0825734e168aff0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201501",
+      "definitionSha256": "b3139368001b8b37faceb0cf35ee9852603c62885e873c18f0d83bc2f4473587",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201502",
+      "definitionSha256": "f660d8f9e3ebdf77582740bc17bf0bd3268af9945e516ffc6c940a3204ac5996",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201512",
+      "definitionSha256": "933e894a6799348ffc1a0417337ae9a9aa6b0719dfa11d6f71caa134420e1130",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201521",
+      "definitionSha256": "614280ec7aae0851d0362770ee19fd24da590d645ed6b11e8912b56ac40bedc1",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201522",
+      "definitionSha256": "aa7e8bd59fdbe5c76b077cb83b7f5aab66bfc2121ffc0eec0c0ed4ed38f11243",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201531",
+      "definitionSha256": "1b1e810bf9490575f010c8419b711a30d73fd95ffefdbceeca0e7c6f163a1b86",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201532",
+      "definitionSha256": "3f6d8633d3ddaa30c9d737944db34181fad3b3c2daad5a904cbd91e2e3593b7d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201541",
+      "definitionSha256": "23b0a45e431c5a95405a115acf68505cd074ef9cc4543c045b8e4360ee45af21",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201542",
+      "definitionSha256": "b6a9bb4753e4a3aafdfd897736fdf2b1153953bb1ce223ce1902d38309c1295a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201551",
+      "definitionSha256": "2a8075f0a63cec203468096fdffce3e8844a6ce337d3fc404a5d024cfce41ac3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201552",
+      "definitionSha256": "c3691038baed9dce531a3512370af861eb14a8675a7d57d2398254dc41d2b309",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201561",
+      "definitionSha256": "3863e35d111738b490de3963ac4262279368d1181052563a5d3af0d344421cf2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201562",
+      "definitionSha256": "14428209bc4b71f013196020a8ffc144c4402b8720038a386490c577a426a9f7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201571",
+      "definitionSha256": "2d6fd0990490d357833ecc3af806353f4dda56f3229f0e62d0a409709c5b7499",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201581",
+      "definitionSha256": "b2006c6a76ddf5000ae75fa0b60af04d24af16d0be67029802b2f9cb040caacb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201591",
+      "definitionSha256": "95b24b8dcfb5a732a376141c95a5ea4c46107344e0c7d041b28ef4b8be05ae66",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201592",
+      "definitionSha256": "fec5ec874f837f8ddb574f23efa6cac1db04f1132e44844fcefd2f1bbb573956",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201601",
+      "definitionSha256": "96dbe7316b72ff1a940a2ed1f7b92efb3c7dbbf422efeb5d9018024c849be256",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201611",
+      "definitionSha256": "28792e99703f9760661203497eb3299e728bd6b9b7cf73b56f3fdd2489215fb5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201612",
+      "definitionSha256": "8a33c81ffa251cc65cf3558e588187ed10dbc5f62a3ef691f142ce08a5c9aa2c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201621",
+      "definitionSha256": "b21c12733a84142c02616942c8e6854177cbc76eb4c49c6284f251034c8e4a25",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201631",
+      "definitionSha256": "89d58c39a16958a62d1cf2885e297c0c3a58a89a82ee1ec5d010100a11596807",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201641",
+      "definitionSha256": "eb3180b73a45038a5b94441136dcf818e45e9f09022b04a892af77a904ce9846",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201651",
+      "definitionSha256": "3534b353987470709c2a4882e1f6e95aee03c8d7bb969163ff03df5af83ce390",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201652",
+      "definitionSha256": "67676d59ff75f20d5e07ce4be85ee5a12e690355689c10a7d226f62ab4073844",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201661",
+      "definitionSha256": "e851399980f814568624fcd892c516e721641ea43111fbe90abf052313398700",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201662",
+      "definitionSha256": "569fdd21ff26d8dc2e259e29392b2f449ee85fc86be8daaadc9ee4f04cd19e27",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201671",
+      "definitionSha256": "c44cdb689b21ffa98feddd6d0c08c70bc73f2fbe7361b1615babb788f950f29a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201672",
+      "definitionSha256": "319a5694e761de2bf5ef879f5e5ff9bcff9b08b996114207aad90e92c338205a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201681",
+      "definitionSha256": "bdd6d0b15533cbecf11807fc202d00d6c093df039cf53884890f59903f0f7682",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201682",
+      "definitionSha256": "9a89a749ebde287861878d85d9716a6871452d32edfe740a7ccc5252a654966d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201691",
+      "definitionSha256": "74f5a636d41a05e24af28009a94c844f3d0798df3dcaed94863bf49a960c06a7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201692",
+      "definitionSha256": "6c2028ca0d6a417435bdb3597dc374d3cba8040bd29c8165ea0fc7041855d107",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201701",
+      "definitionSha256": "6c51c7ee2277f00241d675c5500d30638dfda93b2bf5e235538819fbfa5381b5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201702",
+      "definitionSha256": "e92b09b734e0ab8bb422b8c6d7ea5d54a1efb3d5f3f2bf8b75b233dce763e3fe",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201901",
+      "definitionSha256": "3b81570695e7bd3cbfc68e2f08cb6e6a8c4164aab81635c7ee88c39e56e4285b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "201902",
+      "definitionSha256": "5c4a0b9554d8c5db37584e51c7d56679e1dbdc050ffd8e1d5e91858fae975c62",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202001",
+      "definitionSha256": "eb4a5c158e437b30268ba7c826c4ef50aece54ad6f99796317fef44b7433489b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202002",
+      "definitionSha256": "28179bac2db2108f8ba4fd2535033c447250a38f94f3dda81369e1ccecea516b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202011",
+      "definitionSha256": "1644e9e44ab0d4b3b3965759f7f7febe19530efb8142350ffc270c85ea31cad7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202012",
+      "definitionSha256": "48633715318aaabe861de467a6a0747f41cb22f6d8cc065cd579de8aabcd04fc",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202021",
+      "definitionSha256": "df5c592f310b2e614d8b63d3ad861a8ce4a5d65f1dcd97de2b6a606ae84e68f5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202022",
+      "definitionSha256": "4e7728e0b90ea60ea209b14000cafbe8cb261213ae0706540de7d597202b6a5f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202031",
+      "definitionSha256": "5d41dd421608f8b29f4628b99615cce6ba136c9a1e501fb18218da6ff78d9fef",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202032",
+      "definitionSha256": "a4c4392c8cf21865cbc670bd5e316e8de913f3f7a755204060795b26c24ae47a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202041",
+      "definitionSha256": "7bc9a8018c766b85fe8548eab95bb8e7d6b042e98bd89aec14af01de33be4cde",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202042",
+      "definitionSha256": "2cc27ef77618ba9a81c48688cc3803db59a06241b6e4a1b28ef375f5f58f9d26",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202051",
+      "definitionSha256": "deb6e0d091187425f124cf9bbd8b95525894858b73c0bc97548cf0a4c2a65163",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202061",
+      "definitionSha256": "32e6509f2f3ebbea20abdfb68aa5ade724320573f8a0436a2f466fb1a28de893",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202071",
+      "definitionSha256": "32f643e9b6d4cc62f4af54325cd242c15834c616bfad5b6b515a3834d4eef129",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202072",
+      "definitionSha256": "7ed77410984c60376b743d99fc65a24982e9bc417dea046ec1aa1a6bf05a79cd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202081",
+      "definitionSha256": "7e28fadcf29c660ee306f4ec5a2e1881162912e55cab861aa8d3f8397a304093",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202082",
+      "definitionSha256": "1bb2756ccdac660d64b16f792af46b2915559a7222b448d3d8b949e56bc6b7a9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202092",
+      "definitionSha256": "eb6586eef66ba2ed310070893fd44561e01e049fedca1f3fe2a6ad6dc6d813e8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202101",
+      "definitionSha256": "f3f1c4c4d116349d5a54e8ce86a9e549b2ce50dd0b20784c41cfb14aca5b6a95",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202102",
+      "definitionSha256": "221eca8ac8453f19b5a6595d5958bc700c18938bb7a18295986864e06e0a4af2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202112",
+      "definitionSha256": "9a18e5b85c454faf15fb7be9d4e505d8f486d7e6503243c9c20f6d7e65d7b6aa",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202121",
+      "definitionSha256": "1c6e0756c9b0d4461105f1e9bceedc62e0edefb7a4cc880c8fd1b63966ddb0e1",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202122",
+      "definitionSha256": "672fab8a847f0951f751b27362e58d1fbcce46277817b795fb437c74f38daffa",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202132",
+      "definitionSha256": "9c9c59717be37806b6e26cdb05243ec9b80f3f3b69b9fcf83ba3be4d04a81353",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202152",
+      "definitionSha256": "086270cd80d4c1ef0a494a30d73f86bf5448139944f4442c399dcf5b634bef0e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202161",
+      "definitionSha256": "4384cacad7b194f8e6a694d1d090afb0a7a8cd6b34e750d0a993e4ab603aea94",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202172",
+      "definitionSha256": "1aa1dd73d3c73b7d458dab7eca064536cb67f39a984b77e2023581515922b8f6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202192",
+      "definitionSha256": "e422abcc8ae55029d5ddae53177f4ed4c902dd1dbc1a0120efdf758e5036792d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202202",
+      "definitionSha256": "75486b31ab58384e21bc2572b610a57ddf8f5be8fdb7b39cee9967720f71ce9c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202242",
+      "definitionSha256": "9b3cff3c21e8acf948ea5f800a3550c90897257a158777097de6f5367c664279",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202252",
+      "definitionSha256": "a95fd9a64744abf17e0116bfe4fdfa5ef0b08ddc06f8d2fae94f07d832a5fe9a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202261",
+      "definitionSha256": "af300fc9cb6ebe1ae124552ba56020ae60c9f6564a6ec16f1427c7c627cd0967",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202262",
+      "definitionSha256": "da5793b25628874786acb0abf6cd19be7c2d9a5f8bf353844b9fed15ee558b8a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202272",
+      "definitionSha256": "2f61208524daa70469f0af437b0021254bc50bd21329547332a3f088b142634f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202281",
+      "definitionSha256": "c5314e11516b2876a7b6a7751db4ce3cdc074edca0741b52e29aa633e187c6ab",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202282",
+      "definitionSha256": "eb01e250f2c7f590b5887603c7647f8d197f45b33724b1e052cdf3c5a7f032f6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202292",
+      "definitionSha256": "dbfbd395354ad1fffa0958cb4af88cc448247a69abb20600676e2947e011e04f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202301",
+      "definitionSha256": "d7401ccae6b48e682d91067d6f464095084f3ca4eadbae9ad2c40ec4ec96c534",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202302",
+      "definitionSha256": "dcd86c0a0576475148841c7515680fbae93f7735bc0a84c0f09c7c81da4ff2a8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202311",
+      "definitionSha256": "12bbc076283041d29f59b97783d510a7c18498e2f62ebff5b0ee705b76f8f2e0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202312",
+      "definitionSha256": "483dd443139f847d0b1093cbbb2d4221e17489bff157da71cdcda06119436a1e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202322",
+      "definitionSha256": "4f675ac1569fabf694e84bfc8c086e9f6d67448b2f0c8fdbe67ab4974ffb4c22",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202331",
+      "definitionSha256": "97ada19fdbf50c4aafeef5f865d3c4e009e8238adca0297de382e3af6a26dff7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202331",
+      "definitionSha256": "97ada19fdbf50c4aafeef5f865d3c4e009e8238adca0297de382e3af6a26dff7",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "202332",
+      "definitionSha256": "2bc7f233b5c852df857e27d239a3e2a304b3cca6f312811e43b7c06799e3e66d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202332",
+      "definitionSha256": "2bc7f233b5c852df857e27d239a3e2a304b3cca6f312811e43b7c06799e3e66d",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "202341",
+      "definitionSha256": "b7cb49813c17e8b2ad8a9dff0860bdd06955e6d70ab0d231d943a5738c1d7702",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202342",
+      "definitionSha256": "2aa313f4168543188cbdc8feb9fc743f2c125e21272b111da94cc29991c95cc2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202343",
+      "definitionSha256": "fdb419ce196b1f3aa732d118e8c558b22c22bed33edeef8bb27305ccc6f85f6c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202352",
+      "definitionSha256": "773fbcc400d3dc8c115fa7c7b95371d9623d082d4399e0fa705c8d7f51e342db",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202362",
+      "definitionSha256": "34bd15cb2c660e6e64087040859847918df8580d1dccce9bbbe3c60124254a7b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202371",
+      "definitionSha256": "52e88548a006a409e34df7a8b9cedca733825bfa2b67637ff8481a2eacc96ab2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202372",
+      "definitionSha256": "816d6893cb8458c13cc1461aa4358ba79ad187c05fc5aeacd5c8c8dc6339e15a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202382",
+      "definitionSha256": "90c90da11a4c650ac71a5fa361cb844a7597bd2c391e3fbf2c180d55b547209b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202392",
+      "definitionSha256": "72f1a2297fb0d6f310e6eac74e3ac928508941a07ea92827083a10bd524c88e9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202401",
+      "definitionSha256": "ebd7fde1970ba6baca6f83bb4b219513813ed26f463d716c39f6395a7768242c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202402",
+      "definitionSha256": "ec198395245a87e66fecedba1681d7d20d26826e60133fc2d4b24d874bb8a68e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202412",
+      "definitionSha256": "d1a78e0e38d960c9ea24dd40a72cbb126592c783358d89d78ea703736eeb7f7c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202421",
+      "definitionSha256": "c9601bb239a43546a52487894c9a89d65920f153bec7a64697c8283c219ec1e2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202422",
+      "definitionSha256": "e22768103076dd6efa54069337d3457e7ed749d9aa24966d96b7731f911f426e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202431",
+      "definitionSha256": "8a20ba91822b054219e232b72a163d89173dea413610dfb767cb428f043cd326",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202432",
+      "definitionSha256": "a16fd3946f00029e642ee09b40591a2a67350cd903c0577a69c7c27ee77b9bb2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202451",
+      "definitionSha256": "5f63b467cb1efc63b335ec7eb872724c43615a75f9e8b697ff21b78eab1de3b3",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202452",
+      "definitionSha256": "297f84a3bdf0f9cf1482410ed6dc5274de390b14ce874ed6bdb5bc2b58aadb21",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202462",
+      "definitionSha256": "de97c4331214d38edcb225b175caa2978eba60032761950104b726d2262654b9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202471",
+      "definitionSha256": "eb0ef296ed3486d966eaf5de217ea59c2f929e3e72cbeda392f1eb95a8db86df",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202472",
+      "definitionSha256": "cdc5d3ac142bbccd03db1ee2e1ae96c05e7b6bd704fa61bf7ca86faae44c8b43",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202482",
+      "definitionSha256": "693da1df1c8dad27cf8c4256a0b411af513d7a9be38192c5f717fabca5739716",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "202502",
+      "definitionSha256": "f3058d820dd6ee8eb80dba2918936abe26b07cbcb43fe070cad0e912e3bbb928",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210011",
+      "definitionSha256": "0ac439c0d0c637db4b54afa26f3d08864766a4e4cd87e5f03572ec228e8b5bcb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210012",
+      "definitionSha256": "4a691d3e0faf2223da88a20753fed58fa38c1e6a5fc44060e5277ba3725d0f9c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210022",
+      "definitionSha256": "b9f1f991cbc85fb668c7328cb36a37c85e759db188d4b9397c9c16d9a0c239c9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210031",
+      "definitionSha256": "4988047759b538ba341e39d63c87018f2e5a755e1b08b2201506d58a98e86bff",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210032",
+      "definitionSha256": "a68bfd24bc8f5cb4d9e08059fbec43ef70981a39fbbd6cff766f9b15782f7107",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210042",
+      "definitionSha256": "de5e23d9fc414e1e3e083a1dd3e934317294b887917e65575085edf0d42af0ab",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210051",
+      "definitionSha256": "60d606f3d7b67ea8e14e3f15d6f4a162b3e5897345e3828971e074682c8eb15b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210052",
+      "definitionSha256": "79eb80f82a1a83e173e5edd086b8a07a28570e22b0f785b91bc65b4453da7a02",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210061",
+      "definitionSha256": "14f347cfa4cfa66e8abd8e5a2b6f5d387c0bf4d0470959ab87db89bac71dd9ab",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210062",
+      "definitionSha256": "68fec0f687bb3861cd4b7870cb0143082dc9575b4d66640a1a22edd7fa5e6daf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210071",
+      "definitionSha256": "65f6d4b7ba02912dad3fa4e608760436daaa2a45228091f9ecfad3a421ead2b0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210072",
+      "definitionSha256": "5f91b599ab350bde8f1ad8753ca02c9e86b6dc123403747a457745a1a9c63885",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210081",
+      "definitionSha256": "c74f7a9ccee03a7b47ed6262a313d0e7fd7162ff03be7f8a896aa602d94e3443",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210082",
+      "definitionSha256": "3434363d24164eec1b6ff22aa4532f56f226314ec226e04e32c66c06583b2767",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210091",
+      "definitionSha256": "c050068fa04581388e4a7ee2a481b3607cc0197589da466b7ad5080d1b590ac9",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210101",
+      "definitionSha256": "c0c82b6d9a0dda7c8d9cda195c6fe0c881aed48322bb96a4a6c7617aa0cf47c0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210111",
+      "definitionSha256": "42203ee91eb1ff9df5b273062a1a222883be3a2994f1acd31d4286b36951866f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210121",
+      "definitionSha256": "a3bf805ba8015245e0b44be8a7d64c22a0b65e18eb207a177cffa61d1c1acbd7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210131",
+      "definitionSha256": "29f18af22d217b31dee73807bc87bd3f49a29d11d08f39ad9309250c20af7cde",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "210141",
+      "definitionSha256": "5b5c0021c98737ac1fc3836549e80da0ddeeb439f41d0aab741d3f2953e1e261",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900011",
+      "definitionSha256": "b4f54e675776f1d94656f6c92a4e82fd6972c19a8a2fee4a94e51e8355361185",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900021",
+      "definitionSha256": "265ac4f4f770043562fc17a4a33692df15d75bf3fcc2896b5bd0d46b35b7ad7b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900031",
+      "definitionSha256": "704a04de0de8e605b19117445238f1c279a125e6cc7c0c257e49bda8144be722",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900041",
+      "definitionSha256": "ac898ae963da3a511acc22571c6f4fff759215c625e3941614d5a2d56c2bb1db",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900051",
+      "definitionSha256": "08ed7e831e9abec6273cd0f8856bce274ad2d181f61c22ad9aa1e38f2f766902",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900061",
+      "definitionSha256": "20ad5ece9e393d745ad8518fe07151bf68ea9a843fbcca0b24ac9a0ce6641536",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900071",
+      "definitionSha256": "51d26052785cb48cb6ced2d2f4325d5d5ef492fdba7178b496635cd764e74c3c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900081",
+      "definitionSha256": "3f936c540a0d64a790427a20de4e302e63b90b1c80962fcfe343dd1faf38c489",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900091",
+      "definitionSha256": "863f277cf9f0a386c413e4e283deb8360931ff99499ad35a2999ed485d6bad68",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900101",
+      "definitionSha256": "24484ab8a54e6c20c32ff60f540eedf34100dc2d75a29c1ccabab0d0245d1551",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900131",
+      "definitionSha256": "5daba1d7b5f78645376aa19d49c19131f89743f316d159ebd2c99bc60adf7812",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900131",
+      "definitionSha256": "5daba1d7b5f78645376aa19d49c19131f89743f316d159ebd2c99bc60adf7812",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900141",
+      "definitionSha256": "83bf124598f4deb723ddd58cefdb30b0e8416a7a8efd2286d11d4739ab5e1b2d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900161",
+      "definitionSha256": "f46f9be16288511c6f26c7a4fcda8c509bf059fa96abe1da2e544dfb46630aaf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900161",
+      "definitionSha256": "f46f9be16288511c6f26c7a4fcda8c509bf059fa96abe1da2e544dfb46630aaf",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900171",
+      "definitionSha256": "0f387967054bbcb53bd833201c73b23709a0a8551d631be14ef3b5dfd828ca0b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900181",
+      "definitionSha256": "4e2e5f4634fe707abdfa03e5d6ff1058bbf0dd5280fe3211b5ffe491abac84cf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900191",
+      "definitionSha256": "27acf40a5496126c4ecfdc15516f5c7e3df81a6be74059a33cc0aadb1c221663",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900201",
+      "definitionSha256": "930d9249353756150d4736531cfd07103874efb6b3da5d135801916b40725856",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900211",
+      "definitionSha256": "1b32839285963ee493d699ace69b92012a822d410e2679d85b68db0d16188faf",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900231",
+      "definitionSha256": "64bebe7e5a47b83259e08641ce303a1a2e1c19603894712cac78daf7284593ac",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900231",
+      "definitionSha256": "64bebe7e5a47b83259e08641ce303a1a2e1c19603894712cac78daf7284593ac",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900241",
+      "definitionSha256": "ef00f114a70e44b72c395a561791d0e4e70dbfc967141731f8dcd784f2f04643",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900251",
+      "definitionSha256": "03feb4aab66333106887d56d839952d6ec4258061cea19b839bdde3eef4cd23a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900261",
+      "definitionSha256": "9696909bf967e5b0697a30441ae941085dd1d421e3a6746b4243dc47929e88b2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900261",
+      "definitionSha256": "9696909bf967e5b0697a30441ae941085dd1d421e3a6746b4243dc47929e88b2",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900271",
+      "definitionSha256": "4a72e1b680d42afe188a9a8ba46a418dbcdd028a543928bd13dc0c940cf36549",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900281",
+      "definitionSha256": "1e9074fffcb57166ffe14ab3fb2eb46e99a8e86a1d67d8045cde9de03a0181d1",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900311",
+      "definitionSha256": "256ad850284392a07c60cff1f17b2ce0a180d658a456b427234ffe3e1fbcf61b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900311",
+      "definitionSha256": "256ad850284392a07c60cff1f17b2ce0a180d658a456b427234ffe3e1fbcf61b",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900321",
+      "definitionSha256": "72d8b8c4a3627c6eab26c87b4ad1ea16762b6881a69ceead4ba996e6eec5f45b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900331",
+      "definitionSha256": "cf848f8a5d2b9b8c5415c3dfa1d476d2e6ef5b0d7d862fbe102ed8a8b5e4cff6",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900331",
+      "definitionSha256": "cf848f8a5d2b9b8c5415c3dfa1d476d2e6ef5b0d7d862fbe102ed8a8b5e4cff6",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900351",
+      "definitionSha256": "37800d9cb3cb170e77e4ff359cd04446b060311e16a125b308a7011571f5d8be",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900391",
+      "definitionSha256": "76cf345932f2c9ba8d13e7786e15347b0953b6e219d59da20d5b41dbc9ad9103",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900401",
+      "definitionSha256": "e0ff40aa1e31858319cd2db035c68ff9a2e0c74d367733488f20ad21b0d5aad2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900411",
+      "definitionSha256": "4be5d24dc0be0e9588369239cd20761da80741ee6f9dbb1f39e7821016f8dd0e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900421",
+      "definitionSha256": "06c7da6c2306df59e7e57dfca00890e320a8ca35d9e70c3645a962c5bb6d5744",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900421",
+      "definitionSha256": "06c7da6c2306df59e7e57dfca00890e320a8ca35d9e70c3645a962c5bb6d5744",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900451",
+      "definitionSha256": "53dcaf3d2832708c4cf02e34dd2a05e3bea4f28e399f42a9a454f861cca8ef2a",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900461",
+      "definitionSha256": "fa8b9c7d180f2118f1641c01437c5fceb9bd0a40b507d0c3aea2ce9f02df74a8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900471",
+      "definitionSha256": "180637f2ef5d886ede2c3d94188863bb1c8e65bd5973a4fbbcb15042fdd38574",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900471",
+      "definitionSha256": "180637f2ef5d886ede2c3d94188863bb1c8e65bd5973a4fbbcb15042fdd38574",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900511",
+      "definitionSha256": "fdb25e5ad18b0e0597acd64aeb7c902d21e2976aa123288cfeaa6a33dd74053b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900521",
+      "definitionSha256": "7548abd25e919c86b4e8e6b8e52b8f8ea7bc298deffa4690501037f19cf65ee7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900581",
+      "definitionSha256": "ef73a99807efffb2d87c787a9fba9a1afe7fae9fdfaa3a6604859164667c5f9b",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900591",
+      "definitionSha256": "9b9ff34b1b884adf47f4430543982e78247ffe32466cd9868d92eccba2e9e8c5",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900601",
+      "definitionSha256": "71ccf4b441794900a13cd9fc53d8dbcef46a797662b78d2eecfbbbcbf4355298",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900611",
+      "definitionSha256": "876fd9615bc384fe481ab66e015fbdd3199f4f6efea6aa63a13d780f90b9592c",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900621",
+      "definitionSha256": "584f3baaade86c7b6c99169d18514fc5352ea00cbbe439ff5fdfee4994fa1e95",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900671",
+      "definitionSha256": "0d941dc77cf71e442cbeb72bd17e20f1fd19750a63d2b018d24d1c9fae966dfd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900671",
+      "definitionSha256": "0d941dc77cf71e442cbeb72bd17e20f1fd19750a63d2b018d24d1c9fae966dfd",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900681",
+      "definitionSha256": "c0e32011096dd4504d55b786fc286bba26c588a1eedf42f0ce5a60a6fe0bebd7",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900681",
+      "definitionSha256": "c0e32011096dd4504d55b786fc286bba26c588a1eedf42f0ce5a60a6fe0bebd7",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "900691",
+      "definitionSha256": "34003a37f33a88fc4b08e9cff3333cb376e0c98c51b95154465e915ebf4418ca",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900711",
+      "definitionSha256": "ad8a69967498abd40b2268101c40d92e85a6e73105acf3d81be0e9ca2d44e2dd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900721",
+      "definitionSha256": "fdc83fe61ae847d3e287d55d9eb6cbc1104bd8700ceb4a1fc52e09558c7d9b38",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900871",
+      "definitionSha256": "eceed8c30644043912b98e44cca39aac0892a2ed9d5799096bad3383719c1d42",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "900981",
+      "definitionSha256": "41e457e64a262e07cb59ddaa5c3bbaef87563a52cdf040e7478f0b563aec7c10",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910011",
+      "definitionSha256": "3e6dbd74adb6fa1d4418514765a3f8ec1fddec9f0ed78591468bb55a4e05ba17",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910041",
+      "definitionSha256": "04ded5c1acac9ae15edb12720ce13861a9be71ddea43005294e267f57791a7cb",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910051",
+      "definitionSha256": "84beec9122ace1c9b1ffb5864fe12d75e0618feeffb183c80ec47f95030e3c31",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910071",
+      "definitionSha256": "8c15ea62b9f2d08bd07c811d78c9a31552f974f6fef7ff7e2dde942c58814a3d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910081",
+      "definitionSha256": "9b7d30ed5705d2c8ad1a82869595b07ffd97b01698b4892806dc9aefbce15a04",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910081",
+      "definitionSha256": "9b7d30ed5705d2c8ad1a82869595b07ffd97b01698b4892806dc9aefbce15a04",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910101",
+      "definitionSha256": "08d073e550d85428fc8f6b1658896227eaed4765a61e24b766308d2e7061be9f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910101",
+      "definitionSha256": "08d073e550d85428fc8f6b1658896227eaed4765a61e24b766308d2e7061be9f",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910111",
+      "definitionSha256": "b6951530e07086ba05b2d8015526f808d4735683472250b444b49fdaf8b12dde",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910141",
+      "definitionSha256": "1b5c76171829e94d8111e5e367bdb3d32f61f496dc89586f9cf3aafe287d1b8e",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910151",
+      "definitionSha256": "1de4bddc4d7d80c44deb46330630b5f198ba6412753570f21a3b09d312371055",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910151",
+      "definitionSha256": "1de4bddc4d7d80c44deb46330630b5f198ba6412753570f21a3b09d312371055",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910201",
+      "definitionSha256": "04146f09e5f5f09d17249543b51254f2e25517e8692e5ba2f393b677f8a70290",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910201",
+      "definitionSha256": "04146f09e5f5f09d17249543b51254f2e25517e8692e5ba2f393b677f8a70290",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910211",
+      "definitionSha256": "d4d9ec5a6d1e5c5e4aa1b5298212daf19b2fd3ca181eb17c4f10f621d4249911",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910221",
+      "definitionSha256": "cd7a09017bc8673048953b5857f778eedaee81793a87f765a92f681fc0854a9f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910221",
+      "definitionSha256": "cd7a09017bc8673048953b5857f778eedaee81793a87f765a92f681fc0854a9f",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910231",
+      "definitionSha256": "ded9a72c813d32035f71e7acd7f7197514eb6e25013086dc53468d7e8e5ecefd",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910241",
+      "definitionSha256": "da885cf98a998b087d6c3446d895b5d19fb6cddb1163dda1f5843ac2383b9c80",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910241",
+      "definitionSha256": "da885cf98a998b087d6c3446d895b5d19fb6cddb1163dda1f5843ac2383b9c80",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910261",
+      "definitionSha256": "df6d5c45c3d060c6d41af949e034c6f77a078574727d0e6d70b69074723afe3d",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910301",
+      "definitionSha256": "3f8b1300baef8ce2454278778c2ddad3aad616cd133170afd1186147804d2bf0",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910401",
+      "definitionSha256": "5b763f415474b3997e8bb430b2ecbbacfbe9a761b611895d2c4739aa91962b3f",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910451",
+      "definitionSha256": "7342f798de12efbbaedff33f156626f6778ac389eae25985d945d2cf539d0e22",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910521",
+      "definitionSha256": "a7c73e8f78621ca5c7a1fb6a2b2d8325a3681de8312c80bfe1e7052723d3c9e2",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910591",
+      "definitionSha256": "33c30bbde52f7949c3b2e2ff52d9ae0d66a113d3f8b06b8b0423ae6edb7e3dc8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910601",
+      "definitionSha256": "7df3882cf586b488099b2cd86edf47d0e23fc88d76e391c11f4e6c953ba42638",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "910601",
+      "definitionSha256": "7df3882cf586b488099b2cd86edf47d0e23fc88d76e391c11f4e6c953ba42638",
+      "detailIndex": 1
+    },
+    {
+      "skillId": "910611",
+      "definitionSha256": "01775eebfc0731b6b42dffc58ecbffeb931113680c36eff89b036fd02d046f85",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "920011",
+      "definitionSha256": "6e1658e5a1b81ce9a9b43f0a019d69324c5541199a33b48da449bf6fcbd9efd8",
+      "detailIndex": 0
+    },
+    {
+      "skillId": "920011",
+      "definitionSha256": "6e1658e5a1b81ce9a9b43f0a019d69324c5541199a33b48da449bf6fcbd9efd8",
+      "detailIndex": 1
+    }
+  ],
+  "equippedButNeverObservedActivating": [
+    "100201",
+    "100221",
+    "100241",
+    "100421",
+    "100471",
+    "100561",
+    "10081",
+    "10091",
+    "10141",
+    "10241",
+    "110091",
+    "110131",
+    "200052",
+    "200061",
+    "200072",
+    "200081",
+    "200082",
+    "200092",
+    "200102",
+    "200112",
+    "200122",
+    "200171",
+    "200191",
+    "200211",
+    "200241",
+    "200242",
+    "200311",
+    "200433",
+    "200611",
+    "200701",
+    "200712",
+    "200731",
+    "200761",
+    "200772",
+    "200811",
+    "200952",
+    "200981",
+    "200982",
+    "201091",
+    "201171",
+    "201191",
+    "201192",
+    "201211",
+    "201221",
+    "201222",
+    "201501",
+    "201631",
+    "201702",
+    "202061",
+    "202071",
+    "202081",
+    "202192",
+    "202202",
+    "202242",
+    "202341",
+    "202342",
+    "202352",
+    "202421",
+    "202422",
+    "202471",
+    "210082",
+    "900031",
+    "900181",
+    "900311",
+    "900351",
+    "900391",
+    "900411",
+    "900421",
+    "900451",
+    "900601",
+    "900671",
+    "900691",
+    "900711",
+    "900721",
+    "910051",
+    "910081",
+    "910101",
+    "910141"
+  ],
+  "equippedMultipleBranchSkillIds": [
+    "100161",
+    "100231",
+    "100331",
+    "100371",
+    "100421",
+    "100471",
+    "100681",
+    "101001",
+    "110081",
+    "110091",
+    "110101",
+    "110151",
+    "110241",
+    "110461",
+    "120011",
+    "202331",
+    "202332",
+    "900131",
+    "900161",
+    "900231",
+    "900261",
+    "900311",
+    "900331",
+    "900421",
+    "900471",
+    "900671",
+    "900681",
+    "910081",
+    "910101",
+    "910151",
+    "910201",
+    "910221",
+    "910241",
+    "910601",
+    "920011"
+  ],
+  "equippedConditionTokens": [
+    "accumulatetime",
+    "activate_count_all",
+    "activate_count_end_after",
+    "activate_count_heal",
+    "activate_count_later_half",
+    "activate_count_middle",
+    "activate_count_start",
+    "all_corner_random",
+    "always",
+    "base_power",
+    "bashin_diff_behind",
+    "bashin_diff_infront",
+    "behind_near_lane_time",
+    "behind_near_lane_time_set1",
+    "blocked_front",
+    "blocked_front_continuetime",
+    "blocked_side_continuetime",
+    "change_order_onetime",
+    "change_order_up_end_after",
+    "change_order_up_finalcorner_after",
+    "compete_fight_count",
+    "corner",
+    "corner_random",
+    "distance_diff_rate",
+    "distance_diff_top",
+    "distance_rate",
+    "distance_rate_after_random",
+    "distance_type",
+    "down_slope_random",
+    "grade",
+    "ground_condition",
+    "ground_type",
+    "hp_per",
+    "infront_near_lane_time",
+    "is_activate_any_skill",
+    "is_badstart",
+    "is_basis_distance",
+    "is_behind_in",
+    "is_dirtgrade",
+    "is_finalcorner",
+    "is_finalcorner_laterhalf",
+    "is_finalcorner_random",
+    "is_last_straight_onetime",
+    "is_lastspurt",
+    "is_move_lane",
+    "is_other_character_activate_advantage_skill",
+    "is_overtake",
+    "is_surrounded",
+    "is_temptation",
+    "lane_type",
+    "lastspurt",
+    "motivation",
+    "near_count",
+    "order",
+    "order_rate",
+    "order_rate_in20_continue",
+    "order_rate_in50_continue",
+    "order_rate_in80_continue",
+    "order_rate_out40_continue",
+    "order_rate_out70_continue",
+    "overtake_target_time",
+    "phase",
+    "phase_firsthalf_random",
+    "phase_laterhalf_random",
+    "phase_random",
+    "popularity",
+    "post_number",
+    "random_lot",
+    "remain_distance",
+    "rotation",
+    "running_style",
+    "running_style_count_nige_otherself",
+    "running_style_count_oikomi_otherself",
+    "running_style_count_same",
+    "running_style_count_same_rate",
+    "running_style_count_sashi_otherself",
+    "running_style_count_senko_otherself",
+    "running_style_equal_popularity_one",
+    "running_style_temptation_opponent_count_sashi",
+    "running_style_temptation_opponent_count_senko",
+    "same_skill_horse_count",
+    "season",
+    "slope",
+    "straight_front_type",
+    "straight_random",
+    "temptation_count",
+    "temptation_opponent_count_behind",
+    "temptation_opponent_count_infront",
+    "track_id",
+    "up_slope_random",
+    "weather"
+  ],
+  "equippedEffectTypes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    10,
+    13,
+    21,
+    22,
+    27,
+    28,
+    29,
+    31,
+    35,
+    37
+  ],
+  "officialStateSamples": {
+    "samplesWithState": 15925,
+    "blockedSamples": 327,
+    "rushingSamples": 81
+  },
+  "limitations": [
+    "equipped definitions do not prove condition, branch or effect execution",
+    "skill ID activation alone does not identify a branch; raw detail observations do",
+    "absence from this selection is a collection gap, not proof of an engine defect"
+  ]
+}

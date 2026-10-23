@@ -558,7 +558,7 @@ mod tests {
     }
 
     #[test]
-    fn python_port_vectors_match_every_float32_bit() {
+    fn snapshot_vectors_match_every_float32_bit() {
         let p = parameters();
         let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_physics_port.json"))
         .unwrap();

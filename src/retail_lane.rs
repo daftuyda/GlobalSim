@@ -692,12 +692,14 @@ impl<T: PointRow> PassingSearch<'_, T> {
             .iter()
             .map(|&i| self.live[i].point().position)
             .fold(f32::MAX, f32::min);
-        // Store the corridor edges before subtracting the inward offset.
-        // The final subtraction stays wide through the lane comparison;
-        // rounding it to float can close a clear corridor at the boundary.
+        // Evaluate the shifted corridor in wide arithmetic, then store each
+        // completed bound as float32 before the inclusive lane comparison.
+        // Rounding the unshifted edges first can admit a blocked inward path.
+        // Three captured races distinguish this through the subsequent lane
+        // movement, including a blocker exactly on the rounded lower bound.
         let bounds = if straight != lane {
-            Some(((lane - CORRIDOR) as f64 - STRAIGHT as f64,
-                (lane + CORRIDOR) as f64 - STRAIGHT as f64))
+            Some(((lane as f64 - CORRIDOR as f64 - STRAIGHT as f64) as f32 as f64,
+                (lane as f64 + CORRIDOR as f64 - STRAIGHT as f64) as f32 as f64))
         } else {
             None
         };
@@ -740,6 +742,49 @@ pub fn resolve_overlaps_with_order(rows: &mut [Row], force_checks: &mut [bool], 
 mod tests {
     use super::*;
     use crate::json::Value;
+
+    #[test]
+    fn passing_corridor_includes_rounded_lower_edge_and_excludes_next_float() {
+        // Course 11102, 16 runners: gate 11 at 50.48318862915039 seconds.
+        // Gate 15 lies exactly on the inward corridor's final float32 edge.
+        // The outward choice restores the complete captured replay.
+        let owner = Row { position: 983.1047973632812, lane: 0.1712033450603485 };
+        let live = [
+            Row { position: 996.8428955078125, lane: 0. },
+            Row { position: 985.94384765625, lane: 0.18314433097839355 },
+            Row { position: 1000.6927490234375, lane: 0.11035139113664627 },
+            Row { position: 1009.8056640625, lane: 0. },
+            Row { position: 1008.3018798828125, lane: 0.04622805863618851 },
+            Row { position: 986.1582641601562, lane: 0.072707898914814 },
+            Row { position: 1001.1455078125, lane: 0.18637758493423462 },
+            Row { position: 994.541259765625, lane: 0.009614402428269386 },
+            Row { position: 988.8441162109375, lane: 0. },
+            Row { position: 994.8853759765625, lane: 0.055555559694767 },
+            Row { position: 990.4222412109375, lane: 0.09033980220556259 },
+            Row { position: 999.5616455078125, lane: 0. },
+            Row { position: 987.0814819335938, lane: 0.18172475695610046 },
+            Row { position: 986.8275756835938, lane: 0.0712033361196518 },
+            Row { position: 1002.341552734375, lane: 0. },
+        ];
+        let mut cached = live;
+        for (row, position) in cached[..10].iter_mut().zip([
+            995.5263671875, 984.6029052734375, 999.35693359375, 1008.4671020507812,
+            1006.9469604492188, 984.8319702148438, 999.7761840820312, 993.1939086914062,
+            987.4900512695312, 993.5510864257812,
+        ]) { row.position = position; }
+        let side = SideRoom { can_in: true, can_out: true,
+            in_space: owner.lane, out_space: 1.0287965536117554,
+            inner_blocker: None, inner_blocker_index: None };
+        let target = |rows: &[Row]| PassingSearch {
+            lane_preference: 0, owner, phase: 1, max_lane: 1.2,
+            live: rows, cached: &cached, visible: &[0, 1, 2, 4, 6, 7, 9, 10, 11, 12, 13, 14],
+            targets: &[1], side,
+        }.target();
+        assert_eq!(target(&live), 0.23869988322257996_f32);
+        let mut outside = live;
+        outside[13].lane = f32::from_bits(live[13].lane.to_bits() - 1);
+        assert_eq!(target(&outside), 0.11564779281616211_f32);
+    }
 
     #[test]
     fn fused_lane_cache_matches_independent_queries_and_owner_changes() {
@@ -1027,7 +1072,7 @@ mod tests {
     }
 
     #[test]
-    fn lateral_acceleration_and_permissions_match_python_bits() {
+    fn lateral_acceleration_and_permissions_match_snapshot_bits() {
         let fixture = fixture();
         let p = MoveParameters::from_value(fixture.get("move_parameters").unwrap()).unwrap();
         for (case, row) in fixture.get_array("moves").unwrap().iter().enumerate() {

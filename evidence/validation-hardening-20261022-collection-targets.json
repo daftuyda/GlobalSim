@@ -1,0 +1,616 @@
+{
+  "scope": "Latest frozen intake stratified panel; absence is not proof of a defect",
+  "races": 265,
+  "equippedBranchVersions": 607,
+  "observedBranchVersions": 548,
+  "targets": [
+    {
+      "skillId": "100131",
+      "definitionSha256": "4f8a12a48664f400ef3a133036baf9a6ca3fa0cc329399b1fbab5dc588cc20bb",
+      "detailIndex": 0,
+      "condition": "is_finalcorner==1&corner!=0&distance_diff_rate<=30&distance_type==4&lastspurt==2",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100161",
+      "definitionSha256": "a3f5463f63ccd13097691e68d993123608d730df8769deded1c009eed63216b1",
+      "detailIndex": 1,
+      "condition": "is_finalcorner==1&order>=2&order_rate<=75&is_behind_in==1&change_order_onetime<0",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100261",
+      "definitionSha256": "3fcfd8f0d5e34c824d31958d4e5fc254683aba77e9cd84168cde454ba04de061",
+      "detailIndex": 0,
+      "condition": "is_badstart==0&order<=3&is_finalcorner==1&corner==0&order_rate_in20_continue==1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100471",
+      "definitionSha256": "79aa0ae281be64d899725a07b517e2e8b5b027a329c42ee0dd72380477967ed4",
+      "detailIndex": 0,
+      "condition": "phase>=2&remain_distance<=401&remain_distance>=399&order_rate<=40&grade==100&popularity<=3",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100491",
+      "definitionSha256": "7143f37083a7f080fd086a1f01b85d80170bfa6396abd35de920001c017880f5",
+      "detailIndex": 1,
+      "condition": "remain_distance<=400&order_rate>=30&order_rate<=50&popularity<4",
+      "precondition": "is_finalcorner==1&is_overtake==1",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100561",
+      "definitionSha256": "887f4231d6ac6e73c102a5efc2fcdc88c960f21369147b6d370267eb9d8b0c49",
+      "detailIndex": 0,
+      "condition": "phase>=2&order>=3&blocked_front==1",
+      "precondition": "",
+      "effectTypes": [
+        27,
+        31
+      ]
+    },
+    {
+      "skillId": "100671",
+      "definitionSha256": "88247ab4ec8de59fbf6c11804656df06dd0feee8cc5508435fea6de5b9e28765",
+      "detailIndex": 0,
+      "condition": "is_last_straight_onetime==1&order>=2&order<=5&distance_diff_top<=5",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100671",
+      "definitionSha256": "88247ab4ec8de59fbf6c11804656df06dd0feee8cc5508435fea6de5b9e28765",
+      "detailIndex": 1,
+      "condition": "is_last_straight_onetime==1&order>=2&order<=5&distance_diff_top>5",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "100781",
+      "definitionSha256": "77f3f2b8ae6a13293e1b35dda3c614d36a20f1528fd090ded50b379a73c2813b",
+      "detailIndex": 0,
+      "condition": "is_finalcorner_laterhalf==1&distance_diff_rate<=50&order==2",
+      "precondition": "distance_rate>=50&order_rate_out20_continue==1",
+      "effectTypes": [
+        31
+      ]
+    },
+    {
+      "skillId": "100781",
+      "definitionSha256": "77f3f2b8ae6a13293e1b35dda3c614d36a20f1528fd090ded50b379a73c2813b",
+      "detailIndex": 1,
+      "condition": "is_finalcorner_laterhalf==1&distance_diff_rate<=50",
+      "precondition": "distance_rate>=50&order_rate_out20_continue==1",
+      "effectTypes": [
+        31
+      ]
+    },
+    {
+      "skillId": "10091",
+      "definitionSha256": "c821dba393bc2a362628848ad0fd5d8342d51e796deb7a039f7308ad3c77d425",
+      "detailIndex": 0,
+      "condition": "distance_rate>=50&order==1&bashin_diff_behind<=1@distance_rate>=50&order==2&is_overtake==1",
+      "precondition": "",
+      "effectTypes": [
+        27,
+        31
+      ]
+    },
+    {
+      "skillId": "110081",
+      "definitionSha256": "357c7290c53d5973776e7b5b56e4343eba9c59bd13ac764e54fa916e11aadd1d",
+      "detailIndex": 0,
+      "condition": "slope==0@slope==1",
+      "precondition": "phase>=1&slope==2&order_rate>=50&order_rate<=80&track_id==10006",
+      "effectTypes": [
+        27,
+        31
+      ]
+    },
+    {
+      "skillId": "110091",
+      "definitionSha256": "41ae90ae11be57fb75b4e5ad13fbb54166d1ef69023b9cb2810fa075649c7e6b",
+      "detailIndex": 0,
+      "condition": "distance_rate>=50&corner==0&order==1&bashin_diff_behind<=1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "110101",
+      "definitionSha256": "ac03da4b542db5d01aca9919be5e6b13bf14d767f7e573ba78094c8889d4ab3c",
+      "detailIndex": 0,
+      "condition": "distance_diff_top<=5&order>=2&order_rate<=40&remain_distance<=201&remain_distance>=199",
+      "precondition": "",
+      "effectTypes": [
+        22,
+        27
+      ]
+    },
+    {
+      "skillId": "110151",
+      "definitionSha256": "617e8672c7278596dd662086f9454b650d1f1f7db1610cbe97ac9eb6682d3917",
+      "detailIndex": 1,
+      "condition": "remain_distance<=401&remain_distance>=399&order_rate<=40&activate_count_all<=6",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "110461",
+      "definitionSha256": "f261966686e39d55b1fbb856c081d76111e68ac9b515c592b3cc612b80c44d7f",
+      "detailIndex": 1,
+      "condition": "distance_rate>=40&distance_rate<=50&distance_diff_rate<=10",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "110581",
+      "definitionSha256": "60f16b0d9de562c6d9de74fb3b4314bebd3090b4d46ddccf591b0aecd81faae2",
+      "detailIndex": 0,
+      "condition": "is_last_straight_onetime==1&order_rate<=40",
+      "precondition": "",
+      "effectTypes": [
+        21,
+        27
+      ]
+    },
+    {
+      "skillId": "200051",
+      "definitionSha256": "efa7c94aaf77fe8f7db9e12e2480ecfed831bc5135ccf6bd0e3dc533321b13eb",
+      "detailIndex": 0,
+      "condition": "track_id==10009",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "200071",
+      "definitionSha256": "a645b6e353e305a22e0922fc1bf2d444716e8c1e8950e4babe52ff8d8a9da80c",
+      "detailIndex": 0,
+      "condition": "track_id==10007",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "200082",
+      "definitionSha256": "386e954bf961490de14ba14aeb70db094efd264e4bb6f6a4f268f1ee3e57988b",
+      "detailIndex": 0,
+      "condition": "track_id==10001",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "200122",
+      "definitionSha256": "30d173f6bfd7aa7e90a695f98174126da2b27c09535ca836740387e0fe607d54",
+      "detailIndex": 0,
+      "condition": "track_id==10010",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "200181",
+      "definitionSha256": "74709dc4c9f84d86be60a6de305dd821816f010a7b3c188907369b4bfd67bf0a",
+      "detailIndex": 0,
+      "condition": "season==2",
+      "precondition": "",
+      "effectTypes": [
+        1
+      ]
+    },
+    {
+      "skillId": "200241",
+      "definitionSha256": "54afac39df3986d270cba0610681416d0694e0ae6dccab0c8da5299b4d6e4c54",
+      "detailIndex": 0,
+      "condition": "weather==4",
+      "precondition": "",
+      "effectTypes": [
+        4
+      ]
+    },
+    {
+      "skillId": "200242",
+      "definitionSha256": "8fa9b2c4f655535a9bfeb3f6ab79318394a3fc6d87b484b821c206522a01bd04",
+      "detailIndex": 0,
+      "condition": "weather==4",
+      "precondition": "",
+      "effectTypes": [
+        4
+      ]
+    },
+    {
+      "skillId": "200271",
+      "definitionSha256": "d0184085354e1ffa02fb08b8e7634df7d0e490fce5db563a55e56513e12ea212",
+      "detailIndex": 0,
+      "condition": "running_style_count_same<=1",
+      "precondition": "",
+      "effectTypes": [
+        1
+      ]
+    },
+    {
+      "skillId": "200272",
+      "definitionSha256": "e175f9ae776966d32453317d62094cca5957f8bb70b09a2197d814ff4662656f",
+      "detailIndex": 0,
+      "condition": "running_style_count_same<=1",
+      "precondition": "",
+      "effectTypes": [
+        1
+      ]
+    },
+    {
+      "skillId": "200321",
+      "definitionSha256": "12b4ecb9fe3304d1b0f3f7c389f28ef3873605ebc84f1f66c3199e7815b630ae",
+      "detailIndex": 0,
+      "condition": "popularity==1",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "200521",
+      "definitionSha256": "4bdf242790fdc418b206f091236a353de5ac84417e7585e5a8bba05fa1ce7bec",
+      "detailIndex": 0,
+      "condition": "accumulatetime>=2&order==1&bashin_diff_behind>=1",
+      "precondition": "",
+      "effectTypes": [
+        9
+      ]
+    },
+    {
+      "skillId": "200621",
+      "definitionSha256": "a1daec4d53c0a564ab8cb1873412d18481194fefc9d177367a4ebd61a91d45dc",
+      "detailIndex": 0,
+      "condition": "running_style==4&phase_random==1&distance_diff_rate>=75",
+      "precondition": "",
+      "effectTypes": [
+        9
+      ]
+    },
+    {
+      "skillId": "200761",
+      "definitionSha256": "0483027f8ba9e97f0d10ff06f1779baf531e8e26dcdd8ea4dfb9c7b26ad53a4d",
+      "detailIndex": 0,
+      "condition": "distance_type==4&hp_per<=30",
+      "precondition": "",
+      "effectTypes": [
+        9,
+        27
+      ]
+    },
+    {
+      "skillId": "200821",
+      "definitionSha256": "7bc63403be3410bd500d035f1c6051ec96a838728450e51eab4fce311e303e4f",
+      "detailIndex": 0,
+      "condition": "running_style_temptation_opponent_count_oikomi>=1&is_temptation==0",
+      "precondition": "",
+      "effectTypes": [
+        13
+      ]
+    },
+    {
+      "skillId": "200951",
+      "definitionSha256": "6244d88bc697362652331d6b910a35c4858cca4a90c8163c8d62f3d894d38fff",
+      "detailIndex": 0,
+      "condition": "track_id==10101",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "200981",
+      "definitionSha256": "3d8274230ce3fbd13f09b77737980b104fc7e3d1c3f0df107c72e7bb3444c017",
+      "detailIndex": 0,
+      "condition": "distance_type==1&phase==1&bashin_diff_behind>=3&order==1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "201192",
+      "definitionSha256": "78ab547c069c1ab0ae17c1b6132252e781d7cf37e4cb33755b8d73bde3b3477d",
+      "detailIndex": 0,
+      "condition": "distance_type==4&phase_random==1&bashin_diff_behind>=1&order==1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "201631",
+      "definitionSha256": "89d58c39a16958a62d1cf2885e297c0c3a58a89a82ee1ec5d010100a11596807",
+      "detailIndex": 0,
+      "condition": "same_skill_horse_count>=5",
+      "precondition": "",
+      "effectTypes": [
+        1
+      ]
+    },
+    {
+      "skillId": "202202",
+      "definitionSha256": "75486b31ab58384e21bc2572b610a57ddf8f5be8fdb7b39cee9967720f71ce9c",
+      "detailIndex": 0,
+      "condition": "track_id==10103",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "202212",
+      "definitionSha256": "132b1740017879013d6d56e64fcd66955a3b6cc118ea3240c4738910617dd31b",
+      "detailIndex": 0,
+      "condition": "track_id==10104",
+      "precondition": "",
+      "effectTypes": [
+        2
+      ]
+    },
+    {
+      "skillId": "202421",
+      "definitionSha256": "c9601bb239a43546a52487894c9a89d65920f153bec7a64697c8283c219ec1e2",
+      "detailIndex": 0,
+      "condition": "distance_type==4&running_style==3&is_lastspurt==1&order_rate>=40",
+      "precondition": "",
+      "effectTypes": [
+        9,
+        31
+      ]
+    },
+    {
+      "skillId": "202422",
+      "definitionSha256": "e22768103076dd6efa54069337d3457e7ed749d9aa24966d96b7731f911f426e",
+      "detailIndex": 0,
+      "condition": "distance_type==4&running_style==3&is_lastspurt==1&order_rate>=40",
+      "precondition": "",
+      "effectTypes": [
+        9,
+        31
+      ]
+    },
+    {
+      "skillId": "202441",
+      "definitionSha256": "afe20ef9c46748d39e33898e30b40b5b4fb7f2ba5cd122197daf8099ba7a9224",
+      "detailIndex": 0,
+      "condition": "popularity<=3&random_lot==30",
+      "precondition": "",
+      "effectTypes": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "skillId": "202461",
+      "definitionSha256": "104124d19b79d7b3c9b6be3da695207e7e9a60b855ccf177e67bbf8ae996815b",
+      "detailIndex": 0,
+      "condition": "running_style==1&is_finalcorner==1&corner==0&order==1&bashin_diff_behind<=1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "210141",
+      "definitionSha256": "5b5c0021c98737ac1fc3836549e80da0ddeeb439f41d0aab741d3f2953e1e261",
+      "detailIndex": 0,
+      "condition": "motivation>=4",
+      "precondition": "",
+      "effectTypes": [
+        2,
+        4,
+        5
+      ]
+    },
+    {
+      "skillId": "900151",
+      "definitionSha256": "60d5511bd15327581864de3f167eaa433d2b884ebab85c194c254bc7439ef2ce",
+      "detailIndex": 0,
+      "condition": "is_finalcorner==1&bashin_diff_behind<=1&order<=4@is_finalcorner==1&bashin_diff_infront<=1&order<=4",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900231",
+      "definitionSha256": "64bebe7e5a47b83259e08641ce303a1a2e1c19603894712cac78daf7284593ac",
+      "detailIndex": 1,
+      "condition": "phase>=2&is_finalcorner==1&order<=4",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900281",
+      "definitionSha256": "1e9074fffcb57166ffe14ab3fb2eb46e99a8e86a1d67d8045cde9de03a0181d1",
+      "detailIndex": 0,
+      "condition": "distance_rate>=45&distance_rate<=60&order>=3&order_rate<=50&hp_per<=70",
+      "precondition": "",
+      "effectTypes": [
+        27,
+        31
+      ]
+    },
+    {
+      "skillId": "900291",
+      "definitionSha256": "a04927c8bbb52a9a695aefa65e64333f083ed933cf4cbc1930be56a902fb0cad",
+      "detailIndex": 0,
+      "condition": "distance_diff_top<=5&remain_distance<=300&order_rate<=40",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900301",
+      "definitionSha256": "d7971e2312b6b3d2e19deebb4ff1e23230cc82d9270922d1ffc74d32e96e94ac",
+      "detailIndex": 0,
+      "condition": "is_finalcorner==1&corner==0",
+      "precondition": "phase>=2&order<=4&change_order_onetime<0",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900411",
+      "definitionSha256": "4be5d24dc0be0e9588369239cd20761da80741ee6f9dbb1f39e7821016f8dd0e",
+      "detailIndex": 0,
+      "condition": "distance_rate>=50&order<=3&blocked_side_continuetime>=2",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900471",
+      "definitionSha256": "180637f2ef5d886ede2c3d94188863bb1c8e65bd5973a4fbbcb15042fdd38574",
+      "detailIndex": 0,
+      "condition": "phase>=2&remain_distance<=401&remain_distance>=399&order_rate<=40&grade==100&popularity<=3",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900481",
+      "definitionSha256": "9cd228b9602035d072ace31045d1f75d609f9aa4a6db649d67b57086d6e4b4e0",
+      "detailIndex": 0,
+      "condition": "is_finalcorner==1&corner==0&order_rate<=40&overtake_target_time>=1@is_finalcorner==1&corner==0&order_rate<=40&is_overtake==1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "900621",
+      "definitionSha256": "584f3baaade86c7b6c99169d18514fc5352ea00cbbe439ff5fdfee4994fa1e95",
+      "detailIndex": 0,
+      "condition": "distance_rate>=50&phase==1&order>=3&order_rate<=70",
+      "precondition": "",
+      "effectTypes": [
+        9,
+        27
+      ]
+    },
+    {
+      "skillId": "900871",
+      "definitionSha256": "eceed8c30644043912b98e44cca39aac0892a2ed9d5799096bad3383719c1d42",
+      "detailIndex": 0,
+      "condition": "remain_distance<=400&order<=2&overtake_target_time>=1",
+      "precondition": "",
+      "effectTypes": [
+        27,
+        31
+      ]
+    },
+    {
+      "skillId": "910081",
+      "definitionSha256": "9b7d30ed5705d2c8ad1a82869595b07ffd97b01698b4892806dc9aefbce15a04",
+      "detailIndex": 0,
+      "condition": "slope==0@slope==1",
+      "precondition": "phase>=1&slope==2&order_rate>=50&order_rate<=80&track_id==10006",
+      "effectTypes": [
+        27,
+        31
+      ]
+    },
+    {
+      "skillId": "910091",
+      "definitionSha256": "73c8c62bff734bb4cb4edd71169c6532a90c1834c2235f5eb56a1ac883c3f851",
+      "detailIndex": 0,
+      "condition": "distance_rate>=50&corner==0&order==1&bashin_diff_behind<=1",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "910091",
+      "definitionSha256": "73c8c62bff734bb4cb4edd71169c6532a90c1834c2235f5eb56a1ac883c3f851",
+      "detailIndex": 1,
+      "condition": "distance_rate>=50&corner==0&order<=2",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "910101",
+      "definitionSha256": "08d073e550d85428fc8f6b1658896227eaed4765a61e24b766308d2e7061be9f",
+      "detailIndex": 0,
+      "condition": "distance_diff_top<=5&order>=2&order_rate<=40&remain_distance<=201&remain_distance>=199",
+      "precondition": "",
+      "effectTypes": [
+        22,
+        27
+      ]
+    },
+    {
+      "skillId": "910221",
+      "definitionSha256": "cd7a09017bc8673048953b5857f778eedaee81793a87f765a92f681fc0854a9f",
+      "detailIndex": 1,
+      "condition": "phase>=2&is_finalcorner==1&order_rate>=20&order_rate<=40",
+      "precondition": "",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "910601",
+      "definitionSha256": "7df3882cf586b488099b2cd86edf47d0e23fc88d76e391c11f4e6c953ba42638",
+      "detailIndex": 0,
+      "condition": "is_finalcorner==1&corner==0&order_rate>=40&order_rate<=70&popularity>=4",
+      "precondition": "is_finalcorner==1&change_order_onetime<0",
+      "effectTypes": [
+        27
+      ]
+    },
+    {
+      "skillId": "910601",
+      "definitionSha256": "7df3882cf586b488099b2cd86edf47d0e23fc88d76e391c11f4e6c953ba42638",
+      "detailIndex": 1,
+      "condition": "is_finalcorner==1&corner==0&order_rate>=40&order_rate<=70&popularity<4",
+      "precondition": "is_finalcorner==1&change_order_onetime<0",
+      "effectTypes": [
+        27
+      ]
+    }
+  ],
+  "guidance": "Use the recorded definitions and matched controls on both sides of the listed conditions. Preserve original seeds and full inputs."
+}

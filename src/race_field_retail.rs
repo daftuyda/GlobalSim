@@ -29,6 +29,43 @@ fn blocking_sample(owner: usize, rows: &[(f32, f32, bool)], p: retail_lane::Bloc
     (front, side)
 }
 
+/// `blocking_sample` over rows sorted by position (`order`, with `slot[i]`
+/// giving row i's place in it). Float subtraction is monotonic, so each scan
+/// stops at the first row whose gap cannot qualify. Front ties keep the
+/// lowest index, as in the indexed scan.
+fn blocking_sample_sorted(owner: usize, rows: &[(f32, f32, bool)], order: &[usize], slot: &[usize],
+    p: retail_lane::BlockParameters) -> (Option<(usize, f32)>, bool)
+{
+    let (position, lane, _) = rows[owner];
+    let mut front: Option<(usize, f32)> = None;
+    let mut side = false;
+    let reach = p.front_distance.max(p.side_distance);
+    let mut visit = |i: usize, gap: f32| {
+        let (_, other_lane, finished) = rows[i];
+        let lane_gap = other_lane - lane;
+        if gap > 0. && gap < p.front_distance
+            && front.map_or(true, |(j, nearest)| gap < nearest || (gap == nearest && i < j))
+            && lane_gap.abs() <= retail_lane::front_lane_limit(gap, p)
+        {
+            front = Some((i, gap));
+        }
+        if !finished && gap.abs() < p.side_distance && lane_gap.abs() < p.side_lane
+            && (lane_gap < 0. || lane_gap > 0.)
+        { side = true; }
+    };
+    for &i in &order[slot[owner] + 1..] {
+        let gap = rows[i].0 - position;
+        if gap >= reach { break; }
+        visit(i, gap);
+    }
+    for &i in order[..slot[owner]].iter().rev() {
+        let gap = rows[i].0 - position;
+        if gap.abs() >= p.side_distance { break; }
+        visit(i, gap);
+    }
+    (front, side)
+}
+
 /// Reverse passing membership for the current ordered movement pass. A row
 /// changes only after its owner moves, or after a peer-mutating callback.
 #[derive(Default)]
@@ -113,13 +150,15 @@ pub(super) struct TickBuffers {
     overlaps: Vec<Row>,
     flags: Vec<bool>,
     overlap_order: Vec<usize>,
+    by_position: Vec<usize>,
+    slot: Vec<usize>,
     passing: PassingSnapshot,
 }
 
 impl RaceField {
     pub(super) fn step_all_retail(&self, dt: f32, indices: &[usize]) {
         let mut buffers = self.retail_tick.borrow_mut();
-        let TickBuffers { before: rows, roster, advanced, overlaps, flags, overlap_order, passing } = &mut *buffers;
+        let TickBuffers { before: rows, roster, advanced, overlaps, flags, overlap_order, by_position, slot, passing } = &mut *buffers;
         rows.clear();
         roster.clear();
         for cell in &self.solvers {
@@ -171,8 +210,23 @@ impl RaceField {
             *row = s.retail_live_horse();
             rows.push((s.pos as f32, s.lane as f32, s.pos >= s.course.distance));
         }
+        // Positions are finite during a race; otherwise keep the indexed scan.
+        let sorted = rows.iter().all(|row| row.0.is_finite());
+        if sorted {
+            by_position.clear();
+            by_position.extend(0..rows.len());
+            by_position.sort_by(|&a, &b| rows[a].0.partial_cmp(&rows[b].0).unwrap());
+            slot.resize(rows.len(), 0);
+            for (k, &i) in by_position.iter().enumerate() { slot[i] = k; }
+        }
         for &i in indices {
-            let (front, side) = blocking_sample(i, rows, self.retail_block.unwrap());
+            let block = self.retail_block.unwrap();
+            let (front, side) = if sorted {
+                blocking_sample_sorted(i, rows, by_position, slot, block)
+            } else {
+                blocking_sample(i, rows, block)
+            };
+            #[cfg(test)] assert_eq!((front, side), blocking_sample(i, rows, block));
             let mut s = self.solvers[i].borrow_mut();
             #[cfg(test)] {
                 assert_eq!(front, self.front_blocker(i, s.pos, s.lane).map(|(j, gap)| (j, gap as f32)));

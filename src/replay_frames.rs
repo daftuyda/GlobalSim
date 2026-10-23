@@ -46,6 +46,11 @@ impl ReplayFrames {
     }
 
     pub fn horse_count(&self) -> usize { self.horse_count }
+    /// Capacity hint only; captured values are unaffected.
+    pub fn reserve(&mut self, frames: usize) {
+        self.times.reserve(frames);
+        self.horses.reserve(frames * self.horse_count);
+    }
     pub fn raw_len(&self) -> usize { self.times.len() }
     pub fn len(&self) -> usize {
         self.selected.as_ref().map_or(self.times.len(), Vec::len)

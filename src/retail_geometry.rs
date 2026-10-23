@@ -483,13 +483,15 @@ mod tests {
             [-466.5899963378906_f32, 126.39814758300781_f32]
         );
         let naka = CourseGeometry::load(&directory(), 10504, 2000.).unwrap();
+        // Widths are basis points times 0.0001f (doc 13.186); 12000 is not 1.2f.
+        let width = |points: u32| points as f32 * 0.0001_f32;
         for (position, width) in [
-            (0., 1.2),
-            (874.999, 1.2),
-            (875., 0.7),
-            (1449.999, 0.7),
-            (1450., 1.),
-            (874., 1.2),
+            (0., width(12000)),
+            (874.999, width(12000)),
+            (875., width(7000)),
+            (1449.999, width(7000)),
+            (1450., width(10000)),
+            (874., width(12000)),
         ] {
             assert_eq!(naka.lane_max_at(position), width);
         }
@@ -609,7 +611,7 @@ mod tests {
         assert!((dot(q, q) - 1.).abs() < 1e-6);
     }
     #[test]
-    fn python_port_vectors_match_bits_for_all_captured_courses() {
+    fn snapshot_vectors_match_bits_for_all_captured_courses() {
         let fixture = crate::json::parse(include_str!("../tests/fixtures/retail_geometry_port.json"))
         .unwrap();
         for course in fixture.get_array("courses").unwrap() {

@@ -1,5 +1,7 @@
 # Discrepancy investigation — 20 October 2026
 
+> **[23 October corridor follow-up](CORRIDOR-FIX-20261023.md):** The remaining long-distance practice rounding case (`1a711441c217d665`) is resolved by the corridor correction. The results below describe the original historical audit.
+
 The startup event-order correction resolves **4,681 races**. A fresh run of all
 **95,062 races in the new batch** has **94,566 strict matches**, **496 remaining
 discrepancies**, and no audit errors or newly failing races.

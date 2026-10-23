@@ -181,7 +181,7 @@ mod tests {
     use crate::retail_random::RetailRandom;
 
     #[test]
-    fn search_matches_python_plans_and_shared_draw_counts() {
+    fn search_matches_snapshot_plans_and_shared_draw_counts() {
         let raw = crate::json::parse(include_str!("../data/global_parameters.json"))
         .unwrap();
         let physics = Parameters::from_value(raw.get("parameters").unwrap()).unwrap();

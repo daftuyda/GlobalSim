@@ -984,6 +984,7 @@ impl RaceSolverBuilder {
                 effects: sd.effects,
                 prerequisite: sd.prerequisite,
                 prerequisite_satisfied: false,
+                cooldown_cache: Default::default(),
             });
         }
 
@@ -995,7 +996,8 @@ impl RaceSolverBuilder {
             skill.random_activation_order = Some(first_index[&skill.skill_id]);
         }
         let table = skills_table();
-        skills.sort_by_key(|skill| (
+        // Stable, like sort_by_key; each key is looked up once.
+        skills.sort_by_cached_key(|skill| (
             table.get(&skill.skill_id).is_some_and(|def| def.priority == 1),
             std::cmp::Reverse(first_index[&skill.skill_id])));
         drop(table);

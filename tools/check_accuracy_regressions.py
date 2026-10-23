@@ -4,6 +4,7 @@ Uses only the standard library. Fixtures contain pre-race inputs and decoded
 official observations; the engine receives only the inputs.
 """
 import argparse
+from contextlib import nullcontext
 from collections import Counter
 import gzip
 import hashlib
@@ -11,7 +12,10 @@ import json
 import math
 from pathlib import Path
 import struct
-import subprocess
+import sys
+from validation_contract import audit_output, replay_surface
+from validation_inputs import audit_input
+from validation_runner import Worker
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -55,13 +59,13 @@ def check(expected, actual):
         official_durations = Counter((i, str(sid), round(t, 4), units)
                                      for i, sid, t, units in expected["skillRecordedDurations"])
         assert durations == official_durations, "recorded skill durations differ"
-    targets = {}
+    targets = Counter()
     for e in actual["skillTargetEvents"]:
         key = (e["horseIndex"], str(e["skillId"]), round(e["t"], 4))
-        targets[key] = visual_recipient_mask(e["abilityTargets"], e["t"])
-    for i, sid, t, mask in expected["targetMasks"]:
-        observed = targets.get((i, str(sid), round(t, 4)))
-        assert observed == mask & 0xffffffff, f"skill {sid} visual recipient mask differs at {t}"
+        targets[(*key, visual_recipient_mask(e["abilityTargets"], e["t"]))] += 1
+    for cast, count in Counter((i, str(sid), round(t, 4), mask & 0xffffffff)
+                               for i, sid, t, mask in expected["targetMasks"]).items():
+        assert targets[cast] >= count, f"skill {cast[1]} visual recipient mask differs at {cast[2]}"
     if "mechanicEvents" in expected:
         mechanics = Counter((e["type"], e["horseIndex"], f32(e["t"]))
                             for e in actual.get("competitionEvents", []) if e["type"] in (4, 5))
@@ -86,7 +90,42 @@ def check(expected, actual):
     return samples
 
 
-def check_strict(expected, actual):
+def check_strict(expected, actual, *, dense_frames=False, spec=None):
+    """Report observation agreement separately from output integrity and coverage.
+
+    Set dense_frames only when the caller retained every engine tick. It is an
+    explicit caller assertion: a sampled frame list cannot prove its own scope.
+    """
+    contract = audit_output(actual, len(expected.get('finish', [])), spec)
+    try:
+        result = _check_observations(expected, actual)
+    except (AssertionError, ValueError, KeyError, IndexError, TypeError, OverflowError) as error:
+        result = dict(passed=False, differences={'malformedObservations': 1},
+                      examples=[dict(error=str(error))], counts={}, coverageGaps=[])
+    result['observationsPassed'] = result['passed'] if contract['passed'] else None
+    result['outputContractPassed'] = contract['passed']
+    result['differences'].update(contract['differences'])
+    result['examples'] = (result['examples'] + contract['examples'])[:20]
+    result['counts'].update(contract['counts'])
+    result['passed'] = result['passed'] and contract['passed']
+    try:
+        surface, gaps = replay_surface(expected)
+    except (KeyError, TypeError, ValueError) as error:
+        surface, gaps = {}, ['malformed raw replay surface inventory']
+        result['passed'] = False
+        result['differences']['malformedReplaySurface'] = 1
+    result['surfaceCounts'] = surface
+    result['coverageGaps'].extend(gaps)
+    if not dense_frames:
+        result['coverageGaps'].append('all-tick output integrity not established: caller did not declare dense frames')
+    if contract['counts'].get('syntheticRushingEvents'):
+        result['coverageGaps'].append('synthetic rushing event durations lack an independent official event oracle')
+    result['frameScope'] = 'all-engine-ticks' if dense_frames else 'supplied-frames-only'
+    result['coverageStatus'] = 'partial' if result['coverageGaps'] else 'complete-for-recorded-surface'
+    return result
+
+
+def _check_observations(expected, actual):
     """Check every supplied official observation, including post-finish samples.
 
     Dense simulation frames are a superset of recorded replay frames. Match
@@ -204,6 +243,31 @@ def check_strict(expected, actual):
         gaps.append("visual recipient observations cover only a subset of casts")
         for key, count in expected_targets.items():
             compare("targetObservation", count, min(count, actual_targets.get(key, 0)), cast=key)
+    if 'replaySurface' in expected:
+        raw_skills = [e for e in expected['replaySurface']['events']
+                      if e['kind'] == 3 and len(e['params']) == 6]
+        official_details = [(e['params'][0], str(e['params'][1]), stamp(e['t']), e['params'][3])
+                            for e in raw_skills]
+        details = [(*identity(e), e['detailIndex']) for e in actual.get('skillDetailEvents', [])]
+        counts['skillDetailObservations'] = len(official_details)
+        compare('skillDetailMultiset', sorted(Counter(official_details).items()),
+                sorted(Counter(details).items()))
+        # Engine detail telemetry is grouped by runner. Only within-runner order
+        # is exposed, so do not pretend to compare global cross-runner ordering.
+        for i in range(n):
+            compare('skillDetailRunnerSequence', [e for e in official_details if e[0] == i],
+                    [e for e in details if e[0] == i], runner=i)
+        # Correlate branch and target in the same record; separate multisets
+        # could hide swapped targets on simultaneous casts of the same skill.
+        official_detail_targets = [(*d, e['params'][4] & 0xffffffff)
+                                   for d, e in zip(official_details, raw_skills)]
+        detail_targets = [(*identity(e), e.get('detailIndex'),
+                          visual_recipient_mask(e['abilityTargets'], e['t']))
+                         for e in actual['skillTargetEvents']]
+        compare('skillDetailTargetMultiset', sorted(Counter(official_detail_targets).items()),
+                sorted(Counter(detail_targets).items()))
+    else:
+        gaps.append('skill branch/detail observations absent')
     if "mechanicEvents" in expected:
         for kinds, events in [((4, 5), actual.get("competitionEvents", [])),
                               ((6,), [dict(e, type=6) for e in actual.get("conservePowerEvents", [])])]:
@@ -235,32 +299,36 @@ def main():
     parser.add_argument("--report", type=Path)
     parser.add_argument("--legacy", action="store_true", help="Use the earlier pre-finish audit only")
     parser.add_argument("--fixtures", type=Path, default=ROOT / "tests/fixtures/accuracy")
+    parser.add_argument("--timeout", type=float, default=60, help="Deadline in seconds for each engine request")
     args = parser.parse_args()
+    if args.timeout <= 0:
+        parser.error('timeout must be positive')
     fixtures = sorted(args.fixtures.glob("*.json.gz"))
     if not fixtures:
         raise SystemExit("No accuracy fixtures found")
     rows = []
-    with subprocess.Popen([str(args.engine.resolve())], stdin=subprocess.PIPE,
-                          stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as worker:
+    log_context = args.report.with_suffix('.worker.log').open('wb') if args.report else nullcontext(sys.stderr)
+    with log_context as log, Worker([str(args.engine.resolve())], log, output='json', timeout=args.timeout) as worker:
         for fixture in fixtures:
             case = json.loads(gzip.decompress(fixture.read_bytes()))
             spec = dict(case["input"], retainAllFrames=True)
-            worker.stdin.write((json.dumps(spec, separators=(",", ":")) + "\n").encode())
-            worker.stdin.flush()
-            reply = worker.stdout.readline()
+            preflight = audit_input(spec, case['expected'])
+            if not preflight['passed']:
+                rows.append(dict(case=case['name'], passed=False, inputValidation=preflight))
+                continue
             try:
+                reply = worker.exchange((json.dumps(spec, separators=(",", ":")) + "\n").encode())
                 actual = json.loads(reply)
                 if args.legacy:
                     samples = check(case["expected"], actual)
                     rows.append({"case": case["name"], "passed": True, "runnerSamples": samples})
                 else:
-                    rows.append({"case": case["name"], **check_strict(case["expected"], actual)})
-            except (AssertionError, ValueError, KeyError, IndexError, TypeError, OverflowError) as error:
+                    rows.append({"case": case["name"], 'inputValidation': preflight,
+                                 **check_strict(case["expected"], actual, dense_frames=True, spec=spec)})
+            except (AssertionError, ValueError, KeyError, IndexError, TypeError, OverflowError, OSError, TimeoutError) as error:
                 rows.append({"case": case["name"], "passed": False, "error": str(error)})
-        worker.stdin.close()
-        assert worker.wait(timeout=30) == 0, "engine exited unsuccessfully"
     report = {"engineSha256": hashlib.sha256(args.engine.read_bytes()).hexdigest(),
-              "mode": "legacy-prefinish" if args.legacy else "strict-observations-v1",
+              "mode": "legacy-prefinish" if args.legacy else "strict-observations-v2",
               "passed": sum(row["passed"] for row in rows), "total": len(rows), "cases": rows}
     if args.report:
         args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

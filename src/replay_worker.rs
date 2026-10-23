@@ -83,6 +83,11 @@ impl<'a> FrameCollector<'a> {
         Ok(Self { worker, frames: Vec::new(), numeric: crate::replay_frames::ReplayFrames::new(horse_count) })
     }
 
+    /// Size synchronous numeric storage for an expected frame count.
+    pub fn reserve(&mut self, frames: usize) {
+        if self.worker.is_none() { self.numeric.reserve(frames); }
+    }
+
     pub fn capture(&mut self, t: f64, sample: impl FnMut(usize) -> [f64; 6]) -> Result<(), String> {
         if self.worker.is_none() {
             self.numeric.capture(t, sample);

@@ -815,6 +815,8 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
     let mut finished: Vec<Option<f64>> = vec![None; n];
     let mut finished_step: Vec<Option<f64>> = vec![None; n];
     let mut frames = replay_worker::FrameCollector::new(replay_worker, n)?;
+    // Most fields finish within this many ticks; longer races grow as before.
+    frames.reserve(((course.distance.max(0.) / 15.5 / dt) as usize).min(1 << 14) + 128);
     let mut competition_events: Vec<Value> = Vec::new();
     let mut duel_counts: Vec<i32> = field.solvers.iter().map(|s| s.borrow().compete_fight_count).collect();
     let mut spot_started: Vec<bool> = field.solvers.iter().map(|s| s.borrow().spot_struggle_started).collect();
@@ -860,6 +862,7 @@ fn run_race(spec: &RaceSpec, conditions: &'static BTreeMap<String, activation_co
         // Type 5 is CompeteFight. Emit only real count increments, never every
         // active tick or a synthetic event when a horse crosses the finish.
         if retail_runtime {
+            field.order_competition_records();
             for (kind, i) in field.competition_starts.borrow_mut().drain(..) {
                 competition_events.push(json::obj(vec![
                     ("t", json::num(t + dt)), ("type", json::num(kind as f64)),

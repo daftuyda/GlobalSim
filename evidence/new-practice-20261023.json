@@ -1,0 +1,2240 @@
+{
+  "schema": "practice-intake-validation-v1",
+  "completedUtc": "2026-10-22T23:06:31.671092+00:00",
+  "frozenUtc": "2026-10-22T22:54:25.930167+00:00",
+  "races": 35134,
+  "strictMatches": 35133,
+  "unresolved": 1,
+  "inputOrExecutionErrors": 0,
+  "careerRacesTested": 0,
+  "byRunners": {
+    "14": {
+      "races": 5090,
+      "strictMatches": 5090,
+      "unresolved": 0
+    },
+    "16": {
+      "races": 15782,
+      "strictMatches": 15781,
+      "unresolved": 1
+    },
+    "18": {
+      "races": 13098,
+      "strictMatches": 13098,
+      "unresolved": 0
+    },
+    "15": {
+      "races": 914,
+      "strictMatches": 914,
+      "unresolved": 0
+    },
+    "12": {
+      "races": 250,
+      "strictMatches": 250,
+      "unresolved": 0
+    }
+  },
+  "engineSha256": "c426866172fd499c6457405c973cf663aaea8d7703571272455e632dfd0f6f8a",
+  "engineChanged": false,
+  "validator": "strict observations with dense tick integrity; canonical fallback and independent reconstruction",
+  "counts": {
+    "officialFrames": 5564735,
+    "runnerSamples": 91839507,
+    "stateSamples": 91839507,
+    "postFinishSamples": 16610426,
+    "skillEvents": 6660740,
+    "skillDetailObservations": 6660740,
+    "supplementaryResultValues": 4033722,
+    "checkedSimulationFrames": 50235425,
+    "checkedSimulationRunnerSamples": 827751552,
+    "checkedOutputEvents": 20525949,
+    "syntheticRushingEvents": 90940
+  },
+  "surfaceCounts": {
+    "eventKind.3": 6660740,
+    "recordedSkillDetailValues": 6660740,
+    "uncomparedSkillActivationFlags": 6660740,
+    "nonzeroSkillDetails": 55826,
+    "nonzeroSkillActivationFlags": 0,
+    "eventKind.4": 73206,
+    "eventKind.6": 159020,
+    "eventKind.5": 206629
+  },
+  "coverageGaps": {
+    "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat": 35134,
+    "global ordering between separate event streams is not exposed": 35134,
+    "official recording cadence/count not reconstructed from dense simulation output": 35134,
+    "skill activation flag is retained but not exposed by the engine": 35134,
+    "synthetic rushing event durations lack an independent official event oracle": 30928
+  },
+  "auditWallSeconds": 194.5755701000453,
+  "auditWorkers": 24,
+  "timingScope": "Parallel full-validation wall time, including input reads and Python checks; not per-race engine latency.",
+  "newPracticeCorpusRaces": 457989,
+  "totalCorpusRaces": 470350,
+  "activeCorpusRaces": 469551,
+  "quarantinedRaces": 799,
+  "newlyQuarantined": 0,
+  "previousCorpusNotRerun": 435216,
+  "olderActivePracticeNonmatches": 1,
+  "olderActiveCareerNonmatches": 410,
+  "observedActiveNonmatchesAcrossCurrentBaseline": 412,
+  "originalInputsPreserved": true,
+  "failedRacesRemainActive": true,
+  "unresolvedCases": [
+    {
+      "replaySha256": "4c47e5cffaa028662c05099b744a7063334701cd18c9aa3ac3164b0868dbf4b2",
+      "corpus": "practice",
+      "cohort": "collected-practice",
+      "quarantined": false,
+      "seed": 1344019483,
+      "runners": 16,
+      "course": 11102,
+      "inputSha256": "3f10b4842f52f85c62c5e6d7eff096d639ff908b1f52c73c7a8ae4e2addbbb09",
+      "workerRoundTripMs": 29.250399966258556,
+      "passed": false,
+      "differences": {
+        "legacyChecks": 1,
+        "finishTimes": 1,
+        "position": 110,
+        "lane": 8,
+        "result.finishTimeRaw": 1
+      },
+      "examples": [
+        {
+          "field": "legacyChecks",
+          "error": "raw finish times differ"
+        },
+        {
+          "field": "finishTimes",
+          "expected": 86.1393814086914,
+          "actual": 86.139404296875,
+          "index": 10,
+          "expectedCount": 16,
+          "actualCount": 16
+        },
+        {
+          "field": "position",
+          "expected": 1105.271484375,
+          "actual": 1105.2716064453125,
+          "t": 56.47726058959961,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1169.4468994140625,
+          "actual": 1169.447021484375,
+          "t": 59.67409896850586,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1212.36767578125,
+          "actual": 1212.3675537109375,
+          "t": 61.80532455444336,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1234.3507080078125,
+          "actual": 1234.3505859375,
+          "t": 62.87093734741211,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1256.9951171875,
+          "actual": 1256.9952392578125,
+          "t": 63.93655014038086,
+          "runner": 10
+        },
+        {
+          "field": "lane",
+          "expected": 1129,
+          "actual": 1130,
+          "t": 63.93655014038086,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1280.3079833984375,
+          "actual": 1280.3084716796875,
+          "t": 65.00210571289062,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1304.2198486328125,
+          "actual": 1304.22021484375,
+          "t": 66.06765747070312,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1328.4801025390625,
+          "actual": 1328.48046875,
+          "t": 67.13320922851562,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1353.0986328125,
+          "actual": 1353.0985107421875,
+          "t": 68.19876098632812,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1378.0498046875,
+          "actual": 1378.049072265625,
+          "t": 69.26431274414062,
+          "runner": 10
+        },
+        {
+          "field": "lane",
+          "expected": 1896,
+          "actual": 1897,
+          "t": 69.26431274414062,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1403.6219482421875,
+          "actual": 1403.62109375,
+          "t": 70.32986450195312,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1429.721923828125,
+          "actual": 1429.7213134765625,
+          "t": 71.39541625976562,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1456.1165771484375,
+          "actual": 1456.1162109375,
+          "t": 72.46096801757812,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1482.6654052734375,
+          "actual": 1482.6650390625,
+          "t": 73.52651977539062,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1509.3343505859375,
+          "actual": 1509.333984375,
+          "t": 74.59207153320312,
+          "runner": 10
+        },
+        {
+          "field": "position",
+          "expected": 1536.0430908203125,
+          "actual": 1536.0426025390625,
+          "t": 75.65762329101562,
+          "runner": 10
+        }
+      ],
+      "counts": {
+        "officialFrames": 138,
+        "runnerSamples": 2208,
+        "stateSamples": 2208,
+        "postFinishSamples": 401,
+        "skillEvents": 210,
+        "skillDetailObservations": 210,
+        "supplementaryResultValues": 112,
+        "checkedSimulationFrames": 1323,
+        "checkedSimulationRunnerSamples": 21168,
+        "checkedOutputEvents": 651,
+        "syntheticRushingEvents": 5
+      },
+      "coverageGaps": [
+        "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat",
+        "global ordering between separate event streams is not exposed",
+        "official recording cadence/count not reconstructed from dense simulation output",
+        "skill activation flag is retained but not exposed by the engine",
+        "synthetic rushing event durations lack an independent official event oracle"
+      ],
+      "observationsPassed": false,
+      "outputContractPassed": true,
+      "surfaceCounts": {
+        "eventKind.3": 210,
+        "recordedSkillDetailValues": 210,
+        "uncomparedSkillActivationFlags": 210,
+        "nonzeroSkillDetails": 1,
+        "nonzeroSkillActivationFlags": 0,
+        "eventKind.6": 4,
+        "eventKind.5": 9
+      },
+      "frameScope": "all-engine-ticks",
+      "coverageStatus": "partial",
+      "validatorImplementation": "binary-vectorized-with-canonical-fallback",
+      "outputSha256": "2aed5f1375efdf9faeea19e27ac0ff4ac4ab8c1249d3fe8a8abd74d0c700a7aa",
+      "failureStage": "output-validation",
+      "auditMs": 268.7122999923304
+    }
+  ],
+  "investigation": {
+    "cases": [
+      {
+        "replaySha256": "4c47e5cffaa028662c05099b744a7063334701cd18c9aa3ac3164b0868dbf4b2",
+        "sourceJob": {
+          "case": "live-test-batch-081f9da612574ae8b20a546d3d207b8d:77",
+          "batch": "live-test-batch-081f9da612574ae8b20a546d3d207b8d",
+          "completedUtc": "2026-10-22T17:29:41.304973+00:00",
+          "reference": "D:\\UmamusumeData\\practice-research\\live-test-batch-081f9da612574ae8b20a546d3d207b8d\\session-00002\\practice-77\\reference.json",
+          "referenceSha256": "b9893494342a7a06223576b2221621951bdd8b99d312060685bee7d922ea1a6b",
+          "provenanceSha256": "60eff4be2998bb0ec4528e1b4b1cc4daaaf1ae7ea424ad9f1cc38fadf1c0f2e1",
+          "replaySha256": "4c47e5cffaa028662c05099b744a7063334701cd18c9aa3ac3164b0868dbf4b2",
+          "masterSha256": "851cf9b72a2633968342f46ea7df74777f6118c828e232198e4ed05ee70071e2",
+          "seed": 1344019483,
+          "runners": 16,
+          "course": 11102,
+          "corpus": "practice",
+          "cohort": "collected-practice",
+          "quarantined": false
+        },
+        "courseData": {
+          "corners": [
+            {
+              "length": 150,
+              "start": 300.0
+            },
+            {
+              "length": 150,
+              "start": 500.0
+            },
+            {
+              "length": 150,
+              "start": 1100.0
+            },
+            {
+              "length": 164,
+              "start": 1250.0
+            }
+          ],
+          "course": 1,
+          "courseSetStatus": [
+            3
+          ],
+          "distance": 1800,
+          "distanceType": 2,
+          "finishTimeMax": 1180000,
+          "finishTimeMin": 1081000,
+          "laneMax": 12000,
+          "raceTrackId": 10101,
+          "slopes": [],
+          "straights": [
+            {
+              "end": 301.0,
+              "frontType": 1,
+              "start": 0.0
+            },
+            {
+              "end": 1100.22998046875,
+              "frontType": 2,
+              "start": 600.0
+            },
+            {
+              "end": 1800.0,
+              "frontType": 1,
+              "start": 1414.0
+            }
+          ],
+          "surface": 2,
+          "turn": 1
+        },
+        "environment": {
+          "groundCondition": "heavy",
+          "weather": "cloudy",
+          "season": "spring",
+          "time": "evening",
+          "grade": "g1",
+          "singleMode": false
+        },
+        "rosterStrategies": {
+          "Nige": 3,
+          "Sasi": 4,
+          "Senkou": 6,
+          "Oikomi": 3
+        },
+        "affectedRunners": {
+          "10": {
+            "speed": 1334,
+            "stamina": 552,
+            "power": 938,
+            "guts": 794,
+            "wisdom": 1100,
+            "strategy": "Sasi",
+            "distanceAptitude": "A",
+            "surfaceAptitude": "A",
+            "strategyAptitude": "A",
+            "mood": 0,
+            "popularity": 7,
+            "skills": [
+              {
+                "skillId": "100521",
+                "level": 4,
+                "isUnique": true
+              },
+              {
+                "skillId": "200132",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200302",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200331",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200591",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200881",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201052",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201062",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201392",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201412",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201542",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201631",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201662",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201691",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "202302",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "202322",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "202402",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "900061",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "900611",
+                "level": 1,
+                "isUnique": false
+              }
+            ],
+            "gateIndex": 10,
+            "teamId": 0,
+            "teamRank": 0,
+            "charaId": 1052,
+            "fans": 200943,
+            "careerWins": 11
+          },
+          "2": {
+            "speed": 1268,
+            "stamina": 558,
+            "power": 779,
+            "guts": 501,
+            "wisdom": 1751,
+            "strategy": "Senkou",
+            "distanceAptitude": "A",
+            "surfaceAptitude": "A",
+            "strategyAptitude": "A",
+            "mood": 0,
+            "popularity": 9,
+            "skills": [
+              {
+                "skillId": "100141",
+                "level": 6,
+                "isUnique": true
+              },
+              {
+                "skillId": "200012",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200142",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200342",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200352",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200362",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200372",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200432",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200461",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200561",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200582",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200681",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200871",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "200911",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201042",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201052",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201062",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201312",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201322",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201372",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201571",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201611",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "201661",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "202302",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "210012",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "210022",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "210032",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "210042",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "210051",
+                "level": 1,
+                "isUnique": false
+              },
+              {
+                "skillId": "910071",
+                "level": 1,
+                "isUnique": false
+              }
+            ],
+            "gateIndex": 2,
+            "teamId": 0,
+            "teamRank": 0,
+            "charaId": 1014,
+            "fans": 533897,
+            "careerWins": 23
+          }
+        },
+        "firstByRunner": {
+          "10": {
+            "firstDeviation": {
+              "t": 56.47726058959961,
+              "runner": 10,
+              "gate": 11,
+              "field": "position",
+              "expected": 1105.271484375,
+              "actual": 1105.2716064453125,
+              "delta": 0.0001220703125,
+              "postFinish": false
+            },
+            "lastExactSample": {
+              "t": 55.41164779663086,
+              "position": 1083.799072265625,
+              "lane": 0.148,
+              "speed": 20.16
+            }
+          },
+          "2": {
+            "firstDeviation": {
+              "t": 84.18203735351562,
+              "runner": 2,
+              "gate": 3,
+              "field": "position",
+              "expected": 1749.183837890625,
+              "actual": 1749.1834716796875,
+              "delta": -0.0003662109375,
+              "postFinish": false
+            },
+            "lastExactSample": {
+              "t": 83.11648559570312,
+              "position": 1723.1319580078125,
+              "lane": 0.4375,
+              "speed": 24.3
+            }
+          }
+        },
+        "frameDifferences": {
+          "position": 110,
+          "lane": 8
+        },
+        "deviations": [
+          {
+            "t": 56.47726058959961,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1105.271484375,
+            "actual": 1105.2716064453125,
+            "delta": 0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 59.67409896850586,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1169.4468994140625,
+            "actual": 1169.447021484375,
+            "delta": 0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 61.80532455444336,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1212.36767578125,
+            "actual": 1212.3675537109375,
+            "delta": -0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 62.87093734741211,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1234.3507080078125,
+            "actual": 1234.3505859375,
+            "delta": -0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 63.93655014038086,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1256.9951171875,
+            "actual": 1256.9952392578125,
+            "delta": 0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 63.93655014038086,
+            "runner": 10,
+            "gate": 11,
+            "field": "lane",
+            "expected": 1129,
+            "actual": 1130,
+            "delta": 1,
+            "postFinish": false
+          },
+          {
+            "t": 65.00210571289062,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1280.3079833984375,
+            "actual": 1280.3084716796875,
+            "delta": 0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 66.06765747070312,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1304.2198486328125,
+            "actual": 1304.22021484375,
+            "delta": 0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 67.13320922851562,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1328.4801025390625,
+            "actual": 1328.48046875,
+            "delta": 0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 68.19876098632812,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1353.0986328125,
+            "actual": 1353.0985107421875,
+            "delta": -0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 69.26431274414062,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1378.0498046875,
+            "actual": 1378.049072265625,
+            "delta": -0.000732421875,
+            "postFinish": false
+          },
+          {
+            "t": 69.26431274414062,
+            "runner": 10,
+            "gate": 11,
+            "field": "lane",
+            "expected": 1896,
+            "actual": 1897,
+            "delta": 1,
+            "postFinish": false
+          },
+          {
+            "t": 70.32986450195312,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1403.6219482421875,
+            "actual": 1403.62109375,
+            "delta": -0.0008544921875,
+            "postFinish": false
+          },
+          {
+            "t": 71.39541625976562,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1429.721923828125,
+            "actual": 1429.7213134765625,
+            "delta": -0.0006103515625,
+            "postFinish": false
+          },
+          {
+            "t": 72.46096801757812,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1456.1165771484375,
+            "actual": 1456.1162109375,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 73.52651977539062,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1482.6654052734375,
+            "actual": 1482.6650390625,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 74.59207153320312,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1509.3343505859375,
+            "actual": 1509.333984375,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 75.65762329101562,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1536.0430908203125,
+            "actual": 1536.0426025390625,
+            "delta": -0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 76.72317504882812,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1562.749755859375,
+            "actual": 1562.7493896484375,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 77.78872680664062,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1589.4566650390625,
+            "actual": 1589.4560546875,
+            "delta": -0.0006103515625,
+            "postFinish": false
+          },
+          {
+            "t": 78.85427856445312,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1616.259033203125,
+            "actual": 1616.258544921875,
+            "delta": -0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 79.91983032226562,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1643.22216796875,
+            "actual": 1643.2218017578125,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 80.98538208007812,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1670.1824951171875,
+            "actual": 1670.1820068359375,
+            "delta": -0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 82.05093383789062,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1697.142333984375,
+            "actual": 1697.141845703125,
+            "delta": -0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 83.11648559570312,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1724.103271484375,
+            "actual": 1724.1026611328125,
+            "delta": -0.0006103515625,
+            "postFinish": false
+          },
+          {
+            "t": 84.18203735351562,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1749.183837890625,
+            "actual": 1749.1834716796875,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 84.18203735351562,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1750.94873046875,
+            "actual": 1750.947998046875,
+            "delta": -0.000732421875,
+            "postFinish": false
+          },
+          {
+            "t": 85.24758911132812,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1775.270263671875,
+            "actual": 1775.2698974609375,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.24758911132812,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1777.6490478515625,
+            "actual": 1777.648681640625,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.3141860961914,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1776.900390625,
+            "actual": 1776.900634765625,
+            "delta": 0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 85.3141860961914,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1779.318359375,
+            "actual": 1779.317626953125,
+            "delta": -0.000732421875,
+            "postFinish": false
+          },
+          {
+            "t": 85.38078308105469,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1778.531494140625,
+            "actual": 1778.5311279296875,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.38078308105469,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1780.987060546875,
+            "actual": 1780.9866943359375,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.44738006591797,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1780.1614990234375,
+            "actual": 1780.1617431640625,
+            "delta": 0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 85.44738006591797,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1782.6563720703125,
+            "actual": 1782.655517578125,
+            "delta": -0.0008544921875,
+            "postFinish": false
+          },
+          {
+            "t": 85.51397705078125,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1781.7926025390625,
+            "actual": 1781.7923583984375,
+            "delta": -0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 85.51397705078125,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1784.3251953125,
+            "actual": 1784.3248291015625,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.58057403564453,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1783.4229736328125,
+            "actual": 1783.4232177734375,
+            "delta": 0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 85.58057403564453,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1785.9945068359375,
+            "actual": 1785.99365234375,
+            "delta": -0.0008544921875,
+            "postFinish": false
+          },
+          {
+            "t": 85.64717102050781,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1785.053955078125,
+            "actual": 1785.0538330078125,
+            "delta": -0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 85.64717102050781,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1787.663330078125,
+            "actual": 1787.6629638671875,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.7137680053711,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1786.6844482421875,
+            "actual": 1786.6846923828125,
+            "delta": 0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 85.7137680053711,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1789.3326416015625,
+            "actual": 1789.331787109375,
+            "delta": -0.0008544921875,
+            "postFinish": false
+          },
+          {
+            "t": 85.78036499023438,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1788.304931640625,
+            "actual": 1788.3048095703125,
+            "delta": -0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 85.78036499023438,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1791.0015869140625,
+            "actual": 1791.0010986328125,
+            "delta": -0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 85.84696197509766,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1789.9249267578125,
+            "actual": 1789.925048828125,
+            "delta": 0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 85.84696197509766,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1792.6708984375,
+            "actual": 1792.670166015625,
+            "delta": -0.000732421875,
+            "postFinish": false
+          },
+          {
+            "t": 85.91355895996094,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1791.5347900390625,
+            "actual": 1791.5345458984375,
+            "delta": -0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 85.91355895996094,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1794.33984375,
+            "actual": 1794.3394775390625,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 85.98015594482422,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1793.1441650390625,
+            "actual": 1793.144287109375,
+            "delta": 0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 85.98015594482422,
+            "runner": 2,
+            "gate": 3,
+            "field": "lane",
+            "expected": 4497,
+            "actual": 4496,
+            "delta": -1,
+            "postFinish": false
+          },
+          {
+            "t": 85.98015594482422,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1796.0091552734375,
+            "actual": 1796.008544921875,
+            "delta": -0.0006103515625,
+            "postFinish": false
+          },
+          {
+            "t": 86.0467529296875,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1794.7435302734375,
+            "actual": 1794.7432861328125,
+            "delta": -0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 86.0467529296875,
+            "runner": 2,
+            "gate": 3,
+            "field": "lane",
+            "expected": 4511,
+            "actual": 4510,
+            "delta": -1,
+            "postFinish": false
+          },
+          {
+            "t": 86.0467529296875,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1797.67822265625,
+            "actual": 1797.6778564453125,
+            "delta": -0.0003662109375,
+            "postFinish": false
+          },
+          {
+            "t": 86.11334991455078,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1796.34228515625,
+            "actual": 1796.3424072265625,
+            "delta": 0.0001220703125,
+            "postFinish": false
+          },
+          {
+            "t": 86.11334991455078,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1799.347412109375,
+            "actual": 1799.346923828125,
+            "delta": -0.00048828125,
+            "postFinish": false
+          },
+          {
+            "t": 86.17994689941406,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1797.9307861328125,
+            "actual": 1797.9305419921875,
+            "delta": -0.000244140625,
+            "postFinish": false
+          },
+          {
+            "t": 86.17994689941406,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1801.0167236328125,
+            "actual": 1801.0162353515625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.24654388427734,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1802.68603515625,
+            "actual": 1802.685546875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.31314086914062,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1801.0972900390625,
+            "actual": 1801.096923828125,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.31314086914062,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1804.3553466796875,
+            "actual": 1804.3548583984375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.3797378540039,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1802.6627197265625,
+            "actual": 1802.662353515625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.3797378540039,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1806.024658203125,
+            "actual": 1806.024169921875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.44633483886719,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1804.2078857421875,
+            "actual": 1804.20751953125,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.44633483886719,
+            "runner": 2,
+            "gate": 3,
+            "field": "lane",
+            "expected": 4492,
+            "actual": 4491,
+            "delta": -1,
+            "postFinish": true
+          },
+          {
+            "t": 86.44633483886719,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1807.6939697265625,
+            "actual": 1807.6934814453125,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.51293182373047,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1805.73779296875,
+            "actual": 1805.7374267578125,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.51293182373047,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1809.36328125,
+            "actual": 1809.36279296875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.57952880859375,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1807.2451171875,
+            "actual": 1807.2447509765625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.57952880859375,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1811.0325927734375,
+            "actual": 1811.0321044921875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.64612579345703,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1808.739501953125,
+            "actual": 1808.7391357421875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.64612579345703,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1812.701904296875,
+            "actual": 1812.701416015625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.71272277832031,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1810.212158203125,
+            "actual": 1810.2117919921875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.71272277832031,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1814.3712158203125,
+            "actual": 1814.3707275390625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.7793197631836,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1811.671142578125,
+            "actual": 1811.6707763671875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.7793197631836,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1816.04052734375,
+            "actual": 1816.0400390625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.84591674804688,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1813.108642578125,
+            "actual": 1813.1082763671875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.84591674804688,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1817.7098388671875,
+            "actual": 1817.7093505859375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.91251373291016,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1814.5321044921875,
+            "actual": 1814.53173828125,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.91251373291016,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1819.379150390625,
+            "actual": 1819.378662109375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 86.97911071777344,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1815.9342041015625,
+            "actual": 1815.933837890625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 86.97911071777344,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1821.0484619140625,
+            "actual": 1821.0479736328125,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.04570770263672,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1817.3221435546875,
+            "actual": 1817.32177734375,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.04570770263672,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1822.7177734375,
+            "actual": 1822.71728515625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.1123046875,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1818.6888427734375,
+            "actual": 1818.6884765625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.1123046875,
+            "runner": 2,
+            "gate": 3,
+            "field": "lane",
+            "expected": 4487,
+            "actual": 4486,
+            "delta": -1,
+            "postFinish": true
+          },
+          {
+            "t": 87.1123046875,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1824.3870849609375,
+            "actual": 1824.3865966796875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.17890167236328,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1820.0413818359375,
+            "actual": 1820.041015625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.17890167236328,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1826.056396484375,
+            "actual": 1826.055908203125,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.24549865722656,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1821.37255859375,
+            "actual": 1821.3721923828125,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.24549865722656,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1827.7257080078125,
+            "actual": 1827.7252197265625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.31209564208984,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1822.689453125,
+            "actual": 1822.6890869140625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.31209564208984,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1829.39501953125,
+            "actual": 1829.39453125,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.37869262695312,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1823.984375,
+            "actual": 1823.9840087890625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.37869262695312,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1831.0643310546875,
+            "actual": 1831.0638427734375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.4452896118164,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1825.265625,
+            "actual": 1825.2652587890625,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.4452896118164,
+            "runner": 2,
+            "gate": 3,
+            "field": "lane",
+            "expected": 4406,
+            "actual": 4405,
+            "delta": -1,
+            "postFinish": true
+          },
+          {
+            "t": 87.4452896118164,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1832.733642578125,
+            "actual": 1832.733154296875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.51188659667969,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1826.525146484375,
+            "actual": 1826.5247802734375,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.51188659667969,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1834.4029541015625,
+            "actual": 1834.4024658203125,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.57848358154297,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1827.7706298828125,
+            "actual": 1827.770263671875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.57848358154297,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1836.072265625,
+            "actual": 1836.07177734375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.64508056640625,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1828.99462890625,
+            "actual": 1828.9942626953125,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.64508056640625,
+            "runner": 2,
+            "gate": 3,
+            "field": "lane",
+            "expected": 4273,
+            "actual": 4272,
+            "delta": -1,
+            "postFinish": true
+          },
+          {
+            "t": 87.64508056640625,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1837.7415771484375,
+            "actual": 1837.7410888671875,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.71167755126953,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1830.2052001953125,
+            "actual": 1830.204833984375,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.71167755126953,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1839.410888671875,
+            "actual": 1839.410400390625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.77827453613281,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1831.393798828125,
+            "actual": 1831.3934326171875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.77827453613281,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1841.0802001953125,
+            "actual": 1841.0797119140625,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.8448715209961,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1832.568603515625,
+            "actual": 1832.5682373046875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.8448715209961,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1842.74951171875,
+            "actual": 1842.7490234375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.91146850585938,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1833.733154296875,
+            "actual": 1833.7327880859375,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.91146850585938,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1844.4188232421875,
+            "actual": 1844.4183349609375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 87.97806549072266,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1834.897705078125,
+            "actual": 1834.8973388671875,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 87.97806549072266,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1846.088134765625,
+            "actual": 1846.087646484375,
+            "delta": -0.00048828125,
+            "postFinish": true
+          },
+          {
+            "t": 88.04466247558594,
+            "runner": 2,
+            "gate": 3,
+            "field": "position",
+            "expected": 1836.062255859375,
+            "actual": 1836.0618896484375,
+            "delta": -0.0003662109375,
+            "postFinish": true
+          },
+          {
+            "t": 88.04466247558594,
+            "runner": 10,
+            "gate": 11,
+            "field": "position",
+            "expected": 1847.7574462890625,
+            "actual": 1847.7569580078125,
+            "delta": -0.00048828125,
+            "postFinish": true
+          }
+        ],
+        "finishDifferences": [
+          {
+            "runner": 10,
+            "expected": 86.1393814086914,
+            "actual": 86.139404296875,
+            "deltaSeconds": 2.288818359375e-05
+          }
+        ],
+        "maxPositionErrorMeters": 0.0008544921875,
+        "preFinishPositionDifferences": 54,
+        "postFinishPositionDifferences": 56,
+        "placementsExact": true,
+        "strict": {
+          "passed": false,
+          "differences": {
+            "legacyChecks": 1,
+            "finishTimes": 1,
+            "position": 110,
+            "lane": 8,
+            "result.finishTimeRaw": 1
+          },
+          "examples": [
+            {
+              "field": "legacyChecks",
+              "error": "raw finish times differ"
+            },
+            {
+              "field": "finishTimes",
+              "expected": 86.1393814086914,
+              "actual": 86.139404296875,
+              "index": 10,
+              "expectedCount": 16,
+              "actualCount": 16
+            },
+            {
+              "field": "position",
+              "expected": 1105.271484375,
+              "actual": 1105.2716064453125,
+              "t": 56.47726058959961,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1169.4468994140625,
+              "actual": 1169.447021484375,
+              "t": 59.67409896850586,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1212.36767578125,
+              "actual": 1212.3675537109375,
+              "t": 61.80532455444336,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1234.3507080078125,
+              "actual": 1234.3505859375,
+              "t": 62.87093734741211,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1256.9951171875,
+              "actual": 1256.9952392578125,
+              "t": 63.93655014038086,
+              "runner": 10
+            },
+            {
+              "field": "lane",
+              "expected": 1129,
+              "actual": 1130,
+              "t": 63.93655014038086,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1280.3079833984375,
+              "actual": 1280.3084716796875,
+              "t": 65.00210571289062,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1304.2198486328125,
+              "actual": 1304.22021484375,
+              "t": 66.06765747070312,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1328.4801025390625,
+              "actual": 1328.48046875,
+              "t": 67.13320922851562,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1353.0986328125,
+              "actual": 1353.0985107421875,
+              "t": 68.19876098632812,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1378.0498046875,
+              "actual": 1378.049072265625,
+              "t": 69.26431274414062,
+              "runner": 10
+            },
+            {
+              "field": "lane",
+              "expected": 1896,
+              "actual": 1897,
+              "t": 69.26431274414062,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1403.6219482421875,
+              "actual": 1403.62109375,
+              "t": 70.32986450195312,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1429.721923828125,
+              "actual": 1429.7213134765625,
+              "t": 71.39541625976562,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1456.1165771484375,
+              "actual": 1456.1162109375,
+              "t": 72.46096801757812,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1482.6654052734375,
+              "actual": 1482.6650390625,
+              "t": 73.52651977539062,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1509.3343505859375,
+              "actual": 1509.333984375,
+              "t": 74.59207153320312,
+              "runner": 10
+            },
+            {
+              "field": "position",
+              "expected": 1536.0430908203125,
+              "actual": 1536.0426025390625,
+              "t": 75.65762329101562,
+              "runner": 10
+            }
+          ],
+          "counts": {
+            "officialFrames": 138,
+            "runnerSamples": 2208,
+            "stateSamples": 2208,
+            "postFinishSamples": 401,
+            "skillEvents": 210,
+            "skillDetailObservations": 210,
+            "supplementaryResultValues": 112,
+            "checkedSimulationFrames": 1323,
+            "checkedSimulationRunnerSamples": 21168,
+            "checkedOutputEvents": 651,
+            "syntheticRushingEvents": 5
+          },
+          "coverageGaps": [
+            "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat",
+            "global ordering between separate event streams is not exposed",
+            "official recording cadence/count not reconstructed from dense simulation output",
+            "skill activation flag is retained but not exposed by the engine",
+            "synthetic rushing event durations lack an independent official event oracle"
+          ],
+          "observationsPassed": false,
+          "outputContractPassed": true,
+          "surfaceCounts": {
+            "eventKind.3": 210,
+            "recordedSkillDetailValues": 210,
+            "uncomparedSkillActivationFlags": 210,
+            "nonzeroSkillDetails": 1,
+            "nonzeroSkillActivationFlags": 0,
+            "eventKind.6": 4,
+            "eventKind.5": 9
+          },
+          "frameScope": "all-engine-ticks",
+          "coverageStatus": "partial"
+        },
+        "nearbyRecordedEvents": [
+          {
+            "t": 55.54484939575195,
+            "kind": 3,
+            "params": [
+              15,
+              210071,
+              21599,
+              0,
+              32768,
+              0
+            ]
+          },
+          {
+            "t": 55.87785339355469,
+            "kind": 3,
+            "params": [
+              4,
+              200331,
+              43199,
+              0,
+              16,
+              0
+            ]
+          },
+          {
+            "t": 56.144256591796875,
+            "kind": 3,
+            "params": [
+              13,
+              202002,
+              0,
+              0,
+              8192,
+              0
+            ]
+          },
+          {
+            "t": 56.144256591796875,
+            "kind": 3,
+            "params": [
+              13,
+              202021,
+              71999,
+              0,
+              8192,
+              0
+            ]
+          },
+          {
+            "t": 56.344058990478516,
+            "kind": 3,
+            "params": [
+              12,
+              200571,
+              0,
+              0,
+              4096,
+              0
+            ]
+          },
+          {
+            "t": 57.14326858520508,
+            "kind": 3,
+            "params": [
+              4,
+              201062,
+              53999,
+              0,
+              16,
+              0
+            ]
+          },
+          {
+            "t": 57.74267578125,
+            "kind": 3,
+            "params": [
+              7,
+              201392,
+              53999,
+              0,
+              128,
+              0
+            ]
+          }
+        ],
+        "hypothesis": "Small movement/geometry numerical divergence near the third-corner entry; root cause unconfirmed.",
+        "collectionTarget": "Repeat course 11102, 1800m dirt, heavy ground, mixed 16-runner roster, preserving this gate-11 Sasi build and the original full lobby. Retain raw samples around 54-65 seconds and 1080-1260m."
+      }
+    ],
+    "canonicalRechecks": 11,
+    "repeatabilityChecks": 60,
+    "repeatabilityPassed": true,
+    "geometryProbeSummary": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\geometry-probes\\summary.json"
+  },
+  "canonicalIndependentRechecks": 11,
+  "repeatabilityChecks": 70,
+  "repeatabilityMatched": 70,
+  "geometryDiagnosticAlternatives": 9,
+  "geometryAlternativesRestoringAgreement": 0,
+  "artifacts": [
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\intake.json",
+      "sha256": "a888a149c7f7502d362c2d68840da068c2144d4c5a702b98055c97187aad8e15"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\manifest.json",
+      "sha256": "7805f8ef85828378007124b36ce86947ade2faa5b0179f4079b2bc777a4296fc"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\inventory.json",
+      "sha256": "6b4508a556a87a4358c3cb1682679ba99bd9c1020f8982f1c154d888f82c2c16"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\active-inventory.json",
+      "sha256": "9b18db5407ff566e9d79fea62cc76d2e23fc4484f0176d5a5239aac9edd63bc1"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\count-receipt.json",
+      "sha256": "4c2aa4853b5b7d0a0ca4f657c6ba7d4cf5691929ecb1bfe0fe3608dc86e560a8"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\source-receipt.json",
+      "sha256": "69745ede570724cf556165ac66675a3a563ef0d8942c4a892509351c3140165c"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\audit\\config.json",
+      "sha256": "704ff9a2ad9ca893be8cc498d816d33170d25e09cf5b7c08cd2e2d8ccffdf3ee"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\audit\\jobs.jsonl",
+      "sha256": "c8366a0c9ee74549858c2e61accd412566aee8a7d340f0d4fb44b41a0a5979b0"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\audit\\results.jsonl",
+      "sha256": "2db212762b370548245b26171d444879ff9442daefb7614f33e11b6ef5d66297"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\audit\\summary.json",
+      "sha256": "d74fd3a20fa661fd752cae53ec423690bfdf424bf17359be012382d3581f2a07"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\canonical-rechecks.json",
+      "sha256": "3c9a565949702c2771bec5fc786a90766fa7b0273662d2a6def7c8696edc36c8"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\investigation.json",
+      "sha256": "34df349d0763fd4c1850cf82d15ce38ad33d5cb3ad1d4933ffbeec05b971dd8d"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\repeatability-panel\\report.json",
+      "sha256": "c448fe3ffb2a76c5db168eb523a2610acbb19fc091a8effb64d9a40b0f70cc7f"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\audit\\repeatability-failures\\report.json",
+      "sha256": "e72df4ae9a90209559a9f5cd43b1d7647b92941743fdfed3abd0752f6183450d"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261023\\geometry-probes\\summary.json",
+      "sha256": "669e5dbe6435840706472c7e5a8d94fc33b345538c3fd6e70802fe2547475110"
+    }
+  ],
+  "previousFullCorpusAudit": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\.local\\race-datasets\\latest-full-validation.json",
+    "sha256": "c65d6a4fc8a3aa507c5bc0c222c40eb0351ed4e89c7abfbe79bdda1e5df7a95b"
+  }
+}

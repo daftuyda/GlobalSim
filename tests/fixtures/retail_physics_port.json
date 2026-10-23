@@ -1,5 +1,5 @@
 {
-  "provenance": "Reconstructed Python physics port vectors; not captured official outcomes.",
+  "provenance": "vectors.expected_bits and spurt_vectors outcomes: Regenerated 2026-10-20 from the GlobalSim engine (v75 rules) as a regression snapshot; inputs come from the reconstructed Python port. The engine deliberately differs from that port's float32 rounding; each differing calculation was checked against the 69 strict official-race fixtures (see docs/TESTING.md). state_traces and sort_vectors remain Python port vectors.",
   "parameters_sha256": "4655bd004ad7a9a46104283fd42e9afb1c0e9835ccb1b86be47940c100fe99e1",
   "vectors": [
     {
@@ -45,7 +45,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101581517,
         "minimum_speed": 1100253735,
-        "maximum_spurt_speed": 1102047913,
+        "maximum_spurt_speed": 1102047914,
         "target_speed": 1100253735,
         "initial_hp": 1159151616,
         "hp_state_rate": 1065353216,
@@ -149,7 +149,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101214515,
         "minimum_speed": 1099930554,
-        "maximum_spurt_speed": 1102383879,
+        "maximum_spurt_speed": 1102383881,
         "target_speed": 1099930554,
         "initial_hp": 1162018816,
         "hp_state_rate": 1068708659,
@@ -305,7 +305,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101581517,
         "minimum_speed": 1100192887,
-        "maximum_spurt_speed": 1104214077,
+        "maximum_spurt_speed": 1104214076,
         "target_speed": 1101716259,
         "initial_hp": 1159151616,
         "hp_state_rate": 1070386381,
@@ -409,7 +409,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101000605,
         "minimum_speed": 1099941783,
-        "maximum_spurt_speed": 1101661333,
+        "maximum_spurt_speed": 1101661335,
         "target_speed": 1106247680,
         "initial_hp": 1162018816,
         "hp_state_rate": 1089889894,
@@ -459,15 +459,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1100795084,
+        "base_target_speed": 1100795085,
         "minimum_speed": 1099763497,
-        "maximum_spurt_speed": 1101428055,
+        "maximum_spurt_speed": 1101428054,
         "target_speed": 1099763497,
         "initial_hp": 1163657216,
         "hp_state_rate": 1058642330,
-        "hp_per_second": 1094123622,
+        "hp_per_second": 1094123626,
         "acceleration": 1051997277,
-        "blocking_speed_cap": 1100795084
+        "blocking_speed_cap": 1100795085
       }
     },
     {
@@ -511,15 +511,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100178521,
+        "base_target_speed": 1100178522,
         "minimum_speed": 1099217522,
-        "maximum_spurt_speed": 1100855233,
+        "maximum_spurt_speed": 1100855234,
         "target_speed": 1100444335,
         "initial_hp": 1167294464,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1106261351,
+        "hp_per_second": 1106261356,
         "acceleration": 1051357581,
-        "blocking_speed_cap": 1100178521
+        "blocking_speed_cap": 1100178522
       }
     },
     {
@@ -565,12 +565,12 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101360267,
         "minimum_speed": 1100218728,
-        "maximum_spurt_speed": 1103722303,
+        "maximum_spurt_speed": 1103722302,
         "target_speed": 1100218728,
         "initial_hp": 1159151616,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1104321416,
-        "acceleration": 1062546376,
+        "hp_per_second": 1104321415,
+        "acceleration": 1062546377,
         "blocking_speed_cap": 1101230172
       }
     },
@@ -622,7 +622,7 @@
         "initial_hp": 1160380416,
         "hp_state_rate": 1080452710,
         "hp_per_second": 1116266353,
-        "acceleration": 1060106606,
+        "acceleration": 1060106607,
         "blocking_speed_cap": 1101077881
       }
     },
@@ -669,11 +669,11 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101000605,
         "minimum_speed": 1099880935,
-        "maximum_spurt_speed": 1103302120,
+        "maximum_spurt_speed": 1103302119,
         "target_speed": 1099880935,
         "initial_hp": 1162018816,
         "hp_state_rate": 1058642330,
-        "hp_per_second": 1093872250,
+        "hp_per_second": 1093872249,
         "acceleration": 1103510897,
         "blocking_speed_cap": 1100921993
       }
@@ -719,15 +719,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1100795084,
+        "base_target_speed": 1100795085,
         "minimum_speed": 1099439351,
         "maximum_spurt_speed": 1102082650,
         "target_speed": 1101060898,
         "initial_hp": 1157240914,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1106353187,
+        "hp_per_second": 1106353192,
         "acceleration": 1103386326,
-        "blocking_speed_cap": 1100795084
+        "blocking_speed_cap": 1100795085
       }
     },
     {
@@ -777,7 +777,7 @@
         "target_speed": 1099228751,
         "initial_hp": 1167294464,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1117092677,
+        "hp_per_second": 1117092676,
         "acceleration": 1103266005,
         "blocking_speed_cap": 1100003447
       }
@@ -823,15 +823,15 @@
       },
       "expected_bits": {
         "course_speed": 1101581517,
-        "base_target_speed": 1101185761,
+        "base_target_speed": 1101185762,
         "minimum_speed": 1100253707,
-        "maximum_spurt_speed": 1102047894,
+        "maximum_spurt_speed": 1102047895,
         "target_speed": 1106247680,
         "initial_hp": 1159151616,
         "hp_state_rate": 1089889894,
-        "hp_per_second": 1126165871,
+        "hp_per_second": 1126165876,
         "acceleration": 1103363984,
-        "blocking_speed_cap": 1101057760
+        "blocking_speed_cap": 1101057761
       }
     },
     {
@@ -981,12 +981,12 @@
         "course_speed": 1101004800,
         "base_target_speed": 1100981520,
         "minimum_speed": 1099715884,
-        "maximum_spurt_speed": 1102146174,
+        "maximum_spurt_speed": 1102146175,
         "target_speed": 1099715884,
         "initial_hp": 1163657216,
         "hp_state_rate": 1057971241,
-        "hp_per_second": 1096273146,
-        "acceleration": 1057415901,
+        "hp_per_second": 1096273147,
+        "acceleration": 1057415902,
         "blocking_speed_cap": 1100981520
       }
     },
@@ -1033,11 +1033,11 @@
         "course_speed": 1100375654,
         "base_target_speed": 1100105960,
         "minimum_speed": 1099167903,
-        "maximum_spurt_speed": 1100941272,
+        "maximum_spurt_speed": 1100941271,
         "target_speed": 1106247680,
         "initial_hp": 1167294464,
         "hp_state_rate": 1069044203,
-        "hp_per_second": 1107455176,
+        "hp_per_second": 1107455175,
         "acceleration": 1052278987,
         "blocking_speed_cap": 1100105960
       }
@@ -1085,11 +1085,11 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102262147,
         "minimum_speed": 1099929561,
-        "maximum_spurt_speed": 1104068475,
+        "maximum_spurt_speed": 1104068474,
         "target_speed": 1099929561,
         "initial_hp": 1147220132,
         "hp_state_rate": 1053609165,
-        "hp_per_second": 1119334249,
+        "hp_per_second": 1119334248,
         "acceleration": 1103482945,
         "blocking_speed_cap": 1102121229
       }
@@ -1187,15 +1187,15 @@
       },
       "expected_bits": {
         "course_speed": 1101214515,
-        "base_target_speed": 1100826843,
+        "base_target_speed": 1100826844,
         "minimum_speed": 1099941755,
-        "maximum_spurt_speed": 1101661314,
+        "maximum_spurt_speed": 1101661316,
         "target_speed": 1099941755,
         "initial_hp": 1162018816,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1105958848,
+        "hp_per_second": 1105958853,
         "acceleration": 1103339843,
-        "blocking_speed_cap": 1100749535
+        "blocking_speed_cap": 1100749536
       }
     },
     {
@@ -1239,15 +1239,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1100793799,
+        "base_target_speed": 1100793798,
         "minimum_speed": 1099752296,
-        "maximum_spurt_speed": 1101785558,
+        "maximum_spurt_speed": 1101785557,
         "target_speed": 1106247680,
         "initial_hp": 1163657216,
         "hp_state_rate": 1078271672,
-        "hp_per_second": 1116442292,
+        "hp_per_second": 1116442289,
         "acceleration": 1103305965,
-        "blocking_speed_cap": 1100793799
+        "blocking_speed_cap": 1100793798
       }
     },
     {
@@ -1291,15 +1291,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100082324,
+        "base_target_speed": 1100082325,
         "minimum_speed": 1099193744,
-        "maximum_spurt_speed": 1100909792,
+        "maximum_spurt_speed": 1100909793,
         "target_speed": 1099193744,
         "initial_hp": 1167294464,
         "hp_state_rate": 1047904912,
-        "hp_per_second": 1084759025,
+        "hp_per_second": 1084759028,
         "acceleration": 1051932451,
-        "blocking_speed_cap": 1100082324
+        "blocking_speed_cap": 1100082325
       }
     },
     {
@@ -1402,7 +1402,7 @@
         "initial_hp": 1160380416,
         "hp_state_rate": 1057971241,
         "hp_per_second": 1099399731,
-        "acceleration": 1060426887,
+        "acceleration": 1060426888,
         "blocking_speed_cap": 1101919935
       }
     },
@@ -1449,7 +1449,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101646947,
         "minimum_speed": 1099617609,
-        "maximum_spurt_speed": 1103156518,
+        "maximum_spurt_speed": 1103156517,
         "target_speed": 1106247680,
         "initial_hp": 1153964114,
         "hp_state_rate": 1069044203,
@@ -1551,15 +1551,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100158808,
+        "base_target_speed": 1100158809,
         "minimum_speed": 1099228723,
         "maximum_spurt_speed": 1100906071,
         "target_speed": 1099131680,
         "initial_hp": 1167097856,
         "hp_state_rate": 1059313419,
-        "hp_per_second": 1094893191,
+        "hp_per_second": 1094893195,
         "acceleration": 1103265947,
-        "blocking_speed_cap": 1100158808
+        "blocking_speed_cap": 1100158809
       }
     },
     {
@@ -1603,15 +1603,15 @@
       },
       "expected_bits": {
         "course_speed": 1101581517,
-        "base_target_speed": 1101338142,
+        "base_target_speed": 1101338143,
         "minimum_speed": 1100242506,
-        "maximum_spurt_speed": 1103149625,
+        "maximum_spurt_speed": 1103149626,
         "target_speed": 1100242506,
         "initial_hp": 1158758400,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1104085321,
+        "hp_per_second": 1104085326,
         "acceleration": 1103437624,
-        "blocking_speed_cap": 1101208313
+        "blocking_speed_cap": 1101208314
       }
     },
     {
@@ -1661,7 +1661,7 @@
         "target_speed": 1106247680,
         "initial_hp": 1159987200,
         "hp_state_rate": 1078271672,
-        "hp_per_second": 1113997040,
+        "hp_per_second": 1113997041,
         "acceleration": 1103521237,
         "blocking_speed_cap": 1101056332
       }
@@ -1707,15 +1707,15 @@
       },
       "expected_bits": {
         "course_speed": 1101214515,
-        "base_target_speed": 1100979214,
+        "base_target_speed": 1100979215,
         "minimum_speed": 1099894142,
-        "maximum_spurt_speed": 1103275322,
+        "maximum_spurt_speed": 1103275320,
         "target_speed": 1099894142,
         "initial_hp": 1161625600,
         "hp_state_rate": 1065353216,
-        "hp_per_second": 1100429452,
+        "hp_per_second": 1100429455,
         "acceleration": 1058729149,
-        "blocking_speed_cap": 1100900763
+        "blocking_speed_cap": 1100900764
       }
     },
     {
@@ -1766,7 +1766,7 @@
         "initial_hp": 1163264000,
         "hp_state_rate": 1070386381,
         "hp_per_second": 1106088482,
-        "acceleration": 1057575298,
+        "acceleration": 1057575299,
         "blocking_speed_cap": 1100774113
       }
     },
@@ -1811,15 +1811,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100158808,
+        "base_target_speed": 1100158809,
         "minimum_speed": 1098901505,
-        "maximum_spurt_speed": 1100930213,
+        "maximum_spurt_speed": 1100930212,
         "target_speed": 1098901505,
         "initial_hp": 1162349412,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1104341451,
+        "hp_per_second": 1104341455,
         "acceleration": 1052256619,
-        "blocking_speed_cap": 1100158808
+        "blocking_speed_cap": 1100158809
       }
     },
     {
@@ -1865,7 +1865,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101481954,
         "minimum_speed": 1100253735,
-        "maximum_spurt_speed": 1102198916,
+        "maximum_spurt_speed": 1102198917,
         "target_speed": 1106247680,
         "initial_hp": 1158758400,
         "hp_state_rate": 1080452710,
@@ -1917,7 +1917,7 @@
         "course_speed": 1101424230,
         "base_target_speed": 1101326083,
         "minimum_speed": 1100120013,
-        "maximum_spurt_speed": 1102033820,
+        "maximum_spurt_speed": 1102033821,
         "target_speed": 1100120013,
         "initial_hp": 1159987200,
         "hp_state_rate": 1065353216,
@@ -1969,7 +1969,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101118255,
         "minimum_speed": 1099930554,
-        "maximum_spurt_speed": 1102529873,
+        "maximum_spurt_speed": 1102529874,
         "target_speed": 1101384069,
         "initial_hp": 1161625600,
         "hp_state_rate": 1070386381,
@@ -2025,7 +2025,7 @@
         "target_speed": 1099728518,
         "initial_hp": 1163264000,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1116376146,
+        "hp_per_second": 1116376145,
         "acceleration": 1103330871,
         "blocking_speed_cap": 1100910428
       }
@@ -2077,7 +2077,7 @@
         "target_speed": 1106247680,
         "initial_hp": 1167097856,
         "hp_state_rate": 1089889894,
-        "hp_per_second": 1125494802,
+        "hp_per_second": 1125494803,
         "acceleration": 1103289098,
         "blocking_speed_cap": 1100286944
       }
@@ -2125,7 +2125,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101481954,
         "minimum_speed": 1100192887,
-        "maximum_spurt_speed": 1104365081,
+        "maximum_spurt_speed": 1104365080,
         "target_speed": 1100192887,
         "initial_hp": 1158758400,
         "hp_state_rate": 1058642330,
@@ -2177,11 +2177,11 @@
         "course_speed": 1101424230,
         "base_target_speed": 1101326083,
         "minimum_speed": 1099795867,
-        "maximum_spurt_speed": 1103949325,
+        "maximum_spurt_speed": 1103949324,
         "target_speed": 1101460825,
         "initial_hp": 1150686921,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1107102047,
+        "hp_per_second": 1107102046,
         "acceleration": 1060454268,
         "blocking_speed_cap": 1101196398
       }
@@ -2229,7 +2229,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1100965885,
         "minimum_speed": 1099941783,
-        "maximum_spurt_speed": 1101807327,
+        "maximum_spurt_speed": 1101807328,
         "target_speed": 1099941783,
         "initial_hp": 1161625600,
         "hp_state_rate": 1068708659,
@@ -2331,15 +2331,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100176102,
+        "base_target_speed": 1100176103,
         "minimum_speed": 1099217522,
-        "maximum_spurt_speed": 1100989776,
+        "maximum_spurt_speed": 1100989777,
         "target_speed": 1099217522,
         "initial_hp": 1167097856,
         "hp_state_rate": 1058642330,
-        "hp_per_second": 1096437723,
+        "hp_per_second": 1096437727,
         "acceleration": 1103270920,
-        "blocking_speed_cap": 1100176102
+        "blocking_speed_cap": 1100176103
       }
     },
     {
@@ -2437,11 +2437,11 @@
         "course_speed": 1101424230,
         "base_target_speed": 1102089548,
         "minimum_speed": 1100072400,
-        "maximum_spurt_speed": 1103876776,
+        "maximum_spurt_speed": 1103876777,
         "target_speed": 1100072400,
         "initial_hp": 1159987200,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1121042296,
+        "hp_per_second": 1121042298,
         "acceleration": 1103559614,
         "blocking_speed_cap": 1101950702
       }
@@ -2489,11 +2489,11 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101785989,
         "minimum_speed": 1099880935,
-        "maximum_spurt_speed": 1103448114,
+        "maximum_spurt_speed": 1103448113,
         "target_speed": 1106247680,
         "initial_hp": 1161625600,
         "hp_state_rate": 1089889894,
-        "hp_per_second": 1130673410,
+        "hp_per_second": 1130673409,
         "acceleration": 1103429681,
         "blocking_speed_cap": 1101701487
       }
@@ -2645,11 +2645,11 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101329574,
         "minimum_speed": 1100253707,
-        "maximum_spurt_speed": 1102198897,
+        "maximum_spurt_speed": 1102198898,
         "target_speed": 1100253707,
         "initial_hp": 1158758400,
         "hp_state_rate": 1057971241,
-        "hp_per_second": 1095184734,
+        "hp_per_second": 1095184733,
         "acceleration": 1054812245,
         "blocking_speed_cap": 1101199847
       }
@@ -2749,7 +2749,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101596907,
         "minimum_speed": 1099906776,
-        "maximum_spurt_speed": 1103077470,
+        "maximum_spurt_speed": 1103077469,
         "target_speed": 1099906776,
         "initial_hp": 1161625600,
         "hp_state_rate": 1053609165,
@@ -2853,7 +2853,7 @@
         "course_speed": 1100375654,
         "base_target_speed": 1100234096,
         "minimum_speed": 1099167903,
-        "maximum_spurt_speed": 1101075815,
+        "maximum_spurt_speed": 1101075814,
         "target_speed": 1099167903,
         "initial_hp": 1167097856,
         "hp_state_rate": 1068708659,
@@ -2905,7 +2905,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102405960,
         "minimum_speed": 1099929561,
-        "maximum_spurt_speed": 1104219479,
+        "maximum_spurt_speed": 1104219478,
         "target_speed": 1106247680,
         "initial_hp": 1147219345,
         "hp_state_rate": 1078271672,
@@ -3009,7 +3009,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1100551396,
         "minimum_speed": 1099941755,
-        "maximum_spurt_speed": 1102020683,
+        "maximum_spurt_speed": 1102020685,
         "target_speed": 1101131783,
         "initial_hp": 1162346496,
         "hp_state_rate": 1059313419,
@@ -3061,7 +3061,7 @@
         "course_speed": 1101004800,
         "base_target_speed": 1100354683,
         "minimum_speed": 1099752296,
-        "maximum_spurt_speed": 1102137881,
+        "maximum_spurt_speed": 1102137879,
         "target_speed": 1099752296,
         "initial_hp": 1163984896,
         "hp_state_rate": 1057971241,
@@ -3113,7 +3113,7 @@
         "course_speed": 1100375654,
         "base_target_speed": 1099764544,
         "minimum_speed": 1099193744,
-        "maximum_spurt_speed": 1101240975,
+        "maximum_spurt_speed": 1101240976,
         "target_speed": 1106247680,
         "initial_hp": 1167458304,
         "hp_state_rate": 1069044203,
@@ -3217,7 +3217,7 @@
         "course_speed": 1101424230,
         "base_target_speed": 1100748108,
         "minimum_speed": 1100059193,
-        "maximum_spurt_speed": 1104312486,
+        "maximum_spurt_speed": 1104312485,
         "target_speed": 1101013922,
         "initial_hp": 1160708096,
         "hp_state_rate": 1059313419,
@@ -3321,7 +3321,7 @@
         "course_speed": 1101004800,
         "base_target_speed": 1100983829,
         "minimum_speed": 1099763525,
-        "maximum_spurt_speed": 1101780397,
+        "maximum_spurt_speed": 1101780395,
         "target_speed": 1106247680,
         "initial_hp": 1163984896,
         "hp_state_rate": 1078271672,
@@ -3377,7 +3377,7 @@
         "target_speed": 1099228723,
         "initial_hp": 1167458304,
         "hp_state_rate": 1065353216,
-        "hp_per_second": 1101043394,
+        "hp_per_second": 1101043395,
         "acceleration": 1050901145,
         "blocking_speed_cap": 1100355941
       }
@@ -3425,7 +3425,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101559392,
         "minimum_speed": 1100242506,
-        "maximum_spurt_speed": 1103370322,
+        "maximum_spurt_speed": 1103370323,
         "target_speed": 1101389208,
         "initial_hp": 1159479296,
         "hp_state_rate": 1070386381,
@@ -3534,7 +3534,7 @@
         "initial_hp": 1162346496,
         "hp_state_rate": 1080452710,
         "hp_per_second": 1116763107,
-        "acceleration": 1061329656,
+        "acceleration": 1061329655,
         "blocking_speed_cap": 1101113068
       }
     },
@@ -3689,7 +3689,7 @@
         "target_speed": 1100253735,
         "initial_hp": 1159479296,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1118109941,
+        "hp_per_second": 1118109942,
         "acceleration": 1103365194,
         "blocking_speed_cap": 1101407512
       }
@@ -3737,7 +3737,7 @@
         "course_speed": 1101424230,
         "base_target_speed": 1101382246,
         "minimum_speed": 1100120013,
-        "maximum_spurt_speed": 1102251379,
+        "maximum_spurt_speed": 1102251380,
         "target_speed": 1106247680,
         "initial_hp": 1160708096,
         "hp_state_rate": 1089889894,
@@ -3787,15 +3787,15 @@
       },
       "expected_bits": {
         "course_speed": 1101214515,
-        "base_target_speed": 1101525257,
+        "base_target_speed": 1101525258,
         "minimum_speed": 1099930554,
-        "maximum_spurt_speed": 1102743248,
+        "maximum_spurt_speed": 1102743249,
         "target_speed": 1099930554,
         "initial_hp": 1162346496,
         "hp_state_rate": 1058642330,
-        "hp_per_second": 1098605538,
+        "hp_per_second": 1098605544,
         "acceleration": 1058024601,
-        "blocking_speed_cap": 1101442710
+        "blocking_speed_cap": 1101442711
       }
     },
     {
@@ -3845,7 +3845,7 @@
         "target_speed": 1101532589,
         "initial_hp": 1163984896,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1109976884,
+        "hp_per_second": 1109976885,
         "acceleration": 1057013817,
         "blocking_speed_cap": 1101266775
       }
@@ -3945,7 +3945,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102616147,
         "minimum_speed": 1100192887,
-        "maximum_spurt_speed": 1104585777,
+        "maximum_spurt_speed": 1104585776,
         "target_speed": 1106247680,
         "initial_hp": 1159479296,
         "hp_state_rate": 1080452710,
@@ -3997,7 +3997,7 @@
         "course_speed": 1101424230,
         "base_target_speed": 1102407375,
         "minimum_speed": 1099795867,
-        "maximum_spurt_speed": 1104166884,
+        "maximum_spurt_speed": 1104166883,
         "target_speed": 1099795867,
         "initial_hp": 1150687642,
         "hp_state_rate": 1058642330,
@@ -4047,15 +4047,15 @@
       },
       "expected_bits": {
         "course_speed": 1101214515,
-        "base_target_speed": 1101169099,
+        "base_target_speed": 1101169100,
         "minimum_speed": 1099941783,
-        "maximum_spurt_speed": 1102020702,
+        "maximum_spurt_speed": 1102020704,
         "target_speed": 1100135562,
         "initial_hp": 1162346496,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1108880645,
+        "hp_per_second": 1108880647,
         "acceleration": 1103313590,
-        "blocking_speed_cap": 1101089224
+        "blocking_speed_cap": 1101089225
       }
     },
     {
@@ -4099,15 +4099,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1100951265,
+        "base_target_speed": 1100951264,
         "minimum_speed": 1099763497,
-        "maximum_spurt_speed": 1101780378,
+        "maximum_spurt_speed": 1101780377,
         "target_speed": 1099763497,
         "initial_hp": 1163984896,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1117962692,
+        "hp_per_second": 1117962689,
         "acceleration": 1103299302,
-        "blocking_speed_cap": 1100951265
+        "blocking_speed_cap": 1100951264
       }
     },
     {
@@ -4151,15 +4151,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100363378,
+        "base_target_speed": 1100363379,
         "minimum_speed": 1099217522,
-        "maximum_spurt_speed": 1101186416,
+        "maximum_spurt_speed": 1101186417,
         "target_speed": 1106247680,
         "initial_hp": 1167458304,
         "hp_state_rate": 1089889894,
-        "hp_per_second": 1127757382,
+        "hp_per_second": 1127757385,
         "acceleration": 1103276659,
-        "blocking_speed_cap": 1100363378
+        "blocking_speed_cap": 1100363379
       }
     },
     {
@@ -4205,7 +4205,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102367977,
         "minimum_speed": 1100218728,
-        "maximum_spurt_speed": 1104094003,
+        "maximum_spurt_speed": 1104094002,
         "target_speed": 1100218728,
         "initial_hp": 1159479296,
         "hp_state_rate": 1053609165,
@@ -4257,7 +4257,7 @@
         "course_speed": 1101424230,
         "base_target_speed": 1102296747,
         "minimum_speed": 1100072400,
-        "maximum_spurt_speed": 1104094335,
+        "maximum_spurt_speed": 1104094336,
         "target_speed": 1102877134,
         "initial_hp": 1160708096,
         "hp_state_rate": 1059313419,
@@ -4413,7 +4413,7 @@
         "course_speed": 1100375654,
         "base_target_speed": 1099695547,
         "minimum_speed": 1099228751,
-        "maximum_spurt_speed": 1101164827,
+        "maximum_spurt_speed": 1101164825,
         "target_speed": 1099228751,
         "initial_hp": 1167441920,
         "hp_state_rate": 1053609165,
@@ -4463,15 +4463,15 @@
       },
       "expected_bits": {
         "course_speed": 1101581517,
-        "base_target_speed": 1100818205,
+        "base_target_speed": 1100818206,
         "minimum_speed": 1100253707,
         "maximum_spurt_speed": 1102489288,
         "target_speed": 1101084019,
         "initial_hp": 1159446528,
         "hp_state_rate": 1059313419,
-        "hp_per_second": 1092596599,
+        "hp_per_second": 1092596602,
         "acceleration": 1103359614,
-        "blocking_speed_cap": 1100694615
+        "blocking_speed_cap": 1100694616
       }
     },
     {
@@ -4569,7 +4569,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1100476527,
         "minimum_speed": 1099906776,
-        "maximum_spurt_speed": 1103358226,
+        "maximum_spurt_speed": 1103358225,
         "target_speed": 1106247680,
         "initial_hp": 1162313728,
         "hp_state_rate": 1078271672,
@@ -4621,12 +4621,12 @@
         "course_speed": 1101004800,
         "base_target_speed": 1100281282,
         "minimum_speed": 1099715884,
-        "maximum_spurt_speed": 1102564556,
+        "maximum_spurt_speed": 1102564557,
         "target_speed": 1099715884,
         "initial_hp": 1163952128,
         "hp_state_rate": 1047904912,
         "hp_per_second": 1081279299,
-        "acceleration": 1057257097,
+        "acceleration": 1057257096,
         "blocking_speed_cap": 1100281282
       }
     },
@@ -4673,7 +4673,7 @@
         "course_speed": 1100375654,
         "base_target_speed": 1099695547,
         "minimum_speed": 1099167903,
-        "maximum_spurt_speed": 1101334551,
+        "maximum_spurt_speed": 1101334550,
         "target_speed": 1099830289,
         "initial_hp": 1167441920,
         "hp_state_rate": 1059313419,
@@ -4723,15 +4723,15 @@
       },
       "expected_bits": {
         "course_speed": 1101581517,
-        "base_target_speed": 1100818205,
+        "base_target_speed": 1100818206,
         "minimum_speed": 1099929561,
-        "maximum_spurt_speed": 1104509869,
+        "maximum_spurt_speed": 1104509868,
         "target_speed": 1099929561,
         "initial_hp": 1147220722,
         "hp_state_rate": 1057971241,
-        "hp_per_second": 1091197655,
+        "hp_per_second": 1091197658,
         "acceleration": 1063597479,
-        "blocking_speed_cap": 1100694615
+        "blocking_speed_cap": 1100694616
       }
     },
     {
@@ -4829,7 +4829,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101214515,
         "minimum_speed": 1099941755,
-        "maximum_spurt_speed": 1102088065,
+        "maximum_spurt_speed": 1102088066,
         "target_speed": 1099941755,
         "initial_hp": 1162313728,
         "hp_state_rate": 1047904912,
@@ -4881,7 +4881,7 @@
         "course_speed": 1101004800,
         "base_target_speed": 1101004800,
         "minimum_speed": 1099752296,
-        "maximum_spurt_speed": 1102203940,
+        "maximum_spurt_speed": 1102203939,
         "target_speed": 1101585187,
         "initial_hp": 1163952128,
         "hp_state_rate": 1059313419,
@@ -4985,7 +4985,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101581517,
         "minimum_speed": 1100206094,
-        "maximum_spurt_speed": 1104425982,
+        "maximum_spurt_speed": 1104425980,
         "target_speed": 1106247680,
         "initial_hp": 1159446528,
         "hp_state_rate": 1078271672,
@@ -5089,7 +5089,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101214515,
         "minimum_speed": 1099617609,
-        "maximum_spurt_speed": 1103583268,
+        "maximum_spurt_speed": 1103583267,
         "target_speed": 1101480329,
         "initial_hp": 1153964409,
         "hp_state_rate": 1070386381,
@@ -5145,7 +5145,7 @@
         "target_speed": 1099763525,
         "initial_hp": 1163952128,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1107787799,
+        "hp_per_second": 1107787800,
         "acceleration": 1051987753,
         "blocking_speed_cap": 1101014179
       }
@@ -5191,15 +5191,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100377999,
+        "base_target_speed": 1100377998,
         "minimum_speed": 1099228723,
-        "maximum_spurt_speed": 1101164808,
+        "maximum_spurt_speed": 1101164807,
         "target_speed": 1106247680,
         "initial_hp": 1167441920,
         "hp_state_rate": 1080452710,
-        "hp_per_second": 1118464891,
+        "hp_per_second": 1118464887,
         "acceleration": 1050892811,
-        "blocking_speed_cap": 1100377999
+        "blocking_speed_cap": 1100377998
       }
     },
     {
@@ -5245,7 +5245,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102073593,
         "minimum_speed": 1100242506,
-        "maximum_spurt_speed": 1103440015,
+        "maximum_spurt_speed": 1103440016,
         "target_speed": 1100242506,
         "initial_hp": 1159446528,
         "hp_state_rate": 1065353216,
@@ -5295,15 +5295,15 @@
       },
       "expected_bits": {
         "course_speed": 1101424230,
-        "base_target_speed": 1102236454,
+        "base_target_speed": 1102236453,
         "minimum_speed": 1100085034,
-        "maximum_spurt_speed": 1103913640,
+        "maximum_spurt_speed": 1103913639,
         "target_speed": 1102315256,
         "initial_hp": 1160675328,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1112042518,
+        "hp_per_second": 1112042514,
         "acceleration": 1103437782,
-        "blocking_speed_cap": 1102095845
+        "blocking_speed_cap": 1102095844
       }
     },
     {
@@ -5347,15 +5347,15 @@
       },
       "expected_bits": {
         "course_speed": 1101214515,
-        "base_target_speed": 1101964874,
+        "base_target_speed": 1101964873,
         "minimum_speed": 1099894142,
-        "maximum_spurt_speed": 1103556078,
+        "maximum_spurt_speed": 1103556076,
         "target_speed": 1099894142,
         "initial_hp": 1162313728,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1121240972,
+        "hp_per_second": 1121240969,
         "acceleration": 1103497398,
-        "blocking_speed_cap": 1101879030
+        "blocking_speed_cap": 1101879029
       }
     },
     {
@@ -5451,15 +5451,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100480512,
+        "base_target_speed": 1100480511,
         "minimum_speed": 1098901505,
-        "maximum_spurt_speed": 1101188949,
+        "maximum_spurt_speed": 1101188948,
         "target_speed": 1098901505,
         "initial_hp": 1162349756,
         "hp_state_rate": 1058642330,
-        "hp_per_second": 1122494010,
+        "hp_per_second": 1122494004,
         "acceleration": 1051618635,
-        "blocking_speed_cap": 1100480512
+        "blocking_speed_cap": 1100480511
       }
     },
     {
@@ -5765,11 +5765,11 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102682522,
         "minimum_speed": 1100192887,
-        "maximum_spurt_speed": 1104655471,
+        "maximum_spurt_speed": 1104655470,
         "target_speed": 1100192887,
         "initial_hp": 1159446528,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1123106036,
+        "hp_per_second": 1123106034,
         "acceleration": 1103483170,
         "blocking_speed_cap": 1102536560
       }
@@ -5869,7 +5869,7 @@
         "course_speed": 1101214515,
         "base_target_speed": 1101888330,
         "minimum_speed": 1099941783,
-        "maximum_spurt_speed": 1101526571,
+        "maximum_spurt_speed": 1101526573,
         "target_speed": 1099941783,
         "initial_hp": 1161428992,
         "hp_state_rate": 1053609165,
@@ -5919,15 +5919,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1101665402,
+        "base_target_speed": 1101665403,
         "minimum_speed": 1099763497,
         "maximum_spurt_speed": 1101295935,
         "target_speed": 1100638274,
         "initial_hp": 1163067392,
         "hp_state_rate": 1059313419,
-        "hp_per_second": 1098846515,
+        "hp_per_second": 1098846519,
         "acceleration": 1052293681,
-        "blocking_speed_cap": 1101665402
+        "blocking_speed_cap": 1101665403
       }
     },
     {
@@ -5971,15 +5971,15 @@
       },
       "expected_bits": {
         "course_speed": 1100375654,
-        "base_target_speed": 1100996620,
+        "base_target_speed": 1100996621,
         "minimum_speed": 1099217522,
-        "maximum_spurt_speed": 1100731040,
+        "maximum_spurt_speed": 1100731042,
         "target_speed": 1099217522,
         "initial_hp": 1166999552,
         "hp_state_rate": 1057971241,
-        "hp_per_second": 1096307162,
+        "hp_per_second": 1096307167,
         "acceleration": 1051545237,
-        "blocking_speed_cap": 1100996620
+        "blocking_speed_cap": 1100996621
       }
     },
     {
@@ -6025,12 +6025,12 @@
         "course_speed": 1101581517,
         "base_target_speed": 1102278453,
         "minimum_speed": 1100218728,
-        "maximum_spurt_speed": 1103582916,
+        "maximum_spurt_speed": 1103582915,
         "target_speed": 1106247680,
         "initial_hp": 1158561792,
         "hp_state_rate": 1069044203,
-        "hp_per_second": 1108315835,
-        "acceleration": 1064065702,
+        "hp_per_second": 1108315836,
+        "acceleration": 1064065704,
         "blocking_speed_cap": 1102137340
       }
     },
@@ -6179,15 +6179,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1101665402,
+        "base_target_speed": 1101665403,
         "minimum_speed": 1099439351,
         "maximum_spurt_speed": 1101950530,
         "target_speed": 1099439351,
         "initial_hp": 1157240324,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1107959632,
+        "hp_per_second": 1107959634,
         "acceleration": 1103407931,
-        "blocking_speed_cap": 1101665402
+        "blocking_speed_cap": 1101665403
       }
     },
     {
@@ -6237,7 +6237,7 @@
         "target_speed": 1106247680,
         "initial_hp": 1166999552,
         "hp_state_rate": 1078271672,
-        "hp_per_second": 1113475903,
+        "hp_per_second": 1113475902,
         "acceleration": 1103265625,
         "blocking_speed_cap": 1100001102
       }
@@ -6285,11 +6285,11 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101161142,
         "minimum_speed": 1100253707,
-        "maximum_spurt_speed": 1101908507,
+        "maximum_spurt_speed": 1101908508,
         "target_speed": 1100253707,
         "initial_hp": 1158561792,
         "hp_state_rate": 1047904912,
-        "hp_per_second": 1082507894,
+        "hp_per_second": 1082507895,
         "acceleration": 1056580517,
         "blocking_speed_cap": 1101033437
       }
@@ -6337,7 +6337,7 @@
         "course_speed": 1101424230,
         "base_target_speed": 1101009832,
         "minimum_speed": 1100108812,
-        "maximum_spurt_speed": 1102652654,
+        "maximum_spurt_speed": 1102652655,
         "target_speed": 1101275646,
         "initial_hp": 1159790592,
         "hp_state_rate": 1059313419,
@@ -6445,7 +6445,7 @@
         "target_speed": 1106247680,
         "initial_hp": 1163067392,
         "hp_state_rate": 1069044203,
-        "hp_per_second": 1103766495,
+        "hp_per_second": 1103766496,
         "acceleration": 1057201868,
         "blocking_speed_cap": 1100606341
       }
@@ -6493,11 +6493,11 @@
         "course_speed": 1100375654,
         "base_target_speed": 1100001102,
         "minimum_speed": 1099167903,
-        "maximum_spurt_speed": 1100817079,
+        "maximum_spurt_speed": 1100817078,
         "target_speed": 1099167903,
         "initial_hp": 1166999552,
         "hp_state_rate": 1047904912,
-        "hp_per_second": 1082734300,
+        "hp_per_second": 1082734299,
         "acceleration": 1103289104,
         "blocking_speed_cap": 1100001102
       }
@@ -6545,7 +6545,7 @@
         "course_speed": 1101581517,
         "base_target_speed": 1101161142,
         "minimum_speed": 1099929561,
-        "maximum_spurt_speed": 1103929089,
+        "maximum_spurt_speed": 1103929088,
         "target_speed": 1101295884,
         "initial_hp": 1147218952,
         "hp_state_rate": 1059313419,
@@ -6647,15 +6647,15 @@
       },
       "expected_bits": {
         "course_speed": 1101214515,
-        "base_target_speed": 1100698498,
+        "base_target_speed": 1100698499,
         "minimum_speed": 1099941755,
-        "maximum_spurt_speed": 1101526552,
+        "maximum_spurt_speed": 1101526554,
         "target_speed": 1106247680,
         "initial_hp": 1161428992,
         "hp_state_rate": 1078271672,
-        "hp_per_second": 1115161027,
+        "hp_per_second": 1115161033,
         "acceleration": 1103336605,
-        "blocking_speed_cap": 1100622152
+        "blocking_speed_cap": 1100622153
       }
     },
     {
@@ -6699,15 +6699,15 @@
       },
       "expected_bits": {
         "course_speed": 1101004800,
-        "base_target_speed": 1100667970,
+        "base_target_speed": 1100667969,
         "minimum_speed": 1099752296,
-        "maximum_spurt_speed": 1101653438,
+        "maximum_spurt_speed": 1101653436,
         "target_speed": 1099752296,
         "initial_hp": 1163067392,
         "hp_state_rate": 1065353216,
-        "hp_per_second": 1101910491,
+        "hp_per_second": 1101910486,
         "acceleration": 1053124109,
-        "blocking_speed_cap": 1100667970
+        "blocking_speed_cap": 1100667969
       }
     },
     {
@@ -6803,15 +6803,15 @@
       },
       "expected_bits": {
         "course_speed": 1101581517,
-        "base_target_speed": 1102013239,
+        "base_target_speed": 1102013238,
         "minimum_speed": 1100206094,
-        "maximum_spurt_speed": 1103845202,
+        "maximum_spurt_speed": 1103845200,
         "target_speed": 1100206094,
         "initial_hp": 1158561792,
         "hp_state_rate": 1068708659,
-        "hp_per_second": 1109178371,
+        "hp_per_second": 1109178369,
         "acceleration": 1063296449,
-        "blocking_speed_cap": 1101875308
+        "blocking_speed_cap": 1101875307
       }
     },
     {
@@ -6965,7 +6965,7 @@
         "target_speed": 1100755705,
         "initial_hp": 1163067392,
         "hp_state_rate": 1070386381,
-        "hp_per_second": 1107354092,
+        "hp_per_second": 1107354093,
         "acceleration": 1103297826,
         "blocking_speed_cap": 1100489891
       }
@@ -7017,7 +7017,7 @@
         "target_speed": 1099228723,
         "initial_hp": 1166999552,
         "hp_state_rate": 1080033280,
-        "hp_per_second": 1116705204,
+        "hp_per_second": 1116705203,
         "acceleration": 1103265749,
         "blocking_speed_cap": 1099885168
       }
@@ -7117,12 +7117,12 @@
         "course_speed": 1101424230,
         "base_target_speed": 1101691194,
         "minimum_speed": 1100085034,
-        "maximum_spurt_speed": 1103341118,
+        "maximum_spurt_speed": 1103341117,
         "target_speed": 1100085034,
         "initial_hp": 1159790592,
         "hp_state_rate": 1058642330,
         "hp_per_second": 1098759577,
-        "acceleration": 1061746283,
+        "acceleration": 1061746284,
         "blocking_speed_cap": 1101557128
       }
     },
@@ -7221,7 +7221,7 @@
         "course_speed": 1101004800,
         "base_target_speed": 1100899942,
         "minimum_speed": 1099702677,
-        "maximum_spurt_speed": 1102096132,
+        "maximum_spurt_speed": 1102096131,
         "target_speed": 1099702677,
         "initial_hp": 1163067392,
         "hp_state_rate": 1068708659,
@@ -7273,7 +7273,7 @@
         "course_speed": 1100375654,
         "base_target_speed": 1099987681,
         "minimum_speed": 1098901505,
-        "maximum_spurt_speed": 1100671477,
+        "maximum_spurt_speed": 1100671476,
         "target_speed": 1106247680,
         "initial_hp": 1162349314,
         "hp_state_rate": 1080452710,
@@ -11620,7 +11620,7 @@
       "guts": 1600.0,
       "start_bits": 1157234688,
       "speed_bits": 1103534975,
-      "result": 8,
+      "result": 4,
       "draws": 0
     },
     {

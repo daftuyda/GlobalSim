@@ -333,6 +333,27 @@ pub struct PendingSkill {
     pub effects: Vec<SkillEffect>,
     /// v75: is_activate_any_skill trigger nodes of this detail's main condition.
     pub anyskill_nodes: Vec<usize>,
+    /// Cooldown-map lookup for `cooldown_key`, valid while the solver's
+    /// cooldown generation is unchanged. Timer values are still read live.
+    pub(crate) cooldown_cache: CooldownCache,
+}
+
+pub(crate) struct CooldownCache {
+    generation: Cell<u64>,
+    state: RefCell<CooldownState>,
+}
+
+impl Default for CooldownCache {
+    fn default() -> Self {
+        // No solver reaches this generation, so the first use looks up.
+        CooldownCache { generation: Cell::new(u64::MAX), state: RefCell::new(CooldownState::Blocked) }
+    }
+}
+
+pub(crate) enum CooldownState {
+    Blocked,
+    Timer(Timer),
+    Until(f64),
 }
 
 struct RandomSkillReservation {
@@ -401,6 +422,11 @@ struct SkillScanWindow {
     priority: i32,
     retained: bool,
     observed: bool,
+    /// One activation window equal to the trigger: the window test repeats
+    /// the trigger test.
+    single: bool,
+    /// Detail index zero.
+    primary: bool,
 }
 
 fn noop_hook() -> SkillHook {
@@ -445,6 +471,8 @@ pub struct RaceSolver {
     pub(crate) random_gold_reservations: BTreeSet<String>,
     random_active_details: BTreeMap<(String, usize), Timer>,
     waiting_skill_cooldowns: BTreeMap<String, (String, usize, f64)>,
+    /// Advanced on every change to a cooldown map; see `CooldownCache`.
+    cooldown_generation: u64,
     /// Skills sorted by trigger position, so the per-tick scan only looks at
     /// the ones the horse has actually reached instead of re-testing every
     /// unfired skill on all ~1800 frames. Only valid when `pending_removal`
@@ -760,7 +788,7 @@ impl RaceSolver {
             retail_stat_values: [None; 5],
             random_gold_reservations: BTreeSet::new(),
             random_active_details: BTreeMap::new(),
-            waiting_skill_cooldowns: BTreeMap::new(),
+            waiting_skill_cooldowns: BTreeMap::new(), cooldown_generation: 0,
             armed_scan,
             pending_seq,
             armed: Vec::new(),
@@ -1840,7 +1868,7 @@ impl RaceSolver {
     fn observe_anyskill(&mut self, i: usize) {
         let sk = &self.pending_skills[i];
         let checkable = (sk.prerequisite.is_none() || sk.prerequisite_satisfied)
-            && self.skill_cooldown_ready(&sk.cooldown_key);
+            && self.pending_cooldown_ready(sk);
         let count: i32 = self.activate_count.iter().sum();
         let mut state = self.anyskill_observer.borrow_mut();
         let mut result = self.anyskill_result.borrow_mut();
@@ -1857,12 +1885,18 @@ impl RaceSolver {
 
     /// v74: apply recorded own-activation increments of running skills whose turn in the
     /// ascending-id pass has come (skill id <= `upto`), per ability, capped as before.
+    #[inline]
     fn apply_unapplied_additional(&mut self, upto: i64, field: Option<&RaceField>) {
         // Each running skill takes one turn per tick: ids in (floor, upto] take theirs now.
         let floor = self.additional_turn_floor;
         if upto <= floor { return; }
         self.additional_turn_floor = upto;
         if self.unapplied_running_skills == 0 && !self.retiring_additional_skills { return; }
+        self.apply_additional_turns(floor, upto, field);
+    }
+
+    #[inline(never)]
+    fn apply_additional_turns(&mut self, floor: i64, upto: i64, field: Option<&RaceField>) {
         let mut applications = Vec::new();
         for runtime in &mut self.running_skills {
             let id = runtime.numeric_skill_id;
@@ -1971,6 +2005,10 @@ impl RaceSolver {
                 retained: skill.detail_index == 0
                     && matches!(skill.rarity, SkillRarity::White | SkillRarity::Gold | SkillRarity::Evolution),
                 observed: !skill.anyskill_nodes.is_empty(),
+                single: matches!(skill.windows.as_slice(), [w]
+                    if w.start.to_bits() == skill.trigger.start.to_bits()
+                        && w.end.to_bits() == skill.trigger.end.to_bits()),
+                primary: skill.detail_index == 0,
             });
             if skill.prerequisite.is_some() && !skill.prerequisite_satisfied {
                 index.prerequisites.push(i);
@@ -2095,7 +2133,7 @@ impl RaceSolver {
             let sk = &self.pending_skills[j];
             let fires = (sk.prerequisite.is_none() || sk.prerequisite_satisfied)
                 && (field.is_some() || sk.effects.iter().all(|ef| ef.target == 1))
-                && self.skill_cooldown_ready(&sk.cooldown_key)
+                && self.pending_cooldown_ready(sk)
                 && sk.windows.iter().any(|r| r.start <= pos && pos < r.end)
                 && (sk.extra_condition)(self, field);
             if fires {
@@ -2104,6 +2142,7 @@ impl RaceSolver {
                     (sk.skill_id.clone(), sk.perspective, sk.rarity, sk.effects.clone(), sk.has_green_tag, sk.cooldown, sk.cooldown_key.clone());
                 let is_special = sid == "asitame" || sid == "staminasyoubu";
                 self.activate_skill(&sid, perspective, rarity, &effects, green, self.pending_skills[j].detail_index, field);
+                self.cooldown_generation += 1;
                 if cooldown <= 0.0 {
                     self.skill_cooldowns.insert(cooldown_key, f64::INFINITY);
                     self.armed.remove(i); self.pending_skills.remove(j); self.pending_seq.remove(j);
@@ -2173,6 +2212,44 @@ impl RaceSolver {
                     }
                 }
             }
+            // Retail visits read the compact scan entry instead of the full
+            // record wherever it holds the same immutable fields.
+            if let Some(w) = self.skill_scan.windows.get(i).copied().filter(|_| self.retail.is_some()) {
+                #[cfg(test)] {
+                    let sk = &self.pending_skills[i];
+                    assert!(w.priority == sk.priority && w.numeric_id == sk.numeric_skill_id.unwrap_or(i64::MIN)
+                        && w.observed == !sk.anyskill_nodes.is_empty() && w.primary == (sk.detail_index == 0)
+                        && w.retained == (sk.detail_index == 0 && matches!(sk.rarity, SkillRarity::White | SkillRarity::Gold | SkillRarity::Evolution))
+                        && w.start.to_bits() == sk.trigger.start.to_bits() && w.end.to_bits() == sk.trigger.end.to_bits());
+                }
+                // A missing numeric id is i64::MIN, which never takes a turn.
+                self.apply_unapplied_additional(w.numeric_id, field);
+                if w.observed { self.observe_anyskill(i); }
+                let skill_id_matches_removal = !self.pending_removal.is_empty()
+                    && self.pending_removal.contains(&self.pending_skills[i].cooldown_key);
+                let reserved = w.primary && !self.random_gold_reservations.is_empty()
+                    && self.random_gold_reservations.contains(&self.pending_skills[i].skill_id);
+                if (pos >= w.end && !reserved && !w.retained) || skill_id_matches_removal {
+                    let removed = self.pending_skills.remove(i);
+                    self.pending_removal.remove(&removed.cooldown_key);
+                    continue;
+                }
+                let sk = &self.pending_skills[i];
+                #[cfg(test)] if w.single {
+                    assert!(sk.windows.len() == 1 && sk.windows[0].start.to_bits() == sk.trigger.start.to_bits()
+                        && sk.windows[0].end.to_bits() == sk.trigger.end.to_bits());
+                }
+                let fires = (reserved || (pos >= w.start && pos < w.end
+                    && (sk.prerequisite.is_none() || sk.prerequisite_satisfied)
+                    && (w.single || sk.windows.iter().any(|r| r.start <= pos && pos < r.end))
+                    && (sk.extra_condition)(self, field)))
+                    && (field.is_some() || sk.effects.iter().all(|ef| ef.target == 1))
+                    && self.pending_cooldown_ready(sk);
+                if fires && self.fire_pending_skill(i, field) {
+                    activate_count_this_frame += 1;
+                }
+                continue;
+            }
             if priority.is_some_and(|p|p!=self.pending_skills[i].priority) {continue;}
             if self.retail.is_some() {
                 if let Some(id) = self.pending_skills[i].numeric_skill_id {
@@ -2182,8 +2259,9 @@ impl RaceSolver {
             if self.retail.is_some() && !self.pending_skills[i].anyskill_nodes.is_empty() {
                 self.observe_anyskill(i);
             }
-            let skill_id_matches_removal = self.pending_removal.contains(&self.pending_skills[i].cooldown_key);
-            let reserved = self.pending_skills[i].detail_index == 0
+            let skill_id_matches_removal = !self.pending_removal.is_empty()
+                && self.pending_removal.contains(&self.pending_skills[i].cooldown_key);
+            let reserved = self.pending_skills[i].detail_index == 0 && !self.random_gold_reservations.is_empty()
                 && self.random_gold_reservations.contains(&self.pending_skills[i].skill_id);
             let retain_for_random = self.retail.is_some() && self.pending_skills[i].detail_index == 0
                 && matches!(self.pending_skills[i].rarity, SkillRarity::White | SkillRarity::Gold | SkillRarity::Evolution);
@@ -2193,36 +2271,49 @@ impl RaceSolver {
                 continue;
             }
             let sk = &self.pending_skills[i];
+            let single = self.retail.is_some() && self.skill_scan.windows.get(i).is_some_and(|w| w.single);
+            #[cfg(test)] if single {
+                assert!(sk.windows.len() == 1 && sk.windows[0].start.to_bits() == sk.trigger.start.to_bits()
+                    && sk.windows[0].end.to_bits() == sk.trigger.end.to_bits());
+            }
             let fires = (reserved || (pos >= sk.trigger.start && pos < sk.trigger.end
                 && (sk.prerequisite.is_none() || sk.prerequisite_satisfied)
-                && sk.windows.iter().any(|r| r.start <= pos && pos < r.end)
+                && (single || sk.windows.iter().any(|r| r.start <= pos && pos < r.end))
                 && (sk.extra_condition)(self, field)))
                 && (field.is_some() || sk.effects.iter().all(|ef| ef.target == 1))
-                && self.skill_cooldown_ready(&sk.cooldown_key);
-            if fires {
-                let (skill_id, perspective, rarity, effects, has_green_tag) = {
-                    let sk = &self.pending_skills[i];
-                    (sk.skill_id.clone(), sk.perspective, sk.rarity, sk.effects.clone(), sk.has_green_tag)
-                };
-                let cooldown = self.pending_skills[i].cooldown;
-                let cooldown_key = self.pending_skills[i].cooldown_key.clone();
-                self.activate_skill(&skill_id, perspective, rarity, &effects, has_green_tag, self.pending_skills[i].detail_index, field);
-                if cooldown <= 0.0 { self.skill_cooldowns.insert(cooldown_key, f64::INFINITY); self.pending_skills.remove(i); }
-                else {
-                    if self.retail.is_some() && !cooldown_key.ends_with("#followup") {
-                        self.waiting_skill_cooldowns.insert(cooldown_key,
-                            (skill_id.clone(), self.pending_skills[i].detail_index, cooldown));
-                    } else { self.start_skill_cooldown(cooldown_key,cooldown); }
-                }
-                if skill_id != "asitame" && skill_id != "staminasyoubu" {
-                    activate_count_this_frame += 1;
-                }
+                && self.pending_cooldown_ready(sk);
+            if fires && self.fire_pending_skill(i, field) {
+                activate_count_this_frame += 1;
             }
         }
         if self.retail.is_some() && priority.map_or(true, |p| p == 0) {
             self.apply_unapplied_additional(i64::MAX, field);
         }
         self.activate_count_last_frame += activate_count_this_frame;
+    }
+
+    /// Activates pending record `i` and starts its cooldown. Kept out of the
+    /// per-tick visit loop, where it is rarely taken. Returns whether the
+    /// activation counts toward this frame's activations.
+    #[cold]
+    #[inline(never)]
+    fn fire_pending_skill(&mut self, i: usize, field: Option<&RaceField>) -> bool {
+        let (skill_id, perspective, rarity, effects, has_green_tag) = {
+            let sk = &self.pending_skills[i];
+            (sk.skill_id.clone(), sk.perspective, sk.rarity, sk.effects.clone(), sk.has_green_tag)
+        };
+        let cooldown = self.pending_skills[i].cooldown;
+        let cooldown_key = self.pending_skills[i].cooldown_key.clone();
+        self.activate_skill(&skill_id, perspective, rarity, &effects, has_green_tag, self.pending_skills[i].detail_index, field);
+        self.cooldown_generation += 1;
+        if cooldown <= 0.0 { self.skill_cooldowns.insert(cooldown_key, f64::INFINITY); self.pending_skills.remove(i); }
+        else {
+            if self.retail.is_some() && !cooldown_key.ends_with("#followup") {
+                self.waiting_skill_cooldowns.insert(cooldown_key,
+                    (skill_id.clone(), self.pending_skills[i].detail_index, cooldown));
+            } else { self.start_skill_cooldown(cooldown_key,cooldown); }
+        }
+        skill_id != "asitame" && skill_id != "staminasyoubu"
     }
 
     /// v7: ReleaseConservePower fires on the tick the last spurt starts (official kind-6
@@ -2255,29 +2346,58 @@ impl RaceSolver {
             (sk.skill_id.clone(), sk.perspective, sk.rarity, sk.effects.clone(), sk.has_green_tag, sk.detail_index, sk.cooldown_key.clone())
         };
         self.activate_skill(&skill_id, perspective, rarity, &effects, has_green_tag, detail, field);
+        self.cooldown_generation += 1;
         self.skill_cooldowns.insert(key, f64::INFINITY);
     }
 
     fn skill_cooldown_ready(&self,key:&str)->bool {
-        if self.waiting_skill_cooldowns.contains_key(key) {return false;}
-        if self.skill_cooldowns.get(key)==Some(&f64::INFINITY) {return false;}
-        if let Some(timer)=self.retail.as_ref().and_then(|r|r.skill_cooldowns.get(key)) {return timer.get()>=0.;}
-        self.accumulatetime.get()>=*self.skill_cooldowns.get(key).unwrap_or(&-1.)
+        self.cooldown_state_ready(&self.cooldown_state(key))
+    }
+
+    fn cooldown_state(&self,key:&str)->CooldownState {
+        if self.waiting_skill_cooldowns.contains_key(key) {return CooldownState::Blocked;}
+        let fixed=self.skill_cooldowns.get(key);
+        if fixed==Some(&f64::INFINITY) {return CooldownState::Blocked;}
+        if let Some(timer)=self.retail.as_ref().and_then(|r|r.skill_cooldowns.get(key)) {return CooldownState::Timer(timer.clone());}
+        CooldownState::Until(*fixed.unwrap_or(&-1.))
+    }
+
+    fn cooldown_state_ready(&self,state:&CooldownState)->bool {
+        match state {
+            CooldownState::Blocked => false,
+            CooldownState::Timer(timer) => timer.get()>=0.,
+            CooldownState::Until(until) => self.accumulatetime.get()>=*until,
+        }
+    }
+
+    /// `skill_cooldown_ready` for a pending record, reusing its map lookup
+    /// until any cooldown map changes.
+    fn pending_cooldown_ready(&self,skill:&PendingSkill)->bool {
+        let cache=&skill.cooldown_cache;
+        if cache.generation.get()!=self.cooldown_generation {
+            *cache.state.borrow_mut()=self.cooldown_state(&skill.cooldown_key);
+            cache.generation.set(self.cooldown_generation);
+        }
+        self.cooldown_state_ready(&cache.state.borrow())
     }
 
     fn start_expired_skill_cooldowns(&mut self) {
+        if self.waiting_skill_cooldowns.is_empty() { return; }
+        // Keys are unique, so a matching entry is the one `get` would find.
         let expired: Vec<_> = self.waiting_skill_cooldowns.iter().filter(|(_, (sid, detail, _))| {
-            !self.running_skills.iter().any(|r| r.skill_id == *sid && r.detail_index == *detail)
-                && (self.random_active_details.is_empty()
-                    || !self.random_active_details.get(&(sid.clone(), *detail)).is_some_and(|t| t.get() < 0.0))
+            !self.running_skills.iter().any(|r| r.detail_index == *detail && r.skill_id == *sid)
+                && !self.random_active_details.iter()
+                    .any(|((id, d), t)| d == detail && id == sid && t.get() < 0.0)
         }).map(|(key,(_,_,duration))|(key.clone(),*duration)).collect();
         for (key,duration) in expired {
             self.start_skill_cooldown(key.clone(),duration);
             self.waiting_skill_cooldowns.remove(&key);
+            self.cooldown_generation += 1;
         }
     }
 
     fn start_skill_cooldown(&mut self,key:String,duration:f64) {
+        self.cooldown_generation += 1;
         if self.retail.is_some() {
             let remaining=(duration as f32)*(self.course.distance as f32/1000.);
             if let Some(timer)=self.retail.as_ref().unwrap().skill_cooldowns.get(&key) {timer.set(-remaining as f64);}
@@ -2529,6 +2649,7 @@ impl RaceSolver {
                 sk.has_green_tag, sk.detail_index, field);
             self.pending_removal.insert(sk.cooldown_key.clone());
             self.skill_cooldowns.insert(sk.cooldown_key, f64::INFINITY);
+            self.cooldown_generation += 1;
         }
     }
 
@@ -2642,19 +2763,23 @@ impl RaceSolver {
             // for the inclusive duel boundary (doc 13.152). Official survey-1943 (c10508): two
             // Front runners 5.000000000 m apart at 14.1192 s kept CompeteTop HP cost one more
             // tick (exact HP floor at ten samples; sim exited a tick early with >=).
-            let distance_exit = (0..field.n).filter(|&j| j != i).all(|j| {
-                let s = field.solvers[j].borrow();
-                s.horse.strategy != strategy || !s.spot_struggle_started
-                    || (s.pos - self.pos).abs() > 5.0 || (s.lane - self.lane).abs() >= 0.416
-            });
-            self.spot_struggle_distance_exited |= distance_exit;
+            // A started struggle never restarts, so both field scans below only
+            // matter while it is active, and the exit flag only ever turns on.
+            if self.spot_struggle_active && !self.spot_struggle_distance_exited {
+                let distance_exit = (0..field.n).filter(|&j| j != i).all(|j| {
+                    let s = field.solvers[j].borrow();
+                    s.horse.strategy != strategy || !s.spot_struggle_started
+                        || (s.pos - self.pos).abs() > 5.0 || (s.lane - self.lane).abs() >= 0.416
+                });
+                self.spot_struggle_distance_exited |= distance_exit;
+            }
             self.spot_struggle_cutoff_latched |= self.spot_struggle_active && self.spot_struggle_timer.get() < 0.0 && self.pos >= self.section_length * SPOT_STRUGGLE_END_SECTION;
-            let group_cutoff = self.spot_struggle_cutoff_latched || (0..field.n).filter(|&j| j != i).any(|j| {
+            let group_cutoff = || self.spot_struggle_cutoff_latched || (0..field.n).filter(|&j| j != i).any(|j| {
                 let peer = field.solvers[j].borrow();
                 peer.spot_struggle_started && peer.spot_struggle_cutoff_latched
             });
             if self.spot_struggle_active && (self.spot_struggle_distance_exited
-                    || self.spot_struggle_timer.get() >= 0.0 || group_cutoff) {
+                    || self.spot_struggle_timer.get() >= 0.0 || group_cutoff()) {
                 self.spot_struggle_active = false;
                 self.modifiers_target_speed.add(-self.spot_struggle_modifier);
                 self.retail_target_modifiers.remove(1);
@@ -2664,21 +2789,27 @@ impl RaceSolver {
         // Python's `max(group, key=...)` returns the *first* maximal
         // element on ties; `Iterator::max_by` would return the *last*, so
         // this scans manually with a strict `>` to match Python exactly.
-        let mut group = Vec::new();
+        // `j == i` is `self`, already mutably borrowed for the duration
+        // of this `step()` call -- read its own fields directly rather
+        // than re-entering its `RefCell` via `field.solvers[j]`.
+        // Without a same-style rival the group below can never reach two.
+        if field.exact_style_count(strategy) < 2 {
+            return;
+        }
+        let sample = |j: usize| if j == i {
+            (strategy, self.pos, self.lane, self.spot_struggle_started)
+        } else {
+            let s = field.solvers[j].borrow();
+            (s.horse.strategy, s.pos, s.lane, s.spot_struggle_started)
+        };
+        let mut group_len = 0;
         let mut race_front = f64::NEG_INFINITY;
         let mut eligible_front_rank = usize::MAX;
         let mut front_idx: Option<usize> = None;
         let mut front_pos = f64::NEG_INFINITY;
+        let mut front_lane = 0.;
         for j in 0..field.n {
-            // `j == i` is `self`, already mutably borrowed for the duration
-            // of this `step()` call -- read its own fields directly rather
-            // than re-entering its `RefCell` via `field.solvers[j]`.
-            let (j_strategy, j_pos, j_lane, started) = if j == i {
-                (strategy, self.pos, self.lane, self.spot_struggle_started)
-            } else {
-                let s = field.solvers[j].borrow();
-                (s.horse.strategy, s.pos, s.lane, s.spot_struggle_started)
-            };
+            let (j_strategy, j_pos, j_lane, started) = sample(j);
             // The distance gate follows the cached overall leader's live position.
             // A pass during this tick takes effect after the next rank update.
             if field.order_of(j) == 1 { race_front = j_pos; }
@@ -2687,16 +2818,17 @@ impl RaceSolver {
             }
             if j_strategy == strategy {
                 if started { return; }
-                group.push((j, j_pos, j_lane));
+                group_len += 1;
                 // v6: the group front is chosen by the cached (previous-update) field
                 // order, not by live position; positions below remain live.
                 if front_idx.map_or(true, |f| field.order_of(j) < field.order_of(f)) {
                     front_pos = j_pos;
+                    front_lane = j_lane;
                     front_idx = Some(j);
                 }
             }
         }
-        if group.len() < 2 || race_front < 150.0 {
+        if group_len < 2 || race_front < 150.0 {
             return;
         }
         let front_idx = front_idx.unwrap();
@@ -2706,17 +2838,25 @@ impl RaceSolver {
         if field.order_of(front_idx) != eligible_front_rank {
             return;
         }
-        let front_lane = group.iter().find(|s| s.0 == front_idx).unwrap().2;
         // The cached group leader can already be beyond the entry cutoff.
         // Each invited partner must still be before it; another eligible
-        // partner does not make a late runner eligible too.
-        let participants: Vec<_> = group.into_iter().filter(|s|
+        // partner does not make a late runner eligible too. Nothing has
+        // moved since the scan above, so the group is re-read rather than
+        // collected; only a starting group is materialized.
+        let participants = (0..field.n).filter_map(|j| {
+            let (j_strategy, j_pos, j_lane, _) = sample(j);
+            (j_strategy == strategy).then_some((j, j_pos, j_lane))
+        }).filter(|s|
             front_pos - s.1 <= 3.75 && (front_lane - s.2).abs() <= SPOT_STRUGGLE_LANE_GAP
-                && (s.0 == front_idx || s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION)).collect();
-        if participants.len() < 2 || !participants.iter().any(|s| s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION) {
+                && (s.0 == front_idx || s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION));
+        let (count, early) = participants.clone().fold((0, false), |(count, early), s|
+            (count + 1, early || s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION));
+        if count < 2 || !early {
             return;
         }
-        // Replay records the cached group leader first, then the other gates.
+        let participants: Vec<_> = participants.collect();
+        // Queue the cached group leader before its partners. The field applies
+        // the captured roster/group recording order before serialization.
         // Keep the state-update loop independent of this recording order.
         if self.retail.is_some() {
             let mut events = field.competition_starts.borrow_mut();
@@ -2907,7 +3047,8 @@ impl RaceSolver {
         let mut eligible = None;
         let mut ready: Option<usize> = None;
         for j in 0..field.n {
-            if j == i {
+            // Retail entries outside the proximity cache have no effect here.
+            if j == i || (retail_cache && !proximity.contains_key(&j)) {
                 continue;
             }
             let other = field.solvers[j].borrow();
@@ -3105,8 +3246,10 @@ mod movement_tests {
             prerequisite: Some(Box::new(|s, _| s.phase == 0)), prerequisite_satisfied: false,
             cooldown: 1.0, cooldown_key: "999903".into(),
             windows: vec![Region::new(0.0, 2400.0)], effects: vec![], anyskill_nodes: nodes,
+            cooldown_cache: Default::default(),
         });
         s.skill_cooldowns.insert("999903".into(), f64::INFINITY);
+        s.cooldown_generation += 1;
         s.activate_count[0] = 1;
         s.process_skill_priority(Some(0), None);
         assert!(s.pending_skills[0].prerequisite_satisfied);
@@ -3114,6 +3257,7 @@ mod movement_tests {
         assert!(!s.used_skills.contains("999903"));
         // The prior observation must remain consumed after cooldown ends.
         s.skill_cooldowns.remove("999903");
+        s.cooldown_generation += 1;
         s.process_skill_priority(Some(0), None);
         assert!(!s.used_skills.contains("999903"));
         assert_eq!(s.skill_activation_observers.borrow().get(&node), Some(&(0, 1)));
@@ -3156,6 +3300,7 @@ mod movement_tests {
                     })),
                     prerequisite_satisfied: false, cooldown: 0.0, cooldown_key: id,
                     windows: vec![Region::new(0.0, 2400.0)], effects: vec![], anyskill_nodes: vec![100 + i],
+                    cooldown_cache: Default::default(),
                 });
             }
             s.activate_count[0] = 1;
@@ -3229,6 +3374,7 @@ mod movement_tests {
                     prerequisite: None, prerequisite_satisfied: false,
                     cooldown: 0., cooldown_key: id, effects: vec![],
                     anyskill_nodes: if matches!(i, 1 | 3) { vec![i] } else { vec![] },
+                    cooldown_cache: Default::default(),
                 });
             }
             s.activate_count[0] = 2;
@@ -3358,6 +3504,7 @@ mod movement_tests {
             });
             s.unapplied_running_skills = usize::from(queued > 0);
             s.waiting_skill_cooldowns.insert("110211".into(), ("110211".into(), 0, 30.));
+            s.cooldown_generation += 1;
             s.process_skill_history(None);
             s.start_expired_skill_cooldowns();
             assert_eq!(s.running_skills.len(), 1);
@@ -3652,14 +3799,16 @@ mod movement_tests {
     }
 
     #[test]
-    fn duel_warmup_checks_order_and_retains_eligible_rival() {
+    fn duel_warmup_checks_order_and_selects_first_eligible_rival() {
         let field = RaceField::new(vec![solver(2000.0, 0.0), solver(1999.0, 0.1), solver(1998.0, 0.1), solver(1900.0, 0.0)]);
         field.solvers[1].borrow_mut().current_speed = 21.0;
         field.solvers[0].borrow_mut().update_dueling(0.5, &field);
         assert_eq!(field.solvers[0].borrow().duel_target_index, Some(2));
         field.solvers[1].borrow_mut().current_speed = 20.0;
         field.solvers[0].borrow_mut().update_dueling(0.5, &field);
-        assert_eq!(field.solvers[0].borrow().duel_target_index, Some(2));
+        // v6: no target retention. Once runner 1 is also eligible, the first
+        // eligible candidate is selected; neither has a ready proximity yet.
+        assert_eq!(field.solvers[0].borrow().duel_target_index, Some(1));
         for (i, pos) in [(1, 2001.0), (2, 2002.0), (3, 2010.0)] {
             field.solvers[i].borrow_mut().pos = pos;
         }
@@ -3771,7 +3920,11 @@ mod movement_tests {
         field.solvers[1].borrow_mut().update_dueling(0.1, &field);
         field.solvers[0].borrow_mut().update_dueling(0.1, &field);
         assert!(field.solvers[0].borrow().duel_active);
+        // The 5 m separation boundary is inclusive (v71, doc 13.152).
         field.solvers[1].borrow_mut().pos = 1995.0;
+        field.solvers[0].borrow_mut().update_dueling(0.1, &field);
+        assert!(field.solvers[0].borrow().duel_active);
+        field.solvers[1].borrow_mut().pos = 1994.99;
         field.solvers[0].borrow_mut().update_dueling(0.1, &field);
         assert!(!field.solvers[0].borrow().duel_active);
         field.solvers[1].borrow_mut().pos = 1999.0;
@@ -3885,6 +4038,42 @@ mod movement_tests {
         field.solvers[2].borrow_mut().pos = 199.0;
         field.solvers[2].borrow_mut().update_spot_struggle(&field);
         assert!(!field.solvers[2].borrow().spot_struggle_active);
+    }
+
+    #[test]
+    fn competition_recording_keeps_runaways_in_base_style_roster_ties() {
+        let mut solvers: Vec<_> = (0..18).map(|_| solver(0., 0.)).collect();
+        solvers[0].horse.strategy = Strategy::Oonige;
+        let field = RaceField::new(solvers);
+        field.competition_starts.replace(vec![(4, 11), (4, 7), (4, 10), (4, 12), (4, 14)]);
+        let _owner = field.solvers[11].borrow_mut();
+        field.order_competition_records();
+        assert_eq!(*field.competition_starts.borrow(), vec![(4, 11), (4, 14), (4, 12), (4, 10), (4, 7)]);
+    }
+
+    #[test]
+    fn competition_recording_excludes_other_base_styles_before_sorting() {
+        let mut solvers: Vec<_> = (0..18).map(|_| solver(0., 0.)).collect();
+        for (i, s) in solvers.iter_mut().enumerate() {
+            if ![3, 4, 5, 8, 11, 15].contains(&i) { s.horse.strategy = Strategy::Oikomi; }
+        }
+        let field = RaceField::new(solvers);
+        let expected = vec![(4, 4), (4, 3), (4, 5)];
+        field.competition_starts.replace(expected.clone());
+        field.order_competition_records();
+        assert_eq!(*field.competition_starts.borrow(), expected);
+    }
+
+    #[test]
+    fn competition_recording_orders_style_groups_without_moving_duel_slots() {
+        let mut solvers: Vec<_> = (0..16).map(|_| solver(0., 0.)).collect();
+        for (i, s) in solvers.iter_mut().enumerate() {
+            s.horse.strategy = match i { 12 | 13 => Strategy::Oonige, 9 | 10 => Strategy::Nige, _ => Strategy::Sasi };
+        }
+        let field = RaceField::new(solvers);
+        field.competition_starts.replace(vec![(4, 10), (5, 0), (4, 9), (4, 13), (4, 12), (5, 1)]);
+        field.order_competition_records();
+        assert_eq!(*field.competition_starts.borrow(), vec![(4, 13), (5, 0), (4, 12), (4, 10), (4, 9), (5, 1)]);
     }
 
     #[test]

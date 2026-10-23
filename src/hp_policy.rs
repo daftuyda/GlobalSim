@@ -67,7 +67,7 @@ mod retail_tests {
             distance_aptitude:Aptitude::A,surface_aptitude:Aptitude::A,strategy_aptitude:Aptitude::A,raw_stamina:900.,raw_power:1000.}
     }
     #[test]
-    fn integrated_hp_drain_and_heals_match_python_bits() {
+    fn integrated_hp_drain_and_heals_match_snapshot_bits() {
         let f=crate::json::parse(include_str!("../tests/fixtures/retail_hp_port.json")).unwrap();
         let parameters=parameters();
         for trace in f.get_array("traces").unwrap() {

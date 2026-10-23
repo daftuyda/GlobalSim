@@ -78,6 +78,7 @@ pub struct RushingState {
     parameters: RushingParameters,
     style: usize,
     start_distance: f32,
+    start_section: Option<(f32, i32)>,
     pub active: bool,
     pub used: bool,
     pub mode: i32,
@@ -93,6 +94,7 @@ impl RushingState {
             parameters,
             style,
             start_distance,
+            start_section: None,
             active: false,
             used: false,
             mode: 0,
@@ -100,6 +102,15 @@ impl RushingState {
             maximum_remaining: 0.,
             forced_remaining: None,
         }
+    }
+
+    /// Preserve the section lottery as a section comparison. Multiplying its
+    /// boundary into metres changes which tick wins at float32 rounding edges.
+    pub fn new_at_section(parameters: RushingParameters, style: usize,
+                          course_distance: f32, section: Option<i32>) -> Self {
+        let mut state = Self::new(parameters, style, f32::INFINITY);
+        state.start_section = section.map(|index| (course_distance / 24., index - 1));
+        state
     }
 
     fn choose_mode(&self, rng: &mut impl RandomSource) -> i32 {
@@ -149,7 +160,11 @@ impl RushingState {
     /// +1 starts, -1 ends. The starting tick never decrements either clock.
     pub fn step(&mut self, distance: f32, dt: f32, rng: &mut impl RandomSource) -> i32 {
         if !self.active {
-            if self.used || distance < self.start_distance {
+            let before_start = match self.start_section {
+                Some((length, section)) => distance / length < section as f32,
+                None => distance < self.start_distance,
+            };
+            if self.used || before_start {
                 return 0;
             }
             self.active = true;
@@ -311,6 +326,30 @@ mod tests {
             RushingParameters::from_value(p.get("Temptation").unwrap()).unwrap(),
             DownhillParameters::from_value(p.get("Slope").unwrap()).unwrap(),
         )
+    }
+
+    #[test]
+    fn rushing_section_boundary_preserves_float_quotient_and_draw_timing() {
+        let mut state = RushingState::new_at_section(parameters().0, 4, 1600., Some(7));
+        let mut rng = Rolls::new(&[7.]);
+        let below = f32::from_bits(400_f32.to_bits() - 1);
+        assert!(below < 400.);
+        assert_eq!(below / (1600_f32 / 24.), 6.);
+        assert_eq!(state.step(f32::from_bits(below.to_bits() - 1), 0.0666, &mut rng), 0);
+        assert_eq!(rng.draws, 0);
+        assert_eq!(state.step(below, 0.0666, &mut rng), 1);
+        assert_eq!((state.mode, rng.draws), (1, 1));
+        assert_eq!(state.check_remaining, 3.);
+    }
+
+    #[test]
+    fn absent_rushing_section_never_starts_or_consumes_randomness() {
+        let mut state = RushingState::new_at_section(parameters().0, 4, 1600., None);
+        let mut rng = Rolls::new(&[]);
+        for distance in [0., 400., 1600., 20000.] {
+            assert_eq!(state.step(distance, 0.0666, &mut rng), 0);
+        }
+        assert_eq!(rng.draws, 0);
     }
 
     #[test]

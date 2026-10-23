@@ -6,13 +6,47 @@ Run the Rust test suite with:
 cargo test --release --locked
 ```
 
-The latest validated `fast-alloc` library suite has **138 passing tests and
-11 pre-existing failures**. The archived baseline has the same failure set.
-All **69 included strict accuracy fixtures pass**. The latest 95,062-race
-batch and its quarantine partition are described in [accuracy](ACCURACY.md).
-The full library suite is not green.
-[v75 release checks](../evidence/v75-release-validation.json).
+The library suite passes in full: **155 of 155 tests** with `fast-alloc`, and
+all **81 included strict accuracy fixtures pass**. The latest boundary unit
+test and three captured fixtures cover the [passing-corridor rounding
+correction](CORRIDOR-FIX-20261023.md). The preceding three unit tests and
+four captured fixtures cover competition recording order; see the
+[practice correction and quarantine](PRACTICE-FIXES-20261022.md).
+Two preceding unit tests check rushing section rounding and an absent rushing
+section; an added
+capture checks its effect on a complete 18-runner race. The preceding 149-test
+suite also passed with the default allocator. Four earlier captures cover
+restoration to the nearest forward-style runner. See the
+[latest batch and remaining discrepancies](NEW-RACES-20261022.md) and the
+[pacemaker correction](PACING-FIX-20261021.md); earlier results are retained in
+[accuracy](ACCURACY.md).
 
+### Former failures (resolved 2026-10-20)
+
+Earlier releases reported 11 failing unit tests, failing since the first
+published commit. None indicated an engine defect; the tests were outdated:
+
+- Two duel tests predated rules the engine adopted deliberately: v6 removed
+  duel target retention, and v71 made the 5 m separation boundary inclusive.
+  Their expectations were corrected.
+- The lane-width check expected decimal `1.2`; widths are basis points times
+  `0.0001f` (doc 13.186), which is `1.1999999` for 12000.
+- Eight tests compared bits with the reconstructed Python port. The engine
+  intentionally rounds base target speed, maximum spurt speed, initial HP, HP
+  drain, the HP guts factor, acceleration, lane width, world position, world
+  distance correction, lateral movement and the blocking cap differently.
+  Reverting each one alone to the Python arithmetic reduced the strict
+  fixtures from 69 to between 3 and 68 passing. The blocking cap was the
+  exception: the fixtures do not distinguish its two forms. The affected expected
+  values in `retail_physics_port`, `retail_hp_port`, `retail_geometry_port`,
+  `retail_lane_port`, `retail_solver_port` and `retail_field_port` were
+  regenerated from the engine. Inputs, and sections that still match the
+  Python port, are unchanged; each fixture's `provenance` field says which
+  parts are engine snapshots. These tests now guard against unintended
+  numeric changes rather than check agreement with Python.
+
+The v75 release suite had **138 passing tests and 11 failures**.
+[v75 release checks](../evidence/v75-release-validation.json).
 The earlier `fast-alloc` release suite had **136 passing tests and 11 pre-existing failures**.
 The earlier default-allocator accuracy build had 133 passing tests and the same 11 failures.
 The failure set is unchanged. Failures cover
@@ -150,7 +184,10 @@ two courses and a counterexample that preserves the wider spurt guts product.
 Three new cases cover a returning Runaway retaining the pacemaker incumbent,
 HP-percentage truncation before a skill trigger, and a control preserving the
 full course-section precision. An additional case covers an inward passing
-corridor whose final boundary must retain wider precision during comparison.
+corridor boundary. Three later captures distinguish the corrected arithmetic:
+evaluate the complete shifted bound in float64, then round it once to float32
+before the inclusive lane comparison. The boundary unit test also distinguishes
+a blocker exactly on that edge from one at the adjacent float below it.
 Checks include finish times, skill starts, competition
 events, visual recipient masks and sampled movement; recent fixtures also
 check recorded skill durations. The engine receives only pre-race inputs;
@@ -247,6 +284,12 @@ python tools/check_native_parity.py --library target/pgo/globalsim.dll --baselin
 ```
 
 ## Latest intake
+
+The expanded [validation coverage audit](VALIDATION-AUDIT-20261022.md) adds
+all-tick output integrity, official skill branch comparisons, correlated branch
+and recipient checks, retained replay-surface inventories and explicit coverage
+status. Its 464-race panel passes, alongside all 73 regression fixtures. A pass
+means agreement on the checked observations; coverage gaps remain explicit.
 
 The new 39,837-race practice batch has 39,834 observed matches after a natural
 corner-expiry correction. All five new Career captures pass, bringing that

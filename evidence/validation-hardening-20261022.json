@@ -1,0 +1,2265 @@
+{
+  "engineSha256": "c426866172fd499c6457405c973cf663aaea8d7703571272455e632dfd0f6f8a",
+  "engineUnchanged": true,
+  "manifests": {
+    "practice": "23d2a217ac5af62196512c9c14089246e333e8bb8fd37c28bc5c175c1cb35d25",
+    "career": "fb731a31fcdcee98ba2eea7abcb275ec91dbef40f0918af819ebd47053f4ed81"
+  },
+  "quarantineManifest": {
+    "path": "D:\\UmamusumeData\\race-datasets\\quarantine\\practice-numerical-drift-20261022\\manifest.json",
+    "sha256": "bce01c4f1927b2c7dcdd70f4e43e7ab7df6c57223728c5724445040d7cccb077"
+  },
+  "selection": "lowest replay hash per corpus/runner count/course",
+  "perStratum": 1,
+  "excludedQuarantineRecords": 799,
+  "total": 265,
+  "passed": 265,
+  "coverage": {
+    "races": 265,
+    "dimensions": {
+      "runners": {
+        "10": 3,
+        "11": 3,
+        "12": 110,
+        "13": 8,
+        "14": 20,
+        "15": 11,
+        "16": 53,
+        "17": 4,
+        "18": 52,
+        "9": 1
+      },
+      "mode": {
+        "career": 56,
+        "practice": 209
+      },
+      "course": {
+        "10101": 2,
+        "10102": 2,
+        "10103": 2,
+        "10104": 2,
+        "10105": 2,
+        "10107": 2,
+        "10201": 2,
+        "10202": 9,
+        "10203": 5,
+        "10204": 2,
+        "10205": 2,
+        "10207": 2,
+        "10301": 2,
+        "10302": 2,
+        "10303": 2,
+        "10304": 2,
+        "10305": 2,
+        "10306": 2,
+        "10307": 2,
+        "10308": 2,
+        "10309": 2,
+        "10310": 2,
+        "10311": 2,
+        "10401": 2,
+        "10402": 2,
+        "10403": 2,
+        "10404": 2,
+        "10405": 2,
+        "10406": 2,
+        "10501": 4,
+        "10502": 2,
+        "10503": 9,
+        "10504": 2,
+        "10505": 2,
+        "10506": 2,
+        "10507": 2,
+        "10508": 2,
+        "10509": 2,
+        "10601": 9,
+        "10602": 2,
+        "10603": 8,
+        "10604": 2,
+        "10605": 2,
+        "10606": 2,
+        "10607": 2,
+        "10608": 2,
+        "10609": 2,
+        "10610": 2,
+        "10611": 2,
+        "10612": 2,
+        "10701": 8,
+        "10702": 3,
+        "10703": 2,
+        "10704": 2,
+        "10705": 2,
+        "10707": 2,
+        "10708": 2,
+        "10801": 9,
+        "10802": 2,
+        "10803": 3,
+        "10804": 2,
+        "10805": 3,
+        "10806": 2,
+        "10807": 2,
+        "10808": 2,
+        "10809": 2,
+        "10810": 2,
+        "10811": 2,
+        "10812": 2,
+        "10813": 2,
+        "10814": 2,
+        "10815": 2,
+        "10901": 9,
+        "10902": 3,
+        "10903": 2,
+        "10904": 2,
+        "10905": 2,
+        "10906": 2,
+        "10907": 2,
+        "10908": 2,
+        "10909": 2,
+        "10911": 2,
+        "10912": 2,
+        "10913": 2,
+        "10914": 2,
+        "11001": 2,
+        "11002": 2,
+        "11003": 2,
+        "11004": 2,
+        "11006": 2,
+        "11101": 2,
+        "11102": 2,
+        "11103": 2,
+        "11203": 2,
+        "11301": 1,
+        "11302": 2,
+        "11303": 2,
+        "11401": 2,
+        "11402": 2,
+        "11403": 2,
+        "11404": 2,
+        "11501": 2,
+        "11502": 2,
+        "11503": 2,
+        "11504": 2
+      },
+      "strategy": {
+        "Nige": 1107,
+        "Oikomi": 651,
+        "Sasi": 906,
+        "Senkou": 1129
+      },
+      "mechanicEvents": {
+        "4": 509,
+        "5": 1560,
+        "6": 838
+      },
+      "runtimeFlags": {
+        "experimentalLaterStaminaMechanics=False": 265,
+        "experimentalRetailGeometry=True": 265,
+        "experimentalRetailInitialization=True": 265,
+        "experimentalRetailRuntime=True": 265,
+        "experimentalRetailSections=True": 265
+      }
+    },
+    "equippedSkillIds": 565,
+    "activatedSkillIds": 526,
+    "equippedDefinitionVersions": 565,
+    "racesWithBranchObservations": 265,
+    "equippedBranchVersions": 607,
+    "observedBranchVersions": 548,
+    "equippedButUnobservedBranches": [
+      {
+        "skillId": "100131",
+        "definitionSha256": "4f8a12a48664f400ef3a133036baf9a6ca3fa0cc329399b1fbab5dc588cc20bb",
+        "detailIndex": 0,
+        "condition": "is_finalcorner==1&corner!=0&distance_diff_rate<=30&distance_type==4&lastspurt==2",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100161",
+        "definitionSha256": "a3f5463f63ccd13097691e68d993123608d730df8769deded1c009eed63216b1",
+        "detailIndex": 1,
+        "condition": "is_finalcorner==1&order>=2&order_rate<=75&is_behind_in==1&change_order_onetime<0",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100261",
+        "definitionSha256": "3fcfd8f0d5e34c824d31958d4e5fc254683aba77e9cd84168cde454ba04de061",
+        "detailIndex": 0,
+        "condition": "is_badstart==0&order<=3&is_finalcorner==1&corner==0&order_rate_in20_continue==1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100471",
+        "definitionSha256": "79aa0ae281be64d899725a07b517e2e8b5b027a329c42ee0dd72380477967ed4",
+        "detailIndex": 0,
+        "condition": "phase>=2&remain_distance<=401&remain_distance>=399&order_rate<=40&grade==100&popularity<=3",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100491",
+        "definitionSha256": "7143f37083a7f080fd086a1f01b85d80170bfa6396abd35de920001c017880f5",
+        "detailIndex": 1,
+        "condition": "remain_distance<=400&order_rate>=30&order_rate<=50&popularity<4",
+        "precondition": "is_finalcorner==1&is_overtake==1",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100561",
+        "definitionSha256": "887f4231d6ac6e73c102a5efc2fcdc88c960f21369147b6d370267eb9d8b0c49",
+        "detailIndex": 0,
+        "condition": "phase>=2&order>=3&blocked_front==1",
+        "precondition": "",
+        "effectTypes": [
+          27,
+          31
+        ]
+      },
+      {
+        "skillId": "100671",
+        "definitionSha256": "88247ab4ec8de59fbf6c11804656df06dd0feee8cc5508435fea6de5b9e28765",
+        "detailIndex": 0,
+        "condition": "is_last_straight_onetime==1&order>=2&order<=5&distance_diff_top<=5",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100671",
+        "definitionSha256": "88247ab4ec8de59fbf6c11804656df06dd0feee8cc5508435fea6de5b9e28765",
+        "detailIndex": 1,
+        "condition": "is_last_straight_onetime==1&order>=2&order<=5&distance_diff_top>5",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "100781",
+        "definitionSha256": "77f3f2b8ae6a13293e1b35dda3c614d36a20f1528fd090ded50b379a73c2813b",
+        "detailIndex": 0,
+        "condition": "is_finalcorner_laterhalf==1&distance_diff_rate<=50&order==2",
+        "precondition": "distance_rate>=50&order_rate_out20_continue==1",
+        "effectTypes": [
+          31
+        ]
+      },
+      {
+        "skillId": "100781",
+        "definitionSha256": "77f3f2b8ae6a13293e1b35dda3c614d36a20f1528fd090ded50b379a73c2813b",
+        "detailIndex": 1,
+        "condition": "is_finalcorner_laterhalf==1&distance_diff_rate<=50",
+        "precondition": "distance_rate>=50&order_rate_out20_continue==1",
+        "effectTypes": [
+          31
+        ]
+      },
+      {
+        "skillId": "10091",
+        "definitionSha256": "c821dba393bc2a362628848ad0fd5d8342d51e796deb7a039f7308ad3c77d425",
+        "detailIndex": 0,
+        "condition": "distance_rate>=50&order==1&bashin_diff_behind<=1@distance_rate>=50&order==2&is_overtake==1",
+        "precondition": "",
+        "effectTypes": [
+          27,
+          31
+        ]
+      },
+      {
+        "skillId": "110081",
+        "definitionSha256": "357c7290c53d5973776e7b5b56e4343eba9c59bd13ac764e54fa916e11aadd1d",
+        "detailIndex": 0,
+        "condition": "slope==0@slope==1",
+        "precondition": "phase>=1&slope==2&order_rate>=50&order_rate<=80&track_id==10006",
+        "effectTypes": [
+          27,
+          31
+        ]
+      },
+      {
+        "skillId": "110091",
+        "definitionSha256": "41ae90ae11be57fb75b4e5ad13fbb54166d1ef69023b9cb2810fa075649c7e6b",
+        "detailIndex": 0,
+        "condition": "distance_rate>=50&corner==0&order==1&bashin_diff_behind<=1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "110101",
+        "definitionSha256": "ac03da4b542db5d01aca9919be5e6b13bf14d767f7e573ba78094c8889d4ab3c",
+        "detailIndex": 0,
+        "condition": "distance_diff_top<=5&order>=2&order_rate<=40&remain_distance<=201&remain_distance>=199",
+        "precondition": "",
+        "effectTypes": [
+          22,
+          27
+        ]
+      },
+      {
+        "skillId": "110151",
+        "definitionSha256": "617e8672c7278596dd662086f9454b650d1f1f7db1610cbe97ac9eb6682d3917",
+        "detailIndex": 1,
+        "condition": "remain_distance<=401&remain_distance>=399&order_rate<=40&activate_count_all<=6",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "110461",
+        "definitionSha256": "f261966686e39d55b1fbb856c081d76111e68ac9b515c592b3cc612b80c44d7f",
+        "detailIndex": 1,
+        "condition": "distance_rate>=40&distance_rate<=50&distance_diff_rate<=10",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "110581",
+        "definitionSha256": "60f16b0d9de562c6d9de74fb3b4314bebd3090b4d46ddccf591b0aecd81faae2",
+        "detailIndex": 0,
+        "condition": "is_last_straight_onetime==1&order_rate<=40",
+        "precondition": "",
+        "effectTypes": [
+          21,
+          27
+        ]
+      },
+      {
+        "skillId": "200051",
+        "definitionSha256": "efa7c94aaf77fe8f7db9e12e2480ecfed831bc5135ccf6bd0e3dc533321b13eb",
+        "detailIndex": 0,
+        "condition": "track_id==10009",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "200071",
+        "definitionSha256": "a645b6e353e305a22e0922fc1bf2d444716e8c1e8950e4babe52ff8d8a9da80c",
+        "detailIndex": 0,
+        "condition": "track_id==10007",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "200082",
+        "definitionSha256": "386e954bf961490de14ba14aeb70db094efd264e4bb6f6a4f268f1ee3e57988b",
+        "detailIndex": 0,
+        "condition": "track_id==10001",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "200122",
+        "definitionSha256": "30d173f6bfd7aa7e90a695f98174126da2b27c09535ca836740387e0fe607d54",
+        "detailIndex": 0,
+        "condition": "track_id==10010",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "200181",
+        "definitionSha256": "74709dc4c9f84d86be60a6de305dd821816f010a7b3c188907369b4bfd67bf0a",
+        "detailIndex": 0,
+        "condition": "season==2",
+        "precondition": "",
+        "effectTypes": [
+          1
+        ]
+      },
+      {
+        "skillId": "200241",
+        "definitionSha256": "54afac39df3986d270cba0610681416d0694e0ae6dccab0c8da5299b4d6e4c54",
+        "detailIndex": 0,
+        "condition": "weather==4",
+        "precondition": "",
+        "effectTypes": [
+          4
+        ]
+      },
+      {
+        "skillId": "200242",
+        "definitionSha256": "8fa9b2c4f655535a9bfeb3f6ab79318394a3fc6d87b484b821c206522a01bd04",
+        "detailIndex": 0,
+        "condition": "weather==4",
+        "precondition": "",
+        "effectTypes": [
+          4
+        ]
+      },
+      {
+        "skillId": "200271",
+        "definitionSha256": "d0184085354e1ffa02fb08b8e7634df7d0e490fce5db563a55e56513e12ea212",
+        "detailIndex": 0,
+        "condition": "running_style_count_same<=1",
+        "precondition": "",
+        "effectTypes": [
+          1
+        ]
+      },
+      {
+        "skillId": "200272",
+        "definitionSha256": "e175f9ae776966d32453317d62094cca5957f8bb70b09a2197d814ff4662656f",
+        "detailIndex": 0,
+        "condition": "running_style_count_same<=1",
+        "precondition": "",
+        "effectTypes": [
+          1
+        ]
+      },
+      {
+        "skillId": "200321",
+        "definitionSha256": "12b4ecb9fe3304d1b0f3f7c389f28ef3873605ebc84f1f66c3199e7815b630ae",
+        "detailIndex": 0,
+        "condition": "popularity==1",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "200521",
+        "definitionSha256": "4bdf242790fdc418b206f091236a353de5ac84417e7585e5a8bba05fa1ce7bec",
+        "detailIndex": 0,
+        "condition": "accumulatetime>=2&order==1&bashin_diff_behind>=1",
+        "precondition": "",
+        "effectTypes": [
+          9
+        ]
+      },
+      {
+        "skillId": "200621",
+        "definitionSha256": "a1daec4d53c0a564ab8cb1873412d18481194fefc9d177367a4ebd61a91d45dc",
+        "detailIndex": 0,
+        "condition": "running_style==4&phase_random==1&distance_diff_rate>=75",
+        "precondition": "",
+        "effectTypes": [
+          9
+        ]
+      },
+      {
+        "skillId": "200761",
+        "definitionSha256": "0483027f8ba9e97f0d10ff06f1779baf531e8e26dcdd8ea4dfb9c7b26ad53a4d",
+        "detailIndex": 0,
+        "condition": "distance_type==4&hp_per<=30",
+        "precondition": "",
+        "effectTypes": [
+          9,
+          27
+        ]
+      },
+      {
+        "skillId": "200821",
+        "definitionSha256": "7bc63403be3410bd500d035f1c6051ec96a838728450e51eab4fce311e303e4f",
+        "detailIndex": 0,
+        "condition": "running_style_temptation_opponent_count_oikomi>=1&is_temptation==0",
+        "precondition": "",
+        "effectTypes": [
+          13
+        ]
+      },
+      {
+        "skillId": "200951",
+        "definitionSha256": "6244d88bc697362652331d6b910a35c4858cca4a90c8163c8d62f3d894d38fff",
+        "detailIndex": 0,
+        "condition": "track_id==10101",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "200981",
+        "definitionSha256": "3d8274230ce3fbd13f09b77737980b104fc7e3d1c3f0df107c72e7bb3444c017",
+        "detailIndex": 0,
+        "condition": "distance_type==1&phase==1&bashin_diff_behind>=3&order==1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "201192",
+        "definitionSha256": "78ab547c069c1ab0ae17c1b6132252e781d7cf37e4cb33755b8d73bde3b3477d",
+        "detailIndex": 0,
+        "condition": "distance_type==4&phase_random==1&bashin_diff_behind>=1&order==1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "201631",
+        "definitionSha256": "89d58c39a16958a62d1cf2885e297c0c3a58a89a82ee1ec5d010100a11596807",
+        "detailIndex": 0,
+        "condition": "same_skill_horse_count>=5",
+        "precondition": "",
+        "effectTypes": [
+          1
+        ]
+      },
+      {
+        "skillId": "202202",
+        "definitionSha256": "75486b31ab58384e21bc2572b610a57ddf8f5be8fdb7b39cee9967720f71ce9c",
+        "detailIndex": 0,
+        "condition": "track_id==10103",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "202212",
+        "definitionSha256": "132b1740017879013d6d56e64fcd66955a3b6cc118ea3240c4738910617dd31b",
+        "detailIndex": 0,
+        "condition": "track_id==10104",
+        "precondition": "",
+        "effectTypes": [
+          2
+        ]
+      },
+      {
+        "skillId": "202421",
+        "definitionSha256": "c9601bb239a43546a52487894c9a89d65920f153bec7a64697c8283c219ec1e2",
+        "detailIndex": 0,
+        "condition": "distance_type==4&running_style==3&is_lastspurt==1&order_rate>=40",
+        "precondition": "",
+        "effectTypes": [
+          9,
+          31
+        ]
+      },
+      {
+        "skillId": "202422",
+        "definitionSha256": "e22768103076dd6efa54069337d3457e7ed749d9aa24966d96b7731f911f426e",
+        "detailIndex": 0,
+        "condition": "distance_type==4&running_style==3&is_lastspurt==1&order_rate>=40",
+        "precondition": "",
+        "effectTypes": [
+          9,
+          31
+        ]
+      },
+      {
+        "skillId": "202441",
+        "definitionSha256": "afe20ef9c46748d39e33898e30b40b5b4fb7f2ba5cd122197daf8099ba7a9224",
+        "detailIndex": 0,
+        "condition": "popularity<=3&random_lot==30",
+        "precondition": "",
+        "effectTypes": [
+          1,
+          3,
+          4
+        ]
+      },
+      {
+        "skillId": "202461",
+        "definitionSha256": "104124d19b79d7b3c9b6be3da695207e7e9a60b855ccf177e67bbf8ae996815b",
+        "detailIndex": 0,
+        "condition": "running_style==1&is_finalcorner==1&corner==0&order==1&bashin_diff_behind<=1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "210141",
+        "definitionSha256": "5b5c0021c98737ac1fc3836549e80da0ddeeb439f41d0aab741d3f2953e1e261",
+        "detailIndex": 0,
+        "condition": "motivation>=4",
+        "precondition": "",
+        "effectTypes": [
+          2,
+          4,
+          5
+        ]
+      },
+      {
+        "skillId": "900151",
+        "definitionSha256": "60d5511bd15327581864de3f167eaa433d2b884ebab85c194c254bc7439ef2ce",
+        "detailIndex": 0,
+        "condition": "is_finalcorner==1&bashin_diff_behind<=1&order<=4@is_finalcorner==1&bashin_diff_infront<=1&order<=4",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900231",
+        "definitionSha256": "64bebe7e5a47b83259e08641ce303a1a2e1c19603894712cac78daf7284593ac",
+        "detailIndex": 1,
+        "condition": "phase>=2&is_finalcorner==1&order<=4",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900281",
+        "definitionSha256": "1e9074fffcb57166ffe14ab3fb2eb46e99a8e86a1d67d8045cde9de03a0181d1",
+        "detailIndex": 0,
+        "condition": "distance_rate>=45&distance_rate<=60&order>=3&order_rate<=50&hp_per<=70",
+        "precondition": "",
+        "effectTypes": [
+          27,
+          31
+        ]
+      },
+      {
+        "skillId": "900291",
+        "definitionSha256": "a04927c8bbb52a9a695aefa65e64333f083ed933cf4cbc1930be56a902fb0cad",
+        "detailIndex": 0,
+        "condition": "distance_diff_top<=5&remain_distance<=300&order_rate<=40",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900301",
+        "definitionSha256": "d7971e2312b6b3d2e19deebb4ff1e23230cc82d9270922d1ffc74d32e96e94ac",
+        "detailIndex": 0,
+        "condition": "is_finalcorner==1&corner==0",
+        "precondition": "phase>=2&order<=4&change_order_onetime<0",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900411",
+        "definitionSha256": "4be5d24dc0be0e9588369239cd20761da80741ee6f9dbb1f39e7821016f8dd0e",
+        "detailIndex": 0,
+        "condition": "distance_rate>=50&order<=3&blocked_side_continuetime>=2",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900471",
+        "definitionSha256": "180637f2ef5d886ede2c3d94188863bb1c8e65bd5973a4fbbcb15042fdd38574",
+        "detailIndex": 0,
+        "condition": "phase>=2&remain_distance<=401&remain_distance>=399&order_rate<=40&grade==100&popularity<=3",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900481",
+        "definitionSha256": "9cd228b9602035d072ace31045d1f75d609f9aa4a6db649d67b57086d6e4b4e0",
+        "detailIndex": 0,
+        "condition": "is_finalcorner==1&corner==0&order_rate<=40&overtake_target_time>=1@is_finalcorner==1&corner==0&order_rate<=40&is_overtake==1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "900621",
+        "definitionSha256": "584f3baaade86c7b6c99169d18514fc5352ea00cbbe439ff5fdfee4994fa1e95",
+        "detailIndex": 0,
+        "condition": "distance_rate>=50&phase==1&order>=3&order_rate<=70",
+        "precondition": "",
+        "effectTypes": [
+          9,
+          27
+        ]
+      },
+      {
+        "skillId": "900871",
+        "definitionSha256": "eceed8c30644043912b98e44cca39aac0892a2ed9d5799096bad3383719c1d42",
+        "detailIndex": 0,
+        "condition": "remain_distance<=400&order<=2&overtake_target_time>=1",
+        "precondition": "",
+        "effectTypes": [
+          27,
+          31
+        ]
+      },
+      {
+        "skillId": "910081",
+        "definitionSha256": "9b7d30ed5705d2c8ad1a82869595b07ffd97b01698b4892806dc9aefbce15a04",
+        "detailIndex": 0,
+        "condition": "slope==0@slope==1",
+        "precondition": "phase>=1&slope==2&order_rate>=50&order_rate<=80&track_id==10006",
+        "effectTypes": [
+          27,
+          31
+        ]
+      },
+      {
+        "skillId": "910091",
+        "definitionSha256": "73c8c62bff734bb4cb4edd71169c6532a90c1834c2235f5eb56a1ac883c3f851",
+        "detailIndex": 0,
+        "condition": "distance_rate>=50&corner==0&order==1&bashin_diff_behind<=1",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "910091",
+        "definitionSha256": "73c8c62bff734bb4cb4edd71169c6532a90c1834c2235f5eb56a1ac883c3f851",
+        "detailIndex": 1,
+        "condition": "distance_rate>=50&corner==0&order<=2",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "910101",
+        "definitionSha256": "08d073e550d85428fc8f6b1658896227eaed4765a61e24b766308d2e7061be9f",
+        "detailIndex": 0,
+        "condition": "distance_diff_top<=5&order>=2&order_rate<=40&remain_distance<=201&remain_distance>=199",
+        "precondition": "",
+        "effectTypes": [
+          22,
+          27
+        ]
+      },
+      {
+        "skillId": "910221",
+        "definitionSha256": "cd7a09017bc8673048953b5857f778eedaee81793a87f765a92f681fc0854a9f",
+        "detailIndex": 1,
+        "condition": "phase>=2&is_finalcorner==1&order_rate>=20&order_rate<=40",
+        "precondition": "",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "910601",
+        "definitionSha256": "7df3882cf586b488099b2cd86edf47d0e23fc88d76e391c11f4e6c953ba42638",
+        "detailIndex": 0,
+        "condition": "is_finalcorner==1&corner==0&order_rate>=40&order_rate<=70&popularity>=4",
+        "precondition": "is_finalcorner==1&change_order_onetime<0",
+        "effectTypes": [
+          27
+        ]
+      },
+      {
+        "skillId": "910601",
+        "definitionSha256": "7df3882cf586b488099b2cd86edf47d0e23fc88d76e391c11f4e6c953ba42638",
+        "detailIndex": 1,
+        "condition": "is_finalcorner==1&corner==0&order_rate>=40&order_rate<=70&popularity<4",
+        "precondition": "is_finalcorner==1&change_order_onetime<0",
+        "effectTypes": [
+          27
+        ]
+      }
+    ],
+    "equippedButNeverObservedActivating": [
+      "100561",
+      "100671",
+      "100781",
+      "10091",
+      "110581",
+      "200051",
+      "200071",
+      "200082",
+      "200122",
+      "200181",
+      "200241",
+      "200242",
+      "200271",
+      "200272",
+      "200321",
+      "200521",
+      "200621",
+      "200761",
+      "200821",
+      "200951",
+      "200981",
+      "201192",
+      "201631",
+      "202202",
+      "202212",
+      "202421",
+      "202422",
+      "202461",
+      "210141",
+      "900151",
+      "900281",
+      "900291",
+      "900301",
+      "900411",
+      "900481",
+      "900621",
+      "900871",
+      "910091",
+      "910601"
+    ],
+    "equippedMultipleBranchSkillIds": [
+      "100131",
+      "100161",
+      "100231",
+      "100261",
+      "100331",
+      "100371",
+      "100421",
+      "100471",
+      "100491",
+      "100671",
+      "100681",
+      "100781",
+      "101001",
+      "110081",
+      "110091",
+      "110101",
+      "110151",
+      "110201",
+      "110221",
+      "110241",
+      "110461",
+      "120011",
+      "202331",
+      "202332",
+      "202441",
+      "900131",
+      "900161",
+      "900231",
+      "900261",
+      "900311",
+      "900331",
+      "900471",
+      "900681",
+      "910081",
+      "910091",
+      "910101",
+      "910151",
+      "910201",
+      "910221",
+      "910241",
+      "910601",
+      "920011"
+    ],
+    "equippedConditionTokens": [
+      "accumulatetime",
+      "activate_count_all",
+      "activate_count_end_after",
+      "activate_count_heal",
+      "activate_count_later_half",
+      "activate_count_middle",
+      "activate_count_start",
+      "all_corner_random",
+      "always",
+      "base_power",
+      "bashin_diff_behind",
+      "bashin_diff_infront",
+      "behind_near_lane_time",
+      "behind_near_lane_time_set1",
+      "blocked_front",
+      "blocked_front_continuetime",
+      "blocked_side_continuetime",
+      "change_order_onetime",
+      "change_order_up_end_after",
+      "change_order_up_finalcorner_after",
+      "compete_fight_count",
+      "corner",
+      "corner_random",
+      "distance_diff_rate",
+      "distance_diff_top",
+      "distance_rate",
+      "distance_rate_after_random",
+      "distance_type",
+      "down_slope_random",
+      "grade",
+      "ground_condition",
+      "ground_type",
+      "hp_per",
+      "infront_near_lane_time",
+      "is_activate_any_skill",
+      "is_badstart",
+      "is_basis_distance",
+      "is_behind_in",
+      "is_dirtgrade",
+      "is_finalcorner",
+      "is_finalcorner_laterhalf",
+      "is_finalcorner_random",
+      "is_last_straight_onetime",
+      "is_lastspurt",
+      "is_move_lane",
+      "is_other_character_activate_advantage_skill",
+      "is_overtake",
+      "is_surrounded",
+      "is_temptation",
+      "lane_type",
+      "last_straight_random",
+      "lastspurt",
+      "motivation",
+      "near_count",
+      "order",
+      "order_rate",
+      "order_rate_in20_continue",
+      "order_rate_in50_continue",
+      "order_rate_in80_continue",
+      "order_rate_out20_continue",
+      "order_rate_out40_continue",
+      "order_rate_out70_continue",
+      "overtake_target_time",
+      "phase",
+      "phase_firsthalf_random",
+      "phase_laterhalf_random",
+      "phase_random",
+      "popularity",
+      "post_number",
+      "random_lot",
+      "remain_distance",
+      "rotation",
+      "running_style",
+      "running_style_count_nige_otherself",
+      "running_style_count_oikomi_otherself",
+      "running_style_count_same",
+      "running_style_count_same_rate",
+      "running_style_count_sashi_otherself",
+      "running_style_count_senko_otherself",
+      "running_style_equal_popularity_one",
+      "running_style_temptation_opponent_count_nige",
+      "running_style_temptation_opponent_count_oikomi",
+      "running_style_temptation_opponent_count_sashi",
+      "running_style_temptation_opponent_count_senko",
+      "same_skill_horse_count",
+      "season",
+      "slope",
+      "straight_front_type",
+      "straight_random",
+      "temptation_count",
+      "temptation_opponent_count_behind",
+      "temptation_opponent_count_infront",
+      "track_id",
+      "up_slope_random",
+      "weather"
+    ],
+    "equippedEffectTypes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      13,
+      21,
+      22,
+      27,
+      28,
+      29,
+      31,
+      35,
+      37
+    ],
+    "officialStateSamples": {
+      "samplesWithState": 533819,
+      "blockedSamples": 11293,
+      "rushingSamples": 2859
+    },
+    "limitations": [
+      "equipped definitions do not prove condition, branch or effect execution",
+      "skill ID activation alone does not identify a branch; raw detail observations do",
+      "absence from this selection is a collection gap, not proof of an engine defect"
+    ]
+  },
+  "counts": {
+    "officialFrames": 37022,
+    "runnerSamples": 533819,
+    "stateSamples": 533819,
+    "postFinishSamples": 83818,
+    "skillEvents": 35801,
+    "skillDetailObservations": 35801,
+    "supplementaryResultValues": 26551,
+    "checkedSimulationFrames": 344945,
+    "checkedSimulationRunnerSamples": 4951577,
+    "checkedOutputEvents": 110924,
+    "syntheticRushingEvents": 572
+  },
+  "surfaceCounts": {
+    "eventKind.3": 35801,
+    "recordedSkillDetailValues": 35801,
+    "uncomparedSkillActivationFlags": 35801,
+    "eventKind.4": 509,
+    "eventKind.6": 838,
+    "eventKind.5": 1560,
+    "nonzeroSkillDetails": 258
+  },
+  "skillDetailValues": {
+    "0": 35543,
+    "1": 258
+  },
+  "skillActivationFlags": {
+    "0": 35801
+  },
+  "coverageGaps": {
+    "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat": 265,
+    "global ordering between separate event streams is not exposed": 265,
+    "official recording cadence/count not reconstructed from dense simulation output": 265,
+    "skill activation flag is retained but not exposed by the engine": 264,
+    "synthetic rushing event durations lack an independent official event oracle": 223
+  },
+  "warmRepeatability": [
+    {
+      "key": [
+        "career",
+        12
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        10
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        11
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        13
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        14
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        15
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        17
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        18
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        16
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "practice",
+        15
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "career",
+        9
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "practice",
+        18
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "practice",
+        14
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "practice",
+        16
+      ],
+      "passed": true
+    },
+    {
+      "key": [
+        "practice",
+        12
+      ],
+      "passed": true
+    }
+  ],
+  "determinism": {
+    "passed": true,
+    "samples": 15,
+    "freshBinaryProcesses": 3,
+    "jsonModes": 2,
+    "checks": 80,
+    "cases": [
+      {
+        "round": 0,
+        "position": 0,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "d8e0aaa2d6c7a7955dcc9e0b0e8385935b8cd56e68a47cef6ae357d33c4e793d",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 1,
+        "sample": 13,
+        "key": [
+          "career",
+          10
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "8aca262dae78f027497796ea42e8f308b29e65d6e3d406fa3e9eb025caa3049c",
+        "outputSha256": "3e71b75d1365870f5d1c95769bf264c1cc78733ae88dac29ebca95def6e8f113",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 2,
+        "sample": 12,
+        "key": [
+          "career",
+          11
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "5a4f526ec9d751caa57d82e84c093fe9c62b351d7af0bc085436976f4cea61c9",
+        "outputSha256": "e725d383e476ccd502832a382f6a5986cf9cda4132cdcd978052cae8de6bc305",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 3,
+        "sample": 11,
+        "key": [
+          "career",
+          13
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "78333116d9ba4d4e66f408701e8393d0933512bc8783a11584e529047abf0f47",
+        "outputSha256": "ded38dddab6b426e7aee6dfaf630a54fab8cf22f4ee3d1b787954133a9752ce6",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 4,
+        "sample": 10,
+        "key": [
+          "career",
+          14
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "e4d71fb70329d75ff0ed12ea03687f396e7f478ee9e7bb6ec8b1e53ceb2bd81d",
+        "outputSha256": "49cd0d180f617b2f6e096d42bfe584949c6e58b0550e33e9ceb7070c130d5a67",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 5,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "f0f4cebf0f30202c801545056c44681b6545f8a7cbe19194825b1db02db695d0",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 6,
+        "sample": 8,
+        "key": [
+          "career",
+          17
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "5156e8d88b46fe84b04775ae6144f571cb71dd0e656466c2e95cbb0e4d4b25c6",
+        "outputSha256": "45feaa18298c724ca61893e0be488850c50a9e738a9cec5c5d6b042d5b5cdcc8",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 7,
+        "sample": 7,
+        "key": [
+          "career",
+          18
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "9df1bd7a96707a25882571246bb24996b5cd0834533c336b2005895499d7cc70",
+        "outputSha256": "96bfd77648e9bd11b126954c12d13c9da3a2895c5009c29dad423f105b7d299a",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 8,
+        "sample": 6,
+        "key": [
+          "career",
+          16
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "878a23203569e81fea300900b9ddc5fb32472a0af7b41065366eb4a06b80ee1d",
+        "outputSha256": "78c860660425c3089f8f4d636371e092dd6be02e92f3fba7269b31af5cf603cd",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 9,
+        "sample": 5,
+        "key": [
+          "practice",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "02138ffde89f0b34e2f37b48606c9edf1380279a5775ab96d1e5f2b9b6f202c8",
+        "outputSha256": "bb4f13737bc0efb93141fba7ffb421c89d693b2d75371d51a1c46fbaca5b6dd9",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 10,
+        "sample": 4,
+        "key": [
+          "career",
+          9
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "7f820b7c90e88f5bf78edd2c4b96dd300c655d88ccd2b4e1cbc6e271777fb1f3",
+        "outputSha256": "45f292f0a002141b7ed6cf76d09b55a17b91b879585d6426ee98351006b0d046",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 11,
+        "sample": 3,
+        "key": [
+          "practice",
+          18
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "484679033755a878417d7453b8ee6cfa9320069847c58b3bcbd3c9b39ef919f0",
+        "outputSha256": "ee6e369621138bc29db7d896ac7776de506f144b49e75d3dfb570e2cb5fb040e",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 12,
+        "sample": 2,
+        "key": [
+          "practice",
+          14
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "224fc5c174e287da8c44850f878c75ce155159a056d912ff38fe5bfd8cbb2b48",
+        "outputSha256": "0b1a57d9edfbec026c93f6ac0e65e3dccc681a06778d4c9f8e189959d922282c",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 13,
+        "sample": 1,
+        "key": [
+          "practice",
+          16
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "dca4f78d23166eb58bb4431fd851f1e48691f884c1e589a045016ea2e910c5a4",
+        "outputSha256": "44aac121222c16e5cff0fb0963c8a0b2b7ff256f69e40610efb58a3172f73da1",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 14,
+        "sample": 0,
+        "key": [
+          "practice",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f5d295043d6e33944c1ca25e344ad911f47c7b2f50d704be80f850ee1243e173",
+        "outputSha256": "46b9b95d9f7e58d19dbb29d65585c1568c71e026ca3dcb050cd9732e885d4bd4",
+        "passed": true
+      },
+      {
+        "round": 0,
+        "position": 15,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "d8e0aaa2d6c7a7955dcc9e0b0e8385935b8cd56e68a47cef6ae357d33c4e793d",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 0,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "d8e0aaa2d6c7a7955dcc9e0b0e8385935b8cd56e68a47cef6ae357d33c4e793d",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 1,
+        "sample": 10,
+        "key": [
+          "career",
+          14
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "e4d71fb70329d75ff0ed12ea03687f396e7f478ee9e7bb6ec8b1e53ceb2bd81d",
+        "outputSha256": "49cd0d180f617b2f6e096d42bfe584949c6e58b0550e33e9ceb7070c130d5a67",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 2,
+        "sample": 0,
+        "key": [
+          "practice",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f5d295043d6e33944c1ca25e344ad911f47c7b2f50d704be80f850ee1243e173",
+        "outputSha256": "46b9b95d9f7e58d19dbb29d65585c1568c71e026ca3dcb050cd9732e885d4bd4",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 3,
+        "sample": 13,
+        "key": [
+          "career",
+          10
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "8aca262dae78f027497796ea42e8f308b29e65d6e3d406fa3e9eb025caa3049c",
+        "outputSha256": "3e71b75d1365870f5d1c95769bf264c1cc78733ae88dac29ebca95def6e8f113",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 4,
+        "sample": 6,
+        "key": [
+          "career",
+          16
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "878a23203569e81fea300900b9ddc5fb32472a0af7b41065366eb4a06b80ee1d",
+        "outputSha256": "78c860660425c3089f8f4d636371e092dd6be02e92f3fba7269b31af5cf603cd",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 5,
+        "sample": 5,
+        "key": [
+          "practice",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "02138ffde89f0b34e2f37b48606c9edf1380279a5775ab96d1e5f2b9b6f202c8",
+        "outputSha256": "bb4f13737bc0efb93141fba7ffb421c89d693b2d75371d51a1c46fbaca5b6dd9",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 6,
+        "sample": 3,
+        "key": [
+          "practice",
+          18
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "484679033755a878417d7453b8ee6cfa9320069847c58b3bcbd3c9b39ef919f0",
+        "outputSha256": "ee6e369621138bc29db7d896ac7776de506f144b49e75d3dfb570e2cb5fb040e",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 7,
+        "sample": 8,
+        "key": [
+          "career",
+          17
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "5156e8d88b46fe84b04775ae6144f571cb71dd0e656466c2e95cbb0e4d4b25c6",
+        "outputSha256": "45feaa18298c724ca61893e0be488850c50a9e738a9cec5c5d6b042d5b5cdcc8",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 8,
+        "sample": 7,
+        "key": [
+          "career",
+          18
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "9df1bd7a96707a25882571246bb24996b5cd0834533c336b2005895499d7cc70",
+        "outputSha256": "96bfd77648e9bd11b126954c12d13c9da3a2895c5009c29dad423f105b7d299a",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 9,
+        "sample": 11,
+        "key": [
+          "career",
+          13
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "78333116d9ba4d4e66f408701e8393d0933512bc8783a11584e529047abf0f47",
+        "outputSha256": "ded38dddab6b426e7aee6dfaf630a54fab8cf22f4ee3d1b787954133a9752ce6",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 10,
+        "sample": 4,
+        "key": [
+          "career",
+          9
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "7f820b7c90e88f5bf78edd2c4b96dd300c655d88ccd2b4e1cbc6e271777fb1f3",
+        "outputSha256": "45f292f0a002141b7ed6cf76d09b55a17b91b879585d6426ee98351006b0d046",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 11,
+        "sample": 1,
+        "key": [
+          "practice",
+          16
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "dca4f78d23166eb58bb4431fd851f1e48691f884c1e589a045016ea2e910c5a4",
+        "outputSha256": "44aac121222c16e5cff0fb0963c8a0b2b7ff256f69e40610efb58a3172f73da1",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 12,
+        "sample": 12,
+        "key": [
+          "career",
+          11
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "5a4f526ec9d751caa57d82e84c093fe9c62b351d7af0bc085436976f4cea61c9",
+        "outputSha256": "e725d383e476ccd502832a382f6a5986cf9cda4132cdcd978052cae8de6bc305",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 13,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "f0f4cebf0f30202c801545056c44681b6545f8a7cbe19194825b1db02db695d0",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 14,
+        "sample": 2,
+        "key": [
+          "practice",
+          14
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "224fc5c174e287da8c44850f878c75ce155159a056d912ff38fe5bfd8cbb2b48",
+        "outputSha256": "0b1a57d9edfbec026c93f6ac0e65e3dccc681a06778d4c9f8e189959d922282c",
+        "passed": true
+      },
+      {
+        "round": 1,
+        "position": 15,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "d8e0aaa2d6c7a7955dcc9e0b0e8385935b8cd56e68a47cef6ae357d33c4e793d",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 0,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "f0f4cebf0f30202c801545056c44681b6545f8a7cbe19194825b1db02db695d0",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 1,
+        "sample": 3,
+        "key": [
+          "practice",
+          18
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "484679033755a878417d7453b8ee6cfa9320069847c58b3bcbd3c9b39ef919f0",
+        "outputSha256": "ee6e369621138bc29db7d896ac7776de506f144b49e75d3dfb570e2cb5fb040e",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 2,
+        "sample": 6,
+        "key": [
+          "career",
+          16
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "878a23203569e81fea300900b9ddc5fb32472a0af7b41065366eb4a06b80ee1d",
+        "outputSha256": "78c860660425c3089f8f4d636371e092dd6be02e92f3fba7269b31af5cf603cd",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 3,
+        "sample": 12,
+        "key": [
+          "career",
+          11
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "5a4f526ec9d751caa57d82e84c093fe9c62b351d7af0bc085436976f4cea61c9",
+        "outputSha256": "e725d383e476ccd502832a382f6a5986cf9cda4132cdcd978052cae8de6bc305",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 4,
+        "sample": 10,
+        "key": [
+          "career",
+          14
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "e4d71fb70329d75ff0ed12ea03687f396e7f478ee9e7bb6ec8b1e53ceb2bd81d",
+        "outputSha256": "49cd0d180f617b2f6e096d42bfe584949c6e58b0550e33e9ceb7070c130d5a67",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 5,
+        "sample": 7,
+        "key": [
+          "career",
+          18
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "9df1bd7a96707a25882571246bb24996b5cd0834533c336b2005895499d7cc70",
+        "outputSha256": "96bfd77648e9bd11b126954c12d13c9da3a2895c5009c29dad423f105b7d299a",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 6,
+        "sample": 8,
+        "key": [
+          "career",
+          17
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "5156e8d88b46fe84b04775ae6144f571cb71dd0e656466c2e95cbb0e4d4b25c6",
+        "outputSha256": "45feaa18298c724ca61893e0be488850c50a9e738a9cec5c5d6b042d5b5cdcc8",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 7,
+        "sample": 4,
+        "key": [
+          "career",
+          9
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "7f820b7c90e88f5bf78edd2c4b96dd300c655d88ccd2b4e1cbc6e271777fb1f3",
+        "outputSha256": "45f292f0a002141b7ed6cf76d09b55a17b91b879585d6426ee98351006b0d046",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 8,
+        "sample": 2,
+        "key": [
+          "practice",
+          14
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "224fc5c174e287da8c44850f878c75ce155159a056d912ff38fe5bfd8cbb2b48",
+        "outputSha256": "0b1a57d9edfbec026c93f6ac0e65e3dccc681a06778d4c9f8e189959d922282c",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 9,
+        "sample": 5,
+        "key": [
+          "practice",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "02138ffde89f0b34e2f37b48606c9edf1380279a5775ab96d1e5f2b9b6f202c8",
+        "outputSha256": "bb4f13737bc0efb93141fba7ffb421c89d693b2d75371d51a1c46fbaca5b6dd9",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 10,
+        "sample": 11,
+        "key": [
+          "career",
+          13
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "78333116d9ba4d4e66f408701e8393d0933512bc8783a11584e529047abf0f47",
+        "outputSha256": "ded38dddab6b426e7aee6dfaf630a54fab8cf22f4ee3d1b787954133a9752ce6",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 11,
+        "sample": 1,
+        "key": [
+          "practice",
+          16
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "dca4f78d23166eb58bb4431fd851f1e48691f884c1e589a045016ea2e910c5a4",
+        "outputSha256": "44aac121222c16e5cff0fb0963c8a0b2b7ff256f69e40610efb58a3172f73da1",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 12,
+        "sample": 0,
+        "key": [
+          "practice",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f5d295043d6e33944c1ca25e344ad911f47c7b2f50d704be80f850ee1243e173",
+        "outputSha256": "46b9b95d9f7e58d19dbb29d65585c1568c71e026ca3dcb050cd9732e885d4bd4",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 13,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "d8e0aaa2d6c7a7955dcc9e0b0e8385935b8cd56e68a47cef6ae357d33c4e793d",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 14,
+        "sample": 13,
+        "key": [
+          "career",
+          10
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "8aca262dae78f027497796ea42e8f308b29e65d6e3d406fa3e9eb025caa3049c",
+        "outputSha256": "3e71b75d1365870f5d1c95769bf264c1cc78733ae88dac29ebca95def6e8f113",
+        "passed": true
+      },
+      {
+        "round": 2,
+        "position": 15,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "binary-v1",
+        "replayWorker": false,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "f0f4cebf0f30202c801545056c44681b6545f8a7cbe19194825b1db02db695d0",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 0,
+        "sample": 12,
+        "key": [
+          "career",
+          11
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "5a4f526ec9d751caa57d82e84c093fe9c62b351d7af0bc085436976f4cea61c9",
+        "outputSha256": "de59fefc6f4c31e0a6e1a01b6d273ea04035e9349e14cd7bd6929c118eec96b6",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 1,
+        "sample": 10,
+        "key": [
+          "career",
+          14
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "e4d71fb70329d75ff0ed12ea03687f396e7f478ee9e7bb6ec8b1e53ceb2bd81d",
+        "outputSha256": "8e3f0126fd56f6666bfeb03de4edc9d45961636aca4fcd176e3d097b72234db4",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 2,
+        "sample": 6,
+        "key": [
+          "career",
+          16
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "878a23203569e81fea300900b9ddc5fb32472a0af7b41065366eb4a06b80ee1d",
+        "outputSha256": "2e815e6e9b8cb03bfe5596bbcb79960cb333b9f2c4f8a95ad9c2c5c2499050d2",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 3,
+        "sample": 11,
+        "key": [
+          "career",
+          13
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "78333116d9ba4d4e66f408701e8393d0933512bc8783a11584e529047abf0f47",
+        "outputSha256": "d568b19a9f2d638735b2adaae9a8be840a9bc96502895f97d5d9c6b829364cc9",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 4,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "34f3d0a951e30ee47c3b16c2eb6e1bd975a26a3cc5db2cf555f217d56aa815ba",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 5,
+        "sample": 0,
+        "key": [
+          "practice",
+          12
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "f5d295043d6e33944c1ca25e344ad911f47c7b2f50d704be80f850ee1243e173",
+        "outputSha256": "7490f8340c584c561834d52a137cb828c065f3dc9caa26b361f02189d842534f",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 6,
+        "sample": 4,
+        "key": [
+          "career",
+          9
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "7f820b7c90e88f5bf78edd2c4b96dd300c655d88ccd2b4e1cbc6e271777fb1f3",
+        "outputSha256": "22969c46ee87e6f53647b087b56687c9cb624558ac3271f2d615d5caf644a987",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 7,
+        "sample": 1,
+        "key": [
+          "practice",
+          16
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "dca4f78d23166eb58bb4431fd851f1e48691f884c1e589a045016ea2e910c5a4",
+        "outputSha256": "8bc263ba91d03acf00e62562a67aa8837a8f4ef7b1d2f53480d26738becc0cb9",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 8,
+        "sample": 7,
+        "key": [
+          "career",
+          18
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "9df1bd7a96707a25882571246bb24996b5cd0834533c336b2005895499d7cc70",
+        "outputSha256": "f81f98c9e87e131ab74aea94c1a4d239a07895d108e5ce44ee7d4f96c4443270",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 9,
+        "sample": 13,
+        "key": [
+          "career",
+          10
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "8aca262dae78f027497796ea42e8f308b29e65d6e3d406fa3e9eb025caa3049c",
+        "outputSha256": "b125a71318ee543d31d389a4c5850bfd1deb1e9e96edc3182d6f92703ea0fb96",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 10,
+        "sample": 5,
+        "key": [
+          "practice",
+          15
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "02138ffde89f0b34e2f37b48606c9edf1380279a5775ab96d1e5f2b9b6f202c8",
+        "outputSha256": "8588f12dba4447378f64cfbd4ee39336b7521c52ba0b65e4ea9877a4263406fc",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 11,
+        "sample": 2,
+        "key": [
+          "practice",
+          14
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "224fc5c174e287da8c44850f878c75ce155159a056d912ff38fe5bfd8cbb2b48",
+        "outputSha256": "91b82cc56d2e0db28590809f9bd62a2736f6b05c4bbea1836bbc925d0f18be97",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 12,
+        "sample": 8,
+        "key": [
+          "career",
+          17
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "5156e8d88b46fe84b04775ae6144f571cb71dd0e656466c2e95cbb0e4d4b25c6",
+        "outputSha256": "09ca347912fb744e6f5481f8f4944f4b8fcc0a2ffe6cb071f4c81c9b587df2bd",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 13,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "d139baa2d837df61546f1ee6ce4890a3adc4bf81a99e3474fdf89145a0421d59",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 14,
+        "sample": 3,
+        "key": [
+          "practice",
+          18
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "484679033755a878417d7453b8ee6cfa9320069847c58b3bcbd3c9b39ef919f0",
+        "outputSha256": "35690c78f5c2de083c05e34101191bce94fb9b222bb3b50a430c65339d73f476",
+        "passed": true
+      },
+      {
+        "round": 3,
+        "position": 15,
+        "sample": 12,
+        "key": [
+          "career",
+          11
+        ],
+        "mode": "json",
+        "replayWorker": false,
+        "inputSha256": "5a4f526ec9d751caa57d82e84c093fe9c62b351d7af0bc085436976f4cea61c9",
+        "outputSha256": "de59fefc6f4c31e0a6e1a01b6d273ea04035e9349e14cd7bd6929c118eec96b6",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 0,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "d139baa2d837df61546f1ee6ce4890a3adc4bf81a99e3474fdf89145a0421d59",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 1,
+        "sample": 13,
+        "key": [
+          "career",
+          10
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "8aca262dae78f027497796ea42e8f308b29e65d6e3d406fa3e9eb025caa3049c",
+        "outputSha256": "b125a71318ee543d31d389a4c5850bfd1deb1e9e96edc3182d6f92703ea0fb96",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 2,
+        "sample": 5,
+        "key": [
+          "practice",
+          15
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "02138ffde89f0b34e2f37b48606c9edf1380279a5775ab96d1e5f2b9b6f202c8",
+        "outputSha256": "8588f12dba4447378f64cfbd4ee39336b7521c52ba0b65e4ea9877a4263406fc",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 3,
+        "sample": 8,
+        "key": [
+          "career",
+          17
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "5156e8d88b46fe84b04775ae6144f571cb71dd0e656466c2e95cbb0e4d4b25c6",
+        "outputSha256": "09ca347912fb744e6f5481f8f4944f4b8fcc0a2ffe6cb071f4c81c9b587df2bd",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 4,
+        "sample": 14,
+        "key": [
+          "career",
+          12
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "358011c29d06f1860ef655bcce958ead3d6533f3d150bef86853b048121e40ab",
+        "outputSha256": "34f3d0a951e30ee47c3b16c2eb6e1bd975a26a3cc5db2cf555f217d56aa815ba",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 5,
+        "sample": 10,
+        "key": [
+          "career",
+          14
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "e4d71fb70329d75ff0ed12ea03687f396e7f478ee9e7bb6ec8b1e53ceb2bd81d",
+        "outputSha256": "8e3f0126fd56f6666bfeb03de4edc9d45961636aca4fcd176e3d097b72234db4",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 6,
+        "sample": 0,
+        "key": [
+          "practice",
+          12
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "f5d295043d6e33944c1ca25e344ad911f47c7b2f50d704be80f850ee1243e173",
+        "outputSha256": "7490f8340c584c561834d52a137cb828c065f3dc9caa26b361f02189d842534f",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 7,
+        "sample": 12,
+        "key": [
+          "career",
+          11
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "5a4f526ec9d751caa57d82e84c093fe9c62b351d7af0bc085436976f4cea61c9",
+        "outputSha256": "de59fefc6f4c31e0a6e1a01b6d273ea04035e9349e14cd7bd6929c118eec96b6",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 8,
+        "sample": 2,
+        "key": [
+          "practice",
+          14
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "224fc5c174e287da8c44850f878c75ce155159a056d912ff38fe5bfd8cbb2b48",
+        "outputSha256": "91b82cc56d2e0db28590809f9bd62a2736f6b05c4bbea1836bbc925d0f18be97",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 9,
+        "sample": 7,
+        "key": [
+          "career",
+          18
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "9df1bd7a96707a25882571246bb24996b5cd0834533c336b2005895499d7cc70",
+        "outputSha256": "f81f98c9e87e131ab74aea94c1a4d239a07895d108e5ce44ee7d4f96c4443270",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 10,
+        "sample": 6,
+        "key": [
+          "career",
+          16
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "878a23203569e81fea300900b9ddc5fb32472a0af7b41065366eb4a06b80ee1d",
+        "outputSha256": "2e815e6e9b8cb03bfe5596bbcb79960cb333b9f2c4f8a95ad9c2c5c2499050d2",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 11,
+        "sample": 11,
+        "key": [
+          "career",
+          13
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "78333116d9ba4d4e66f408701e8393d0933512bc8783a11584e529047abf0f47",
+        "outputSha256": "d568b19a9f2d638735b2adaae9a8be840a9bc96502895f97d5d9c6b829364cc9",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 12,
+        "sample": 1,
+        "key": [
+          "practice",
+          16
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "dca4f78d23166eb58bb4431fd851f1e48691f884c1e589a045016ea2e910c5a4",
+        "outputSha256": "8bc263ba91d03acf00e62562a67aa8837a8f4ef7b1d2f53480d26738becc0cb9",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 13,
+        "sample": 4,
+        "key": [
+          "career",
+          9
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "7f820b7c90e88f5bf78edd2c4b96dd300c655d88ccd2b4e1cbc6e271777fb1f3",
+        "outputSha256": "22969c46ee87e6f53647b087b56687c9cb624558ac3271f2d615d5caf644a987",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 14,
+        "sample": 3,
+        "key": [
+          "practice",
+          18
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "484679033755a878417d7453b8ee6cfa9320069847c58b3bcbd3c9b39ef919f0",
+        "outputSha256": "35690c78f5c2de083c05e34101191bce94fb9b222bb3b50a430c65339d73f476",
+        "passed": true
+      },
+      {
+        "round": 4,
+        "position": 15,
+        "sample": 9,
+        "key": [
+          "career",
+          15
+        ],
+        "mode": "json",
+        "replayWorker": true,
+        "inputSha256": "f2b9a2151cfb7fd805961ac6adea169083a8fa049195dd952b681295ac44a8c1",
+        "outputSha256": "d139baa2d837df61546f1ee6ce4890a3adc4bf81a99e3474fdf89145a0421d59",
+        "passed": true
+      }
+    ],
+    "limitation": "Finite process/order probes do not prove universal determinism or official accuracy."
+  },
+  "failureStages": {},
+  "failures": []
+}
