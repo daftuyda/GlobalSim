@@ -13,7 +13,9 @@ With `omitFrames: true` a packet carries zero frames.
 
 ## Packet layout
 
-Each request returns one packet, flushed when complete. Packets have no newline
+An ordinary request returns one packet. A `seeds` batch returns one packet per
+seed in the requested order, including a packet for a recoverable seed error.
+Each completed packet is flushed. Packets have no newline
 terminator. Read the header, then exactly the advertised number of bytes.
 All integers and floats use little-endian byte order.
 
@@ -56,10 +58,13 @@ and a read-only frame buffer. It handles partial reads and checks packet sizes.
 import json
 import os
 import subprocess
+from pathlib import Path
 from replay_protocol import read_reply  # Add GlobalSim/tools to the module path.
 
+spec = json.loads(Path("examples/v76-race.jsonl").read_text(encoding="utf-8"))
+engine = Path("target/release") / ("race_engine_rs_v2.exe" if os.name == "nt" else "race_engine_rs_v2")
 worker = subprocess.Popen(
-    ["path/to/race_engine_rs_v2.exe"],
+    [str(engine)],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
     env=dict(os.environ, GLOBALSIM_OUTPUT="binary-v1"),
@@ -71,7 +76,7 @@ replay = read_reply(worker.stdout)
 if "error" in replay.metadata:
     raise RuntimeError(replay.metadata["error"])
 time, runner_values = replay.frame(0)
-# Keep the worker alive for subsequent requests.
+# After sending and reading all required requests, shut down the worker.
 worker.stdin.close()
 worker.wait()
 ```

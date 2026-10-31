@@ -1,0 +1,695 @@
+{
+  "status": "unresolved; no general fix identified",
+  "productionChange": false,
+  "capture": "b0dd63b3423947afcbfcec686944f3810c5f8e4c45c6c80b3bf6d572b7fec337",
+  "diagnosticEngineSha256": "bcf8482696ff718931dfb0377e3eec0bb969b36ca7541e5e6b108dcc9427ac22",
+  "diagnosticBuildProfile": {
+    "optLevel": 1,
+    "lto": false,
+    "codegenUnits": 16
+  },
+  "baselineRepeatProcesses": 5,
+  "baselineByteIdentical": true,
+  "results": {
+    "interpolation-probes": [
+      {
+        "mode": 0,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 10,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "finishTimes": 1,
+          "position": 645,
+          "speed": 1,
+          "blockFrontHorseIndex": 1,
+          "hp": 1,
+          "result.finishTimeRaw": 7,
+          "result.lastSpurtStartDistance": 6
+        },
+        "sameAsBaseline": false
+      },
+      {
+        "mode": 11,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 12,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 13,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 14,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "finishTimes": 1,
+          "position": 443,
+          "hp": 2,
+          "result.finishTimeRaw": 3,
+          "result.lastSpurtStartDistance": 7
+        },
+        "sameAsBaseline": false
+      },
+      {
+        "mode": 15,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "finishTimes": 1,
+          "position": 1594,
+          "speed": 237,
+          "blockFrontHorseIndex": 17,
+          "lane": 267,
+          "hp": 348,
+          "skillMultiset": 1,
+          "skillSequence": 1,
+          "skillDurationSequence": 1,
+          "targetMultiset": 1,
+          "skillDetailMultiset": 1,
+          "skillDetailRunnerSequence": 6,
+          "skillDetailTargetMultiset": 1,
+          "mechanicSequence(4, 5)": 1,
+          "mechanicSequence(6,)": 1,
+          "result.finishOrder": 7,
+          "result.finishTimeRaw": 13,
+          "result.lastSpurtStartDistance": 15
+        },
+        "sameAsBaseline": false
+      },
+      {
+        "mode": 16,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 17,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "finishTimes": 1,
+          "position": 870,
+          "speed": 255,
+          "lane": 306,
+          "hp": 352,
+          "blockFrontHorseIndex": 21,
+          "skillMultiset": 1,
+          "skillSequence": 1,
+          "skillDurationSequence": 1,
+          "targetMultiset": 1,
+          "skillDetailMultiset": 1,
+          "skillDetailRunnerSequence": 6,
+          "skillDetailTargetMultiset": 1,
+          "mechanicSequence(4, 5)": 1,
+          "mechanicSequence(6,)": 1,
+          "result.finishOrder": 7,
+          "result.finishTimeRaw": 9,
+          "result.lastSpurtStartDistance": 9
+        },
+        "sameAsBaseline": false
+      }
+    ],
+    "acceleration-stacking-probes": [
+      {
+        "mode": 0,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 5,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 6,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      },
+      {
+        "mode": 7,
+        "passed": false,
+        "differences": {
+          "legacyChecks": 1,
+          "position": 85,
+          "hp": 2,
+          "result.lastSpurtStartDistance": 2
+        },
+        "sameAsBaseline": true
+      }
+    ],
+    "precision-combination-screen": {
+      "probes": 1024,
+      "minimumPositionMismatches": 85,
+      "strictPasses": 0,
+      "best": {
+        "mask": 0,
+        "positionMismatches": 85,
+        "finishErrors": 0,
+        "strict": {
+          "passed": false,
+          "differences": {
+            "legacyChecks": 1,
+            "position": 85,
+            "hp": 2,
+            "result.lastSpurtStartDistance": 2
+          },
+          "examples": [
+            {
+              "field": "legacyChecks",
+              "error": "position differs at 35.16500473022461, runner 7"
+            },
+            {
+              "field": "position",
+              "expected": 688.7662963867188,
+              "actual": 688.7659912109375,
+              "t": 35.16500473022461,
+              "runner": 7
+            },
+            {
+              "field": "position",
+              "expected": 686.777099609375,
+              "actual": 686.77734375,
+              "t": 35.16500473022461,
+              "runner": 9
+            },
+            {
+              "field": "position",
+              "expected": 707.3167724609375,
+              "actual": 707.317138671875,
+              "t": 36.23061752319336,
+              "runner": 6
+            },
+            {
+              "field": "position",
+              "expected": 710.398681640625,
+              "actual": 710.399169921875,
+              "t": 36.23061752319336,
+              "runner": 7
+            },
+            {
+              "field": "position",
+              "expected": 708.4251098632812,
+              "actual": 708.4259643554688,
+              "t": 36.23061752319336,
+              "runner": 9
+            },
+            {
+              "field": "position",
+              "expected": 728.8450927734375,
+              "actual": 728.8452758789062,
+              "t": 37.29623031616211,
+              "runner": 6
+            },
+            {
+              "field": "position",
+              "expected": 731.9215698242188,
+              "actual": 731.921875,
+              "t": 37.29623031616211,
+              "runner": 7
+            },
+            {
+              "field": "position",
+              "expected": 730.0769653320312,
+              "actual": 730.077392578125,
+              "t": 37.29623031616211,
+              "runner": 9
+            },
+            {
+              "field": "position",
+              "expected": 750.44384765625,
+              "actual": 750.444091796875,
+              "t": 38.36184310913086,
+              "runner": 6
+            },
+            {
+              "field": "position",
+              "expected": 753.2623291015625,
+              "actual": 753.2628173828125,
+              "t": 38.36184310913086,
+              "runner": 7
+            },
+            {
+              "field": "position",
+              "expected": 752.1065673828125,
+              "actual": 752.1071166992188,
+              "t": 38.36184310913086,
+              "runner": 9
+            },
+            {
+              "field": "position",
+              "expected": 772.183837890625,
+              "actual": 772.1840209960938,
+              "t": 39.42745590209961,
+              "runner": 6
+            },
+            {
+              "field": "position",
+              "expected": 774.6260375976562,
+              "actual": 774.62646484375,
+              "t": 39.42745590209961,
+              "runner": 7
+            },
+            {
+              "field": "position",
+              "expected": 773.6363525390625,
+              "actual": 773.63720703125,
+              "t": 39.42745590209961,
+              "runner": 9
+            },
+            {
+              "field": "position",
+              "expected": 793.930908203125,
+              "actual": 793.93115234375,
+              "t": 40.49306869506836,
+              "runner": 6
+            },
+            {
+              "field": "position",
+              "expected": 795.905517578125,
+              "actual": 795.9057006835938,
+              "t": 40.49306869506836,
+              "runner": 7
+            },
+            {
+              "field": "position",
+              "expected": 795.0057373046875,
+              "actual": 795.0065307617188,
+              "t": 40.49306869506836,
+              "runner": 9
+            },
+            {
+              "field": "position",
+              "expected": 815.026611328125,
+              "actual": 815.0266723632812,
+              "t": 41.55868148803711,
+              "runner": 6
+            },
+            {
+              "field": "position",
+              "expected": 817.0310668945312,
+              "actual": 817.03125,
+              "t": 41.55868148803711,
+              "runner": 7
+            }
+          ],
+          "counts": {
+            "officialFrames": 136,
+            "runnerSamples": 2176,
+            "stateSamples": 2176,
+            "postFinishSamples": 441,
+            "skillEvents": 201,
+            "skillDetailObservations": 201,
+            "supplementaryResultValues": 112,
+            "checkedSimulationFrames": 1171,
+            "checkedSimulationRunnerSamples": 18736,
+            "checkedOutputEvents": 618
+          },
+          "coverageGaps": [
+            "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat",
+            "global ordering between separate event streams is not exposed",
+            "official recording cadence/count not reconstructed from dense simulation output",
+            "skill activation flag is retained but not exposed by the engine"
+          ],
+          "observationsPassed": false,
+          "outputContractPassed": true,
+          "surfaceCounts": {
+            "eventKind.3": 201,
+            "recordedSkillDetailValues": 201,
+            "uncomparedSkillActivationFlags": 201,
+            "nonzeroSkillDetails": 1,
+            "nonzeroSkillActivationFlags": 0,
+            "eventKind.6": 5,
+            "eventKind.5": 10
+          },
+          "frameScope": "all-engine-ticks",
+          "coverageStatus": "partial"
+        }
+      }
+    },
+    "move-permission-screen": {
+      "probes": 2992,
+      "minimumPositionMismatches": 21,
+      "strictPasses": 0,
+      "best": {
+        "kind": 6,
+        "delta": 0,
+        "gate": 7,
+        "t": 24.70867919921875,
+        "position": 475.40728759765625,
+        "positionMismatches": 21,
+        "finishErrors": 0
+      }
+    },
+    "other-runner-move-permission-screen": {
+      "probes": 9235,
+      "minimumPositionMismatches": 7,
+      "strictPasses": 0,
+      "best": {
+        "kind": 6,
+        "delta": 0,
+        "gate": 14,
+        "t": 27.23950958251953,
+        "position": 537.585205078125,
+        "positionMismatches": 7,
+        "finishErrors": 0,
+        "strict": {
+          "passed": false,
+          "differences": {
+            "legacyChecks": 1,
+            "lane": 3,
+            "position": 7
+          },
+          "examples": [
+            {
+              "field": "legacyChecks",
+              "error": "lane differs at 27.70571517944336, runner 14"
+            },
+            {
+              "field": "lane",
+              "expected": 666,
+              "actual": 681,
+              "t": 27.70571517944336,
+              "runner": 14
+            },
+            {
+              "field": "lane",
+              "expected": 427,
+              "actual": 442,
+              "t": 28.77132797241211,
+              "runner": 14
+            },
+            {
+              "field": "lane",
+              "expected": 193,
+              "actual": 207,
+              "t": 29.83694076538086,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 614.1887817382812,
+              "actual": 614.188720703125,
+              "t": 30.90255355834961,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 636.0467529296875,
+              "actual": 636.0469360351562,
+              "t": 31.96816635131836,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 657.415283203125,
+              "actual": 657.4154052734375,
+              "t": 33.03377914428711,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 679.058837890625,
+              "actual": 679.0589599609375,
+              "t": 34.09939193725586,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 700.718994140625,
+              "actual": 700.7191162109375,
+              "t": 35.16500473022461,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 722.379150390625,
+              "actual": 722.3792114257812,
+              "t": 36.23061752319336,
+              "runner": 14
+            },
+            {
+              "field": "position",
+              "expected": 743.9727172851562,
+              "actual": 743.9727783203125,
+              "t": 37.29623031616211,
+              "runner": 14
+            }
+          ],
+          "counts": {
+            "officialFrames": 136,
+            "runnerSamples": 2176,
+            "stateSamples": 2176,
+            "postFinishSamples": 441,
+            "skillEvents": 201,
+            "skillDetailObservations": 201,
+            "supplementaryResultValues": 112,
+            "checkedSimulationFrames": 1171,
+            "checkedSimulationRunnerSamples": 18736,
+            "checkedOutputEvents": 618
+          },
+          "coverageGaps": [
+            "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat",
+            "global ordering between separate event streams is not exposed",
+            "official recording cadence/count not reconstructed from dense simulation output",
+            "skill activation flag is retained but not exposed by the engine"
+          ],
+          "observationsPassed": false,
+          "outputContractPassed": true,
+          "surfaceCounts": {
+            "eventKind.3": 201,
+            "recordedSkillDetailValues": 201,
+            "uncomparedSkillActivationFlags": 201,
+            "nonzeroSkillDetails": 1,
+            "nonzeroSkillActivationFlags": 0,
+            "eventKind.6": 5,
+            "eventKind.5": 10
+          },
+          "frameScope": "all-engine-ticks",
+          "coverageStatus": "partial"
+        }
+      }
+    },
+    "corner-hidden-lane-screen": {
+      "probes": 1188,
+      "minimumPositionMismatches": 17,
+      "strictPasses": 0,
+      "best": {
+        "kind": 3,
+        "delta": 16,
+        "gate": 7,
+        "t": 33.83298873901367,
+        "position": 659.9439697265625,
+        "positionMismatches": 17,
+        "finishErrors": 0
+      }
+    },
+    "hidden-speed-screen-built": {
+      "probes": 994,
+      "minimumPositionMismatches": 1,
+      "strictPasses": 0,
+      "best": {
+        "kind": 10,
+        "delta": -64,
+        "gate": 7,
+        "t": 33.43338394165039,
+        "position": 651.6485595703125,
+        "positionMismatches": 1,
+        "finishErrors": 0,
+        "strict": {
+          "passed": false,
+          "differences": {
+            "legacyChecks": 1,
+            "position": 1
+          },
+          "examples": [
+            {
+              "field": "legacyChecks",
+              "error": "position differs at 34.09939193725586, runner 7"
+            },
+            {
+              "field": "position",
+              "expected": 666.907958984375,
+              "actual": 666.9077758789062,
+              "t": 34.09939193725586,
+              "runner": 7
+            }
+          ],
+          "counts": {
+            "officialFrames": 136,
+            "runnerSamples": 2176,
+            "stateSamples": 2176,
+            "postFinishSamples": 441,
+            "skillEvents": 201,
+            "skillDetailObservations": 201,
+            "supplementaryResultValues": 112,
+            "checkedSimulationFrames": 1171,
+            "checkedSimulationRunnerSamples": 18736,
+            "checkedOutputEvents": 618
+          },
+          "coverageGaps": [
+            "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat",
+            "global ordering between separate event streams is not exposed",
+            "official recording cadence/count not reconstructed from dense simulation output",
+            "skill activation flag is retained but not exposed by the engine"
+          ],
+          "observationsPassed": false,
+          "outputContractPassed": true,
+          "surfaceCounts": {
+            "eventKind.3": 201,
+            "recordedSkillDetailValues": 201,
+            "uncomparedSkillActivationFlags": 201,
+            "nonzeroSkillDetails": 1,
+            "nonzeroSkillActivationFlags": 0,
+            "eventKind.6": 5,
+            "eventKind.5": 10
+          },
+          "frameScope": "all-engine-ticks",
+          "coverageStatus": "partial"
+        }
+      }
+    }
+  },
+  "installedAssetComparison": [
+    {
+      "kind": "animation",
+      "assetSha256": "38935e0ecad6ef92b918f5baee020ed22dd7ca613f034790eac5a8e25538418a",
+      "exact": true
+    },
+    {
+      "kind": "overrun",
+      "assetSha256": "7fe6e9985612a5c4bc5982212223552aca4a3b79ca4591af63362cc45ef20c90",
+      "exact": true
+    },
+    {
+      "kind": "events",
+      "assetSha256": "858bef382d97414a5ae03ffa59850a42f7b9163fff89066287a4162ed9b7aed0",
+      "exactListedOrder": false,
+      "sameEventEntries": true
+    }
+  ],
+  "rawReplaySurface": {
+    "source_sha256": "a9bf0be3259c19238a2529e7ddd27185d3c0f8c1328294e04a3d626fc37b2f0c",
+    "provenance": "not_established_by_export",
+    "runner_count": 16,
+    "frame_count": 136,
+    "extensions": [
+      {
+        "name": "before_frames",
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "before_results",
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "events": [
+      {
+        "kind": 3,
+        "parameter_count": 6,
+        "count": 201
+      },
+      {
+        "kind": 5,
+        "parameter_count": 1,
+        "count": 10
+      },
+      {
+        "kind": 6,
+        "parameter_count": 1,
+        "count": 5
+      }
+    ],
+    "populated_extensions_need_inspection": false
+  },
+  "managedProbeSummary": [
+    {
+      "pointerSize": 4,
+      "forceQuaternion": false,
+      "ticks": 8440,
+      "mismatches": 4048
+    },
+    {
+      "pointerSize": 4,
+      "forceQuaternion": true,
+      "ticks": 8440,
+      "mismatches": 4045
+    },
+    {
+      "pointerSize": 8,
+      "forceQuaternion": false,
+      "ticks": 8440,
+      "mismatches": 1880
+    },
+    {
+      "pointerSize": 8,
+      "forceQuaternion": true,
+      "ticks": 8440,
+      "mismatches": 1880
+    }
+  ],
+  "limitations": [
+    "Installed client assets are not direct evidence of server-private state.",
+    "Managed-runtime probes use a reconstructed test program, not the official game evaluator.",
+    "Artificial perturbations are causal probes, not accepted fixes.",
+    "The saved reference contains 136 frames and no populated hidden extension sections; the intervening true simulation states are unavailable."
+  ]
+}

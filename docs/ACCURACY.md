@@ -1,163 +1,109 @@
-# Benchmark results and coverage
+# Accuracy and coverage
 
-## Version 76
+This page describes the v76 engine with the pacemaker and passing-route
+corrections committed on 31 October 2026. Official replay comparisons,
+implementation regressions and third-party simulator comparisons have separate
+denominators. None establishes accuracy for every possible race.
 
-The frozen corpus contains 470,350 official captures. The final optimized engine
-produces byte-identical complete binary replies for every input compared with
-the preceding audited engine. Each reconstructed input must also match its
-frozen input hash. This preserves all strict observation outcomes, including
-known discrepancies; it is not 470,350 official-race passes.
+## Current validated engine
 
-| Group | Strict matches | Total | Unresolved |
+| Check | Scope | Result |
+|---|---|---:|
+| Rust unit tests | Current production implementation | 163/163 pass |
+| Official regression fixtures | Included captured edge cases | 82/82 pass |
+| Official practice regression | 52,096-race cohort audited on 28 October | All complete outputs preserved; all checked official observations match |
+| Third-party output regression | 437,000 uma.moe inputs | 436,999 complete outputs unchanged; one discrepancy corrected; no regressions |
+
+An unchanged output preserves its previous result, including any existing
+discrepancy. The 437,000-race regression is not a claim that every race matches
+uma.moe. The final production build also agrees with the validated candidate
+on 62 complete-output checks.
+
+The pacemaker correction resolved a section-boundary discrepancy in the
+66,738-race practice intake. That intake then had 66,737 strict matches and
+one remaining movement discrepancy. The passing corrections retain that
+behavior and refine equal-cost route selection.
+
+See the [validation summary](../evidence/documentation-snapshot-20261031.json),
+[pacemaker evidence](../evidence/practice-fix-20261024.json),
+[passing-clearance evidence](../evidence/passing-clearance-20261031.json) and
+[passing-direction evidence](../evidence/passing-route-direction-20261031.json).
+
+## Official capture inventory
+
+The latest documented inventory snapshot is **28 October 2026**, not a live
+count of ongoing collection:
+
+| Capture type | Registered | Active | Quarantined |
 |---|---:|---:|---:|
-| Practice, including quarantine | 457,989 | 457,989 | 0 |
-| Career, including quarantine | 11,153 | 12,361 | 1,208 |
-| Active captures, both types | 469,141 | 469,551 | 410 |
-| Quarantined captures, both types | 1 | 799 | 798 |
+| Practice | 696,779 | 696,778 | 1 |
+| Career | 13,174 | 12,289 | 885 |
+| Total | 709,953 | 709,067 | 886 |
 
-The last two rows partition the first two. One practice capture remains
-quarantined even though it now passes; quarantine was not changed for this
-release. All 81 captured regression fixtures pass. The synthetic HP-empty
-precondition test is separate and is not counted as an official capture.
+Practice includes 13,187 archived races outside the newer collection inventory.
+The 52,096-race intake covers every field size from 9 through 18 runners. It
+checks 97,425,308 runner observations at recorded official frames, plus results,
+skills and competition events. Integrity checks also cover full simulator output.
 
-See [v76 validation](V76-VALIDATION.md) and
-[machine-readable results](../evidence/v76-release-validation.json).
+The entire 709,953-race inventory has not been rerun on the current source
+revision. Historical audits retain **one active practice discrepancy and 410
+active Career discrepancies**. The practice case has matching raw finish times
+and placements but a maximum sampled position difference of 1.221 mm and some
+stamina/spurt differences. These remain recorded issues, not newly audited totals.
+See the [intake report](NEW-RACES-20261028.md),
+[Career coverage](CAREER-VALIDATION.md) and [quarantine policy](DATASET-QUARANTINE.md).
 
-## Historical Version 75
+## Third-party simulator comparison
 
-The latest batch contains 95,062 additional official races: 90,283 practice
-and 4,779 Career races. Strict validation records **94,566 matches and 496
-unresolved cases**, with no audit errors. The startup event-order correction
-resolved 4,681 cases without regressions in that batch.
+The latest uma.moe collection contains 240,000 distinct input/seed pairs across
+22 courses and fields of 9–18 runners. These lobbies have no equipped skills.
+The current production engine matches every checked exported observation in
+**213,745/240,000 races (89.0604%)**. This is agreement with another simulator,
+not an official-game accuracy percentage.
 
-Of the unresolved cases, **492 are quarantined for captured-seed/replay
-mismatches**. This leaves **94,566 strict matches out of 94,570 active races**
-and four active discrepancies. Quarantine changes dataset selection, not the
-historical result or the simulator's pass count. Replay-derived seed matches
-are diagnostic evidence only.
+Research variants achieve higher agreement with that collection but regress
+official captures and are not part of the production engine. In particular,
+the official lead-competition partner cutoff distinguishes the two simulators.
+See [third-party results and limits](UMAMOE-MOVEMENT-20261031.md).
 
-The stored corpus contains 342,913 races at this snapshot; 342,421 remain active.
-The older 247,851 races were not rerun for this batch. All 69 included strict
-regression fixtures pass. See [batch validation](DISCREPANCIES-20261020.md),
-[remaining cases](UNRESOLVED-FOLLOWUP-20261020.md), and
-[quarantine policy](DATASET-QUARANTINE.md).
+## What the checks establish
 
-## Historical v74 benchmark
+- **Inputs:** retain the captured seed, runner identities, ordering, stats,
+  skills, course and runtime settings. Validate capture linkage and input
+  integrity before interpreting a simulation difference.
+- **Results:** compare raw finish times, placements and exposed result fields,
+  including start delays, running styles, stat orders and spurt distances.
+- **Movement:** compare position, speed, HP, lane, rushing state and front-blocker
+  identity at recorded official samples, including post-finish samples in the
+  strict checker. Position uses float32 equality; encoded channels use the
+  replay's wire precision. Unrecorded official ticks cannot be compared.
+- **Skills:** compare exposed identities, detail branches, timing, order,
+  durations and visual recipient masks. The first ability's visual mask does
+  not expose every secondary gameplay recipient or effect value.
+- **Competition:** compare exposed event identities, times and sequence order.
+  Ordering within a recorded stream does not establish a global order across
+  separate streams.
+- **Output integrity:** check finite values, identities, structure and temporal
+  consistency throughout the simulator's full output. These checks can detect
+  invalid output without observing hidden official state.
+- **Repeatability:** compare repeated runs, seed order, persistent workers and
+  prepared handles. Complete-output equality is an implementation regression
+  check, separate from agreement with an official capture.
 
-Version 74 was evaluated against **203,572 captured official
-Global races**. **All 203,572 match every audited observation**, including finish
-times, placements, sampled movement, recorded skill events and competition
-events. This is observed 1:1 agreement with the tested captures at their recorded
-precision and cadence, not a claim of equivalence across every possible race.
-
-| Metric | Result |
-|---|---:|
-| Races matching all core checks | 203,572/203,572 |
-| Races with every finish time exact | 203,572/203,572 |
-| Winner agreement | 203,572/203,572 |
-| Exact placement agreement | 2,210,585/2,210,585 |
-| Races with every compared movement sample exact | 203,572/203,572 |
-| Races with all skill starts exact | 203,572/203,572 |
-| Matched skill starts | 23,395,637/23,395,637 |
-| Worst observed finish-time error | 0 s |
-| Unresolved execution errors | 0 |
-
-Core checks comprise finish times, winner, placements, skill starts and the
-position, speed, HP and lane samples defined below.
-[Validation results](../evidence/new-races-20261017-morning.json).
-
-## Captured-race coverage
-
-| Field size | Races | Matches across all audited observations |
-|---|---:|---:|
-| 9 runners | 129,086 | 129,086 |
-| 12 runners | 29,888 | 29,888 |
-| 14 runners | 6,041 | 6,041 |
-| 15 runners | 24,443 | 24,443 |
-| 16 runners | 7,558 | 7,558 |
-| 18 runners | 6,556 | 6,556 |
-
-The datasets contain distinct official replay captures. Each race uses its
-original seed, complete runner inputs and the skill definitions corresponding
-to the capture.
-
-Coverage includes 2,210,585 runner observations across 105 courses and
-21 race distances from 1000 to 3600 m, on turf and dirt.
-
-These captures informed the corrections and also serve as regression coverage.
-They share some configurations and are not an independent, uniformly sampled
-estimate of accuracy across the game. Custom oversized fields are outside
-this benchmark.
-
-## Additional observations
-
-The audit compares **266,951,869 pre-finish runner/frame samples** for position,
-speed, HP, lane, rushing state and front-blocker identity. All 2,210,585 start
-delays, running styles, guts orders, wisdom orders and last-spurt start distances
-match.
-
-All 23,395,637 skill records have exact recorded durations and visual recipient
-masks, with no missing or extra casts. Recorded competition-event identities
-and times match in all 203,572 races under the earlier multiset comparison;
-that check does not establish ordering among simultaneous events.
-
-Recorded durations and visual recipients describe replay events; they do not
-expose every gameplay receiver or its complete lifetime. Full-frame engine
-output is retained for comparisons, while official observations are limited
-to the capture's sampled frames. Post-finish movement is outside the core
-pre-finish denominator.
-
-## What exact means
-
-- `finishExact`: the entire vector of decoded official raw finish times equals
-  the simulated `finishTimeRaw` vector, without a tolerance.
-- Winner: simulated finish-time ordering selects the official winner.
-- Placement: corresponding identities in sorted official and simulated orders
-  match; denominator is runners.
-- Skill starts: multiset of runner, skill ID and timestamp rounded to four
-  decimal places (0.1 ms). `skillExact` compares the full multiset; matched-start
-  recall alone does not measure recipient, value or duration correctness.
-- Frame exactness: official replay sample times matched to simulation times
-  rounded to five decimals; positions compared as float32; speed, HP and lane
-  compared through the audit's wide wire quantization (scales 100,1,10000).
-  Samples after either official or simulated finish are excluded. It is not
-  proof of all hidden state or all unsampled ticks matching.
-- Competition events: recorded runner, event kind and float32 timestamp match
-  for Spot Struggle, dueling and Conserve Power starts. These are checked in
-  addition to the core metrics.
-- Recorded skill durations: float32 duration multiplied by 10000 in wider
-  arithmetic and truncated to integer wire units; time-zero events use `-1`.
-  No one-unit tolerance is applied.
-- Visual recipients: the recorded mask matches the first ability's selected
-  targets, with the replay's time-zero sentinel. Secondary gameplay targets
-  are not all visible in this field.
+Earlier audits used different definitions, including pre-finish-only samples
+and unordered event comparisons. Their results keep their original scope;
+they are not retroactively strict full-replay passes.
 
 ## Limitations
 
-Conserve Power fallbacks and optional later stamina mechanics include
-approximations. Results also depend on the selected runtime settings and course
-and skill data. Coverage is not uniform across course, roster or skill
-combinations, and the results do not establish population-wide accuracy.
+Coverage is concentrated in collected configurations and includes cases used to
+develop corrections. It is not an independent random sample of all races.
+Nonzero Career team-rank bonuses have synthetic coverage but still need official
+captures. Career seed/replay discrepancies remain unresolved. Optional later
+stamina mechanics and some Conserve Power fallback paths contain approximations.
+Custom oversized fields are outside official capture validation.
 
-GlobalSim is an unofficial implementation and does not claim complete 1:1
-equivalence with the game. See [testing](TESTING.md) for the current test status.
-
-The stricter regression audit includes post-finish samples and event-stream
-order. All 67 fixtures pass the earlier checks; 63 pass the strict checks, with
-four remaining time-zero skill-order differences. The 203,572-race result above
-uses the earlier comparison definitions; it is not a strict replay-order pass.
-
-A separate cohort of 4,442 official Career races has 4,031 strict observation
-matches. The remaining cases comprise 410 startup discrepancies and one later
-runtime discrepancy. All captured team ranks are zero, so nonzero rank bonuses
-still require official validation. See [Career validation](CAREER-VALIDATION.md)
-and [strict validation](TESTING.md).
-
-## Latest practice intake
-
-An additional **39,837 official practice races** have been audited: **39,834**
-match the exposed observations under the practice definitions above. One
-corner-boundary skill discrepancy was corrected; one pacing discrepancy and
-two small position differences remain. The previous 203,572-race benchmark
-remains a separate result on its recorded engine; it has not been rerun for
-this intake. See [new race findings](NEW-RACE-FINDINGS-20261018.md).
+Results depend on the input data and runtime profile. Use the v76 example's
+settings for the documented validated path. [Testing](TESTING.md) describes
+reproducible checks; the [documentation index](README.md) retains dated reports
+for earlier cohorts and releases.

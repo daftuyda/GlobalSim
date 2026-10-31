@@ -5,6 +5,9 @@ settings. It decodes those inputs once and returns each race directly to the
 calling application. The simulation still creates fresh RNG streams, sampled
 triggers, runners, timers, activation observers and results for every seed.
 
+Start from `examples/v76-race.jsonl` to use the validated runtime profile and
+skill table. A prepared handle retains the profile supplied at preparation.
+
 `retainAllFrames: true` retains every simulation frame. The default frame
 selection is the same as the worker interface. Preparing a different roster,
 skill table or setting requires a new preparation; only the seed varies during
@@ -29,7 +32,7 @@ use globalsim::PreparedRace;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // One conventional race request, with retainAllFrames set as desired.
-    let input = std::fs::read_to_string("race.json")?;
+    let input = std::fs::read_to_string("examples/v76-race.jsonl")?;
     let mut race = PreparedRace::new(&input)?;
     for seed in [100003, 107922, 115841] {
         let result = race.run(seed)?;
@@ -71,11 +74,11 @@ module. Add `GlobalSim/tools` to your application's module path:
 import json
 from native_engine import NativeRace
 
-with open("race.json", encoding="utf-8") as source:
+with open("examples/v76-race.jsonl", encoding="utf-8") as source:
     spec = json.load(source)
 spec["retainAllFrames"] = True
 
-with NativeRace("target/pgo/globalsim.dll", spec) as race:
+with NativeRace("target/release/globalsim.dll", spec) as race:
     for seed in [100003, 107922, 115841]:
         replay = race.run(seed)
         time, runner_values = replay.frame(0)
@@ -137,9 +140,10 @@ globalsim::register_course_geometry(10606, json);
 let mut race = globalsim::PreparedRace::new(&input)?;
 ```
 
-The default build is unchanged and keeps every captured course embedded. With
-the feature on, a wasm32 build of a thin bridge crate is about 2.2 MB instead
-of 36 MB, and its results match the native worker exactly.
+The default build keeps the bundled course geometry embedded. External geometry
+lets a host package course assets separately; binary size depends on the target,
+wrapper and build settings. Validate the host's loaded assets and outputs against
+the native worker before using that configuration for comparisons.
 
 ## Build and measure
 

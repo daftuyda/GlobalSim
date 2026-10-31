@@ -1,248 +1,113 @@
 # Source reference
 
-Modules and functions for navigating the implementation. Function lists also
-include test helpers; see [testing](TESTING.md) for test status.
-
-## [activation_conditions.rs](../src/activation_conditions.rs)
-
-Static and dynamic skill-condition evaluation.
-
-Functions: `not_supported`, `noop_filter`, `new`, `eq`, `neq`, `lt`, `lte`, `gt`, `gte`, `immediate`, `retail_phase_condition`, `filter`, `retail_distance_rate_condition`, `filter`, `retail_remaining_distance_condition`, `filter`, `retail_final_corner_half_condition`, `filter`, `retail_corner_condition`, `filter`, `retail_slope_condition`, `filter`, `retail_furlong_condition`, `filter`, `random_cond`, `noop_all`, `noop_immediate`, `noop_random`, `noop_erlang_random`, `value_filter`, `mk`, `roster_condition`, `mk`, `same_style_rate_condition`, `mk`, `identity_transform`, `passthrough_static`, `live_condition`, `mk`, `live_simple`, `lane_type_value`, `behind_in_condition`, `mk`, `live_with_static`, `order_of_value`, `order_filter`, `order_get_pos`, `order_rate_get_pos`, `order_in_filter`, `order_out_filter`, `band_track`, `continuous_band_check`, `track_order_bands`, `section_random`, `is_sorted_by_start`, `accumulatetime_condition`, `mk`, `all_corner_random_filter_eq`, `corner_filter_eq`, `corner_filter_neq`, `corner_random_filter_eq`, `distance_rate_filter_lte`, `distance_rate_filter_gte`, `distance_rate_after_random_filter_eq`, `distance_type_filter_eq`, `distance_type_filter_neq`, `furlong_filter_eq`, `down_slope_random_filter_eq`, `hp_per_filter_lte`, `hp_per_filter_gte`, `hp_condition_percent`, `is_activate_heal_skill_filter_eq`, `take_anyskill_nodes`, `is_activate_any_skill_filter_eq`, `is_activate_other_skill_detail_filter_eq`, `is_basis_distance_filter_eq`, `is_badstart_filter_eq`, `is_dirtgrade_filter_eq`, `is_dirtgrade_filter_neq`, `is_tight_track_filter_eq`, `is_finalcorner_filter_eq`, `is_finalcorner_laterhalf_filter_eq`, `is_finalcorner_random_filter_eq`, `is_hp_empty_onetime_filter_eq`, `is_lastspurt_filter_eq`, `is_last_straight_filter_eq`, `is_last_straight_onetime_filter_eq`, `is_temptation_filter_eq`, `is_used_skill_id_filter_eq`, `lastspurt_condition`, `mk`, `phase_filter_eq`, `phase_filter_lt`, `phase_filter_lte`, `phase_filter_gt`, `phase_filter_gte`, `phase_corner_random_filter_eq`, `phase_firsthalf_filter_eq`, `phase_firstquarter_filter_eq`, `phase_laterhalf_filter_eq`, `phase_laterhalf_random_filter_eq`, `phase_random_filter_eq`, `phase_straight_random_filter_eq`, `phase_first_half_straight_random_filter_eq`, `phase_latter_half_straight_random_filter_eq`, `gate_block`, `or_default_num_umas`, `post_number_filter_eq`, `post_number_filter_lte`, `post_number_filter_gte`, `random_lot_filter_eq`, `remain_distance_filter_eq`, `remain_distance_filter_lte`, `remain_distance_filter_gte`, `run_at_full_speed_random_filter_eq`, `running_style_filter_eq`, `slope_filter_eq`, `straight_front_type_filter_eq`, `straight_random_filter_eq`, `last_straight_random_filter_eq`, `temptation_count_filter_eq`, `up_slope_random_filter_eq`, `up_slope_random_later_half_filter_eq`, `compete_fight_count_filter_gt`, `is_overtaking_value`, `change_order_up_end_after_static`, `change_order_up_finalcorner_after_static`, `change_order_up_middle_static`, `activate_count_all_filter_lte`, `activate_count_all_filter_gte`, `activate_count_end_after_filter_gte`, `activate_count_heal_filter_gte`, `activate_count_later_half_filter_gte`, `activate_count_middle_filter_gte`, `activate_count_start_filter_gte`, `v_base_power`, `v_base_speed`, `v_base_stamina`, `v_base_guts`, `v_base_wiz`, `v_corner_count`, `v_course_distance`, `v_grade`, `v_ground_condition`, `v_ground_type`, `v_motivation`, `v_popularity`, `v_rotation`, `v_season`, `v_time`, `v_track_id`, `v_weather`, `lv_visiblehorse`, `bashin_condition`, `mk`, `lv_behind_near_lane_time`, `lv_behind_near_lane_time_set1`, `lv_blocked_all_continuetime`, `lv_blocked_front`, `lv_blocked_front_continuetime`, `lv_blocked_side_continuetime`, `lv_distance_diff_rate`, `distance_spread_percentage`, `leader_gap`, `lv_distance_diff_top`, `lv_distance_diff_top_float`, `lv_infront_near_lane_time`, `lv_is_move_lane`, `lv_is_surrounded`, `lv_near_count`, `lv_near_infront_count`, `lv_temptation_count_behind`, `lv_temptation_count_infront`, `lv_temptation_opponent_count_behind`, `lv_temptation_opponent_count_infront`, `running_style_temptation_count_live`, `pointer`, `nige`, `senko`, `sashi`, `oikomi`, `cell_order_band_in_200`, `cell_order_band_in_400`, `cell_order_band_in_500`, `cell_order_band_in_800`, `cell_order_band_out_200`, `cell_order_band_out_400`, `cell_order_band_out_500`, `cell_order_band_out_700`, `lookup_condition`, `sample_policy`, `apply`, `apply_sampled`, `apply_windows`, `separate_samples`, `make_and`, `make_or`, `build_conditions`, `activate_count_all_random_filter_gte`, `activate_count_all_random_filter_lte`, `acr_activate_count_end_after_filter_gte`, `acr_activate_count_later_half_filter_gte`, `acr_activate_count_middle_filter_gte`, `acr_activate_count_start_filter_gte`, `build_conditions_with_activate_counts_as_random`, `distance_percentage_uses_field_spread_and_floors`, `large_field_extends_balanced_outer_post_grouping`, `ordinary_eighteen_runner_posts_match_extracted_client_table`.
-
-## [activation_sample_policy.rs](../src/activation_sample_policy.rs)
-
-Selection of activation points within eligible distance regions.
-
-Functions: `kind`, `reconcile`, `sample`, `sample_distance_window`, `sample_random`, `sample_straight_random`, `sample_distribution`, `uniform_distribution`, `log_normal_distribution`, `erlang_distribution`, `place_first_corner_trigger`, `place_all_corner_triggers`, `union_regions`.
-
-## [condition_parser.rs](../src/condition_parser.rs)
-
-Parsing and composition of skill-condition expressions.
-
-Functions: `is_id_char`, `tokenize`, `peek`, `advance`, `parse_or`, `parse_and`, `parse_cmp`, `parse`, `parse_with_retail`, `parse_with_retail_runtime`, `parse_uncached`, `inputs`, `trigger`, `cached_syntax_keeps_samples_and_observer_state_private`, `warm_cache_preserves_sample_validation_errors`, `parse_context_separates_runtime_and_condition_tables`.
-
-## [conserve_power.rs](../src/conserve_power.rs)
-
-Conserve Power accumulation, cooldowns and release duration.
-
-Functions: `default`, `enable_trace`, `status`, `observation`, `record`, `record_release`, `diagnostics`, `supported`, `update`, `duration`.
-
-## [course_data.rs](../src/course_data.rs)
-
-Course definitions, race phases and stat modifiers.
-
-Functions: `is_sorted_by_start_f`, `phase_start`, `phase_end`, `course_speed_modifier`, `init_courses`, `get_course`.
-
-## [horse_types.rs](../src/horse_types.rs)
-
-Runner attributes, strategies and aptitude types.
-
-Functions: `base_running_style`, `from_i32`, `parse_str`, `from_i32`, `parse_str`, `strategy_matches`.
-
-## [hp_policy.rs](../src/hp_policy.rs)
-
-HP consumption, recovery and last-spurt policy.
-
-Functions: `parameters`, `course`, `horse`, `integrated_hp_drain_and_heals_match_snapshot_bits`, `hp_guts_factor_refreshes_on_reinitialization_and_preserves_phase_boundary`, `spurt_policy_uses_shared_stream_and_current_hp`, `exhausted_hp_has_no_debt_against_later_recovery`, `new`, `with_retail`, `init`, `get_status_modifier`, `hp_per_second`, `tick`, `has_remaining_hp`, `hp_ratio_remaining`, `recover`, `spend`, `tick_start_dash`, `get_last_spurt_pair`, `init`, `tick`, `has_remaining_hp`, `hp_ratio_remaining`, `recover`, `get_last_spurt_pair`, `spend`, `hp_value`.
-
-## [json.rs](../src/json.rs)
-
-JSON parsing and serialization, including exact numeric formatting and typed incremental replay encoding.
-
-Functions: `into_buffer`, `resolved`, `bitwise_eq`, `as_f64`, `as_i64`, `as_str`, `as_bool`, `as_array`, `as_object`, `get`, `is_null`, `get_f64`, `get_i64`, `get_str`, `get_bool`, `get_array`, `get_object`, `len`, `at`, `text`, `matching_end`, `len`, `at`, `text`, `matching_end`, `len`, `at`, `text`, `parse`, `parse`, `parse_input`, `parse_input`, `skip_ws`, `parse_value`, `expect_literal`, `parse_object`, `parse_object_with`, `parse_array`, `parse_string`, `parse_number`, `to_string`, `to_string_into`, `write_value`, `write`, `new`, `push`, `finish`, `write_replay_frames`, `write_cached_replay_frame`, `write_cached_frame_parts`, `write_small_integer`, `write_horse_frame`, `write_number`, `write_widened_f32`, `write_string`, `obj`, `num`, `arr`, `check_request`, `request_cache_shares_exact_text_and_survives_errors_and_omission`, `request_cache_preserves_duplicates_numbers_unicode_and_errors`, `compact_replay_frames_preserve_object_bytes_and_float_formatting`, `data_comparison_checks_nested_content_and_float_bits`, `ascii_and_character_paths_agree_on_tokens_and_errors`, `numeric_tokens_keep_float_bits`, `unicode_input_retains_whitespace_and_character_offsets`, `string_serialization_preserves_escapes_and_unicode`, `specialized_numbers_match_the_original_standard_formatter`, `check`, `replay_number_cache_preserves_transitions_and_array_shapes`, `response_buffer_reuses_capacity_and_replaces_previous_contents`, `replay_batch_encoder_matches_arrays_and_reuses_finished_storage`.
-
-## [lane_selection.rs](../src/lane_selection.rs)
-
-Lane preferences and passing corridors.
-
-Functions: `visible`, `collect_targets`, `passing_lane`.
-
-## [lib.rs](../src/lib.rs)
-
-Request handling, request-local roster preparation, simulation configuration and result serialization.
-
-Functions: `bundled_courses`, `bundled_skills`, `bundled_parameters`, `bundled_geometry`, `opt_array`, `load_course_table`, `load_skill_table`, `load_skill_value`, `skill_id_and_level`, `experimental_grid_enabled`, `starting_coordinates`, `parse_race_spec`, `strategy_id_for_output`, `new`, `roster_preparation_preserves_counts_exclusions_and_ordered_team_sums`, `new_builder`, `is_usable`, `run_race`, `into_json`, `encode_frames`, `gate_order`, `restore_request_order`, `run_worker`, `grid_requires_exact_contract_and_hundred_horses`, `grid_has_five_separate_rows_and_twenty_ordinary_stalls`, `compact_frames_restore_runner_order_and_blocker_indices`, `frames`, `result`, `sparse_frames_keep_cadence_and_unthinned_finish_sample`, `finish_sample_includes_equal_tick_and_handles_missing_prior_frame`, `dense_output_has_all_frames_without_sparse_metadata`, `geometry_cache_shares_only_matching_course_identity`.
-
-## [overtaking.rs](../src/overtaking.rs)
-
-Overtaking targets and event tracking.
-
-Functions: `is_target`, `is_target_with_block_check`, `irrelevant_blocker_queries_are_skipped`, `equal_speed_comparisons_skip_blocker_queries`, `differing_speed_comparisons_query_blockers_once`, `relevant_blocker_state_selects_the_same_speed`.
-
-## [race_field.rs](../src/race_field.rs)
-
-Field coordination, ranking, nearby runners and effect dispatch.
-
-Functions: `is_advantage_ability`, `is_skill_demerit`, `new`, `update`, `step_all`, `retail_overtake_times_for`, `next_overtake_times`, `has_character`, `record_heal`, `record_ability_activation`, `cache_skill_activations`, `other_advantage_active`, `viewer_remaining`, `visible`, `skill_targets`, `queue_skill_effect`, `flush_skill_effects`, `order_of`, `previous_order_of`, `distance_to_leader`, `ranked_distance_bounds`, `distance_to_ahead`, `distance_to_behind`, `lane_gap_to_ahead`, `lane_gap_to_behind`, `did_overtake`, `front_blocker`, `side_room`, `is_surrounded`, `is_solo_front_runner`, `ordinary_front_runner_count`, `later_style_ahead`, `pacemaker_is_later_style_ahead`, `pacemaker`, `update_pacemaker`, `leading_eligible`, `leading_eligible_in`, `gap_to_pacemaker`, `near_count`, `near_infront_count`, `is_opponent`, `temptation_count_behind`, `temptation_count_infront`, `running_style_temptation_count`.
-
-## [race_field_retail.rs](../src/race_field_retail.rs)
-
-Ordered field updates for the detailed runtime.
-
-Functions: `blocking_sample`, `rebuild`, `update`, `passing_membership_keeps_owner_exclusion_and_replacements`, `step_all_retail`.
-
-## [race_parameters.rs](../src/race_parameters.rs)
-
-Race-condition types and configuration parsing.
-
-Functions: `parse_ground_condition`, `parse_weather`, `parse_season`, `parse_time`, `parse_grade`, `default`.
-
-## [race_solver.rs](../src/race_solver.rs)
-
-Runner state, movement, skills and competition.
-
-Functions: `base_speed`, `base_target_speed`, `last_spurt_speed`, `calc_base_accel`, `compete_dist_threshold`, `compete_strategy_coef`, `compete_stamina_strategy_coef`, `secure_lead_strategy_coef`, `secure_lead_stamina_strategy_coef`, `competition_distance_coefficient`, `position_keep_course_factor`, `position_keep_min_threshold`, `position_keep_max_threshold`, `new_timer_value`, `new`, `add`, `duration_coefficient`, `activation_modifier`, `noop_hook`, `add_stat_modifier`, `final_corner_half_value`, `corner_value`, `slope_type`, `has_active_skill`, `remaining_skill_duration`, `set_starting_lane`, `is_spot_struggling`, `new`, `rng_uniform`, `call_activate_hook`, `call_deactivate_hook`, `new_skill_timer`, `next_modifier_token`, `new_timer`, `release_timer`, `init_hills`, `get_max_speed`, `step`, `step_forward`, `step_lateral`, `step_field_conditions`, `update_blocking`, `update_retail_blocking`, `update_lane_target`, `lane_preference_flags`, `visible_distance`, `apply_external_effect`, `refresh_stat_effects`, `update_lane`, `update_near_lane_timers`, `update_kakari`, `update_position_keep`, `clear_position_keep`, `position_keep_wisdom_check`, `roll_competition_wisdom`, `update_position_keep_non_nige`, `update_position_keep_front_runner`, `update_last_spurt_state`, `update_target_speed`, `apply_forces`, `downhill_check`, `update_hills`, `update_phase`, `record_overtakes`, `process_skill_history`, `retire_finished_running_skills`, `extend_running_skills_on_overtake`, `additional_skill_event`, `observe_anyskill`, `apply_unapplied_additional`, `process_skill_activations`, `expire_skill_effects`, `refresh_skill_scan`, `process_skill_priority`, `process_pending_armed`, `process_pending_full`, `conserve_release_duration`, `conserve_release_reaches_threshold`, `release_conserve_power_now`, `skill_cooldown_ready`, `start_expired_skill_cooldowns`, `start_skill_cooldown`, `activate_skill`, `is_debuff_immune`, `apply_activation`, `do_activate_random_gold`, `select_random_gold`, `update_competition_mechanics`, `update_stamina_keep`, `latch_active_spot_cutoff`, `update_spot_struggle`, `start_spot_struggle`, `update_compete_before_spurt`, `update_secure_lead`, `prepare_retail_duel_start`, `update_dueling`, `activate_retail_duel`, `set_on_skill_activate`, `set_on_skill_deactivate`, `cleanup`, `solver`, `random_target_selection_precedes_random_ability_value`, `cooldown_keeps_stateful_checks_and_prerequisite_observations`, `enable_retail_for_skill_test`, `sparse_skill_pass_matches_full_scan_observers_after_removals`, `fixture`, `inactive_skill_windows_match_full_visits_with_stateful_exceptions`, `fixture`, `empty_priority_zero_still_flushes_additional_activations_and_reservations`, `leader_gap_duration_preserves_recorded_boundary_and_clamps`, `final_skill_turn_accepts_earlier_activations_and_rejects_later_ones`, `final_straight_condition_only_checks_the_entry_tick`, `late_corner_overtakes_use_flags_from_before_movement`, `rank_continuity_reads_history_before_new_order_is_published`, `force_lane`, `null_lane_controller_keeps_target_and_ignores_fixed_lane_skill`, `extra_pacing_checks_all_ahead_and_exits_after_passing_later_style`, `rushing_mode_precedes_extra_catchup_and_short_course_factor_is_bounded`, `cornerless_course_cannot_open_a_duel_on_its_last_straight`, `experimental_duel_groups_do_not_sustain_unrelated_participants`, `duel_lane_and_distance_boundaries`, `duel_warmup_same_target_speed_and_count`, `duel_warmup_checks_order_and_selects_first_eligible_rival`, `retail_duel_remains_active_past_the_finish_line`, `retail_duel_after_finish_still_ends_for_low_hp_or_separation`, `retail_duel_can_invite_a_finished_partner_with_ready_proximity`, `finished_runner_is_not_a_duel_target`, `duel_proximity_survives_recovery_and_tracks_multiple_partners`, `duel_partner_hp_and_former_participant_exit_rules`, `spot_struggle_distance_gate_waits_for_cached_overall_leader`, `spot_struggle_distance_gate_reads_live_position_at_exact_boundary`, `spot_struggle_waits_for_cached_lead_over_other_styles`, `spot_struggle_ignores_only_runaways_in_regular_front_runner_ranks`, `spot_struggle_runaways_must_lead_the_entire_field`, `spot_struggle_group_start_and_expiration_are_once_per_style`, `sixth_can_duel_with_fifth_but_seventh_cannot_duel_with_sixth`, `duel_condition_checks_accumulated_real_count_not_random_position`, `spot_struggle_lane_and_entry_cutoff`, `boxed_runner_cancels_stale_target`, `forced_lane_step_sweeps_side_envelope_in_both_directions`, `overlapping_runners_can_separate_and_finished_runners_do_not_block`, `outer_boundary_does_not_report_phantom_movement`, `lateral_guard_compares_positions_from_the_same_tick`, `partial_start_delay_preserves_effective_lateral_and_near_timer_dt`, `surrounded_uses_single_precision_cached_gaps_at_inclusive_limits`, `special_following_timer_is_independent_and_resets_outside_its_corridor`, `finished_runner_is_not_a_front_or_side_blocker`.
-
-## [race_solver_builder.rs](../src/race_solver_builder.rs)
-
-Stat adjustment and runner/skill construction, with indexed lookup of independently sampled triggers.
-
-Functions: `init_skills`, `skills_table`, `random_activation_is_general`, `asitame_release_modifier`, `asitame_release_duration`, `asitame_calc_approximate_modifier`, `stamina_syoubu_distance_factor`, `stamina_syoubu_calc_approximate_modifier`, `odd_raw_stats_retain_half_points_before_mood_and_caps`, `adjust_overcap`, `base_stat`, `build_base_stats`, `build_adjusted_stats`, `build_adjusted_stats_for_mode`, `is_target`, `valid_skill_type`, `level_multiplier`, `retail_skill_value`, `build_skill_effects`, `skill_rarity_from_i32`, `index_sampled_triggers`, `sampled_triggers_for`, `build_skill_data`, `wisdom_seed`, `race_seed_hi`, `new`, `seed`, `wisdom_checks`, `num_umas`, `roster_conditions`, `course`, `mood`, `ground`, `weather`, `season`, `time`, `grade`, `dirt_grade`, `horse`, `single_mode`, `gate_index`, `add_skill`, `with_asiwotameru`, `with_stamina_syoubu`, `prepare`, `validate_skills`, `build`, `indexed_samples_preserve_expression_order_and_parser_errors`, `master_and_level_conversion_round_separately`.
-
-## [race_solver_retail.rs](../src/race_solver_retail.rs)
-
-Detailed runtime integration, exact movement caches and ordered runner updates.
-
-Functions: `course`, `config`, `solver`, `check`, `movement_roster_stays_live_across_ordered_steps_and_callbacks`, `at_target_speed_clamp_ignores_all_clamped_accelerations`, `acceleration_cache_refreshes_every_dependency_and_parameter_object`, `zero_time_preserves_course_event_readiness`, `complete_isolated_races_match_snapshot_tick_bits`, `retail_phase_uses_cached_enum_and_preserves_boundary_window`, `whole_field_races_match_snapshot_tick_bits`, `new`, `base`, `collect_retail_duel_proximity`, `enable_retail_runtime`, `pace_cancel_current_speed`, `retail_current_speed`, `retail_target_speed_with_current_skills`, `retail_lane_context`, `retail_live_horse`, `retail_other_horses`, `fill_retail_other_horses`, `prepare_retail_tick`, `update_retail_pace`, `update_retail_spurt`, `step_forward_retail`, `step_forward_retail_with_roster`.
-
-## [random_gen.rs](../src/random_gen.rs)
-
-Seeded random-number generation for the conventional runtime.
-
-Functions: `new`, `step`, `pair`, `int32`, `random`, `uniform`.
-
-## [replay_worker.rs](../src/replay_worker.rs)
-
-Optional persistent full-frame encoding with bounded snapshot batches and reusable replay storage. Simulation and RNG remain on the calling thread.
-
-Types: `ReplayWorker`, `FrameCollector`, `CollectedFrames`.
-
-Functions: `new`, `send`, `recycle`, `drop`, `new`, `capture`, `push`, `flush`, `finish`, `bounded_batches_and_reused_worker_preserve_complete_arrays`, `abandoned_frame_sequence_does_not_leak_into_next_request`.
-
-## [region.rs](../src/region.rs)
-
-Distance intervals and region operations.
-
-Functions: `new`, `intersect`, `fully_contains`, `rmap_one`, `rmap_multi`, `union`.
-
-## [retail_geometry.rs](../src/retail_geometry.rs)
-
-Course transforms, lane width and world-space movement.
-
-Functions: `finite`, `number`, `quaternion`, `backend_distance_to_world`, `lerp`, `dot`, `quaternion_lerp`, `quaternion_multiply`, `interpolate`, `animation_segments`, `from_value`, `bundled`, `load`, `from_value`, `corner_state_at`, `lane_max_at`, `position`, `advance`, `directory`, `data`, `object`, `captured_gates_and_per_runner_width_changes`, `invalid_identity_samples_and_widths_are_rejected`, `corner_ids_and_final_flag_follow_explicit_events`, `final_half_uses_last_eligible_event_start`, `compiled_segments_preserve_source_interpolation_bits`, `straight_entry_clears_an_overlapping_corner`, `short_quaternion_arc`, `snapshot_vectors_match_bits_for_all_captured_courses`.
-
-## [retail_geometry_assets.rs](../src/retail_geometry_assets.rs)
-
-Embedded geometry lookup by course ID.
-
-
-## [retail_initialization.rs](../src/retail_initialization.rs)
-
-Seeded initialization, opening values and skill lotteries.
-
-Functions: `initial_base_wisdom`, `official_export_values_and_constructor_bounds`, `number`, `skill_id`, `field`, `terms`, `distance_window`, `sample_trigger`, `initialize`, `initialize_sections_and_rushing`, `absent_following_straight_keeps_empty_trigger_and_rng_state`, `final_corner_random_requires_an_eligible_start`, `all_ninety_official_delays_are_bit_exact_from_inputs`, `all_official_rushing_eligibility_and_sections_follow_shared_stream`.
-
-## [retail_lane.rs](../src/retail_lane.rs)
-
-Lane targeting, lateral movement and overlap resolution. Passing searches read cached and live horse rows directly through `PointRow`.
-
-Functions: `from_value`, `collect`, `collect_roster`, `collect_cached`, `update_targets`, `target`, `reachable`, `is_visible`, `front_index`, `front_lane_limit`, `front_index_iter`, `has_front_blocker`, `side_room`, `side_room_iter`, `point`, `from_value`, `approximately`, `step`, `target`, `resolve_overlaps`, `resolve_overlaps_with_order`, `passing_corridor_includes_rounded_lower_edge_and_excludes_next_float`, `front_block_preserves_captured_inclusive_and_exclusive_edges`, `lane_continuity_preserves_blocked_time_and_skips_direction_changes`, `row`, `indices`, `fixture`, `cached_and_live_passing_search_matches_python_bits`, `overlap_order_and_flags_match_python_on_small_and_large_fields`, `lateral_acceleration_and_permissions_match_snapshot_bits`, `target_state_retention_cooldown_and_shared_draws_match_python`.
-
-## [retail_physics.rs](../src/retail_physics.rs)
-
-Speed, acceleration, HP and numerical integration helpers.
-
-Functions: `phase_boundaries`, `exported_thresholds_and_adjacent_float`, `target_speed_indices`, `advance_start_delay`, `finish_time`, `group`, `number`, `numbers`, `phases`, `from_value`, `course_speed`, `base_target_speed`, `start_dash_speed`, `minimum_speed`, `blocking_speed_cap`, `maximum_spurt_speed`, `target_speed`, `target_speed_with_late_terms`, `target_speed_with_late_terms_iter`, `initial_hp`, `hp_state_rate`, `hp_per_second`, `hp_guts_factor`, `hp_per_second_with_guts_factor`, `acceleration`, `acceleration_iter`, `base_acceleration`, `acceleration_from_base_iter`, `bounded_stat`, `root`, `apply_additive_modifiers`, `values`, `values_except_tokens`, `values_except`, `value`, `register`, `remove`, `apply`, `zero_time_suppresses_ai_without_changing_countdown`, `gate_countdown_exact_zero_and_repeated_subtraction`, `parameters`, `dash_threshold_uses_captured_float32_rate`, `acceleration_base_keeps_negative_values_until_after_modifiers`, `snapshot_vectors_match_every_float32_bit`, `receiver_keeps_order_and_recomputes_after_expiry`, `missing_parameters_are_rejected_instead_of_defaulted`, `finish_interpolation_matches_official_adjacent_crossings`.
-
-## [retail_position_keep.rs](../src/retail_position_keep.rs)
-
-Pacing states, thresholds and transitions.
-
-Functions: `start_section`, `end_section`, `from_value`, `thresholds`, `default`, `base_style`, `clear`, `choose`, `update`, `exact_pace_up_gap_does_not_consume_a_lottery_draw`, `sequential_field_contexts_match_python_timers_draws_and_modes`.
-
-## [retail_random.rs](../src/retail_random.rs)
-
-Shared random stream for the detailed runtime.
-
-Functions: `integer`, `real`, `integer`, `real`, `new`, `next_int`, `next_double`, `integer`, `real_distance`, `real`, `independent_dotnet_reference_all_signed_seed_boundaries`, `zero_width_still_consumes_a_draw`.
-
-## [retail_sort.rs](../src/retail_sort.rs)
-
-Comparison sorting and tie behavior.
-
-Functions: `comparison_sort`, `swap_if_greater`, `down_heap`, `sort`, `comparison_sort_port_matches_python_partition_vectors`.
-
-## [retail_spurt.rs](../src/retail_spurt.rs)
-
-Last-spurt feasibility search and planning.
-
-Functions: `default`, `sort_candidates`, `choose`, `default`, `update`, `search_matches_snapshot_plans_and_shared_draw_counts`, `recovery_retry_preserves_a_valid_start_and_failed_retry_keeps_plan`, `real_first_pass_retry_limit_rejects_a_distant_feasible_speed_without_rolls`, `comparator_near_ties_and_large_equal_partitions_keep_framework_behavior`, `second_pass_lottery_is_strict_and_has_its_own_retry_limit`, `integer`, `real`.
-
-## [retail_states.rs](../src/retail_states.rs)
-
-Rushing, downhill and slope-event runtime states. `SlopeState::update` handles
-inclusive shared boundaries and expiry without reactivating an old event.
-
-Functions: `update`, `number`, `from_value`, `new`, `choose_mode`, `set_forced_end`, `step`, `from_value`, `update`, `new`, `take`, `integer`, `real`, `parameters`, `adjoining_uphill_event_uses_first_matching_end_and_does_not_restart`, `rushing_boundaries_consumption_and_single_use`, `rushing_float_tick_and_forced_timer_replacement`, `downhill_zero_crossing_and_level_terrain_freeze`, `shared_stream_matches_python_state_transitions_and_float_timers`.
-
-## [rushing.rs](../src/rushing.rs)
-
-Rushing-mode selection and pacing strategy.
-
-Functions: `select_mode`, `pacing_style`, `extracted_mode_lottery_boundaries_and_original_strategy`.
-
-## [stadium_score.rs](../src/stadium_score.rs)
-
-Positioning and rushing observations.
-
-Functions: `style_leaders`, `new`, `update`, `new`, `update`, `leaders_use_exact_styles_and_cached_ranks`, `positioning_is_checked_only_at_phase_change`, `countdown_pauses_and_discards_overshoot`.
-
-## [starting_grid.rs](../src/starting_grid.rs)
-
-Starting-stall coordinates and grid configuration.
-
-Functions: `starting_lane`, `retail_starting_lane`, `lane`, `track_specific_dividers_and_half_gate`.
-
-## [build_pgo.py](../tools/build_pgo.py)
-
-Collects compiler branch profiles from JSON-lines race requests and builds a
-profile-guided release executable. See [Performance](PERFORMANCE.md) for usage.
-
-## [replay_frames.rs](../src/replay_frames.rs)
-
-Contiguous timestamp and runner buffers, sparse frame selection and exact
-runner/blocker remapping. Functions: `new`, `horse_count`, `raw_len`, `len`,
-`capture`, `raw_frame`, `frame`, `select`, `restore_order`, `bitwise_eq`.
-
-## [binary_replay.rs](../src/binary_replay.rs)
-
-Lossless `GSIMRP01` packet encoding with UTF-8 metadata and float64 replay records.
-Function: `encode`. See the [protocol](BINARY-REPLAY.md).
-
-## Binary replay tools
-
-- [replay_protocol.py](../tools/replay_protocol.py): packet reader, numeric views,
-  conventional-object conversion and complete value comparison.
-- [check_replay_protocol.py](../tools/check_replay_protocol.py): persistent-worker
-  equivalence checks across both frame modes and request-isolation cases.
-- [benchmark_replay.py](../tools/benchmark_replay.py): paired JSON and binary latency.
-- [benchmark_throughput.py](../tools/benchmark_throughput.py): independent-worker
-  batches with separate throughput and request-latency measurements.
-
-## Prepared API and bindings
-
-- [main.rs](../src/main.rs): command-line entry point and error exit handling.
-- [api.rs](../src/api.rs): `PreparedRace`, immutable preparation and owned results.
-- [ffi.rs](../src/ffi.rs): C ABI, handle ownership, output buffers and error recovery.
-- [globalsim.h](../include/globalsim.h): C declarations and pointer lifetimes.
-- [native_engine.py](../tools/native_engine.py): Python prepared-race wrapper.
-- [benchmark_native.py](../tools/benchmark_native.py): paired complete-packet timings.
-- [check_native_parity.py](../tools/check_native_parity.py): seeds, tables, frames,
-  ownership, errors and concurrent-handle regression checks.
-- [train_native.py](../tools/train_native.py): prepared-library compiler profiling.
-
-## [seed_sampling.rs](../src/seed_sampling.rs)
-
-Worker seed-batch validation, prepared-setup reuse, persistent seed threads and
-ordered replies. Regression tests cover repeated seeds, mutable precondition
-isolation, changed setup data, and invalid sampling controls.
+Map of the current production source. Start with the [architecture](ARCHITECTURE.md)
+for execution order, [mathematics](MATHEMATICS.md) for equations and
+[field mechanics](FIELD-MECHANICS.md) for runner interactions.
+
+## Interfaces and execution
+
+| Module | Responsibility |
+|---|---|
+| [main.rs](../src/main.rs) | Command-line entry point and process exit handling. |
+| [lib.rs](../src/lib.rs) | Request parsing, shared data, field construction, output metadata and worker execution. |
+| [api.rs](../src/api.rs) | PreparedRace setup and fresh per-seed state; owned Simulation results. |
+| [ffi.rs](../src/ffi.rs) | Thread-confined C handles, packet buffers, ownership and recoverable errors. |
+| [seed_sampling.rs](../src/seed_sampling.rs) | Validated seed batches, prepared setup reuse, persistent threads and ordered replies. |
+| [geometry_registry.rs](../src/geometry_registry.rs) | Registration and lookup of separately supplied course geometry. |
+| [json.rs](../src/json.rs) | JSON parsing, numeric representation and serialization. |
+
+## Runners, fields and skills
+
+| Module | Responsibility |
+|---|---|
+| [race_solver_builder.rs](../src/race_solver_builder.rs) | Runner stats, Career bonuses, skill definitions, triggers and effect values. |
+| [race_solver.rs](../src/race_solver.rs) | Runner state, skill lifecycle, conventional movement and competition decisions. |
+| [race_field.rs](../src/race_field.rs) | Roster facts, ranks, recipients, pacemaker selection and coordinated updates. |
+| [race_solver_retail.rs](../src/race_solver_retail.rs) | Detailed runtime updates, precision-sensitive movement and integration. |
+| [race_field_retail.rs](../src/race_field_retail.rs) | Ordered detailed field passes, cached/live observations and overlap resolution. |
+| [horse_types.rs](../src/horse_types.rs) | Runner attributes, strategies, aptitudes and shared types. |
+| [condition_parser.rs](../src/condition_parser.rs) | Condition-expression parsing, composition and immutable expression caches. |
+| [activation_conditions.rs](../src/activation_conditions.rs) | Static/dynamic predicates, stateful observations and sampled conditions. |
+| [activation_sample_policy.rs](../src/activation_sample_policy.rs) | Distance windows and lottery policies for sampled activation. |
+| [region.rs](../src/region.rs) | Eligible distance intervals and region operations. |
+
+## Physics and field mechanics
+
+| Module | Responsibility |
+|---|---|
+| [retail_initialization.rs](../src/retail_initialization.rs) | Ordered seeded initialization, start delays, skill lotteries and opening values. |
+| [retail_physics.rs](../src/retail_physics.rs) | Detailed speed, acceleration, HP, blocking and mixed-precision formulas. |
+| [retail_lane.rs](../src/retail_lane.rs) | Visibility, cached/live passing targets, body clearance, route ties and lateral movement. |
+| [retail_position_keep.rs](../src/retail_position_keep.rs) | Detailed pacing modes, selected targets, gaps and check timers. |
+| [retail_spurt.rs](../src/retail_spurt.rs) | Last-spurt candidate construction, affordability, sorting and retries. |
+| [retail_states.rs](../src/retail_states.rs) | Rushing and downhill states with their ordered random draws. |
+| [retail_geometry.rs](../src/retail_geometry.rs) | Course transforms, interpolation and world-distance correction. |
+| [retail_geometry_assets.rs](../src/retail_geometry_assets.rs) | Embedded course-geometry asset selection. |
+| [retail_random.rs](../src/retail_random.rs) | Detailed-runtime random streams and integer/floating draw paths. |
+| [retail_sort.rs](../src/retail_sort.rs) | Comparison sorting and tie behavior used by the detailed runtime. |
+| [hp_policy.rs](../src/hp_policy.rs) | Stamina policy, consumption, recovery and conventional spurt planning. |
+| [lane_selection.rs](../src/lane_selection.rs) | Conventional lane selection and lateral calculations. |
+| [overtaking.rs](../src/overtaking.rs) | Overtake targets, timing and recorded passes. |
+| [rushing.rs](../src/rushing.rs) | Conventional rushing state and duration decisions. |
+| [conserve_power.rs](../src/conserve_power.rs) | Supported accumulation/release ledger and fallback coverage. |
+| [random_gen.rs](../src/random_gen.rs) | Conventional Rule30 random generator and derived streams. |
+| [starting_grid.rs](../src/starting_grid.rs) | Stall coordinates, gate identity and custom grid layout. |
+| [course_data.rs](../src/course_data.rs) | Course metadata, conditions and speed-threshold modifiers. |
+| [race_parameters.rs](../src/race_parameters.rs) | Parameter loading and typed runtime settings. |
+| [stadium_score.rs](../src/stadium_score.rs) | Recorded leading-style and rushing observations. |
+
+## Replay output
+
+| Module | Responsibility |
+|---|---|
+| [replay_frames.rs](../src/replay_frames.rs) | Contiguous numeric frames, thinning, finish samples and runner/blocker remapping. |
+| [binary_replay.rs](../src/binary_replay.rs) | Lossless GSIMRP01 packet encoding. |
+| [replay_worker.rs](../src/replay_worker.rs) | Optional JSON encoding helper for eligible full-frame requests. |
+
+## Current accuracy boundaries
+
+- `RaceField::update_pacemaker` retains the incumbent until normal selection or restoration replaces it.
+- `PassingSearch` keeps cached target identity separate from live obstacle routes and evaluates exact-cost ties with body clearance and obstacle-side direction.
+- The inward corridor calculation stores each complete shifted bound as float32 before comparison.
+- Prepared skill reuse preserves fresh mutable preconditions and observers for every seed.
+
+## Tools and bindings
+
+| Tool | Purpose |
+|---|---|
+| [native_engine.py](../tools/native_engine.py) | Python binding for the prepared native API. |
+| [replay_protocol.py](../tools/replay_protocol.py) | Binary packet reading, frame views and output comparison. |
+| [check_accuracy_regressions.py](../tools/check_accuracy_regressions.py) | Strict official-fixture comparison. |
+| [check_binary_accuracy.py](../tools/check_binary_accuracy.py) | Binary replay observation checking. |
+| [audit_validation_coverage.py](../tools/audit_validation_coverage.py) | Fixture observation and branch coverage inventory. |
+| [validation_inputs.py](../tools/validation_inputs.py) | Captured input preflight and integrity checks. |
+| [validation_contract.py](../tools/validation_contract.py) | Input-aware output structure and consistency checks. |
+| [validation_runner.py](../tools/validation_runner.py) | Bounded engine execution and recovery. |
+| [check_worker_parity.py](../tools/check_worker_parity.py) | Persistent worker comparisons and isolation. |
+| [check_replay_protocol.py](../tools/check_replay_protocol.py) | JSON/binary agreement and protocol checks. |
+| [check_seed_sampling.py](../tools/check_seed_sampling.py) | Seed batches, output modes, concurrency and error handling. |
+| [check_native_parity.py](../tools/check_native_parity.py) | Native/worker agreement, ownership and handle isolation. |
+| [check_career_team_rank.py](../tools/check_career_team_rank.py) | Synthetic team-rank equivalence and validation. |
+| [build_pgo.py](../tools/build_pgo.py) | Profile-guided compiler training and builds. |
+| [train_native.py](../tools/train_native.py) | Prepared-library profile training. |
+| [benchmark.py](../tools/benchmark.py) | JSON worker latency. |
+| [benchmark_replay.py](../tools/benchmark_replay.py) | Paired JSON/binary worker latency. |
+| [benchmark_native.py](../tools/benchmark_native.py) | Prepared Python binding and worker latency. |
+| [benchmark_throughput.py](../tools/benchmark_throughput.py) | Independent worker throughput. |
+
+The [C header](../include/globalsim.h) defines exported handles and pointer
+lifetimes. [prepared_race.rs](../examples/prepared_race.rs) demonstrates Rust
+integration; [benchmark_prepared.rs](../examples/benchmark_prepared.rs)
+measures owned numeric frames or binary packets.
+
+## Data and regression cases
+
+- [Course definitions](../data/course_data.json) and [course geometry](../data/course_geometry).
+- [Runtime parameters](../data/global_parameters.json) and [parameter reference](PARAMETERS.md).
+- [Validated-profile skill table](../data/v70-skill-data.json) and [legacy fallback](../data/skill_data.json).
+- [Starting grids](../data/starting_grids.json).
+- [Official regression fixtures](../tests/fixtures/accuracy) and [test guide](TESTING.md).
+
+Use [v76-race.jsonl](../examples/v76-race.jsonl) for a complete request with
+the validated runtime settings and skill table. File-version names identify
+data snapshots; they are separate from the engine release version.

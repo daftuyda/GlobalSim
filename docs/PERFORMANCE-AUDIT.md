@@ -1,9 +1,13 @@
-# Performance audit
+# Historical performance audit
+
+This investigation predates v76. Timings, test counts and proposed work below
+describe the measured builds of that period. Use [Performance](PERFORMANCE.md)
+for the v76 release measurements and [Testing](TESTING.md) for current validation.
 
 The prepared API removes repeated input decoding and process transport when
 many seeds share one race setup. Direct Rust calls average 4.74 ms with every
 frame retained, or 4.81 ms including binary packet encoding. The paired Python
-binding result is 5.72 ms versus 5.85 ms for the current binary worker.
+binding result is 5.72 ms versus 5.85 ms for the worker tested in that comparison.
 [Performance scopes and measurements](PERFORMANCE.md).
 
 ## Prepared execution
@@ -156,7 +160,7 @@ cover exact float bits, selected frames, errors, truncation and partial reads.
 [protocol checks](../evidence/prepared-protocol-check.json),
 [build settings](../evidence/prepared-build.json), [testing](TESTING.md).
 
-The current optimized build also reproduces all 17,594 recently audited race
+The later build in this historical investigation also reproduced all 17,594 recently audited race
 outputs after the competition corrections. The paired numeric-frame benchmark
 remains 4.68 ms before and after those corrections.
 [Accuracy validation](../evidence/fidelity-validation-20261014.json),

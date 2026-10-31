@@ -4,49 +4,43 @@
 
 **Version 76**
 
-GlobalSim is a detailed race simulation engine written in Rust, modeling the
-interactions that decide a race—from starting gates and positioning to skill
-activation, stamina management, and the final sprint.
+GlobalSim is a fast, detailed race simulation engine written in Rust. It models
+runner attributes, course geometry, positioning, skill activation, stamina and
+the final sprint to produce reproducible races from seeded inputs.
 
-Built for race analysis, strategy exploration, and simulation-driven tools,
-GlobalSim produces reproducible results from seeded inputs, with detailed
-trajectories, finishing orders, and race events.
+Designed for race analysis, strategy exploration and Monte Carlo workloads,
+GlobalSim offers complete movement replays, race events and finishing results
+through a persistent worker or a prepared library API.
 
 ## Race mechanics
 
-- **Runner attributes:** speed, stamina, power, guts, wisdom, mood, and aptitudes.
-- **Course physics:** distance, surface, ground conditions, slopes, corners, and track geometry.
-- **Field interactions:** positioning, pacing, overtaking, lane selection, blocking, and competition.
-- **Stamina and race phases:** consumption, recovery, rushing, Conserve Power, and last-spurt planning.
-- **Skill simulation:** activation conditions, timing, effect values, duration, cooldowns, and recipients.
-- **Detailed output:** finish times, placements, movement frames, and skill and competition events.
+- **Runner attributes:** speed, stamina, power, guts, wisdom, mood and aptitudes.
+- **Course physics:** distance, surface, ground conditions, slopes, corners and track geometry.
+- **Field interactions:** pacing, overtaking, lane selection, blocking and competition.
+- **Stamina:** consumption, recovery, rushing, Conserve Power and last-spurt planning.
+- **Skills:** activation conditions, timing, effect values, duration, cooldowns and recipients.
+- **Replay output:** finish times, placements, movement frames, skills and competition events.
 
-## Improvements in v76
+## Performance and fidelity
 
-Version 76 accelerates skill preparation, field ordering, and movement queries.
-Persistent workers reuse race setup across seeds, with optional concurrent seed
-batches and results-only output. Every race receives independent activation state.
-It also includes refined passing-corridor, pacing, and competition-event handling,
-with stricter replay validation.
+Prepared races reuse course, roster and skill setup across seeds. Persistent
+workers support concurrent seed batches, full replays and results-only output.
+Every seed receives independent mutable race and activation state.
 
-## Measured fidelity
+The current engine includes refined pacemaker retention and passing-route
+selection. Its latest validation records:
 
-The current validation snapshot covers **470,350 official race captures**:
-
-| Metric | Result |
+| Check | Result |
 |---|---:|
-| Practice captures matching every strict observation check | **457,989/457,989** |
-| Career captures matching every strict observation check | **11,153/12,361** |
-| Included accuracy regression fixtures passing | **81/81** |
+| Official practice regression cohort | **52,096/52,096** matching recorded observations |
+| Included official accuracy fixtures | **82/82** passing |
+| Rust unit tests | **163/163** passing |
 
-The optimization preserves the preceding engine's complete outputs for all
-470,350 captures. The 1,208 Career discrepancies remain unresolved. These totals
-include 799 quarantined captures; quarantine membership is unchanged.
-
-These measurements describe tested observations at their recorded precision and
-cadence. GlobalSim is an unofficial implementation and does not claim 1:1
-equivalence across every race configuration.
-See [benchmark methodology and coverage](docs/ACCURACY.md).
+These results describe the tested configurations and recorded observations.
+GlobalSim is an unofficial implementation and does not claim universal 1:1
+equivalence. [Accuracy and coverage](docs/ACCURACY.md) distinguishes official
+captures, third-party comparisons and known limitations.
+[Performance](docs/PERFORMANCE.md) reports measured latency and benchmark scope.
 
 ## Getting started
 
@@ -56,10 +50,10 @@ Build with a Rust toolchain, Cargo, a native linker and a C compiler:
 cargo build --release --locked
 ```
 
-The default build uses the faster mimalloc allocator, which the C compiler
-builds. Add `--no-default-features` to use the platform allocator instead.
+The default build uses mimalloc. Add `--no-default-features` to use the platform
+allocator instead.
 
-Run the included example on Windows:
+Run the included v76 example on Windows:
 
 ```powershell
 Get-Content examples/v76-race.jsonl | .\target\release\race_engine_rs_v2.exe
@@ -71,32 +65,30 @@ On Linux or macOS:
 ./target/release/race_engine_rs_v2 < examples/v76-race.jsonl > results.jsonl
 ```
 
-The example includes the simulation settings and skill data used by the
-benchmarked configuration. Adapt its course, runners, skills, and seed to
-explore other races.
+Start from this example to retain the runtime settings and skill table used by
+the validated configuration. Adapt its course, runners, skills and seed to
+explore other races. Omitting those settings selects a different runtime profile.
 
 ## Integration
 
-By default, GlobalSim accepts one race specification per line of JSON and returns one JSON
-result per race. A persistent worker supports repeated requests, making it
-suitable for batch simulations and integration into analysis tools.
+The worker accepts one race specification per line of JSON and returns one
+result per race. A `seeds` array runs one setup across multiple seeds; `threads`
+controls concurrency and `omitFrames` selects results-only output.
 
-The [prepared Rust and C API](docs/IN-PROCESS.md) reuses race setup across seeds
-and provides direct access to numeric replay frames for low-latency integration.
-
-Use a fixed seed and identical inputs for reproducible comparisons. Detailed
-movement frames and event records support analysis beyond the finishing order.
-See the [input/output reference](docs/INTERFACE.md) for settings, result fields,
-and error handling.
+The [prepared Rust and C API](docs/IN-PROCESS.md) reuses race setup and exposes
+numeric replay frames directly. A Python binding and a
+[lossless binary worker interface](docs/BINARY-REPLAY.md) support analysis tools.
+See the [input/output reference](docs/INTERFACE.md) for request fields and errors.
 
 ## Documentation
 
 - [Race mathematics](docs/MATHEMATICS.md)
-- [Positioning, movement, and field mechanics](docs/FIELD-MECHANICS.md)
+- [Positioning, movement and field mechanics](docs/FIELD-MECHANICS.md)
 - [Skills and activation rules](docs/SKILLS.md)
 - [Architecture and simulation order](docs/ARCHITECTURE.md)
-- [Input/output reference](docs/INTERFACE.md)
 - [Parameter reference](docs/PARAMETERS.md)
 - [Source reference](docs/SOURCE-INDEX.md)
 - [Performance and benchmarking](docs/PERFORMANCE.md)
-- [Benchmark methodology and coverage](docs/ACCURACY.md)
+- [Accuracy and coverage](docs/ACCURACY.md)
+- [Testing](docs/TESTING.md)
+- [Complete documentation index](docs/README.md)

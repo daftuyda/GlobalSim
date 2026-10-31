@@ -1,5 +1,12 @@
 # New race findings — 18 October 2026
 
+> Later result: the [21 October pacemaker correction](PACING-FIX-20261021.md)
+> resolved the pacing case described here.
+
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 Follow-up: both position-rounding cases below are now corrected by the
 acceleration-bonus ordering fix. The pacing case remains open. See the
 [edge-case follow-up](PRACTICE-EDGE-CASES-20261018.md); the original intake

@@ -1,5 +1,9 @@
 # Investigation of the 21 October failures
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 Follow-up: the [pacemaker restoration correction](PACING-FIX-20261021.md)
 resolves the practice case and four older pacing examples. The 167 Career
 captures have now been quarantined. The findings below describe the initial
@@ -102,7 +106,7 @@ hypothesis, not an established trigger.
 The [machine-readable investigation record](../evidence/discrepancies-20261021.json)
 links the retained per-case seed results, raw-packet checks, original practice
 fixture, diagnostic traces and experimental-mode comparisons under
-`D:/UmamusumeData/race-datasets/discrepancies-20261021`.
+`<race-dataset>/discrepancies-20261021`.
 
 Production Rust source was not modified by this investigation. The diagnostic
 source and executable are separate from the live working tree. No additional

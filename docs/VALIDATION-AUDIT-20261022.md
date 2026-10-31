@@ -1,5 +1,9 @@
 # Validation coverage audit
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 The later [validation hardening report](VALIDATION-HARDENING-20261022.md) adds
 capture preflight, output consistency, bounded failure recovery, expanded
 repeatability probes and actionable branch collection targets. The results below

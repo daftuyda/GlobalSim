@@ -1,5 +1,9 @@
 # Passing-corridor boundary correction
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 The corridor rounding correction resolves the latest practice discrepancy and
 both older practice rounding cases. **All 457,989 practice captures in the frozen
 corpus now match the checked official observations**, including the one practice
@@ -113,7 +117,7 @@ full-validation registries point to it. Historical audit reports remain intact.
 Full diagnostic and comparison artifacts are retained at:
 
 ```text
-D:/UmamusumeData/race-datasets/practice-fix-20261023
+<race-dataset>/practice-fix-20261023
 ```
 
 Agreement covers the recorded observations checked by the validator. It does

@@ -1,5 +1,9 @@
 # Discrepancy investigation — 20 October 2026
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 > **[23 October corridor follow-up](CORRIDOR-FIX-20261023.md):** The remaining long-distance practice rounding case (`1a711441c217d665`) is resolved by the corridor correction. The results below describe the original historical audit.
 
 The startup event-order correction resolves **4,681 races**. A fresh run of all
@@ -133,7 +137,7 @@ The [investigation evidence](../evidence/discrepancies-20261020.json) records
 the engine, source snapshot, complete result files, focused fixtures, traces,
 rejected arithmetic probes, startup analysis, and independent comparison.
 The evidence is under
-`D:/UmamusumeData/race-datasets/discrepancies-20261020`.
+`<race-dataset>/discrepancies-20261020`.
 
 No remaining behavioural discrepancy has a sufficiently supported correction
 from this investigation. No seed replacement, case-specific timing adjustment,

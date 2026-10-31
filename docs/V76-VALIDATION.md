@@ -1,4 +1,8 @@
-# Version 76 validation
+# Version 76 release validation
+
+This is the original v76 release receipt. The later pacemaker and passing
+corrections are covered by [current accuracy](ACCURACY.md) and [testing](TESTING.md).
+The counts below remain specific to the release audit.
 
 Version 76 reduces repeated setup and field-query work while retaining full
 replay output. The final optimized build matches the previous engine's complete

@@ -1,0 +1,74 @@
+{
+  "schema": "globalsim-documentation-snapshot-v1",
+  "asOf": "2026-10-31",
+  "engineCommit": "73f2312",
+  "release": "v76",
+  "scope": "Summary of recorded audits; documentation refresh is not a new simulation run.",
+  "currentValidation": {
+    "rustTests": 163,
+    "focusedOfficialFixtures": 82,
+    "officialCases": 52096,
+    "officialCompleteOutputsUnchanged": 52096,
+    "thirdPartyCases": 437000,
+    "thirdPartyCompleteOutputsUnchanged": 436999,
+    "fixed": 1,
+    "regressed": 0,
+    "researchSettingsPromoted": false
+  },
+  "officialInventory": {
+    "asOf": "2026-10-28",
+    "totalCorpusRaces": 709953,
+    "practiceCorpusRaces": 696779,
+    "careerCorpusRaces": 13174,
+    "activeCorpusRaces": 709067,
+    "quarantinedRaces": 886,
+    "quarantinedCareerRaces": 885,
+    "quarantinedPracticeRaces": 1,
+    "olderActivePracticeNonmatches": 1,
+    "olderActiveCareerNonmatches": 410,
+    "currentRevisionFullCorpusRerun": false
+  },
+  "thirdParty": {
+    "reference": "uma.moe",
+    "courses": 22,
+    "runners": "9-18",
+    "equippedSkills": false,
+    "production": {
+      "matches": 213745,
+      "races": 240000,
+      "percentage": 89.06041666666667
+    },
+    "unappliedResearch": {
+      "matches": 239967,
+      "races": 240000,
+      "percentage": 99.98625,
+      "unresolved": 33
+    },
+    "detailedCaptures": 12,
+    "broaderResearchChangesPromoted": false,
+    "officialGameAccuracyEstimate": false
+  },
+  "sources": [
+    {
+      "file": "evidence/new-races-20261028.json",
+      "sha256": "11a9ac1ce95d8d7a1b7cda2a651387690d2261ad00de488c591eaa5572fd57b0"
+    },
+    {
+      "file": "evidence/practice-fix-20261024.json",
+      "sha256": "94dbc8087f1cf23ee748faa0cde13a9e90c138b59d0752f867b83ad7de8c4fdc"
+    },
+    {
+      "file": "evidence/passing-clearance-20261031.json",
+      "sha256": "f996754a62033cdcf55d0c8980607cf5652d531dfa2e94eb01f9ed310ebd9c95"
+    },
+    {
+      "file": "evidence/passing-route-direction-20261031.json",
+      "sha256": "0483f5f5b5fe34d73e8d1392021252747cffe7dc449062bc4e734ffceb7d241c"
+    }
+  ],
+  "thirdPartyArchiveReceipt": {
+    "file": "final-results.json",
+    "collection": "umamoe-coverage-expansion-20261031",
+    "sha256": "80c33f0a45e2e816d9580468f72944d223e49803af893aa3f5c59e752269c06c"
+  }
+}

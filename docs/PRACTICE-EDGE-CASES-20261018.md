@@ -1,5 +1,12 @@
 # Practice edge-case follow-up
 
+> Later result: the [21 October pacemaker correction](PACING-FIX-20261021.md)
+> resolved the pacing case described here.
+
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 Two of the three practice discrepancies from the latest intake are corrected.
 Both were caused by the addition order of overlapping duel and Conserve Power
 acceleration bonuses. The pacing discrepancy remains unresolved.

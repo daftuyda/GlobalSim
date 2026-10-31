@@ -1,5 +1,9 @@
 # Full corpus validation
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 > **[23 October corridor follow-up](CORRIDOR-FIX-20261023.md):** The corridor correction resolves both practice discrepancies in this historical corpus. The newer full regression check covers 470,350 captures with no regressions. The results below describe the original historical audit.
 
 The expanded validator checked all **435,216 races in the frozen registered
@@ -95,7 +99,7 @@ and artifact receipts. Full inputs, expected observations, failure outputs,
 worker logs, retry evidence and the frozen audit configuration are retained at:
 
 ```text
-D:/UmamusumeData/race-datasets/full-validation-20261022
+<race-dataset>/full-validation-20261022
 ```
 
 The capture repository's `.local/race-datasets/latest-full-validation.json`

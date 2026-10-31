@@ -1,5 +1,9 @@
 # Practice intake validation — 23 October 2026
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 > **[23 October corridor follow-up](CORRIDOR-FIX-20261023.md):** The corridor correction now resolves this intake's remaining case and both older practice rounding cases. All 35,134 races in this intake pass. The results below describe the original historical audit.
 
 **35,133 of 35,134 new practice races match the checked official observations.**
@@ -110,7 +114,7 @@ target. Original captures, full failed input/output, per-sample differences,
 repeatability records and rejected probe outputs are preserved at:
 
 ```text
-D:/UmamusumeData/race-datasets/new-practice-20261023
+<race-dataset>/new-practice-20261023
 ```
 
 The intake registry points to the expanded practice inventory and its active

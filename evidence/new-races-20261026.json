@@ -1,0 +1,217 @@
+{
+  "schema": "race-intake-validation-v4",
+  "completedUtc": "2026-10-25T20:48:52.421352+00:00",
+  "practiceFrozenUtc": "2026-10-25T20:40:39.859034+00:00",
+  "careerFrozenUtc": "2026-10-25T20:37:11.272585+00:00",
+  "newRaces": 49404,
+  "practice": {
+    "races": 49404,
+    "strictMatches": 49404,
+    "unresolved": 0,
+    "inputOrExecutionErrors": 0,
+    "byRunners": {
+      "14": {
+        "races": 6894,
+        "strictMatches": 6894,
+        "unresolved": 0
+      },
+      "16": {
+        "races": 22792,
+        "strictMatches": 22792,
+        "unresolved": 0
+      },
+      "18": {
+        "races": 17878,
+        "strictMatches": 17878,
+        "unresolved": 0
+      },
+      "12": {
+        "races": 500,
+        "strictMatches": 500,
+        "unresolved": 0
+      },
+      "15": {
+        "races": 1340,
+        "strictMatches": 1340,
+        "unresolved": 0
+      }
+    },
+    "counts": {
+      "officialFrames": 7651508,
+      "runnerSamples": 126023292,
+      "stateSamples": 126023292,
+      "postFinishSamples": 21863412,
+      "skillEvents": 9265659,
+      "skillDetailObservations": 9265659,
+      "supplementaryResultValues": 5663644,
+      "checkedSimulationFrames": 69700958,
+      "checkedSimulationRunnerSamples": 1147118382,
+      "checkedOutputEvents": 28560377,
+      "syntheticRushingEvents": 130319
+    },
+    "surfaceCounts": {
+      "eventKind.3": 9265659,
+      "recordedSkillDetailValues": 9265659,
+      "uncomparedSkillActivationFlags": 9265659,
+      "nonzeroSkillDetails": 65164,
+      "nonzeroSkillActivationFlags": 0,
+      "eventKind.4": 84624,
+      "eventKind.6": 232439,
+      "eventKind.5": 300158
+    },
+    "coverageGaps": {
+      "official result fields not exposed by the engine: finish_time_scaled, finish_diff_time, defeat": 49404,
+      "global ordering between separate event streams is not exposed": 49404,
+      "official recording cadence/count not reconstructed from dense simulation output": 49404,
+      "skill activation flag is retained but not exposed by the engine": 49404,
+      "synthetic rushing event durations lack an independent official event oracle": 44119
+    },
+    "failures": [],
+    "engineSha256": "97a89d5bc5f712d17bee0f33c8bff3f07839b1101a945e457385e30fa4b4376b",
+    "summary": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\audit\\summary.json",
+      "sha256": "29892e3d4b928835a9015e2260812eca44faed7fbce364292d9e25cb1b194cb4"
+    },
+    "results": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\audit\\results.jsonl",
+      "sha256": "3ed7bd4e03135bd8f336871003bd58d94d22b9044c6f66878807ac7c5b341aa9"
+    }
+  },
+  "career": {
+    "newRaces": 0,
+    "racesTested": 0,
+    "strictMatches": 0,
+    "unresolved": 0,
+    "auditPerformed": false,
+    "interpretation": "No new Career identities in the frozen source check; prior Career validation and cohort registries retained.",
+    "sourceCheck": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-races-20261026\\career\\report.json",
+      "sha256": "a5a7d1e3f88bc1d35c601226890146540e88b09b85d00422b03a49921b0e1eb6"
+    }
+  },
+  "strictMatches": 49404,
+  "unresolved": 0,
+  "engineBaseVersion": "v76",
+  "engineSha256": "97a89d5bc5f712d17bee0f33c8bff3f07839b1101a945e457385e30fa4b4376b",
+  "uncommittedPacingCorrection": true,
+  "engineChangedThisIntake": false,
+  "totalCorpusRaces": 657857,
+  "practiceCorpusRaces": 644683,
+  "careerCorpusRaces": 13174,
+  "collectedPracticeRaces": 631496,
+  "archivedPracticeRaces": 13187,
+  "archivedPracticeInventory": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\UmamusumePS\\.local\\race-datasets\\official-archive\\inventory.json",
+    "sha256": "4acdf4ff3b65b0041c0c805921c2cf11cb5e4d48997d8511d0a2d23e7a657671"
+  },
+  "activeCorpusRaces": 656971,
+  "quarantinedRaces": 886,
+  "quarantinedCareerRaces": 885,
+  "quarantinedPracticeRaces": 1,
+  "newlyQuarantined": 0,
+  "originalInputsPreserved": true,
+  "failedRacesRemainActive": true,
+  "priorCorpusNotRerun": 608453,
+  "olderActivePracticeNonmatches": 1,
+  "olderActiveCareerNonmatches": 410,
+  "priorActiveUnresolved": 411,
+  "activeUnresolvedIncludingPrior": 411,
+  "priorUnresolvedIncludingQuarantine": 1296,
+  "unresolvedIncludingPriorAndQuarantine": 1296,
+  "historicalDiscrepancyScope": "The inherited 1296 count is retained from historical audits; it is not active unresolved plus every quarantined record. One quarantined practice capture has a passing retained audit.",
+  "practiceCanonicalChecks": 10,
+  "practiceRepeatabilityChecks": 55,
+  "previousRegistry": {
+    "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\registry-before\\latest-intake-validation.json",
+    "sha256": "dc8594357fb25790802452fdb3659d942d68591d25d5ed712568af0fb79d92d4"
+  },
+  "previousValidationReport": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\evidence\\career-quarantine-20261025.json",
+    "sha256": "3a99e96c1eab825cc1cb4eddb5c7c822256b94d95f9fc65b8fdea230b99730e9"
+  },
+  "previousCanonicalValidationReport": {
+    "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim\\evidence\\new-races-20261025.json",
+    "sha256": "dcc64a1c1a70132b6e652cbad7185668fc5aa7c6830b1d1d570e25efbeb315bc"
+  },
+  "priorQuarantineRegistry": {
+    "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\registry-before\\quarantine.json",
+    "sha256": "2f51022c15fbc0a775fcd9bef6934dec3a8de4bb7ea26a41d1862ddb70fcd812"
+  },
+  "preservedRegistries": {
+    "latest-career-validation.json": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\registry-before\\latest-career-validation.json",
+      "sha256": "3a27b2b25b81bbd49db6d4939bb2224bc625ba4536e2eaff58b1371a2941e201"
+    },
+    "additional-cohorts.json": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\registry-before\\additional-cohorts.json",
+      "sha256": "b32ac9d5bef6f0250d5c95953e04475fde88c7c31e58820881dbdab877afd583"
+    },
+    "quarantine.json": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\registry-before\\quarantine.json",
+      "sha256": "2f51022c15fbc0a775fcd9bef6934dec3a8de4bb7ea26a41d1862ddb70fcd812"
+    },
+    "latest-full-validation.json": {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\registry-before\\latest-full-validation.json",
+      "sha256": "860608dc93234ac3c82e4b4f1356edaea99185ea6d3531d8aab37c1bb3bafb19"
+    }
+  },
+  "snapshotScope": {
+    "method": "Individually pinned completed manifest prefixes",
+    "scanStartedUtc": "2026-10-25T20:35:04.608464+00:00",
+    "scanCompletedUtc": "2026-10-25T20:40:39.859034+00:00",
+    "partialLinesDeferred": [],
+    "interpretation": "Frozen prefix snapshot collected during this scan, not an end-of-day total or an atomic live view. Captures beyond each pinned prefix remain for a later intake."
+  },
+  "limitations": [
+    "Frozen local manifest-prefix intake, not an end-of-day total or a moving live count.",
+    "Agreement covers recorded official observations; unrecorded official ticks remain unobserved.",
+    "Only new practice races were simulated; Career had no new identities and was not re-audited.",
+    "Older discrepancies and quarantine classifications retain their prior scope; this is not a full historical rerun."
+  ],
+  "artifacts": [
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\intake.json",
+      "sha256": "118455eb98448417165a579418f45d2f50afcba88bd73df1dbbc42ba6a60b877"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\count-receipt.json",
+      "sha256": "e256e5b88093ad67ae6aefda39863459ec2e05c80d8881ab48c03cda7c1948ed"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\manifest.json",
+      "sha256": "7ca54bf282b987c7f41f86c1dcf37b2a257ed57c96e37d9bf8e3893f57d6b802"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\inventory.json",
+      "sha256": "50d913e4a261440af0025cb67c66f321e4db736d35d6a1e7ed32b15b4b0334a8"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\publication-inventory.json",
+      "sha256": "2127bb028a4fe71ec766cb8ca169ece9766be16f638b9c454fabe19658bcca41"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\active-inventory.json",
+      "sha256": "8d6ce2856dc32a23f559c9129c6dd3aebb068f609bbe513f2c65c50812d0eb14"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\source-receipt.json",
+      "sha256": "3cc02d56899905d562ae676a9771e2d25db3a86c6f1d83fd619452229618b7fa"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\investigation.json",
+      "sha256": "bc59f8c6fd955092434820ebfd0fa9d1aace38f619eee1b7f13afd5ea0baf0ce"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\canonical-rechecks.json",
+      "sha256": "c1f30705df1d963b30e1979c859e09d4666ddd4ee438c2e218cff825ea487aa4"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-practice-20261026\\ineligible-row-review.json",
+      "sha256": "d6ff970e2b3146f4f1ec7b3c541f1058783987ea1b935d5de9ca6fac622be200"
+    },
+    {
+      "path": "D:\\UmamusumeData\\race-datasets\\new-races-20261026\\career\\report.json",
+      "sha256": "a5a7d1e3f88bc1d35c601226890146540e88b09b85d00422b03a49921b0e1eb6"
+    }
+  ]
+}

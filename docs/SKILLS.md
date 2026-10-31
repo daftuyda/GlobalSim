@@ -7,7 +7,9 @@
 contain alternative detail branches, prerequisites, condition expressions,
 effect arrays, activation lottery flags, cooldowns and duration/value usages.
 Skill level and unique-skill metadata accompany a runner's skill ID. Bundled
-tables are a snapshot, not a live master database.
+tables are a snapshot, not a live master database. The v76 example supplies
+`data/v70-skill-data.json` through `skillData`; omitting it selects the legacy
+fallback table. Keep definitions consistent with the reference race.
 
 The parser in [`condition_parser.rs`](../src/condition_parser.rs) builds
 expressions; [`activation_conditions.rs`](../src/activation_conditions.rs)
@@ -27,6 +29,14 @@ the remaining/max HP ratio as float32, multiplies that ratio by 100 in wider
 arithmetic, then truncates. For example, `0.71_f32` represents a value just
 below 0.71, so its integer percentage is 70. Rounding the product to float32
 first would incorrectly make it 71 and delay a `hp_per<=70` activation.
+
+## State across seeds
+
+Prepared races may share immutable condition expressions and decoded definitions.
+Each seed receives fresh sampled windows, prerequisite latches, activation
+observers and mutable condition state. A stateful precondition is rebuilt even
+when its main activation condition is otherwise reusable. Reusing that latch
+across seeds can change later races in a persistent worker or Monte Carlo batch.
 
 ## Lottery and order
 

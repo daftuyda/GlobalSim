@@ -1,8 +1,17 @@
-# Complete parameter reference
+# Race parameter reference
 
 Parameter values used by the engine. These tables do not imply every
 parameter is consumed in every runtime mode. Follow `Parameters::from_value`
 and the linked modules to see usage. Float values retain their JSON precision.
+
+The table below contains all 770 leaf values in the bundled
+[parameter data](../data/global_parameters.json). Decimal text is preserved;
+the runtime may load a value into float32 before using it. Arithmetic order
+and store boundaries are specified in [mathematics](MATHEMATICS.md).
+
+`Block.SideBlockLaneGap` supplies passing body clearance. Its value is read
+from the loaded block parameters; the route tie rule does not hard-code a
+replacement clearance. See [field mechanics](FIELD-MECHANICS.md).
 
 ## Captured Global parameters
 
@@ -779,9 +788,11 @@ and the linked modules to see usage. Float values retain their JSON precision.
 | `Sound.BGMVolumeFadeSecArray[1]` | `1` |
 | `Sound.BGMVolumeFadeSecArray[2]` | `10` |
 
-## Source constants
+## Selected source constants
 
-Exact declarations from the source, including implementation/version constants.
+Exact declarations from the linked production modules. These are selected
+constants; runtime parameters, loaded assets and branch-specific literals
+also affect behavior.
 
 ### [activation_conditions.rs](../src/activation_conditions.rs)
 
@@ -821,7 +832,7 @@ const HP_CONSUMPTION_GROUND_MODIFIER: [[f64; 5]; 3] = [
 const LANE: f64 = 1.0 / 18.0;
 ```
 
-### [main.rs](../src/main.rs)
+### [lib.rs](../src/lib.rs)
 
 ```rust
 const DT: f64 = 1.0 / 15.0;

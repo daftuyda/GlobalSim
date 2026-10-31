@@ -234,15 +234,23 @@ rates, spurt speed, initial HP, acceleration, slope correction and spurt
 feasibility have explicit float32 store boundaries and wider intermediate
 expressions. The exact expression order is in `retail_physics.rs`.
 
-Inward passing corridors also retain a wider final boundary comparison.
-`retail_lane.rs` stores the two `lane +/- corridorHalfWidth` edges as
-float32, then subtracts the inward offset without another float32 store
-before comparing peer lanes. Lane candidates and ordinary corridor bounds
-retain their existing float32 stores.
+For an inward passing corridor, let `L` be the runner's float32 lane,
+`C = 0.04444444924592972f` and `S = 0.0555555559694767f`. Widen these stored
+values to float64, evaluate `L - C - S` and `L + C - S`, then store each
+completed bound as float32. Peer lanes are compared inclusively with those
+rounded bounds. Rounding `L +/- C` first is a different operation.
+
+Passing-route cost is `abs((ownerLane - candidateLane) * weight * skillWeight)`,
+with each product stored as float32. The inward weight is 100 in phase 0,
+1 in phase 1 and `1.149999976158142f` in later phases; outward weight is 1.
+The applicable lane-preference weight is 1.5, otherwise 1. Exact cost ties
+also depend on cached target position, body clearance and obstacle-side
+direction, as described in [field mechanics](FIELD-MECHANICS.md).
 
 Geometry interpolation retains unrounded x/z differences. Corner-end handling,
 Spot Struggle bonuses after slope correction, and skill-duration extension
-order can affect boundary outcomes. Spurt affordability uses double-precision
-HP products and sums. Finished runners have a minimum speed of 5 m/s.
+order can affect boundary outcomes. Spurt affordability uses the mixed-precision
+normal-cost store and wider sum specified in section 5. Finished runners have a
+minimum speed of 5 m/s.
 A still-racing exhausted runner blocked by a finished runner can resolve to
 the target minimum 13 m/s; this differs from the finished runner's minimum 5.

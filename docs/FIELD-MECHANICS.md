@@ -87,13 +87,11 @@ range, the pacemaker becomes the leading runner of the most-forward style still
 within range. This refresh clears the section counter even when it selects the
 same incumbent; the current section is counted afterward. Otherwise, the normal
 recalculation threshold retains the incumbent.
-If the forward group's leader has passed a handed-over incumbent at a new
-section, the incumbent first refreshes to the leader of its own running-style
-group. Subsequent restoration checks use that refreshed runner. The forward
-group must also pass this runner before it can regain the pacemaker role.
-A returning Runaway does not trigger this incumbent-group refresh: the
-incumbent remains available for the following restoration check. Runaway
-still shares the Front Runner group for the other selection rules.
+A section boundary retains the handed-over incumbent until ordinary selection
+or restoration replaces it. A returning forward runner does not first refresh
+the incumbent to the leader of its own style group. That extra replacement can
+delay restoration and end Pace Down prematurely. Runaway shares the Front
+Runner group under the same retention rule.
 Between section-selection passes, the forward group's leader passing the
 incumbent restores the forward pacemaker and clears handover state, even if a
 different running style still leads the race. If that pass coincides with a
@@ -142,6 +140,22 @@ see the [corridor correction](CORRIDOR-FIX-20261023.md).
 The final-corner outward preference does not disable passing or force an
 unconditional fixed lane. Finished runners are excluded where the relevant
 blocking/competition checks require active rivals.
+
+Passing routes are visited in target order, inward then outward, and scored
+by weighted lateral distance. A lower cost wins. At exactly equal float32 cost,
+a later route replaces the retained route only when all of these hold:
+
+- Its original target has a farther cached longitudinal position.
+- Both the candidate and retained route move toward their respective obstacle
+  side: `(candidateLane - ownerLane) * routeSide > 0` for each route.
+- The candidate fits the available body clearance and the retained route does not.
+
+Body clearance subtracts the loaded `SideBlockLaneGap` from space limited by a
+neighbor, clamping at zero; an unobstructed track edge keeps its available space.
+This is a tie preference, separate from the ordinary corridor-reachability test.
+Ties between sides of the same target and with the straight fallback retain
+their existing order. Two outward obstacle edges can lie on opposite sides of
+the runner; equal cost alone must not reverse the retained movement.
 
 Front blocking caps speed according to minimum speed, blocker speed and gap
 (see mathematics). Lane movement can also change world-path length. Therefore

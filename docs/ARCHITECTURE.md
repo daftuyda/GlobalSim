@@ -18,8 +18,8 @@ input buffer; Unicode input uses the character-aware parser.
 Runner construction shares a request-local prepared roster containing style
 counts, skill and character membership, favorite-style information and team stat
 sums. Self exclusions and team sums retain their original runner order and
-numeric rounding. This data is rebuilt for each request; each seed has its own
-mutable simulation state.
+numeric rounding. A prepared setup reuses these immutable facts across seeds;
+each seed has its own mutable simulation state.
 
 Tick, rank and lane buffers reuse their storage. Rank-band thresholds are
 calculated once from the fixed field size, retaining the original rounded cutoffs. Running-style scoring groups
@@ -87,7 +87,7 @@ passes through [`race_solver_retail.rs`](../src/race_solver_retail.rs) and
 startup, geometry and section behavior. These are not interchangeable with the
 default solver. The examples deliberately name the selected path.
 
-For the benchmark profile use `examples/v75-race.jsonl`. Its switches do
+For the validated profile use `examples/v76-race.jsonl`. Its switches do
 not enable the separate startup option. The reconstructed field tick proceeds in this order:
 
 1. Capture the pre-movement roster, then collect duel proximity, geometry width
@@ -163,6 +163,16 @@ platform allocator. Neither option changes simulation rules.
 This binary produces simulation results and replay observations. Encoding the game's `race_scenario`,
 persisting results, granting rewards, and playback/UI are outside this package.
 Post-finish movement is distinct from the recorded finish time and rank.
+
+## Field decision boundaries
+
+Pacemaker selection retains an incumbent across section boundaries until the
+normal selection or restoration rule replaces it. Passing-route ties combine
+cached target reach with live obstacle routes and available lateral body space.
+These decisions depend on when ranks and positions are observed; substituting
+one field-wide snapshot for all reads changes the behavior.
+See [field mechanics](FIELD-MECHANICS.md) for the rules and
+[mathematics](MATHEMATICS.md) for rounding boundaries.
 
 ## Numerical reproducibility
 

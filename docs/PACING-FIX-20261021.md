@@ -1,5 +1,9 @@
 # Pacemaker restoration correction — 21 October 2026
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 The practice race on course 10801 with captured seed 636656617 now matches
 every strict replay check. The same correction also resolves the older practice
 pacing case, both older Career pacing cases, and the later pacing discrepancy
@@ -65,7 +69,7 @@ simulation input and seed-inference diagnostic. The combined manifest retains
 the previous quarantine's records and points to their preserved copies.
 
 Quarantine location:
-`D:/UmamusumeData/race-datasets/quarantine/captured-seed-replay-mismatch-20261021`.
+`<race-dataset>/quarantine/captured-seed-replay-mismatch-20261021`.
 Normal Career rechecks exclude all 659 IDs; `--include-quarantined` includes
 them with their original seeds. Both selection paths were verified. The frozen
 corpus contains 386,895 captures, of which **386,236 are active**; these are

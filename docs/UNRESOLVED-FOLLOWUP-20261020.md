@@ -1,5 +1,9 @@
 # Unresolved race follow-up — 20 October 2026
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 The largest discrepancy group now has a substantially clearer explanation:
 **all 492 Career startup cases have recorded start-delay sequences consistent
 with a seed different from the captured seed**. Using that inferred seed in
@@ -135,7 +139,7 @@ per-case inferred-seed checks, raw-packet cross-checks, private probe builds,
 regression failure, source snapshots, and reproduction scripts. Detailed local
 artifacts are under:
 
-`D:/UmamusumeData/race-datasets/discrepancies-20261020-followup`
+`<race-dataset>/discrepancies-20261020-followup`
 
 The validated production Rust source and engine are unchanged by this follow-up.
 The prior full-batch validation remains applicable to that unchanged build.

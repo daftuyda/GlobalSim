@@ -1,5 +1,9 @@
 # Practice competition recording and Career quarantine
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 > **[23 October corridor follow-up](CORRIDOR-FIX-20261023.md):** The isolated practice rounding case (`f400e64edf548950`) now passes after the corridor correction; its quarantine membership is unchanged. The results below describe the original historical audit.
 
 The competition recording correction resolves **all 172 event-ordering
@@ -78,7 +82,7 @@ microseconds. Validation tolerances and the original input are unchanged.
 Its reason is `unresolved-numerical-drift`, distinct from the Career seed/replay
 inconsistencies. Reference data, input, expected and actual outputs, and the
 diagnostics are preserved under
-`D:/UmamusumeData/race-datasets/quarantine/practice-numerical-drift-20261022`.
+`<race-dataset>/quarantine/practice-numerical-drift-20261022`.
 Restoration requires a general fix passing the capture's full strict checks
 and regression controls, followed by review. Explicit inclusion remains
 available for research. The [isolation receipt](../evidence/practice-isolation-20261022.json)
@@ -97,5 +101,5 @@ lane and world-coordinate evidence around the first divergence.
 The original [validation report](../evidence/practice-fixes-20261022.json) records the
 accepted engine, checks, quarantine receipt and unresolved case. Private
 reproduction artifacts are under
-`D:/UmamusumeData/race-datasets/practice-fixes-20261022`; original intake
+`<race-dataset>/practice-fixes-20261022`; original intake
 results remain under `new-races-20261022`.

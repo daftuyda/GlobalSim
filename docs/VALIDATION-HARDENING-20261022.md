@@ -1,5 +1,9 @@
 # Capture validation and reproducibility
 
+> Historical report: counts, open issues and test results below describe
+> the stated audit and its follow-ups. See [current accuracy](ACCURACY.md)
+> and [testing](TESTING.md) for the committed engine.
+
 The subsequent [full corpus audit](FULL-VALIDATION-20261022.md) applies these
 checks to all 435,216 registered races, with active and quarantined results
 reported separately. The smaller panel results below remain their original

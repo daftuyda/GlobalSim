@@ -1,34 +1,42 @@
 # Dataset quarantine
 
-492 Career captures are quarantined for a **captured-seed/replay mismatch**.
-Their recorded start delays imply a different seed from the original input.
-The cause remains unresolved; this does not establish that their replays are
-invalid or that the simulator reproduces the server's seed-selection behaviour.
+Quarantine separates explicitly identified captures from active validation while
+preserving their original inputs, seeds, replays and historical results. It does
+not turn a discrepancy into a simulator pass or establish that a capture is corrupt.
 
-The [portable quarantine index](../evidence/quarantine-20261020.json) identifies
-the exact replay hashes. The original captures, seeds and historical audit
-results remain preserved in the local dataset. No captured seed was replaced.
-The local Career recheck tool excludes these hashes by default and supports
-explicit inclusion for research. Archived audit scripts retain their original
-selection so historical runs remain reproducible.
+## Recorded scope
 
-| Latest audited batch | Races |
-| --- | ---: |
-| Original batch | 95,062 |
-| Quarantined | 492 |
-| Active batch | 94,570 |
-| Strict matches | 94,566 |
-| Active unresolved discrepancies | 4 |
+The latest documented inventory, frozen on **28 October 2026**, contains:
 
-This is a partition of existing results, not another simulation run. The
-original result remains 94,566 matches and 496 unresolved cases. The older
-247,851 races were not rerun in this batch.
+| Capture type | Registered | Quarantined | Active |
+|---|---:|---:|---:|
+| Practice | 696,779 | 1 | 696,778 |
+| Career | 13,174 | 885 | 12,289 |
+| Total | 709,953 | 886 | 709,067 |
 
-491 quarantined races match all strict observations when given a seed inferred
-from their replay. These are diagnostic matches, not validation passes. The
-remaining quarantined race also exposes a later pacing discrepancy.
+The most recent quarantine action added 87 Career captures on 25 October.
+One quarantined practice capture now has a passing retained audit; its manifest
+membership remains unchanged. Historical active findings still include one
+practice discrepancy and 410 Career discrepancies. Inventory membership and
+validation status are separate records.
 
-Quarantine applies only to the listed identities. New failures are investigated
-individually. Restoration requires evidence resolving the mismatch or a verified
-seed mapping available before simulation, followed by explicit review of the
-manifest and active dataset views.
+See the [latest intake](NEW-RACES-20261028.md),
+[87-case quarantine report](CAREER-QUARANTINE-20261025.md) and
+[quarantine evidence](../evidence/career-quarantine-20261025.json).
+
+## Interpretation and restoration
+
+Career startup discrepancies can match when rerun with a seed inferred from the
+replay. These are diagnostic matches, not canonical passes: inference uses the
+answer being tested. Conditional Career goal-failure handling remains a possible
+explanation, and the general rule is not established.
+
+New discrepancies are investigated individually. Keep exact capture identities,
+original and diagnostic inputs, the reason for exclusion and the audit scope.
+Explicitly include quarantined records when investigating them; preserve the
+selection used by historical reports.
+
+Restore a record after a verified input mapping available before simulation or
+a general engine correction reproduces its original observations. Review the
+manifest change explicitly and rerun the relevant checks. Changing selection,
+substituting a replay-derived seed or loosening a tolerance is not an accuracy fix.

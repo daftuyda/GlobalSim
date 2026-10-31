@@ -1,13 +1,18 @@
 # Performance
 
-## Version 76
+## Version 76 release measurements
+
+These timings belong to the v76 release benchmark. The 31 October pacemaker and
+passing corrections have correctness/regression evidence, but no new paired
+latency benchmark is recorded for that exact source revision. The figures below
+are a measured release baseline, not a new performance claim for those fixes.
 
 Full-replay worker requests averaged **4.62 ms for 9 runners**, **5.36 ms for
 12 runners**, and **10.68 ms for 18 runners** on the measured workloads.
-The paired comparison uses the current pre-rewrite engine, including the latest
-accuracy fixes, as its baseline.
+The paired comparison used the pre-rewrite engine and accuracy fixes available
+at the time of that release as its baseline.
 
-| Workload | Current baseline | v76 | Reduction in mean time |
+| Workload | Release comparison baseline | v76 | Reduction in mean time |
 |---|---:|---:|---:|
 | 9 runners, 1600 m | 4.839 ms | 4.619 ms | 4.5% |
 | 12 runners, 1200 m | 5.660 ms | 5.356 ms | 5.4% |
