@@ -765,15 +765,9 @@ impl RaceField {
         if previous.is_none() {self.section_pacemaker.set(Some((leader,0)));}
         let entering_section = section > old_section && (section as f32) < end;
         if entering_section {
-            // A returning forward leader first refreshes the handed-over
-            // group's incumbent at a section boundary. A returning Runaway
-            // retains the incumbent through this pass. Restoration then
-            // compares against that group's current leader on later ticks.
-            if self.pm_handed.get()
-                && self.strategies[leader] != Strategy::Oonige
-                && active.iter().position(|&i|i==leader) < active.iter().position(|&i|i==selected) {
-                selected=active.iter().copied().find(|&i|style(i)==style(selected)).unwrap_or(selected);
-            }
+            // Retain the incumbent until ordinary selection or restoration
+            // chooses its replacement. Refreshing its style-group leader here
+            // can delay a returning forward runner and end Pace Down too early.
             if style(overall)==forward && !self.pm_handed.get() {selected=leader;}
             // A detached forward group yields to the most-forward style
             // within range, preserving rank within that style. Front Runners

@@ -369,6 +369,7 @@ impl TargetState {
         if passing {
             let mut target = PassingSearch {
                 lane_preference: c.lane_preference,
+                side_lane: p.block.side_lane,
                 owner: c.owner.point,
                 phase: c.phase,
                 max_lane: c.max_lane,
@@ -566,6 +567,7 @@ impl PointRow for Horse { fn point(&self) -> Row { self.point } }
 
 pub struct PassingSearch<'a, T = Row> {
     pub lane_preference: u8,
+    pub side_lane: f32,
     pub owner: Row,
     pub phase: i32,
     pub max_lane: f32,
@@ -755,9 +757,21 @@ impl<T: PointRow> PassingSearch<'_, T> {
                     && row.lane as f64 <= high
             })
         };
+        let fits_side_space = |candidate: f32| {
+            let inward = if self.side.in_space < lane {
+                (self.side.in_space - self.side_lane).max(0.)
+            } else { self.side.in_space };
+            let outward = if self.side.out_space < self.max_lane - lane {
+                (self.side.out_space - self.side_lane).max(0.)
+            } else { self.side.out_space };
+            let delta = candidate - lane;
+            if delta < 0. { -delta <= inward } else { delta <= outward }
+        };
         let mut best = lane;
         let mut best_score = f32::INFINITY;
-        let mut consider = |candidate: f32| {
+        let mut best_origin = f32::NEG_INFINITY;
+        let mut best_side = 0.;
+        let mut consider = |candidate: f32, origin: Option<f32>, route_side: f32| {
             let weight = if candidate < lane {
                 if self.phase == 0 { 100. }
                 else if self.phase >= 2 { 1.149999976158142_f32 }
@@ -767,9 +781,20 @@ impl<T: PointRow> PassingSearch<'_, T> {
             let skill = if (self.lane_preference == 1 && gap > 0.)
                 || (self.lane_preference == 2 && gap < 0.) { 1.5 } else { 1. };
             let cost = ((gap * weight) * skill).abs();
-            if cost < best_score {
+            // A tied route must improve both the target reach and body clearance.
+            // Clearance can select a different obstacle side only when both routes
+            // move toward that side. Two outward edges may straddle the owner;
+            // their equal costs alone must not reverse the retained movement.
+            // Preserve ties between the same target's sides and the straight fallback.
+            if cost < best_score || (cost == best_score
+                && origin.is_some_and(|position| position > best_origin)
+                && (candidate - lane) * route_side > 0.
+                && (best - lane) * best_side > 0.
+                && fits_side_space(candidate) && !fits_side_space(best)) {
                 best = candidate;
                 best_score = cost;
+                best_origin = origin.unwrap_or(f32::NEG_INFINITY);
+                best_side = route_side;
             }
         };
         for &index in self.targets {
@@ -830,7 +855,7 @@ impl<T: PointRow> PassingSearch<'_, T> {
                 let row = self.live[edge].point();
                 let candidate = row.lane + direction * EDGE;
                 if clear(candidate, row.position + 0.5, None) {
-                    consider(candidate);
+                    consider(candidate, Some(self.cached[index].point().position), direction);
                 }
             }
         }
@@ -856,7 +881,7 @@ impl<T: PointRow> PassingSearch<'_, T> {
             None
         };
         if clear(straight, nearest + 3., bounds) {
-            consider(straight);
+            consider(straight, None, 0.);
         }
         best
     }
@@ -928,7 +953,7 @@ mod tests {
             in_space: owner.lane, out_space: 1.0287965536117554,
             inner_blocker: None, inner_blocker_index: None };
         let target = |rows: &[Row]| PassingSearch {
-            lane_preference: 0, owner, phase: 1, max_lane: 1.2,
+            lane_preference: 0, side_lane: 0.1111110970377922, owner, phase: 1, max_lane: 1.2,
             live: rows, cached: &cached, visible: &[0, 1, 2, 4, 6, 7, 9, 10, 11, 12, 13, 14],
             targets: &[1], side,
         }.target();
@@ -936,6 +961,90 @@ mod tests {
         let mut outside = live;
         outside[13].lane = f32::from_bits(live[13].lane.to_bits() - 1);
         assert_eq!(target(&outside), 0.11564779281616211_f32);
+    }
+
+    #[test]
+    fn passing_ties_require_more_target_reach_and_body_clearance() {
+        let block = BlockParameters { front_distance: 2., front_lane: 0.0416666716337204,
+            side_distance: 1.05, side_lane: 0.1111110970377922 };
+        let owner = Row { position: 796.3378295898438, lane: 0.07111842185258865 };
+        let cached = [
+            Row { position: 797.9921264648438, lane: 0. },
+            Row { position: 797.9982299804688, lane: owner.lane },
+            Row { position: owner.position, lane: 0.18366937339305878 },
+        ];
+        let mut live = cached;
+        live[0].position = 799.361328125;
+        let search = PassingSearch { lane_preference: 0, side_lane: block.side_lane,
+            owner, phase: 1, max_lane: 1.25, live: &live, cached: &cached,
+            visible: &[0, 1], targets: &[0, 1], side: side_room(owner, 1.25, &cached, block) };
+        assert_eq!(search.target(), 0.015562862157821655_f32);
+        // Loaded body spacing matters: with room on both sides, keep the first route.
+        let narrow = PassingSearch { side_lane: 0.04, ..search };
+        assert_eq!(narrow.target(), 0.12667398154735565_f32);
+
+        let owner = Row { position: 1014.4103393554688, lane: 0.05586765334010124 };
+        let rows = [
+            Row { position: 1020.3208618164062, lane: 0.07183811813592911 },
+            Row { position: 1016.2098999023438, lane: owner.lane },
+            Row { position: 1015.2350463867188, lane: 0.17857620120048523 },
+        ];
+        let search = PassingSearch { lane_preference: 0, side_lane: block.side_lane,
+            owner, phase: 1, max_lane: 1.25, live: &rows, cached: &rows,
+            visible: &[0, 1], targets: &[0, 1], side: side_room(owner, 1.25, &rows, block) };
+        // The inward target route costs one ULP more. The later straight fallback
+        // ties the outward route, so it must not replace that passing route.
+        assert_eq!(search.target(), 0.11142320930957794_f32);
+    }
+
+    #[test]
+    fn passing_ties_preserve_two_outward_edges_straddling_the_owner() {
+        let block = BlockParameters { front_distance: 2., front_lane: 0.0416666716337204,
+            side_distance: 1.05, side_lane: 0.1111110970377922 };
+        let owner = Row { position: 387.21881103515625, lane: 0.07712357491254807 };
+        let cached = [
+            Row { position: 388.56243896484375, lane: 0.021568015217781067 },
+            Row { position: 391.1722717285156, lane: 0.01996961422264576 },
+            Row { position: 386.2972717285156, lane: 0.1887470781803131 },
+        ];
+        let mut live = cached;
+        live[0] = Row { position: 389.92626953125, lane: 0.023166416212916374 };
+        live[1].position = 392.5345153808594;
+        let first = live[0].lane + 0.055555559694767_f32;
+        let second = live[1].lane + 0.055555559694767_f32;
+        assert_eq!((first - owner.lane).abs(), (second - owner.lane).abs());
+        assert!(second < owner.lane && owner.lane < first);
+        let search = PassingSearch { lane_preference: 0, side_lane: block.side_lane,
+            owner, phase: 1, max_lane: 1.25, live: &live, cached: &cached,
+            visible: &[0, 1], targets: &[0, 1], side: side_room(owner, 1.25, &cached, block) };
+        // Both routes pass outside their obstacle. Keep the nearer route even
+        // though the farther edge would move inward and has more body clearance.
+        assert_eq!(search.target(), first);
+    }
+
+    #[test]
+    fn passing_ties_keep_the_first_side_of_the_same_root() {
+        let block = BlockParameters { front_distance: 2., front_lane: 0.0416666716337204,
+            side_distance: 1.05, side_lane: 0.1111110970377922 };
+        let owner = Row { position: 100., lane: 0.34751784801483154 };
+        let edge = 0.055555559694767_f32;
+        let rows = [
+            Row { position: 102., lane: owner.lane },
+            Row { position: 102., lane: owner.lane - edge },
+            Row { position: 102., lane: owner.lane + edge },
+            Row { position: 99.9, lane: owner.lane - 0.11425468 },
+        ];
+        let side = side_room(owner, 1.25, &rows, block);
+        let search = PassingSearch { lane_preference: 0, side_lane: block.side_lane,
+            owner, phase: 1, max_lane: 1.25, live: &rows, cached: &rows,
+            visible: &[0, 1, 2], targets: &[0], side };
+        let inward = rows[1].lane - edge;
+        let outward = rows[2].lane + edge;
+        assert_eq!((owner.lane - inward).abs(), (outward - owner.lane).abs());
+        assert!(owner.lane - inward > side.in_space - block.side_lane);
+        assert!(outward - owner.lane < side.out_space);
+        // The outward side has more lateral room, but does not reach a farther root.
+        assert_eq!(search.target(), inward);
     }
 
     #[test]
@@ -1169,6 +1278,7 @@ mod tests {
                 "front case {case}"
             );
             let target = PassingSearch {
+                side_lane: block.side_lane,
                 lane_preference: v.get("lane_preference").and_then(Value::as_i64).unwrap_or(0) as u8,
                 owner,
                 phase: v.get_i64("phase").unwrap() as i32,
@@ -1190,6 +1300,7 @@ mod tests {
             let live_horses = horses(&live);
             let cached_horses = horses(&cached);
             let direct = PassingSearch {
+                side_lane: block.side_lane,
                 lane_preference: v.get("lane_preference").and_then(Value::as_i64).unwrap_or(0) as u8,
                 owner, phase: v.get_i64("phase").unwrap() as i32, max_lane,
                 live: &live_horses, cached: &cached_horses, visible: &visible, targets: &targets, side,
