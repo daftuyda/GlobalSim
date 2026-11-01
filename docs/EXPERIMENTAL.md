@@ -45,8 +45,9 @@ would end. Other HP policies and non-retail duel behavior keep their existing te
 **Staged pacemaker restoration** (`experimental-pacemaker-staging`). At a section
 boundary after a handover, the returning forward-style group can use its new
 reference one tick before other styles. That selection is retained for the next
-restoration when the runner remains eligible. Ordinary restoration keeps its
-existing selection rule.
+restoration when the runner remains eligible. The reference lookup uses the
+runner's temporary running style while rushing, consistent with its pacing
+controller. Ordinary restoration keeps its existing selection rule.
 
 **Participant cutoff timing** (`experimental-spot-cutoff`). Invited
 lead-competition partners use their previous-tick positions for the entry cutoff.
@@ -140,7 +141,8 @@ The packaged follow-up build matches the prototype's complete outputs on all
 
 Detailed staging checks improve reference-and-mode histories through 15 seconds
 from 16/32 to 26/32 and full-race pacing-decision comparisons from 20/32 to 27/32.
-One-tick reference differences for rushing runners remain under investigation.
+Two observed one-tick reference differences for rushing runners are corrected
+by the Wave 5 change below.
 Those checks cover the staging experiment and must not be read as complete
 state validation of all five features.
 
@@ -153,6 +155,48 @@ complete byte equivalence to that earlier prototype audit.
 
 See the [follow-up validation record](../evidence/experimental-followup-20261101.json)
 for measured scopes, remaining official failures and the retained anomaly.
+
+## Wave 5 validation
+
+Eight new report/replay pairs reproduce eight previously failing sampled races.
+All eight repeat their earlier exported observations on the newer upstream
+engine. They are repeat checks, not additional independent sampled races.
+
+The retained correction makes staged reference selection use the pacing
+controller's temporary running style while rushing. It fixes the observed
+one-tick reference differences in two Wave 4 controls. Across 46 detailed checks,
+reference-and-mode agreement through 15 seconds improves from **35/46 to 37/46**,
+with complete trace coverage in that window. Full-race pacing-decision agreement
+remains **37/46**. The research observer includes attempts rejected before a
+lottery and verifies that logging leaves the complete race output unchanged.
+
+The corrected implementation preserves **all 400,040 complete race outputs** in
+the frozen third-party audit. Its packaged build also matches the checked outputs
+on 1,074 focused inputs. Ordinary report accuracy therefore remains
+**399,947/400,000 sampled races**, with **53 sampled discrepancies**, and the eight
+Wave 5 repeats remain unresolved. The 40 targeted boundary probes and 33 Wave 4
+checks still match; the older adversarial panel remains 36/47.
+
+A separate section-counter reset trial initially fixed 11 checks in the focused
+screen, including three repeated Wave 5 cases, without a regression there. The
+full audit instead found **8 fixes and 51 regressions** among 400,040 inputs. It
+also broke the official `pacemaker-restoration-after-selection-window` fixture.
+The reset was rejected and is absent from this build. Its apparent fixes do not
+count toward the retained profile's accuracy. An always-leading-returner trial
+also broke matching controls and was rejected.
+
+The retained experimental profile remains **72/82** on official fixtures; the
+default remains **82/82**. Both profiles pass 165 Rust tests, and 27 Python checks
+pass. Prepared-library/worker equivalence, concurrent handles and recovery checks
+also pass. These results do not promote the experimental rules to the default.
+
+Longer trace windows still contain missing coverage after idle pacing controllers
+stop updating. One counter-reset trial also matched a report while retaining a
+different internal reference history. Report agreement and complete internal
+state agreement remain separate checks.
+
+See the [Wave 5 validation record](../evidence/experimental-wave5-20261101.json)
+for the retained correction, rejected trials and remaining capture questions.
 
 ## Validation scope
 

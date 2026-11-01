@@ -82,6 +82,14 @@ full internal-state equivalence. See the
 [experimental results and limits](EXPERIMENTAL.md) and the
 [earlier comparison](UMAMOE-MOVEMENT-20261031.md).
 
+The Wave 5 rushing-reference correction improves two observed internal reference
+histories while preserving all 400,040 complete outputs in the frozen third-party
+audit. The sampled match count above is unchanged, with 53 sampled discrepancies
+remaining. Eight fresh exact-seed captures repeat existing failures and are not
+added to the sampled denominator. A broader counter-reset trial fixed eight
+sampled cases but broke 51 others and was rejected. See the
+[Wave 5 validation record](../evidence/experimental-wave5-20261101.json).
+
 ## What the checks establish
 
 - **Inputs:** retain the captured seed, runner identities, ordering, stats,

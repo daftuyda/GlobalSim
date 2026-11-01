@@ -850,8 +850,18 @@ impl RaceSolver {
     }
 
     fn update_retail_pace(&mut self, dt: f32, field: Option<&RaceField>) {
+        let reference_strategy = self.horse.strategy;
+        // Match the pace controller's temporary style while rushing.
+        #[cfg(feature = "experimental-pacemaker-staging")]
+        let reference_strategy = if self.is_kakari {
+            match self.retail.as_ref().unwrap().rushing.mode {
+                1 => Strategy::Sasi,
+                2 => Strategy::Senkou,
+                _ => Strategy::Nige,
+            }
+        } else { reference_strategy };
         let (field, index, pacemaker) =
-            match field.and_then(|f| Some((f, self.field_index?, f.pacemaker_for(self.horse.strategy)?))) {
+            match field.and_then(|f| Some((f, self.field_index?, f.pacemaker_for(reference_strategy)?))) {
                 Some(x) => x,
                 None => return,
             };
