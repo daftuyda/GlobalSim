@@ -5,6 +5,54 @@ corrections committed on 31 October 2026. Official replay comparisons,
 implementation regressions and third-party simulator comparisons have separate
 denominators. None establishes accuracy for every possible race.
 
+## Evidence priority
+
+Official practice captures are the primary reference for race mechanics and
+numerical behavior. Uma.moe exports are supporting evidence for generating
+hypotheses and reproducing possible edge cases. When the sources disagree, retain
+the behavior supported by official captures. A higher third-party match count
+cannot compensate for an official regression.
+
+Changes to race behavior must preserve the matches in the complete frozen active
+practice inventory before promotion to the default engine. Keep the original
+seeds, runner builds, course data, validator and comparison coverage fixed.
+Missing races, changed inputs or weaker checks cannot establish a pass. An
+unresolved official case whose output changes remains subject to investigation,
+even if both builds still classify it as a failure. A simulator disagreement
+alone is not grounds for quarantining an official capture.
+
+The default build remains the basis of official-accuracy work. Experimental
+features that fail official fixtures are blocked from promotion. Features that
+pass the fixtures still need the full practice comparison; passing 82 cases does
+not establish accuracy on the roughly 700,000-capture inventory.
+
+### Official regression gate
+
+`tools/check_official_promotion.py` compares strict fixture reports and frozen
+corpus audits. It requires every active practice capture in the supplied
+authoritative inventory, unchanged inputs and validation coverage, and zero new
+official failures. It also binds each corpus audit to the same engine used for
+its fixture check. It does not accept third-party scores as inputs.
+Fixture reports also identify the exact compressed capture files; matching case
+names alone cannot establish that both engines were checked against the same data.
+
+```sh
+python tools/check_official_promotion.py --baseline-fixtures official-audits/baseline/fixtures.json --candidate-fixtures official-audits/candidate/fixtures.json --inventory official-audits/frozen/jobs.jsonl --baseline-practice official-audits/baseline --candidate-practice official-audits/candidate --report official-audits/promotion.json
+```
+
+Each corpus audit directory supplies `config.json`, `jobs.jsonl`, `results.jsonl`
+and `summary.json`, with receipts for its engine, course data, projections and
+validation tools. Use the authoritative inventory frozen from the official
+registry, including the archived cohort and existing quarantine membership.
+The gate covers exactly that inventory; an independently selected subset must
+not be described as a whole-corpus audit. Career and quarantined results are
+reported separately and cannot offset active-practice regressions.
+
+Omitting the corpus arguments provides a fixture screen but always leaves the
+promotion gate closed. A closed gate exits with status 1 and records its reasons.
+Passing this check establishes non-regression on its recorded scope, not universal
+accuracy, and does not itself publish or deploy a build.
+
 ## Current validated engine
 
 | Check | Scope | Result |

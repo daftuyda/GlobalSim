@@ -4,6 +4,32 @@ GlobalSim provides opt-in rules for investigating differences with uma.moe's
 exported races. These profiles retain the same seeded worker and prepared-library
 interfaces. They are research configurations of v76, not a new stable release.
 
+Official practice captures take priority over third-party agreement. The full
+comparison profile fails ten of the 82 included official fixtures and is blocked
+from promotion to the default engine. Use uma.moe to discover and investigate
+possible edge cases; retain an engine change only when official validation
+supports it. See the [official regression gate](ACCURACY.md#official-regression-gate).
+
+Individual components are screened separately against official captures. A
+fixture pass permits further evaluation on the practice corpus; it is not an
+approval to enable the component in the default build.
+
+| Component checked alone | Official fixtures | Status for default promotion |
+|---|---:|---|
+| Inward-gap refresh | 73/82 | Blocked: official regressions |
+| Staged pacemaker restoration | 81/82 | Blocked: official regression |
+| Participant-cutoff timing | 81/82 | Blocked: official regression |
+| Duel-stamina arithmetic | 82/82 | Full practice comparison required |
+| Whole-metre entry cutoff | 82/82 | Full practice comparison required |
+| Pacing logarithm | 82/82 | Full practice comparison required |
+
+These checks use the same 82 captured fixtures, with a receipt binding the actual
+fixture files to every report. They do not rerun the complete practice corpus.
+The earlier 52,096-race duel-only check preserved outputs but demonstrated no
+additional official matches. Passing a screen alone is not evidence that an
+experimental rule is more faithful to the game.
+See the [official-priority assessment](../evidence/official-priority-20261101.json).
+
 ## Build
 
 The original aggregate enables the gap and duel experiments:

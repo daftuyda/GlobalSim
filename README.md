@@ -42,9 +42,11 @@ equivalence. [Accuracy and coverage](docs/ACCURACY.md) distinguishes official
 captures, third-party comparisons and known limitations.
 [Performance](docs/PERFORMANCE.md) reports measured latency and benchmark scope.
 
-An optional [experimental uma.moe profile](docs/EXPERIMENTAL.md) improves agreement
-with exported third-party races. It has known differences from official captures
-and requires an explicit build feature.
+Official practice captures are the primary accuracy reference. Third-party
+simulators help identify possible edge cases; improvements must preserve official
+capture agreement before entering the default engine. Optional
+[uma.moe comparison profiles](docs/EXPERIMENTAL.md) have known official regressions
+and remain separate research configurations.
 
 ## Getting started
 

@@ -307,10 +307,13 @@ def main():
     if not fixtures:
         raise SystemExit("No accuracy fixtures found")
     rows = []
+    fixture_receipts = {}
     log_context = args.report.with_suffix('.worker.log').open('wb') if args.report else nullcontext(sys.stderr)
     with log_context as log, Worker([str(args.engine.resolve())], log, output='json', timeout=args.timeout) as worker:
         for fixture in fixtures:
-            case = json.loads(gzip.decompress(fixture.read_bytes()))
+            raw = fixture.read_bytes()
+            fixture_receipts[fixture.name] = hashlib.sha256(raw).hexdigest()
+            case = json.loads(gzip.decompress(raw))
             spec = dict(case["input"], retainAllFrames=True)
             preflight = audit_input(spec, case['expected'])
             if not preflight['passed']:
@@ -328,6 +331,8 @@ def main():
             except (AssertionError, ValueError, KeyError, IndexError, TypeError, OverflowError, OSError, TimeoutError) as error:
                 rows.append({"case": case["name"], "passed": False, "error": str(error)})
     report = {"engineSha256": hashlib.sha256(args.engine.read_bytes()).hexdigest(),
+              "fixturesSha256": hashlib.sha256(json.dumps(fixture_receipts, sort_keys=True,
+                                                          separators=(',', ':')).encode()).hexdigest(),
               "mode": "legacy-prefinish" if args.legacy else "strict-observations-v2",
               "passed": sum(row["passed"] for row in rows), "total": len(rows), "cases": rows}
     if args.report:

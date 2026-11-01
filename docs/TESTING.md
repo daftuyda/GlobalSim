@@ -5,13 +5,15 @@ engine path so the validator checks the binary you intend to ship.
 
 ## Current validation
 
-The default build with the 31 October corrections passes **165 Rust tests**
+The default build passes **167 Rust tests**
 and **82 official captured-race fixtures**. Its final passing-route refinement
 preserved all 52,096 complete outputs in the latest official regression cohort.
 Across 437,000 third-party inputs, it preserved 436,999 complete outputs and
 corrected one discrepancy without regressions.
 
-The Python validation suite also passes all **27 tests**.
+The Python validation suite also passes all **39 tests**, including twelve
+promotion-gate tests for missing captures, altered inputs, reduced coverage,
+quarantine changes, changed unresolved cases and stale validation receipts.
 
 The optional experimental profile has its own results and known official-fixture
 failures. Use the [experimental validation instructions](EXPERIMENTAL.md) when
@@ -25,10 +27,13 @@ failure against its reference. See [accuracy and coverage](ACCURACY.md) and the
 ## Build and unit tests
 
 ```sh
-cargo build --release --locked
 cargo test --release --locked
+cargo build --release --locked
 python -m unittest discover -s tests
 ```
+
+Build release artifacts after the Rust tests so a test library's panic
+configuration does not replace the binary intended for validation or deployment.
 
 The default allocator is mimalloc. To check the platform-allocator configuration:
 
@@ -53,6 +58,8 @@ directory is `tests/fixtures/accuracy`. Each compressed fixture contains its
 input and expected official observations. The default comparison includes
 strict ordering and post-finish observations; `--legacy` selects the earlier
 pre-finish comparison and must be reported separately.
+Each report includes `fixturesSha256`, binding the exact compressed fixture files
+used in that run. Promotion comparisons require matching fixture receipts.
 
 Recent regressions cover pacemaker retention at section boundaries, inward
 corridor rounding, competition partner cutoffs and event order. Lane unit tests
@@ -101,6 +108,13 @@ For a candidate correction:
 4. Compare complete baseline and candidate outputs; investigate every change.
 5. Check worker/prepared equivalence when shared state or execution order changes.
 6. Measure latency separately using identical inputs, output modes and build settings.
+
+Before promoting a behavior change, run the complete frozen active-practice
+comparison and the [official regression gate](ACCURACY.md#official-regression-gate).
+An improvement on one official case or on uma.moe cannot offset a new official
+failure. The gate remains closed if full practice evidence is missing, even when
+all 82 focused fixtures pass. Use the authoritative inventory from the capture
+registry; a smaller selected cohort does not establish whole-corpus accuracy.
 
 Third-party simulations support diagnosis but do not override a conflicting
 official capture. See [third-party comparison](UMAMOE-MOVEMENT-20261031.md),
