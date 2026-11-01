@@ -198,6 +198,45 @@ state agreement remain separate checks.
 See the [Wave 5 validation record](../evidence/experimental-wave5-20261101.json)
 for the retained correction, rejected trials and remaining capture questions.
 
+### Return controls and recorded-frame checks
+
+A further 21 report/replay pairs cover eight repeats, twelve synthetic power
+variants and one projection of an official fixture. The thirteen return and
+counter controls match **11/13** ordinary reports; the eight boundary-sweep
+variants match **7/8**. These targeted checks do not increase the independent
+sample count. Repeated inputs preserve the earlier exported observations.
+
+The detailed audit now also compares position, speed, HP, lane, rushing state
+and blocker identity at the binary replay's own recorded timestamps. It uses
+the encoded channels' wire precision, maps runner identities and refuses to
+interpolate missing ticks or omit post-finish samples. Across 67 targeted
+captures, **55/67** match both the ordinary reports and every recorded binary
+frame. There are 4,629 recorded frames; four clocks absent from local output
+belong to already failing cases. This adds coverage without exposing the
+remote engine's intervening ticks.
+
+Reference-and-mode histories through 15 seconds match **50/67**, with complete
+coverage in that window. Seven report-matching captures, representing five
+distinct inputs, still have reference-annotation differences. They do not
+demonstrate a movement error by themselves. Full-race pacing decisions match
+**54/67**. One report-matching official projection differs only in ten reported
+lottery-threshold values; its rolls and decisions agree. The arithmetic or
+effective-stat cause remains unresolved.
+
+The official projection agrees with all nine captured elapsed finish times and
+80 skill-activation identities/times. Other official result fields are absent
+from that comparison, and full official frame/state parity is not established.
+
+Further counter experiments were rejected. Using the fresh rank for the section
+counter fixes **1** input but breaks **80** in the 400,040-input audit. Three
+stricter guards each fix **2** checks but break **74** in an expanded 1,220-input
+screen. None is included in the engine. The retained sampled result remains
+**399,947/400,000**, with **53** discrepancies; no simulation rule changes follow
+from these checks.
+
+See the [control and frame audit](../evidence/experimental-wave5-controls-20261101.json)
+for capture identities, validation scopes and rejected-trial results.
+
 ## Validation scope
 
 Third-party comparisons cover exported whole-second position, lane, speed and HP,

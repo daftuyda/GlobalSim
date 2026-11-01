@@ -90,6 +90,15 @@ added to the sampled denominator. A broader counter-reset trial fixed eight
 sampled cases but broke 51 others and was rejected. See the
 [Wave 5 validation record](../evidence/experimental-wave5-20261101.json).
 
+An additional 21 targeted capture pairs match 18 ordinary reports. The expanded
+detailed audit covers 67 captures: 55 match every recorded binary frame as well
+as their reports, 50 match reference-and-mode histories through 15 seconds, and
+54 match full-race pacing decisions. These scopes overlap but are not equivalent;
+recorded binary frames still omit intervening remote ticks. No additional
+report-matching movement failures were found. The new counter variants regress
+controls and remain excluded. See the
+[control and frame audit](../evidence/experimental-wave5-controls-20261101.json).
+
 ## What the checks establish
 
 - **Inputs:** retain the captured seed, runner identities, ordering, stats,
