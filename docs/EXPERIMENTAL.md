@@ -234,6 +234,14 @@ screen. None is included in the engine. The retained sampled result remains
 **399,947/400,000**, with **53** discrepancies; no simulation rule changes follow
 from these checks.
 
+An alternative restoration-order trial initially fixes 46 checks and regresses
+11 in that focused screen. The full 400,040-input audit instead finds **33 fixes
+and 184 regressions**. It is also rejected. Its apparent improvements in the
+captured problem cases do not count toward the retained engine's accuracy.
+Requiring a previously active pacing effect does not resolve this: two variants
+each fix 45 checks but regress 153 and 154 respectively in the expanded
+1,402-input screen. Both remain excluded.
+
 See the [control and frame audit](../evidence/experimental-wave5-controls-20261101.json)
 for capture identities, validation scopes and rejected-trial results.
 

@@ -632,7 +632,139 @@
       "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\wave5-guard-screen\\summary.json",
       "sha256": "4c58e12417ab008c8c62d2e93a57b3ce49a992125ff1fa6a388507fb103662a4"
     },
-    "retainedInEngine": false
+    "retainedInEngine": false,
+    "restorationOrder": {
+      "status": "rejected",
+      "published": false,
+      "rule": "Preserve an eligible staged preview; otherwise select the lowest gate index after the incumbent among returning candidates, falling back to the leading candidate.",
+      "screen": [
+        {
+          "mode": 0,
+          "counts": {
+            "races": 1220,
+            "before": 1145,
+            "after": 1145,
+            "unchanged": 1220,
+            "fixed": 0,
+            "regressed": 0
+          }
+        },
+        {
+          "mode": 16,
+          "counts": {
+            "races": 1220,
+            "before": 1145,
+            "after": 1180,
+            "unchanged": 1159,
+            "fixed": 46,
+            "regressed": 11
+          }
+        },
+        {
+          "mode": 17,
+          "counts": {
+            "races": 1220,
+            "before": 1145,
+            "after": 1180,
+            "unchanged": 1159,
+            "fixed": 46,
+            "regressed": 11
+          }
+        },
+        {
+          "mode": 18,
+          "counts": {
+            "races": 1220,
+            "before": 1145,
+            "after": 1179,
+            "unchanged": 1148,
+            "fixed": 51,
+            "regressed": 17
+          }
+        }
+      ],
+      "fullCounts": {
+        "races": 400040,
+        "before": 399987,
+        "after": 399836,
+        "unchanged": 399820,
+        "fixed": 33,
+        "regressed": 184
+      },
+      "fullRecord": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\wave5-order-choice-full\\summary.json",
+        "sha256": "46a295c5fcdf20b41985e421fd4bb368a21b6ca42fa38f4f8f20c4775450b414"
+      },
+      "official": {
+        "passed": 72,
+        "total": 82,
+        "newFailures": 0,
+        "record": {
+          "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\wave5-order-choice-official.json",
+          "sha256": "86e6598df9bebb3e4cd8942b80d1c7cdaab310aab5f569296716a376eea318dc"
+        }
+      },
+      "combinedDetailed": {
+        "captures": 67,
+        "reportMatches": 60,
+        "referenceModeMatches": 57,
+        "decisionMatches": 59,
+        "binaryFrameMatches": 60,
+        "outputsUnchangedFromChoiceOnly": true,
+        "record": {
+          "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\wave5-order-choice-combined-details\\mode-16\\summary.json",
+          "sha256": "dc5247e4a6fde7dcb2851e64ebee691f672ce60cc8975fe0fec3a0b84fec8f70"
+        }
+      },
+      "limits": [
+        "The full audit is the isolated ordering trial; the combination with the retained rushing lookup was checked on 67 detailed captures only.",
+        "The narrower control improvement does not override the 184 full-audit regressions."
+      ]
+    },
+    "previouslyActiveRestoration": {
+      "published": false,
+      "retained": false,
+      "screen": [
+        {
+          "mode": 0,
+          "counts": {
+            "races": 1402,
+            "before": 1327,
+            "after": 1327,
+            "unchanged": 1402,
+            "fixed": 0,
+            "regressed": 0
+          }
+        },
+        {
+          "mode": 19,
+          "counts": {
+            "races": 1402,
+            "before": 1327,
+            "after": 1219,
+            "unchanged": 1200,
+            "fixed": 45,
+            "regressed": 153
+          }
+        },
+        {
+          "mode": 20,
+          "counts": {
+            "races": 1402,
+            "before": 1327,
+            "after": 1218,
+            "unchanged": 1199,
+            "fixed": 45,
+            "regressed": 154
+          }
+        }
+      ],
+      "record": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\wave5-active-choice-screen\\summary.json",
+        "sha256": "39fcd2b1fd50bffef84c7c3480cba33f9cc5b2765ab6fd6038a11d2f80366e7b"
+      },
+      "fullAuditRun": false
+    }
   },
   "unchangedSampledResult": {
     "matches": 399947,
