@@ -4,6 +4,31 @@ use crate::json::Value;
 use crate::retail_physics::bounded_stat;
 use crate::retail_random::RandomSource;
 
+#[inline]
+fn wisdom_logarithm(wisdom: f32) -> f32 {
+    let argument = bounded_stat(wisdom) * 0.1;
+    #[cfg(not(feature = "experimental-pacing-log"))]
+    { (argument as f64).log10() as f32 }
+    #[cfg(feature = "experimental-pacing-log")]
+    {
+        // Match the split, single-precision calculation observed in third-party
+        // pacing thresholds. This is not a change to official-game arithmetic.
+        // Adapted from SunPro's log10f reduction; see licenses/pacing-log.txt.
+        // The inner logarithm retains our double-to-single rounding. This is
+        // validated compatibility for these captures, not a full libc port.
+        if argument.is_nan() { return argument; }
+        let bits = argument.to_bits();
+        let exponent = (bits >> 23) as i32 - 127;
+        let adjust = i32::from(exponent < 0);
+        let y = (exponent + adjust) as f32;
+        let mantissa = f32::from_bits((bits & 0x007f_ffff) | (((127 - adjust) as u32) << 23));
+        let logarithm = (mantissa as f64).ln() as f32;
+        let low = y * f32::from_bits(0x3554_27db)
+            + f32::from_bits(0x3ede_5bd9) * logarithm;
+        low + y * f32::from_bits(0x3e9a_2080)
+    }
+}
+
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Mode {
     SpeedUp,
@@ -299,7 +324,7 @@ impl State {
         };
         if index < 3 && !c.rushing {
             let roll = rng.real(0., 100.);
-            let logarithm = ((bounded_stat(c.wisdom) * 0.1) as f64).log10() as f32;
+            let logarithm = wisdom_logarithm(c.wisdom);
             if roll >= logarithm * p.wisdom[index][runaway] {
                 return;
             }
@@ -326,6 +351,46 @@ impl State {
 mod tests {
     use super::*;
     use crate::retail_random::RetailRandom;
+
+    #[cfg(feature = "experimental-pacing-log")]
+    #[test]
+    fn captured_wisdom_thresholds_match_third_party_replays() {
+        // Seven skill-free captures, with both lottery coefficients observed.
+        // The final three effective values follow the existing >1200 stat rule.
+        let captures: [(f32, f32, f32); 7] = [
+            (600., 26.672269821166992, 35.563026428222656),
+            (1148., 30.89912986755371, 41.1988410949707),
+            (1149., 30.90479850769043, 41.206398010253906),
+            (1150., 30.91046714782715, 41.21395492553711),
+            (1270., 31.55705451965332, 42.076072692871094),
+            (1270.5, 31.559621810913086, 42.079498291015625),
+            (1271., 31.562183380126953, 42.082908630371094),
+        ];
+        for (wisdom, fifteen, twenty) in captures {
+            assert_eq!((wisdom_logarithm(wisdom) * 15.).to_bits(), fifteen.to_bits());
+            assert_eq!((wisdom_logarithm(wisdom) * 20.).to_bits(), twenty.to_bits());
+        }
+    }
+
+    #[cfg(not(feature = "experimental-pacing-log"))]
+    #[test]
+    fn default_wisdom_thresholds_preserve_rounding() {
+        assert_eq!((wisdom_logarithm(1149.) * 15.).to_bits(), 30.904802322387695_f32.to_bits());
+        assert_eq!((wisdom_logarithm(1270.5) * 15.).to_bits(), 31.55961799621582_f32.to_bits());
+    }
+
+    #[test]
+    fn wisdom_logarithm_covers_the_bounded_stat_domain() {
+        let mut previous = f32::NEG_INFINITY;
+        for half_points in 2..=4000 {
+            let value = wisdom_logarithm(half_points as f32 * 0.5);
+            assert!(value.is_finite() && value >= previous);
+            previous = value;
+        }
+        assert_eq!(wisdom_logarithm(f32::NEG_INFINITY), wisdom_logarithm(1.));
+        assert_eq!(wisdom_logarithm(f32::INFINITY), wisdom_logarithm(2000.));
+        assert!(wisdom_logarithm(f32::NAN).is_nan());
+    }
 
     #[test]
     fn exact_pace_up_gap_does_not_consume_a_lottery_draw() {

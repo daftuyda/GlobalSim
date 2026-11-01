@@ -1,0 +1,13 @@
+The experimental pacing logarithm's range reduction and split constants are
+adapted from SunPro's single-precision log10f implementation, as published in:
+https://github.com/bminor/glibc/blob/glibc-2.39/sysdeps/ieee754/flt-32/e_log10f.c
+
+Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+
+Developed at SunPro, a Sun Microsystems, Inc. business.
+Permission to use, copy, modify, and distribute this
+software is freely granted, provided that this notice
+is preserved.
+
+GlobalSim uses its existing double-to-single rounding for the inner natural
+logarithm. This is not a general replacement for libc log10f.

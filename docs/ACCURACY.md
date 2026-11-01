@@ -9,7 +9,7 @@ denominators. None establishes accuracy for every possible race.
 
 | Check | Scope | Result |
 |---|---|---:|
-| Rust unit tests | Default build | 165/165 pass |
+| Rust unit tests | Default build | 167/167 pass |
 | Official regression fixtures | Included captured edge cases | 82/82 pass |
 | Official practice regression | 52,096-race cohort audited on 28 October | All complete outputs preserved; all checked official observations match |
 | Third-party output regression | 437,000 uma.moe inputs | 436,999 complete outputs unchanged; one discrepancy corrected; no regressions |
@@ -76,6 +76,8 @@ regresses official captures. The default build retains the official-tested
 rules. The original aggregate preserves the official lead-competition partner
 cutoff. Three additional opt-in features improve third-party agreement further,
 including a participant-timing rule that conflicts with an official capture.
+The separate `experimental-pacing-log` option also reproduces captured numerical
+lottery thresholds without changing the default arithmetic.
 The full follow-up combination matches 399,947/400,000 sampled third-party races
 but passes only 72/82 official fixtures. Ordinary report matches do not establish
 full internal-state equivalence. See the
@@ -98,6 +100,23 @@ recorded binary frames still omit intervening remote ticks. No additional
 report-matching movement failures were found. The new counter variants regress
 controls and remain excluded. See the
 [control and frame audit](../evidence/experimental-wave5-controls-20261101.json).
+
+Seventeen controlled wisdom captures support the optional pacing-log calculation,
+including ten predictions recorded before collecting the new replays. Across the
+expanded 85-capture panel, it corrects 551 threshold values in eleven captures:
+complete pacing-decision agreement rises from **62/85 to 73/85**. Ordinary reports
+and recorded binary frames remain **73/85**; reference-and-mode histories through
+15 seconds remain **68/85**. All 85 fresh complete outputs are unchanged.
+
+The 400,040-input regression retains every report pass/fail result, with **53
+sampled discrepancies** remaining. It preserves 400,039 complete outputs. One
+isolated output changes a lane sample and a spurt-start annotation; it does not
+repeat when either build replays the preceding 34,003-race sequence. A new remote
+control supports the normally reproduced spurt timing. The anomalous output is
+retained for investigation, so complete-output equivalence across the entire
+audit is not claimed. Default and combined experimental builds pass 167 Rust
+tests each and retain their respective **82/82** and **72/82** official-fixture
+results. See the [numerical validation record](../evidence/experimental-pacing-log-20261101.json).
 
 ## What the checks establish
 

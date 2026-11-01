@@ -9,23 +9,25 @@ interfaces. They are research configurations of v76, not a new stable release.
 The original aggregate enables the gap and duel experiments:
 
 ```sh
-cargo build --release --locked --features experimental-umamoe --target-dir target/experimental-umamoe
 cargo test --release --locked --features experimental-umamoe --target-dir target/experimental-umamoe
+cargo build --release --locked --features experimental-umamoe --target-dir target/experimental-umamoe
 ```
 
-To enable the three additional follow-up experiments as well:
+To enable the four additional follow-up experiments as well:
 
 ```sh
-cargo build --release --locked --features "experimental-umamoe,experimental-pacemaker-staging,experimental-spot-cutoff,experimental-spot-entry-floor" --target-dir target/experimental-followup
-cargo test --release --locked --features "experimental-umamoe,experimental-pacemaker-staging,experimental-spot-cutoff,experimental-spot-entry-floor" --target-dir target/experimental-followup
+cargo test --release --locked --features "experimental-umamoe,experimental-pacemaker-staging,experimental-spot-cutoff,experimental-spot-entry-floor,experimental-pacing-log" --target-dir target/experimental-followup
+cargo build --release --locked --features "experimental-umamoe,experimental-pacemaker-staging,experimental-spot-cutoff,experimental-spot-entry-floor,experimental-pacing-log" --target-dir target/experimental-followup
 ```
 
 Use the worker or library from that profile's release directory. The feature
 applies to both interfaces and every seed. `experimental-umamoe` enables
 `experimental-duel-hp` and `experimental-gap-refresh`; either component can also
-be selected independently. The three follow-up features are separate opt-ins;
+be selected independently. The four follow-up features are separate opt-ins;
 they are not added to the existing aggregate. Each feature can also be selected
 independently. A build without these features uses the default rules.
+Build the release artifacts after running tests; test builds can replace the
+library with a different panic configuration.
 
 ## Mechanics
 
@@ -60,6 +62,14 @@ lead-competition entry distance is rounded down to a whole metre. On the 1,150 m
 course, controlled uma.moe captures admit a runner at 286.9945 m but reject one at
 287.0020 m, supporting 287 m rather than 287.5 m. Those observations do not establish
 the official game's rule. Both cutoff experiments preserve non-retail behavior.
+
+**Pacing logarithm** (`experimental-pacing-log`). The wisdom lottery uses a split
+single-precision logarithm calculation, reproducing the thresholds in seventeen
+controlled third-party captures. The reduction follows the structure of the
+[older SunPro/glibc calculation](https://github.com/bminor/glibc/blob/glibc-2.39/sysdeps/ieee754/flt-32/e_log10f.c),
+with double-to-single rounding for the inner natural logarithm. This identifies a
+compatible calculation, not the remote engine's platform or library. The default
+retains its double-precision base-ten logarithm rounded to single precision.
 
 ## Recheck official fixtures
 
@@ -220,8 +230,8 @@ coverage in that window. Seven report-matching captures, representing five
 distinct inputs, still have reference-annotation differences. They do not
 demonstrate a movement error by themselves. Full-race pacing decisions match
 **54/67**. One report-matching official projection differs only in ten reported
-lottery-threshold values; its rolls and decisions agree. The arithmetic or
-effective-stat cause remains unresolved.
+lottery-threshold values; its rolls and decisions agree. The subsequent wisdom
+checks below reproduce those values with the optional split-logarithm calculation.
 
 The official projection agrees with all nine captured elapsed finish times and
 80 skill-activation identities/times. Other official result fields are absent
@@ -244,6 +254,52 @@ each fix 45 checks but regress 153 and 154 respectively in the expanded
 
 See the [control and frame audit](../evidence/experimental-wave5-controls-20261101.json)
 for capture identities, validation scopes and rejected-trial results.
+
+### Pacing threshold arithmetic
+
+Seven skill-free, nine-runner captures isolate wisdom from equipped-skill effects.
+The thresholds at effective wisdom 1,149 and 1,270.5 differ by a few millionths;
+their neighboring values agree. The split-logarithm calculation reproduces both
+rounding directions. Ten further captures test predictions recorded before
+collection, covering eight previously untested differences and two controls.
+All seventeen now match the complete recorded pacing decisions. No stat-specific
+exceptions or comparison tolerances were added.
+
+| Detailed comparison | Previous follow-up profile | With pacing-log option |
+|---|---:|---:|
+| Ordinary reports | 73/85 | 73/85 |
+| Every recorded binary frame | 73/85 | 73/85 |
+| Reference and mode histories through 15 seconds | 68/85 | 68/85 |
+| Complete pacing decisions | 62/85 | 73/85 |
+
+The change corrects **551 threshold values in eleven captures**, including the
+earlier official-fixture projection. All 85 fresh complete outputs remain
+identical. These are targeted observations, including repeated inputs, and do not
+increase the independent sampled-race denominator.
+
+The full 400,040-input regression retains all report pass/fail results: sampled
+agreement remains **399,947/400,000**, with **53 unresolved discrepancies**, plus
+40/40 targeted boundary probes. It preserves 400,039 complete outputs. One saved
+variation changes a single lane observation and one runner's spurt-start time
+annotation, while still matching the report. Neither build reproduces it during
+fresh runs, a repeat of the full 1,000-race batch, or a replay of the preceding
+34,003-race sequence. The output remains recorded as an unresolved repeatability
+anomaly; it is not attributed to the numerical change.
+
+A fresh remote control agrees with the normally reproduced output on all sixteen
+immediate spurt-decision times. The isolated variant's annotation is one tick late
+for one runner. Its differing lane timestamp falls between recorded remote frames
+and cannot be checked from that replay. This illustrates why matching an ordinary
+report does not validate every output field.
+
+The default and complete follow-up profiles each pass **167 Rust tests** and
+retain their respective **82/82** and **72/82** official-fixture results. Native
+library and worker checks pass in both frame modes, including concurrent handles
+and recovery after rejected inputs. The numerical option remains separate from
+the original aggregate, and no stable version is promoted.
+
+See the [numerical validation record](../evidence/experimental-pacing-log-20261101.json)
+for the controlled thresholds, frozen outputs, repeatability checks and scopes.
 
 ## Validation scope
 

@@ -34,7 +34,7 @@ selection. Its latest validation records:
 |---|---:|
 | Official practice regression cohort | **52,096/52,096** matching recorded observations |
 | Included official accuracy fixtures | **82/82** passing |
-| Rust unit tests | **165/165** passing |
+| Rust unit tests | **167/167** passing |
 
 These results describe the tested configurations and recorded observations.
 GlobalSim is an unofficial implementation and does not claim universal 1:1

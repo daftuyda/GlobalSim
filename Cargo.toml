@@ -40,6 +40,8 @@ experimental-spot-cutoff = []
 experimental-pacemaker-staging = []
 # Evaluate whole-metre rounding of the lead-competition entry distance.
 experimental-spot-entry-floor = []
+# Opt-in numerical compatibility with captured third-party pacing lotteries.
+experimental-pacing-log = []
 
 [dependencies]
 mimalloc = { version = "0.1.52", optional = true, default-features = false }
