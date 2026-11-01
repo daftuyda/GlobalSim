@@ -1,0 +1,859 @@
+{
+  "schema": "globalsim.experimental-followup.v1",
+  "date": "2026-11-01",
+  "baseCommit": "5dc3cad0ce1f003ca661ac080afad3635674994d",
+  "baseRelease": "v76",
+  "defaultBehaviorChanged": false,
+  "existingAggregateUnchanged": [
+    "experimental-gap-refresh",
+    "experimental-duel-hp"
+  ],
+  "addedIndependentFeatures": [
+    "experimental-pacemaker-staging",
+    "experimental-spot-cutoff",
+    "experimental-spot-entry-floor"
+  ],
+  "sourceFiles": {
+    "Cargo.toml": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim-experimental\\Cargo.toml",
+      "sha256": "829d4c8cce404d21dee11681ad14aad5b1dcedd5cfed20a29c1a0f49c7b9a266"
+    },
+    "Cargo.lock": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim-experimental\\Cargo.lock",
+      "sha256": "4648d4844854a9f06184aaefefaef7689680a060e1e19416ee3ad490b02b738b"
+    },
+    "src/race_field.rs": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim-experimental\\src\\race_field.rs",
+      "sha256": "ec7e3de1c4e9e36dfc5037e471f81222b27e01b85f41058ccb289a0afcab4882"
+    },
+    "src/race_solver.rs": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim-experimental\\src\\race_solver.rs",
+      "sha256": "73454123b1603c7b4a8ab1bf0a772ad78ad1f81662a0d712fa36f13680057a7a"
+    },
+    "src/race_solver_retail.rs": {
+      "path": "C:\\Users\\Administrator\\Documents\\GitHub\\GlobalSim-experimental\\src\\race_solver_retail.rs",
+      "sha256": "4a38553eebaec33b83c9ee5d5e4ac84512567a78efba453d3f0ff2c0dddc0470"
+    }
+  },
+  "unitTests": {
+    "default": 165,
+    "allFollowupFeatures": 165,
+    "python": 27
+  },
+  "officialFixtures": {
+    "default": {
+      "passed": 82,
+      "total": 82,
+      "failures": [],
+      "receipt": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-default-official.json",
+        "sha256": "8fbd8077de56608a077bfd8190b3d1f936116aad4abf6aeee11a56e98d220421"
+      }
+    },
+    "combined": {
+      "passed": 72,
+      "total": 82,
+      "failures": [
+        "career-guts-order-near-tie",
+        "competition-runaway-before-front-group-16",
+        "duel-joins-finished-group-05",
+        "lead-competition-partner-past-entry-cutoff",
+        "pacemaker-handover-refresh-2100",
+        "pacemaker-keeps-incumbent-with-forward-group-in-range",
+        "pacemaker-refresh-restarts-count-consecutive-sections",
+        "pacemaker-restores-nearest-forward-runner-career-b",
+        "pacemaker-restores-nearest-forward-runner-practice-10801",
+        "spurt-normal-cost-rounding-accepts-plan"
+      ],
+      "receipt": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-combined-official.json",
+        "sha256": "213bdd1bac2738ba168a6db29bab06e33423da1286544e3fed4da6372ae21b6a"
+      }
+    }
+  },
+  "officialPractice": {
+    "defaultPassed": 52096,
+    "total": 52096,
+    "completeOutputsIdenticalToFrozenDefault": 52096,
+    "followupCombinationNotAuditedOnThisCohort": true,
+    "previousGapDuelPassed": 45026,
+    "receipt": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-default-official-corpus\\summary.json",
+      "sha256": "0336f96ac779e4de028acaf6f315d4580ccc6b585f2f44dca06b4b9c1c3ad341"
+    }
+  },
+  "thirdParty": {
+    "fullCounts": {
+      "races": 400040,
+      "before": 399908,
+      "after": 399987,
+      "unchanged": 399961,
+      "fixed": 79,
+      "regressed": 0
+    },
+    "groups": {
+      "wave3-sampled": {
+        "total": 160000,
+        "before": 159938,
+        "after": 159966
+      },
+      "wave3-targeted": {
+        "total": 40,
+        "before": 3,
+        "after": 40
+      },
+      "wave2-sampled": {
+        "total": 240000,
+        "before": 239967,
+        "after": 239981
+      }
+    },
+    "sampledMatched": 399947,
+    "sampledTotal": 400000,
+    "sampledPercentage": 99.98675,
+    "fullAudit": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\full-packaged\\summary.json",
+      "sha256": "7f8cda770768bb818c39c72512d4391ce7cc3b2d4f1aef23fb70537417ca5d17"
+    },
+    "firstChangedWiresRetained": true,
+    "newReports": 33,
+    "newDetailedReplays": 33,
+    "newOrdinaryReportMatches": 33,
+    "priorGapDuelNewReportMatches": 19,
+    "focusedPrototypeOutputAgreement": 1066,
+    "olderAdversarialMatches": 36,
+    "olderAdversarialTotal": 47,
+    "focused": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-focused\\summary.json",
+      "sha256": "86783c82f1618a2165a229217afbca109b71e780a8abdfc2c27560e5ba0160be"
+    },
+    "intake": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\intake\\summary.json",
+      "sha256": "22ce7072f498c85c085dad8d57e4ad8610a5a4d5c7b71ecd956aa740bdbe3a21"
+    },
+    "fixes": [
+      {
+        "case": "wave3-fukushima-ten-speed-minus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "9987ebc70464533017e8342f7881533f0b044cde4f3b32df042d8610cf0bdfa5"
+      },
+      {
+        "case": "wave3-kokura-nine-speed-minus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "c05bf4796f3d45be1eafd6ffeb5c01cb46dd75cf59a9baa7dd1f9b2b95f641ef"
+      },
+      {
+        "case": "wave3-kokura-seventeen-stamina-minus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "9dfbe36be93b1337dcb3eb56afd637fa9a936185aa4cb35f177672915a535ee6"
+      },
+      {
+        "case": "wave3-fukushima-ten-speed-plus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "34e0efb89c4f4113fdd34e7ead9702c04524155ed006b95e50a06dfa5b6b0399"
+      },
+      {
+        "case": "wave3-kokura-nine-speed-plus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "30199d5a3d0d41133fecb89057f4ecaac8c55c28a7563f2ff7d180ea2efd04a2"
+      },
+      {
+        "case": "wave3-kokura-seventeen-stamina-plus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "9b410997272053d5c9698f80e2b7793d46dfc839ce5dc0879f232daae4917b20"
+      },
+      {
+        "case": "wave3-short-pacing-10401-n18-control",
+        "seed": 1779118172,
+        "runIndex": 304,
+        "before": false,
+        "after": true,
+        "outputSha256": "05679543a20e43a3a1aca90844c6567f80e2629645689cadf2262eddf3702c02"
+      },
+      {
+        "case": "wave3-short-pacing-10401-n18-control",
+        "seed": 1532125199,
+        "runIndex": 519,
+        "before": false,
+        "after": true,
+        "outputSha256": "4887d4263dfb4a2a5bd62ecc1ceb1ee949b3b2328c830a66f623b4df079c0e71"
+      },
+      {
+        "case": "wave3-short-pacing-11001-n9-front-3",
+        "seed": 1073110871,
+        "runIndex": 68,
+        "before": false,
+        "after": true,
+        "outputSha256": "7f3e01e48ea7914705190d4bcf905f55e8a345d7dcebbc0d4c5e0bdeb5c938f5"
+      },
+      {
+        "case": "wave2-hakodate-10201-field-15",
+        "seed": 620860406,
+        "runIndex": 422,
+        "before": false,
+        "after": true,
+        "outputSha256": "329e5c1d3539cbb42a4c21936bd4728c9ed7c1300aa55c1efd05c299ea242640"
+      },
+      {
+        "case": "wave3-fukushima-ten-stamina-minus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "5f2e00e26b60b829603042bb45e4d22eafcb3fd47b49b3e42158a670c56db011"
+      },
+      {
+        "case": "wave3-hakodate-twelve-speed-minus-1",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "3c35e9c9dc9e6a051e369183b95d693c5862534e16436d6f2fb7198c395f5a2d"
+      },
+      {
+        "case": "wave3-kokura-nine-stamina-minus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "5685fd820d32cf08ac1c4b84fd3d090eb7ce5b6d97a6dbd8e62973303bea1aa6"
+      },
+      {
+        "case": "wave3-kokura-seventeen-wisdom-minus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "f2285161751aead6d09567637b98f1b04965b27a5768ee822b5ecc64d0f01d65"
+      },
+      {
+        "case": "wave2-fukushima-10405-field-10",
+        "seed": 1784284219,
+        "runIndex": 380,
+        "before": false,
+        "after": true,
+        "outputSha256": "e4c26ead058b17f24608b6d907b909fa302f31cf24db51e940fa8997490e464c"
+      },
+      {
+        "case": "wave3-fukushima-ten-stamina-plus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "4755ae33ca7492ad3ac0450eb82f79f676311262a46c7c5ec1f6617f61779ec6"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n11-heavy",
+        "seed": 1966920886,
+        "runIndex": 998,
+        "before": false,
+        "after": true,
+        "outputSha256": "b3a69150e04afc3e3678ca3e2bb327a8d8760688b8a1e3d9bd7e55972676ff73"
+      },
+      {
+        "case": "wave3-hakodate-twelve-speed-plus-1",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "ab6f1c9c999b96beb5a58169847f0accca84ef5ef357ec00f34350ed8efff494"
+      },
+      {
+        "case": "wave3-kokura-nine-stamina-plus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "371083f64f6eadf652b54035317f49a565c45b8b1f7b63a022fc9f9c7864d876"
+      },
+      {
+        "case": "wave3-kokura-seventeen-wisdom-plus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "ff34b09565a09d0bea7baa49fd98c19ae0108353485a27bd5d9be418d9e5668f"
+      },
+      {
+        "case": "wave3-short-pacing-10401-n18-front-3",
+        "seed": 1779118172,
+        "runIndex": 304,
+        "before": false,
+        "after": true,
+        "outputSha256": "28f77a028bb5302f915c0249d923bb14ed53a55adcde71e0d46b0bbb8a067994"
+      },
+      {
+        "case": "wave2-fukushima-focus-18-front-2",
+        "seed": 76296880,
+        "runIndex": 121,
+        "before": false,
+        "after": true,
+        "outputSha256": "f53281aa126f6f11fb3055651a713fcc26eff1d61f396654ec110145247bbe6d"
+      },
+      {
+        "case": "wave2-kokura-11005-field-15",
+        "seed": 1672031189,
+        "runIndex": 144,
+        "before": false,
+        "after": true,
+        "outputSha256": "09d248f8a765c1ea30feda7317b4b7f8627159f5268fbc688d195b3a9dbdb5cd"
+      },
+      {
+        "case": "wave3-fukushima-ten-wisdom-minus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "19395be675264b499f5e3aaa1df7a8e10d2181512a669172b29e2aa8a84a65ae"
+      },
+      {
+        "case": "wave3-hakodate-twelve-stamina-minus-1",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "4e632effdb4127efc7ae7e442afa17f9d49107c780cf220463dcbc2d36f6d3b4"
+      },
+      {
+        "case": "wave3-kokura-nine-wisdom-minus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "3eafc870313792258353b480a2970a7c6ee91b428c97cbfc1ed142850d15d8ae"
+      },
+      {
+        "case": "wave3-short-pacing-10401-n18-front-4",
+        "seed": 1779118172,
+        "runIndex": 304,
+        "before": false,
+        "after": true,
+        "outputSha256": "11b57bcbc2e894776d17d6cb61ac83c2e755dc474006fafcd42b106462b999a0"
+      },
+      {
+        "case": "wave3-speed-recovery-10201-n12-all-three-all",
+        "seed": 608801788,
+        "runIndex": 430,
+        "before": false,
+        "after": true,
+        "outputSha256": "9ac211a86dae97e85413c5aebe2916847a2b103543bf20dff787aedcdea2c9d8"
+      },
+      {
+        "case": "wave2-kokura-11005-field-16",
+        "seed": 1777337442,
+        "runIndex": 261,
+        "before": false,
+        "after": true,
+        "outputSha256": "1be699c93205fdf3031c21cbadd1f35cdc1578942e333a69e2a255065c2e9f94"
+      },
+      {
+        "case": "wave3-fukushima-ten-wisdom-plus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "45759c03dac510e280b637a9726e2e330bd08c0d19894d520b8d1138b15182b3"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n11-soft",
+        "seed": 1966920886,
+        "runIndex": 998,
+        "before": false,
+        "after": true,
+        "outputSha256": "bf4bab0963ef678f535ad2b4757487749e5bcead19a8f9b8c13bbca7452240b6"
+      },
+      {
+        "case": "wave3-hakodate-twelve-stamina-plus-1",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "d5ff905e9083316d01347a76dc76038e2331335ddf8dfe2de535204ed022c7d1"
+      },
+      {
+        "case": "wave3-kokura-nine-wisdom-plus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "c4f6eb53230f67ecd3264f5d541f99b922fc48b18f6feb8e3b4fc489eac545d2"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-control",
+        "seed": 2123308030,
+        "runIndex": 103,
+        "before": false,
+        "after": true,
+        "outputSha256": "53a50dc45b48dad44779c721b1c230f0fb7e855f6e19538fef977f44fe1c1c5b"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-control",
+        "seed": 1217468641,
+        "runIndex": 913,
+        "before": false,
+        "after": true,
+        "outputSha256": "a602f6589742c121ee447b9ded2093788459094288580ee0c75d3d2529e0c9a1"
+      },
+      {
+        "case": "wave2-kokura-11005-field-17",
+        "seed": 1777337442,
+        "runIndex": 261,
+        "before": false,
+        "after": true,
+        "outputSha256": "198bb0d8c3d71f4777afa1cf351acf481f2355e8bb64e93d19814c3c56d8d326"
+      },
+      {
+        "case": "wave3-gate-routes-10501-n18-outer-swap",
+        "seed": 1484715862,
+        "runIndex": 144,
+        "before": false,
+        "after": true,
+        "outputSha256": "b06d40f950eaa6d3eac93c4bb84415a9a7f65153049075ef206747c6afc748f8"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n11-yielding",
+        "seed": 1966920886,
+        "runIndex": 998,
+        "before": false,
+        "after": true,
+        "outputSha256": "1aeebf963efcdcea7643b32cad9aeba7be2da3308e1ea8d64ae8ef20a45963b1"
+      },
+      {
+        "case": "wave3-hakodate-twelve-wisdom-minus-1",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "3c4cb930e647f07656543b3ef5b037ab03c6950546894e6b0c261f5d015a5749"
+      },
+      {
+        "case": "wave3-kokura-seventeen-control",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "198bb0d8c3d71f4777afa1cf351acf481f2355e8bb64e93d19814c3c56d8d326"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-speed-minus-1",
+        "seed": 2123308030,
+        "runIndex": 103,
+        "before": false,
+        "after": true,
+        "outputSha256": "51e3d96726d98fbf66592eb8378f77f0a9076876cf5056d8512740e42cc8848e"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-speed-minus-1",
+        "seed": 1217468641,
+        "runIndex": 913,
+        "before": false,
+        "after": true,
+        "outputSha256": "18c049d362793aca61416f3ab0fd8528703603799f6f45b76fee8843f8933b98"
+      },
+      {
+        "case": "wave2-fukushima-10405-field-14",
+        "seed": 469803908,
+        "runIndex": 135,
+        "before": false,
+        "after": true,
+        "outputSha256": "eb9cae75bc41cd38a6c667ee1044d83759805d34bfe4fb3160692af4ec98de6f"
+      },
+      {
+        "case": "wave2-tokyo-10609-field-18",
+        "seed": 382239191,
+        "runIndex": 488,
+        "before": false,
+        "after": true,
+        "outputSha256": "c2329d9d81d4bd3627410a80c7fa75bd2d9f55e424485c50d41528e6aad85337"
+      },
+      {
+        "case": "wave3-hakodate-twelve-wisdom-plus-1",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "622ce6b121d206efcf51ad88b5501de9e5cf5f0c0f80158bb998cdf278e7f380"
+      },
+      {
+        "case": "wave3-kokura-seventeen-gates",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "6b3524574ee1d82b43ac4a0a6eed6bd08d9788bfae298cd60d83c1874bcd3ad0"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-speed-plus-1",
+        "seed": 2123308030,
+        "runIndex": 103,
+        "before": false,
+        "after": true,
+        "outputSha256": "65d96a15ae640828945502087dea4e434cc59d9f6fbd1156263ccf7b71eccdc5"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-speed-plus-1",
+        "seed": 1217468641,
+        "runIndex": 913,
+        "before": false,
+        "after": true,
+        "outputSha256": "df84777f3f0244429f665375bea99108eec22ebc6f0e1b61f11bcbb05884566c"
+      },
+      {
+        "case": "wave2-kokura-11005-field-9",
+        "seed": 1174531635,
+        "runIndex": 707,
+        "before": false,
+        "after": true,
+        "outputSha256": "fc67ea387ee2ba56108dc41fe72e21824c3a4eb5bf78ce9a42c8c79e9222e680"
+      },
+      {
+        "case": "wave3-fukushima-ten-control",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "e4c26ead058b17f24608b6d907b909fa302f31cf24db51e940fa8997490e464c"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n14-heavy",
+        "seed": 635189505,
+        "runIndex": 37,
+        "before": false,
+        "after": true,
+        "outputSha256": "03ee0d81a51c17b0998ad829193a63956384c55ffcaa244bab99249c29394c1e"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n14-heavy",
+        "seed": 745150476,
+        "runIndex": 893,
+        "before": false,
+        "after": true,
+        "outputSha256": "c508a8bfcd3d8911ad63dc062ff51eb8f84b8279e92134386b9be409ba5b1ff2"
+      },
+      {
+        "case": "wave3-kokura-nine-control",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "fc67ea387ee2ba56108dc41fe72e21824c3a4eb5bf78ce9a42c8c79e9222e680"
+      },
+      {
+        "case": "wave3-kokura-seventeen-power-minus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "b6f7d9ffb5db946997380b60236d7ec3d9093150e992e400ccd6c2ab8e9bd07c"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-wisdom-minus-1",
+        "seed": 2123308030,
+        "runIndex": 103,
+        "before": false,
+        "after": true,
+        "outputSha256": "adfa0c6c4de8210bfd7af7219357e03984c62a68a9f6dc5ecb5f61f790abf1a6"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-wisdom-minus-1",
+        "seed": 1217468641,
+        "runIndex": 913,
+        "before": false,
+        "after": true,
+        "outputSha256": "2d86ef18dd20fdfad6596105f935e974e6890326784c1b7c67dc2e7b0d5730b0"
+      },
+      {
+        "case": "wave3-speed-recovery-10201-n12-speed-straight",
+        "seed": 626930188,
+        "runIndex": 117,
+        "before": false,
+        "after": true,
+        "outputSha256": "5ccca490aa20b6d20214f26eaadc8037aa14a14399c5632f2e94d3f1d076a2e9"
+      },
+      {
+        "case": "wave3-speed-recovery-10201-n12-speed-straight",
+        "seed": 1899802729,
+        "runIndex": 416,
+        "before": false,
+        "after": true,
+        "outputSha256": "378ed28e90c6109767ed468deded550e47744e5cf41ee091dc2673f2bb424193"
+      },
+      {
+        "case": "wave3-fukushima-ten-gates",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "007b2c8e910a2c8c895b4206a30b64177b2473447ca8e5e92184ce0237ce52ca"
+      },
+      {
+        "case": "wave3-kokura-nine-gates",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "28d6bd6abe3b61be78c30bbd20d369763f4193ec316c811909e413f32b603a6b"
+      },
+      {
+        "case": "wave3-kokura-seventeen-power-plus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "055ea16b96a4631456a0c38f61ef42dd3f39da383cbbd67d59676dffe1c12fc1"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-wisdom-plus-1",
+        "seed": 2123308030,
+        "runIndex": 103,
+        "before": false,
+        "after": true,
+        "outputSha256": "29b6416357b8de0b36258b95dc5a7b9969aa256a2f4bef891499b46bc4b1ff40"
+      },
+      {
+        "case": "wave3-short-duels-11005-n16-wisdom-plus-1",
+        "seed": 1217468641,
+        "runIndex": 913,
+        "before": false,
+        "after": true,
+        "outputSha256": "d525d9c324a3944cbacd1d336d01375383e844e280135017b851b653ef11e628"
+      },
+      {
+        "case": "wave2-fukushima-focus-18-outer-front-2",
+        "seed": 1439712423,
+        "runIndex": 382,
+        "before": false,
+        "after": true,
+        "outputSha256": "fbc2857fdc92c977fb7253d953b7a3a774fec3d68049afc58982800bc8f7eb82"
+      },
+      {
+        "case": "wave2-fukushima-focus-18-outer-front-2",
+        "seed": 1549869587,
+        "runIndex": 918,
+        "before": false,
+        "after": true,
+        "outputSha256": "ed8f942d9bb7cc05f65a1724be6c85c85353634384377c5e4b370c0fba1cc38c"
+      },
+      {
+        "case": "wave3-fukushima-ten-power-minus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "bd5dcd59c133d203a93177aece961ffac517c2c653be83bf9de79a180e0d7a8b"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n14-soft",
+        "seed": 635189505,
+        "runIndex": 37,
+        "before": false,
+        "after": true,
+        "outputSha256": "ba39efa93c9e5ee5cd6bbbb0fa3db906458e47e061385e5a75cb6c2d50d2b4bb"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n14-soft",
+        "seed": 745150476,
+        "runIndex": 893,
+        "before": false,
+        "after": true,
+        "outputSha256": "232909ea8e83ef5970789a17dfbb2276e0a1b814bf53542c90d26ce3c0294c0f"
+      },
+      {
+        "case": "wave3-hakodate-twelve-control",
+        "seed": 484415354,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "50513cb83607541762c56b0df8f896f9994321ece9a4bf4f98cca296846689f9"
+      },
+      {
+        "case": "wave3-kokura-nine-power-minus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "f3b084f05d89885a160de1d51a729a8a83d17adb3b05a4437d1068e979f968cf"
+      },
+      {
+        "case": "wave3-kokura-seventeen-speed-minus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "5191de78f26dd6e4751645215801c0ea7d288f36c95236b656ac6a11c8aa869a"
+      },
+      {
+        "case": "wave2-fukushima-10405-field-18",
+        "seed": 1982015019,
+        "runIndex": 173,
+        "before": false,
+        "after": true,
+        "outputSha256": "350552acf6add982b3d221e6ea482a46eeeebe9ec1e34c50eb735b6092376829"
+      },
+      {
+        "case": "wave2-fukushima-10405-field-18",
+        "seed": 953099802,
+        "runIndex": 790,
+        "before": false,
+        "after": true,
+        "outputSha256": "353c2936951f4d4dacb3d47bf460dee7c74edf7f6246aaf7a5ce1aa4629723d1"
+      },
+      {
+        "case": "wave2-hakodate-10201-field-12",
+        "seed": 484415354,
+        "runIndex": 36,
+        "before": false,
+        "after": true,
+        "outputSha256": "50513cb83607541762c56b0df8f896f9994321ece9a4bf4f98cca296846689f9"
+      },
+      {
+        "case": "wave3-fukushima-ten-power-plus-1",
+        "seed": 1784284219,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "548c22ef65679d8f3b236179a608e12bfbc82f0568709a6aea584fec0e131759"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n14-yielding",
+        "seed": 635189505,
+        "runIndex": 37,
+        "before": false,
+        "after": true,
+        "outputSha256": "f3d11eeba9e0ab531c605bf79993cb47ce438d87e69705c16ee835770001165b"
+      },
+      {
+        "case": "wave3-ground-weather-10401-n14-yielding",
+        "seed": 745150476,
+        "runIndex": 893,
+        "before": false,
+        "after": true,
+        "outputSha256": "3c702565b64bc6aa4a6837d1f5ae94ff365545725d61f95c26c5619513204b2f"
+      },
+      {
+        "case": "wave3-kokura-nine-power-plus-1",
+        "seed": 1174531635,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "993d05f89d93ce937980a3731d5fbd5bb83dd79185d58ec951ecc6b117c4b07c"
+      },
+      {
+        "case": "wave3-kokura-seventeen-speed-plus-1",
+        "seed": 1777337442,
+        "runIndex": 0,
+        "before": false,
+        "after": true,
+        "outputSha256": "86c22fafb4aa4867e1f15e659c0bed5649ce4dd4a7805f3c879e19306c6be8e3"
+      }
+    ]
+  },
+  "detailedScope": {
+    "stagingOnlyAuditedCases": 32,
+    "reportMatchesBefore": 20,
+    "reportMatchesAfter": 26,
+    "referenceAndModeHistoryMatchesThrough15SecondsBefore": 16,
+    "referenceAndModeHistoryMatchesThrough15SecondsAfter": 26,
+    "fullPacingDecisionMatchesBefore": 20,
+    "fullPacingDecisionMatchesAfter": 27,
+    "reportsAreNotFullStateEquivalence": true,
+    "rushingReferenceDifferencesRemain": true,
+    "receipt": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\staged-detailed\\mode-1\\summary.json",
+      "sha256": "e69f234dce17c81f21e93f6bc43088e5ba623d3dcba5a89cdf5cbafd2d993303"
+    }
+  },
+  "officialConflict": {
+    "case": "lead-competition-partner-past-entry-cutoff",
+    "officialParticipants": 2,
+    "projectedUmamoeParticipants": 3,
+    "defaultMatchesOfficial": true,
+    "snapshotExperimentMatchesThirdParty": true,
+    "projectionLimit": "Missing aptitude slots are explicitly A; unknown remote dependencies are not inferred."
+  },
+  "cutoffEvidence": {
+    "course": 10405,
+    "distance": 1150,
+    "nominalQuarterDistance": 287.5,
+    "proposedEntryEnd": 287,
+    "admittedPosition": 286.9945068359375,
+    "rejectedPosition": 287.0020446777344,
+    "officialRuleEstablished": false
+  },
+  "anomaly": {
+    "case": "wave3-gate-routes-10102-n15-outer-swap",
+    "seed": 16365722,
+    "originalPrototypeDigest": "f7e2a78bccf62cb04be90b8567873b4ad1be750d923566fcef14a597cc9aaca9",
+    "baselineAndRepeatedDigest": "efe946ab31bcf79750d25c9bdbb602b08f580000470d7abb274f4f5536c6b07f",
+    "originalReportComparisonsPassed": true,
+    "originalWireUnavailable": true,
+    "unexplained": true,
+    "independentProcesses": 32,
+    "totalRepeatRuns": 6766,
+    "targetSeedChecks": 3002,
+    "fullPriorInputHistoryChecks": 2,
+    "allRepeatedTargetWiresEqualBaseline": true,
+    "claimOfOriginalFullPrototypeByteEquivalence": false,
+    "receipt": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\hash-repeatability\\summary.json",
+      "sha256": "911705897925670e829d213e40afe599649e6a13f6771f510ee69736c33e0ea5"
+    }
+  },
+  "integration": {
+    "default": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-default-native.json",
+      "sha256": "d094535f73b2d0b427f8d06b6c16e13daa9f291c3c5158a24173a7e33a339035"
+    },
+    "combined": {
+      "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-combined-native.json",
+      "sha256": "64e6bc5293d29bc15977249c191e396131b417c7d782f0a108495935c1e25344"
+    }
+  },
+  "finalBuilds": {
+    "default": {
+      "globalsim.dll": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-default-target\\release\\globalsim.dll",
+        "sha256": "93b730797c80b44b517596c33b9be6c2e28b1cb88d76350f1ca53e47be465fca"
+      },
+      "race_engine_rs_v2.exe": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-default-target\\release\\race_engine_rs_v2.exe",
+        "sha256": "1febacabf67a06dd1223c124519a0dda8b963f167495441d6ae9345c8af15a1b"
+      }
+    },
+    "combined": {
+      "globalsim.dll": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-combined-target\\release\\globalsim.dll",
+        "sha256": "f9f839899ba0a5ce1b5c5f818a0a0c06854dac9d5402023679e951a63ef06b03"
+      },
+      "race_engine_rs_v2.exe": {
+        "path": "D:\\UmamusumeData\\race-datasets\\third-party\\umamoe-edge-followup-20261101\\packaged-combined-target\\release\\race_engine_rs_v2.exe",
+        "sha256": "ba9a1dd23b6431674fbc8bac1f943c58f43b570d46ec8a4fa16a1a8c25acfa52"
+      }
+    }
+  },
+  "limitations": [
+    "Third-party report matches are not an official-game accuracy percentage.",
+    "Sampled panels, deliberately targeted checks and older adversarial controls are reported separately.",
+    "Ordinary exports do not expose every frame or decision.",
+    "The new combined profile intentionally remains opt-in because official fixtures disagree.",
+    "The unexplained earlier prototype digest is retained; successful repeats do not prove universal determinism."
+  ]
+}

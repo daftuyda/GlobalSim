@@ -2847,6 +2847,16 @@ impl RaceSolver {
         let mut front_pos = f64::NEG_INFINITY;
         let mut front_lane = 0.;
         let entry_end = self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION;
+        #[cfg(feature = "experimental-spot-entry-floor")]
+        let entry_end = if self.retail.is_some() { entry_end.floor() } else { entry_end };
+        let partner_before_cutoff = |j: usize, position: f64| {
+            #[cfg(feature = "experimental-spot-cutoff")]
+            if self.retail.is_some() {
+                return field.position_before_tick(j, position) < entry_end;
+            }
+            let _ = j;
+            position < entry_end
+        };
         let mut group_late = true;
         for j in 0..field.n {
             let (j_strategy, j_pos, j_lane, started) = sample(j);
@@ -2894,9 +2904,9 @@ impl RaceSolver {
             (j_strategy == strategy).then_some((j, j_pos, j_lane))
         }).filter(|s|
             front_pos - s.1 <= 3.75 && (front_lane - s.2).abs() <= SPOT_STRUGGLE_LANE_GAP
-                && (s.0 == front_idx || s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION));
+                && (s.0 == front_idx || partner_before_cutoff(s.0, s.1)));
         let (count, early) = participants.clone().fold((0, false), |(count, early), s|
-            (count + 1, early || s.1 < self.section_length * SPOT_STRUGGLE_CHECK_END_SECTION));
+            (count + 1, early || s.1 < entry_end));
         if count < 2 || !early {
             return;
         }

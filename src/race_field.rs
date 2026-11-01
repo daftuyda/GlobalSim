@@ -104,6 +104,8 @@ pub struct RaceField {
     section_pacemaker: Cell<Option<(usize, usize)>>,
     pm_count: Cell<usize>,
     pm_handed: Cell<bool>,
+    #[cfg(feature = "experimental-pacemaker-staging")]
+    pm_forward_preview: Cell<Option<usize>>,
     // Reused storage for the per-tick pacemaker candidate list.
     pacemaker_active: RefCell<Vec<usize>>,
 }
@@ -163,6 +165,8 @@ impl RaceField {
             section_pacemaker: Cell::new(None),
             pm_count: Cell::new(0),
             pm_handed: Cell::new(false),
+            #[cfg(feature = "experimental-pacemaker-staging")]
+            pm_forward_preview: Cell::new(None),
             pacemaker_active: RefCell::new(Vec::new()),
         };
         field.update();
@@ -718,6 +722,17 @@ impl RaceField {
     /// Depends only on `order` (refreshed once per tick by `update`) and
     /// solvers' fixed strategies, so it is computed once per tick and
     /// cached rather than recomputed per asking horse.
+    pub fn pacemaker_for(&self, strategy: Strategy) -> Option<usize> {
+        #[cfg(feature = "experimental-pacemaker-staging")]
+        if let Some(i) = self.pm_forward_preview.get() {
+            if self.strategies[i].base_running_style() == strategy.base_running_style() {
+                return Some(i);
+            }
+        }
+        let _ = strategy;
+        self.pacemaker()
+    }
+
     pub fn pacemaker(&self) -> Option<usize> {
         if let Some((leader, _)) = self.section_pacemaker.get() {
             return Some(leader);
@@ -736,6 +751,8 @@ impl RaceField {
     /// retaking the lead restores the forward group immediately and clears it.
     /// Use the preceding rank pass and live positions, as in v70.
     fn update_pacemaker(&self, order: &[usize]) {
+        #[cfg(feature = "experimental-pacemaker-staging")]
+        let preview = self.pm_forward_preview.replace(None);
         // Runaway shares the Front Runner group; it does not outrank it.
         let style = |i: usize| self.strategies[i].base_running_style() as usize;
         let pos = |i: usize| self.solvers[i].borrow().pos as f32;
@@ -765,6 +782,12 @@ impl RaceField {
         if previous.is_none() {self.section_pacemaker.set(Some((leader,0)));}
         let entering_section = section > old_section && (section as f32) < end;
         if entering_section {
+            // A restored forward group may adopt its reference one tick before
+            // the other styles. Retain that choice for the following rank pass.
+            #[cfg(feature = "experimental-pacemaker-staging")]
+            if style(overall) == forward && self.pm_handed.get() {
+                self.pm_forward_preview.set(Some(leader));
+            }
             // Retain the incumbent until ordinary selection or restoration
             // chooses its replacement. Refreshing its style-group leader here
             // can delay a returning forward runner and end Pace Down too early.
@@ -806,12 +829,22 @@ impl RaceField {
             // Restore the nearest forward-style runner ahead of the incumbent.
             // Selecting the group leader can skip another returning runner and
             // change the live gap observed during gate-ordered movement.
-            let returning = active.iter().copied().take_while(|&i| i != selected)
-                .filter(|&i| style(i) == forward).last().unwrap_or(leader);
+            let candidates = || active.iter().copied().take_while(|&i| i != selected)
+                .filter(|&i| style(i) == forward);
+            #[cfg(feature = "experimental-pacemaker-staging")]
+            let returning = preview.filter(|&i| candidates().any(|j| j == i))
+                .unwrap_or_else(|| candidates().last().unwrap_or(leader));
+            #[cfg(not(feature = "experimental-pacemaker-staging"))]
+            let returning = candidates().last().unwrap_or(leader);
             self.section_pacemaker.set(Some((returning,section)));
             self.pm_count.set(0);self.pm_handed.set(false);
         }
         self.pacemaker_active.replace(active);
+    }
+
+    #[cfg(feature = "experimental-spot-cutoff")]
+    pub(crate) fn position_before_tick(&self, i: usize, live: f64) -> f64 {
+        self.previous_positions.borrow().as_ref().map_or(live, |positions| positions[i])
     }
 
     fn leading_eligible(&self) -> Option<usize> {

@@ -34,6 +34,12 @@ experimental-umamoe = ["experimental-gap-refresh", "experimental-duel-hp"]
 # Components can be evaluated independently against official captures.
 experimental-gap-refresh = []
 experimental-duel-hp = []
+# Separately opt in: this timing rule conflicts with official captures.
+experimental-spot-cutoff = []
+# Stage forward-style pacemaker restoration before the other styles adopt it.
+experimental-pacemaker-staging = []
+# Evaluate whole-metre rounding of the lead-competition entry distance.
+experimental-spot-entry-floor = []
 
 [dependencies]
 mimalloc = { version = "0.1.52", optional = true, default-features = false }

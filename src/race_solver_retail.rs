@@ -851,7 +851,7 @@ impl RaceSolver {
 
     fn update_retail_pace(&mut self, dt: f32, field: Option<&RaceField>) {
         let (field, index, pacemaker) =
-            match field.and_then(|f| Some((f, self.field_index?, f.pacemaker()?))) {
+            match field.and_then(|f| Some((f, self.field_index?, f.pacemaker_for(self.horse.strategy)?))) {
                 Some(x) => x,
                 None => return,
             };

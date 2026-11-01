@@ -59,11 +59,12 @@ The two latest uma.moe collections contain 400,000 sampled races plus 40 targete
 boundary probes. The earlier 240,000-race collection has no equipped skills;
 the newer 160,000-race collection includes 32,000 races with equipped skills.
 
-| Collection | Default build | Optional experimental profile |
-|---|---:|---:|
-| Earlier sampled collection | 213,745/240,000 | 239,967/240,000 |
-| New sampled collection | 140,741/160,000 | 159,938/160,000 |
-| Targeted boundary probes | 3/40 | 3/40 |
+| Collection | Default build | Gap + duel profile | All follow-up features |
+|---|---:|---:|---:|
+| Earlier sampled collection | 213,745/240,000 | 239,967/240,000 | 239,981/240,000 |
+| New sampled collection | 140,741/160,000 | 159,938/160,000 | 159,966/160,000 |
+| Targeted boundary probes | 3/40 | 3/40 | 40/40 |
+| Wave 4 exact-seed checks | 13/33 | 19/33 | 33/33 |
 
 These counts measure agreement with checked third-party exports, not
 official-game accuracy. The targeted probes intentionally concentrate known
@@ -72,8 +73,12 @@ controls are included in the 40 probes.
 
 The opt-in `experimental-umamoe` build has higher third-party agreement but
 regresses official captures. The default build retains the official-tested
-rules. Both profiles preserve the official lead-competition partner cutoff,
-which conflicts with some third-party outputs. See the
+rules. The original aggregate preserves the official lead-competition partner
+cutoff. Three additional opt-in features improve third-party agreement further,
+including a participant-timing rule that conflicts with an official capture.
+The full follow-up combination matches 399,947/400,000 sampled third-party races
+but passes only 72/82 official fixtures. Ordinary report matches do not establish
+full internal-state equivalence. See the
 [experimental results and limits](EXPERIMENTAL.md) and the
 [earlier comparison](UMAMOE-MOVEMENT-20261031.md).
 
