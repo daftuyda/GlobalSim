@@ -108,6 +108,6 @@ measures owned numeric frames or binary packets.
 - [Starting grids](../data/starting_grids.json).
 - [Official regression fixtures](../tests/fixtures/accuracy) and [test guide](TESTING.md).
 
-Use [v76-race.jsonl](../examples/v76-race.jsonl) for a complete request with
+Use [v77-race.jsonl](../examples/v77-race.jsonl) for a complete request with
 the validated runtime settings and skill table. File-version names identify
 data snapshots; they are separate from the engine release version.

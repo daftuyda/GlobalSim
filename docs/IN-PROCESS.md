@@ -5,7 +5,7 @@ settings. It decodes those inputs once and returns each race directly to the
 calling application. The simulation still creates fresh RNG streams, sampled
 triggers, runners, timers, activation observers and results for every seed.
 
-Start from `examples/v76-race.jsonl` to use the validated runtime profile and
+Start from `examples/v77-race.jsonl` to use the validated runtime profile and
 skill table. A prepared handle retains the profile supplied at preparation.
 
 `retainAllFrames: true` retains every simulation frame. The default frame
@@ -32,7 +32,7 @@ use globalsim::PreparedRace;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // One conventional race request, with retainAllFrames set as desired.
-    let input = std::fs::read_to_string("examples/v76-race.jsonl")?;
+    let input = std::fs::read_to_string("examples/v77-race.jsonl")?;
     let mut race = PreparedRace::new(&input)?;
     for seed in [100003, 107922, 115841] {
         let result = race.run(seed)?;
@@ -74,7 +74,7 @@ module. Add `GlobalSim/tools` to your application's module path:
 import json
 from native_engine import NativeRace
 
-with open("examples/v76-race.jsonl", encoding="utf-8") as source:
+with open("examples/v77-race.jsonl", encoding="utf-8") as source:
     spec = json.load(source)
 spec["retainAllFrames"] = True
 

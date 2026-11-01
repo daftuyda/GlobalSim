@@ -7,7 +7,7 @@
 contain alternative detail branches, prerequisites, condition expressions,
 effect arrays, activation lottery flags, cooldowns and duration/value usages.
 Skill level and unique-skill metadata accompany a runner's skill ID. Bundled
-tables are a snapshot, not a live master database. The v76 example supplies
+tables are a snapshot, not a live master database. The v77 example supplies
 `data/v70-skill-data.json` through `skillData`; omitting it selects the legacy
 fallback table. Keep definitions consistent with the reference race.
 

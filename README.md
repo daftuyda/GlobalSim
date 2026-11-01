@@ -2,7 +2,7 @@
 
 ### High-fidelity race simulation for Umamusume Global
 
-**Version 76**
+**Version 77**
 
 GlobalSim is a fast, detailed race simulation engine written in Rust. It models
 runner attributes, course geometry, positioning, skill activation, stamina and
@@ -62,16 +62,16 @@ cargo build --release --locked
 The default build uses mimalloc. Add `--no-default-features` to use the platform
 allocator instead.
 
-Run the included v76 example on Windows:
+Run the included v77 example on Windows:
 
 ```powershell
-Get-Content examples/v76-race.jsonl | .\target\release\race_engine_rs_v2.exe
+Get-Content examples/v77-race.jsonl | .\target\release\race_engine_rs_v2.exe
 ```
 
 On Linux or macOS:
 
 ```sh
-./target/release/race_engine_rs_v2 < examples/v76-race.jsonl > results.jsonl
+./target/release/race_engine_rs_v2 < examples/v77-race.jsonl > results.jsonl
 ```
 
 Start from this example to retain the runtime settings and skill table used by

@@ -1,7 +1,7 @@
 # Accuracy and coverage
 
-This page describes the v76 engine with the pacemaker and passing-route
-corrections committed on 31 October 2026. Official replay comparisons,
+This page describes the v77 official-priority default engine. Official replay
+comparisons,
 implementation regressions and third-party simulator comparisons have separate
 denominators. None establishes accuracy for every possible race.
 
@@ -225,7 +225,7 @@ captures. Career seed/replay discrepancies remain unresolved. Optional later
 stamina mechanics and some Conserve Power fallback paths contain approximations.
 Custom oversized fields are outside official capture validation.
 
-Results depend on the input data and runtime profile. Use the v76 example's
+Results depend on the input data and runtime profile. Use the v77 example's
 settings for the documented validated path. [Testing](TESTING.md) describes
 reproducible checks; the [documentation index](README.md) retains dated reports
 for earlier cohorts and releases.

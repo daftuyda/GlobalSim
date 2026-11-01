@@ -1,0 +1,13 @@
+{
+  "laneSelectionVersion": 1,
+  "raceInitializationVersion": 1,
+  "positionKeepVersion": 1,
+  "skillValueVersion": 4,
+  "raceContextVersion": 2,
+  "experimentalRetailInitialization": true,
+  "experimentalRetailSections": true,
+  "experimentalRetailRuntime": true,
+  "experimentalRetailGeometry": true,
+  "retainAllFrames": true,
+  "dataSignature": "bc99f8d645629420372f6ff41ffae9112aa243ad850af721b3a6d819094a240a+master-projection-f9ed2cca2699e5ee"
+}

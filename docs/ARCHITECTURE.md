@@ -87,7 +87,7 @@ passes through [`race_solver_retail.rs`](../src/race_solver_retail.rs) and
 startup, geometry and section behavior. These are not interchangeable with the
 default solver. The examples deliberately name the selected path.
 
-For the validated profile use `examples/v76-race.jsonl`. Its switches do
+For the validated profile use `examples/v77-race.jsonl`. Its switches do
 not enable the separate startup option. The reconstructed field tick proceeds in this order:
 
 1. Capture the pre-movement roster, then collect duel proximity, geometry width

@@ -1,0 +1,52 @@
+{
+  "version": "v77",
+  "date": "2026-11-01",
+  "profile": "official-priority default",
+  "sourceBase": "f5bdc36d4d309d5e206f9bde293cc5da4d6835c3",
+  "simulationSourceDataAndCargoConfigurationUnchanged": true,
+  "defaultFeatures": [
+    "fast-alloc"
+  ],
+  "experimentalFeaturesEnabled": [],
+  "releaseEngineSha256": "a07942e3df7296fcea8a81391afe5a6cc6a7257712f0e4d71ff158669d18ff45",
+  "toolchain": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "checks": {
+    "rust": {
+      "passed": 167,
+      "failed": 0,
+      "command": "cargo test --release --locked --target-dir target/v77-release -j 1"
+    },
+    "python": {
+      "passed": 39,
+      "failed": 0,
+      "command": "python -m unittest discover -s tests"
+    },
+    "officialFixtures": {
+      "passed": 84,
+      "total": 84,
+      "mode": "strict-observations-v2",
+      "fixturesSha256": "afa275d02e62c9c301667ea8e71a7899e18f2050db75ce9ea5b465d04c936850",
+      "report": "evidence/v77-accuracy.json"
+    },
+    "coverage": {
+      "report": "evidence/v77-coverage.json"
+    }
+  },
+  "fullPracticeAudit": {
+    "rerunForThisRelease": false,
+    "evidence": "evidence/official-practice-validation-20261101.json",
+    "active": 696778,
+    "passing": 696777,
+    "unresolved": 1,
+    "note": "Previously completed full practice audit; release packaging does not change simulation source, data or default build settings."
+  },
+  "examples": {
+    "v77-race.jsonl": "Identical JSON input to v76-race.jsonl; line endings normalized",
+    "v77-settings.json": "Identical JSON settings to v76-settings.json; line endings normalized"
+  },
+  "limitations": [
+    "One official practice movement discrepancy remains.",
+    "Experimental comparison profiles retain known official regressions and are disabled by default.",
+    "These observations do not establish universal 1:1 accuracy."
+  ]
+}

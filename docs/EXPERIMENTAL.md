@@ -2,7 +2,8 @@
 
 GlobalSim provides opt-in rules for investigating differences with uma.moe's
 exported races. These profiles retain the same seeded worker and prepared-library
-interfaces. They are research configurations of v76, not a new stable release.
+interfaces. They are research configurations available alongside the v77
+default engine.
 
 Official practice captures take priority over third-party agreement. The full
 comparison profile fails twelve of the 84 included official regression fixtures and is blocked

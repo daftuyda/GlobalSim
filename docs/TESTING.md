@@ -5,6 +5,9 @@ engine path so the validator checks the binary you intend to ship.
 
 ## Current validation
 
+[Version 77 release validation](V77-VALIDATION.md) records the fresh default-build
+checks and the previously completed full practice audit.
+
 The default build passes **167 Rust tests**
 and **84 official captured-race regression fixtures**. The full practice audit
 matches **696,777/696,778 active official captures** from the frozen 28 October

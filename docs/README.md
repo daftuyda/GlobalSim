@@ -1,7 +1,7 @@
 # GlobalSim documentation
 
-The guides describe v76 with the pacemaker and passing-route corrections
-committed on 31 October 2026. Start with the [project README](../README.md)
+The guides describe v77, the official-priority default engine. Start with the
+[project README](../README.md)
 for setup and features. Accuracy measurements apply to their stated datasets
 and engine configurations.
 
@@ -34,6 +34,10 @@ the default retains its duel-stamina and fractional entry rules. The
 [31 October comparison](UMAMOE-MOVEMENT-20261031.md)
 retains the earlier production and research measurements. Third-party agreement
 is not official-game accuracy.
+
+## Release validation
+
+- [Version 77 validation](V77-VALIDATION.md)
 
 ## Historical reports
 

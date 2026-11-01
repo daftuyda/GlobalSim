@@ -61,7 +61,7 @@ import subprocess
 from pathlib import Path
 from replay_protocol import read_reply  # Add GlobalSim/tools to the module path.
 
-spec = json.loads(Path("examples/v76-race.jsonl").read_text(encoding="utf-8"))
+spec = json.loads(Path("examples/v77-race.jsonl").read_text(encoding="utf-8"))
 engine = Path("target/release") / ("race_engine_rs_v2.exe" if os.name == "nt" else "race_engine_rs_v2")
 worker = subprocess.Popen(
     [str(engine)],
