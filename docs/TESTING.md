@@ -6,8 +6,14 @@ engine path so the validator checks the binary you intend to ship.
 ## Current validation
 
 The default build passes **167 Rust tests**
-and **82 official captured-race fixtures**. Its final passing-route refinement
-preserved all 52,096 complete outputs in the latest official regression cohort.
+and **84 official captured-race regression fixtures**. The full practice audit
+matches **696,777/696,778 active official captures** from the frozen 28 October
+inventory. One movement case remains unresolved. All current races were executed;
+prior strict passes were reused only for identical captures, inputs and complete
+outputs. Changed outputs received fresh strict comparisons.
+
+The earlier passing-route refinement preserved all 52,096 complete outputs in
+its official regression cohort.
 Across 437,000 third-party inputs, it preserved 436,999 complete outputs and
 corrected one discrepancy without regressions.
 
@@ -22,7 +28,7 @@ not describe that profile.
 
 These are separate checks. An unchanged previously failing output remains a
 failure against its reference. See [accuracy and coverage](ACCURACY.md) and the
-[validation summary](../evidence/documentation-snapshot-20261031.json).
+[current official evidence](../evidence/official-practice-validation-20261101.json).
 
 ## Build and unit tests
 
@@ -60,6 +66,17 @@ strict ordering and post-finish observations; `--legacy` selects the earlier
 pre-finish comparison and must be reported separately.
 Each report includes `fixturesSha256`, binding the exact compressed fixture files
 used in that run. Promotion comparisons require matching fixture receipts.
+
+The known unresolved official movement case is retained separately. This command
+is expected to report a strict failure and exit with status 1:
+
+```sh
+python tools/check_accuracy_regressions.py --engine target/release/race_engine_rs_v2.exe --fixtures tests/fixtures/unresolved --report target/unresolved-accuracy.json
+```
+
+Its presence outside the passing regression directory does not exclude it from
+the complete active-practice audit. Report the unresolved result separately;
+do not describe the 84 passing regression fixtures as every included capture.
 
 Recent regressions cover pacemaker retention at section boundaries, inward
 corridor rounding, competition partner cutoffs and event order. Lane unit tests
@@ -113,7 +130,7 @@ Before promoting a behavior change, run the complete frozen active-practice
 comparison and the [official regression gate](ACCURACY.md#official-regression-gate).
 An improvement on one official case or on uma.moe cannot offset a new official
 failure. The gate remains closed if full practice evidence is missing, even when
-all 82 focused fixtures pass. Use the authoritative inventory from the capture
+all 84 focused regression fixtures pass. Use the authoritative inventory from the capture
 registry; a smaller selected cohort does not establish whole-corpus accuracy.
 
 Third-party simulations support diagnosis but do not override a conflicting

@@ -32,10 +32,13 @@ selection. Its latest validation records:
 
 | Check | Result |
 |---|---:|
-| Official practice regression cohort | **52,096/52,096** matching recorded observations |
-| Included official accuracy fixtures | **82/82** passing |
+| Active official practice captures | **696,777/696,778** matching recorded observations |
+| Included official regression fixtures | **84/84** passing |
 | Rust unit tests | **167/167** passing |
 
+The practice result covers the frozen 28 October inventory. One small movement
+discrepancy remains; its raw finish times and placements match. The unresolved
+capture is retained separately from the passing regression fixtures.
 These results describe the tested configurations and recorded observations.
 GlobalSim is an unofficial implementation and does not claim universal 1:1
 equivalence. [Accuracy and coverage](docs/ACCURACY.md) distinguishes official

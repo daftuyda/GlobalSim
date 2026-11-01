@@ -23,7 +23,7 @@ alone is not grounds for quarantining an official capture.
 
 The default build remains the basis of official-accuracy work. Experimental
 features that fail official fixtures are blocked from promotion. Features that
-pass the fixtures still need the full practice comparison; passing 82 cases does
+pass the fixtures still need the full practice comparison; passing 84 cases does
 not establish accuracy on the roughly 700,000-capture inventory.
 
 ### Official regression gate
@@ -58,7 +58,8 @@ accuracy, and does not itself publish or deploy a build.
 | Check | Scope | Result |
 |---|---|---:|
 | Rust unit tests | Default build | 167/167 pass |
-| Official regression fixtures | Included captured edge cases | 82/82 pass |
+| Official regression fixtures | Included regression cases; unresolved capture reported separately | 84/84 pass |
+| Full active official practice inventory | Frozen 28 October inventory, checked 1 November | 696,777/696,778 match recorded observations |
 | Official practice regression | 52,096-race cohort audited on 28 October | All complete outputs preserved; all checked official observations match |
 | Third-party output regression | 437,000 uma.moe inputs | 436,999 complete outputs unchanged; one discrepancy corrected; no regressions |
 
@@ -72,7 +73,16 @@ The pacemaker correction resolved a section-boundary discrepancy in the
 one remaining movement discrepancy. The passing corrections retain that
 behavior and refine equal-cost route selection.
 
-See the [validation summary](../evidence/documentation-snapshot-20261031.json),
+The current whole-practice result is **99.99986% observed agreement** on this
+collected inventory. Every current race was executed with full simulation frames.
+Previously verified strict passes were reused only when the capture, projected
+input and complete output were identical; new or differing outputs received a
+fresh strict comparison. This is not a claim that every old comparison was
+recomputed, or that unrecorded official frames were observed.
+
+See the [official-practice validation](OFFICIAL-PRIORITY-20261101.md),
+[current evidence](../evidence/official-practice-validation-20261101.json),
+[earlier validation summary](../evidence/documentation-snapshot-20261031.json),
 [pacemaker evidence](../evidence/practice-fix-20261024.json),
 [passing-clearance evidence](../evidence/passing-clearance-20261031.json) and
 [passing-direction evidence](../evidence/passing-route-direction-20261031.json).
@@ -93,15 +103,27 @@ The 52,096-race intake covers every field size from 9 through 18 runners. It
 checks 97,425,308 runner observations at recorded official frames, plus results,
 skills and competition events. Integrity checks also cover full simulator output.
 
-The entire 709,953-race inventory has not been rerun on the current source
-revision. Historical audits retain **one active practice discrepancy and 410
-active Career discrepancies**. The practice case has matching raw finish times
-and placements but a maximum sampled position difference of 1.221 mm and some
-stamina/spurt differences. These remain recorded issues, not newly audited totals.
+The 1 November audit executed all **696,779 practice captures**: 696,777 of
+696,778 active captures matched, and the separately quarantined capture matched
+but remains quarantined. The active movement discrepancy has matching raw finish
+times and placements, a maximum sampled position difference of 1.221 mm, two HP
+differences and two spurt-distance differences. Its input and observations are
+included under `tests/fixtures/unresolved` and still fail strict validation.
+
+Career races were not rerun in this audit. Their **410 active discrepancies**
+remain a historical result, not a newly verified count.
 See the [intake report](NEW-RACES-20261028.md),
 [Career coverage](CAREER-VALIDATION.md) and [quarantine policy](DATASET-QUARANTINE.md).
 
 ## Third-party simulator comparison
+
+The latest narrowed experiment combines only the whole-metre entry cutoff and
+pacing logarithm. It improves three sampled uma.moe comparisons and ten targeted
+probes, but the complete official audit records two new failures and no fixes.
+It remains disabled by default. Its secondary audit required a continuation after
+validation-process errors; two affected cases remain excluded from qualified
+counts. See the [complete scoped assessment](OFFICIAL-PRIORITY-20261101.md).
+The historical measurements below retain their original denominators and profiles.
 
 The two latest uma.moe collections contain 400,000 sampled races plus 40 targeted
 boundary probes. The earlier 240,000-race collection has no equipped skills;
@@ -127,7 +149,7 @@ including a participant-timing rule that conflicts with an official capture.
 The separate `experimental-pacing-log` option also reproduces captured numerical
 lottery thresholds without changing the default arithmetic.
 The full follow-up combination matches 399,947/400,000 sampled third-party races
-but passes only 72/82 official fixtures. Ordinary report matches do not establish
+but passes only 72/84 current official regression fixtures. Ordinary report matches do not establish
 full internal-state equivalence. See the
 [experimental results and limits](EXPERIMENTAL.md) and the
 [earlier comparison](UMAMOE-MOVEMENT-20261031.md).

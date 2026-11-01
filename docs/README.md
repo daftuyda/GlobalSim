@@ -28,7 +28,10 @@ and engine configurations.
 ## Third-party comparison
 
 [Experimental profile](EXPERIMENTAL.md) reports the latest paired comparisons
-and official-capture differences. The [31 October comparison](UMAMOE-MOVEMENT-20261031.md)
+and official-capture differences. The
+[official boundary investigation](OFFICIAL-PRIORITY-20261101.md) documents why
+the default retains its duel-stamina and fractional entry rules. The
+[31 October comparison](UMAMOE-MOVEMENT-20261031.md)
 retains the earlier production and research measurements. Third-party agreement
 is not official-game accuracy.
 

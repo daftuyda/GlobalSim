@@ -5,7 +5,7 @@ exported races. These profiles retain the same seeded worker and prepared-librar
 interfaces. They are research configurations of v76, not a new stable release.
 
 Official practice captures take priority over third-party agreement. The full
-comparison profile fails ten of the 82 included official fixtures and is blocked
+comparison profile fails twelve of the 84 included official regression fixtures and is blocked
 from promotion to the default engine. Use uma.moe to discover and investigate
 possible edge cases; retain an engine change only when official validation
 supports it. See the [official regression gate](ACCURACY.md#official-regression-gate).
@@ -16,19 +16,32 @@ approval to enable the component in the default build.
 
 | Component checked alone | Official fixtures | Status for default promotion |
 |---|---:|---|
-| Inward-gap refresh | 73/82 | Blocked: official regressions |
-| Staged pacemaker restoration | 81/82 | Blocked: official regression |
-| Participant-cutoff timing | 81/82 | Blocked: official regression |
-| Duel-stamina arithmetic | 82/82 | Full practice comparison required |
-| Whole-metre entry cutoff | 82/82 | Full practice comparison required |
-| Pacing logarithm | 82/82 | Full practice comparison required |
+| Inward-gap refresh | 74/84 | Blocked: official regressions |
+| Staged pacemaker restoration | 83/84 | Blocked: official regression |
+| Participant-cutoff timing | 83/84 | Blocked: official regression |
+| Duel-stamina arithmetic | 83/84 | Blocked: official regression |
+| Whole-metre entry cutoff | 83/84 | Blocked: official regression |
+| Pacing logarithm | 84/84 | Full practice comparison required |
 
-These checks use the same 82 captured fixtures, with a receipt binding the actual
-fixture files to every report. They do not rerun the complete practice corpus.
+These screens use the same 84 captured regression fixtures, with a receipt binding
+the actual fixture files to every report. A separate unresolved official capture
+is retained under `tests/fixtures/unresolved`; it is not a passing fixture.
 The earlier 52,096-race duel-only check preserved outputs but demonstrated no
 additional official matches. Passing a screen alone is not evidence that an
 experimental rule is more faithful to the game.
-See the [official-priority assessment](../evidence/official-priority-20261101.json).
+See the [official boundary investigation](OFFICIAL-PRIORITY-20261101.md).
+The [earlier component assessment](../evidence/official-priority-20261101.json)
+retains its original 82-case scope.
+
+Two additional official captures expose conflicts missed by the older fixture
+set. The percentage calculation keeps a Kyoto duel active one tick too long.
+The whole-metre cutoff removes a Fukushima lead-competition entry at
+287.1053466796875 m on a 1,150 m course. Both cases match the default engine.
+Enabling just the whole-metre cutoff and pacing logarithm still fails the
+Fukushima case. Neither improvement in third-party agreement is an official fix.
+
+The historical measurements below retain their original fixture and corpus
+scopes; their 82-case results are not results for the expanded 84-case suite.
 
 ## Build
 
@@ -68,7 +81,8 @@ has substantial known differences from official captures.
 test calculates `(remaining_hp * 100) / maximum_hp` in single precision before
 comparing with `5`. Multiplying before division can round a boundary value to
 exactly five percent. That can preserve a duel which the default ratio comparison
-would end. Other HP policies and non-retail duel behavior keep their existing test.
+would end. This disagrees with the captured official Kyoto boundary. Other HP
+policies and non-retail duel behavior keep their existing test.
 
 **Staged pacemaker restoration** (`experimental-pacemaker-staging`). At a section
 boundary after a handover, the returning forward-style group can use its new
@@ -86,8 +100,9 @@ uma.moe race and this experiment admit three. It is not an official-game fix.
 **Whole-metre entry cutoff** (`experimental-spot-entry-floor`). The retail
 lead-competition entry distance is rounded down to a whole metre. On the 1,150 m
 course, controlled uma.moe captures admit a runner at 286.9945 m but reject one at
-287.0020 m, supporting 287 m rather than 287.5 m. Those observations do not establish
-the official game's rule. Both cutoff experiments preserve non-retail behavior.
+287.0020 m, supporting 287 m rather than 287.5 m in those third-party captures.
+The official Fukushima fixture supports retaining the fractional cutoff instead.
+Both cutoff experiments preserve non-retail behavior.
 
 **Pacing logarithm** (`experimental-pacing-log`). The wisdom lottery uses a split
 single-precision logarithm calculation, reproducing the thresholds in seventeen

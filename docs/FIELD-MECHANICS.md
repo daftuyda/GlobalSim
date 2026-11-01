@@ -196,6 +196,11 @@ also determine the group's distance and lane checks.
 Each invited partner must be before the section-6 entry cutoff. The cached
 group leader may already be beyond it when an eligible partner starts the
 competition; that does not admit other partners beyond their entry cutoff.
+The default cutoff retains the fractional distance: `6 * (D / 24) = D / 4`.
+For a 1,150 m race it is 287.5 m, with a strict `position < cutoff` comparison.
+Rounding it down to 287 m rejects an observed official entry and changes later
+movement and finishing results. The whole-metre alternative remains an
+[experimental third-party comparison rule](EXPERIMENTAL.md).
 
 Competition recording is separate from these state updates. When both styles
 start in one tick, Runaway records precede ordinary Front Runner records. Each
@@ -222,6 +227,11 @@ Crossing the finish line does not itself end an active retail duel. The group
 remains available to eligible entrants until its HP or separation conditions
 end participation; finishing does not grant another activation to an existing
 participant.
+The default low-stamina exit compares `remainingHP / maximumHP < 0.05` in
+double precision. It does not first calculate a float32 percentage. At a
+rounding boundary, that percentage can become exactly 5 and keep the duel
+active for an extra tick. The captured Kyoto 1,800 m regression supports the
+default exit behavior; see [precision and boundaries](MATHEMATICS.md#7-precision-and-boundaries).
 
 The later stamina behavior is explicitly gated by
 `experimentalLaterStaminaMechanics`. Its approximations include the flat

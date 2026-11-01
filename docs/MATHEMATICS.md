@@ -234,6 +234,18 @@ rates, spurt speed, initial HP, acceleration, slope correction and spurt
 feasibility have explicit float32 store boundaries and wider intermediate
 expressions. The exact expression order is in `retail_physics.rs`.
 
+The default duel-exit ratio widens the stored HP values and compares
+`remainingHP / maximumHP < 0.05`. It is not equivalent to the float32 expression
+`(remainingHP * 100) / maximumHP < 5`. For example, remaining HP
+`112.32778930664062` and maximum HP `2246.555908203125` give a double ratio below
+0.05, while the float32 percentage rounds to exactly 5. The latter delays the
+exit in an official regression fixture. Official replay HP is quantized, so
+this validates the resulting observed behavior rather than every hidden HP bit.
+
+The default lead-competition entry cutoff is `6 * (D / 24)`, retaining fractional
+metres. At 1,150 m, a participant at `287.1053466796875` m remains before the
+287.5 m cutoff. Flooring the cutoff to 287 m removes the observed entry.
+
 For an inward passing corridor, let `L` be the runner's float32 lane,
 `C = 0.04444444924592972f` and `S = 0.0555555559694767f`. Widen these stored
 values to float64, evaluate `L - C - S` and `L + C - S`, then store each
