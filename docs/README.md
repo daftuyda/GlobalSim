@@ -20,15 +20,17 @@ and engine configurations.
 | [Source Index](SOURCE-INDEX.md) | Production modules, tools and data |
 | [Accuracy](ACCURACY.md) | Current validation, inventory and known limits |
 | [Testing](TESTING.md) | Build, fixture and integration checks |
+| [Experimental profile](EXPERIMENTAL.md) | Optional uma.moe comparison rules and validation tradeoffs |
 | [Performance](PERFORMANCE.md) | Measured release latency and benchmark scope |
 | [Career Validation](CAREER-VALIDATION.md) | Career mechanics, coverage and outstanding evidence |
 | [Dataset Quarantine](DATASET-QUARANTINE.md) | Selection policy and recorded quarantine scope |
 
 ## Third-party comparison
 
-[31 October uma.moe comparison](UMAMOE-MOVEMENT-20261031.md) separates
-committed production results from unapplied research variants. These
-measurements are not official-game accuracy.
+[Experimental profile](EXPERIMENTAL.md) reports the latest paired comparisons
+and official-capture differences. The [31 October comparison](UMAMOE-MOVEMENT-20261031.md)
+retains the earlier production and research measurements. Third-party agreement
+is not official-game accuracy.
 
 ## Historical reports
 

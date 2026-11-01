@@ -739,6 +739,7 @@ impl RaceSolver {
     pub(crate) fn retail_lane_context(&self) -> TargetContext {
         let retail = self.retail.as_ref().unwrap();
         TargetContext {
+            neutral_pace: retail.pace.mode.is_none(),
             lane_preference: self.lane_preference_flags(),
             owner: retail_lane::Horse {
                 point: retail_lane::Row {

@@ -34,13 +34,17 @@ selection. Its latest validation records:
 |---|---:|
 | Official practice regression cohort | **52,096/52,096** matching recorded observations |
 | Included official accuracy fixtures | **82/82** passing |
-| Rust unit tests | **163/163** passing |
+| Rust unit tests | **165/165** passing |
 
 These results describe the tested configurations and recorded observations.
 GlobalSim is an unofficial implementation and does not claim universal 1:1
 equivalence. [Accuracy and coverage](docs/ACCURACY.md) distinguishes official
 captures, third-party comparisons and known limitations.
 [Performance](docs/PERFORMANCE.md) reports measured latency and benchmark scope.
+
+An optional [experimental uma.moe profile](docs/EXPERIMENTAL.md) improves agreement
+with exported third-party races. It has known differences from official captures
+and requires an explicit build feature.
 
 ## Getting started
 

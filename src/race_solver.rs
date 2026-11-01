@@ -3038,6 +3038,15 @@ impl RaceSolver {
         }
     }
 
+    fn duel_low_hp(&self, retail_partner: bool) -> bool {
+        if cfg!(feature = "experimental-duel-hp") && retail_partner {
+            match &self.hp {
+                HpPolicy::Game(hp) => ((hp.hp as f32 * 100.0_f32) / hp.max_hp as f32) < 5.0_f32,
+                _ => self.hp.hp_ratio_remaining() < 0.05,
+            }
+        } else { self.hp.hp_ratio_remaining() < 0.05 }
+    }
+
     /// Compete Fight: proximity-only warmup; see docs/hakuraku-backend-review.md.
     fn update_dueling(&mut self, dt: f64, field: &RaceField) {
         // IsStraightLast (0x341bf80) also requires the final-corner flag.
@@ -3061,7 +3070,8 @@ impl RaceSolver {
             });
             // Retail duels survive the finish line. A nearby entrant can still
             // join that group during its entry window; HP and separation end it.
-            if (!retail_partner && !in_final_straight) || self.hp.hp_ratio_remaining() < 0.05 || !nearby_participant {
+            let low_hp = self.duel_low_hp(retail_partner);
+            if (!retail_partner && !in_final_straight) || low_hp || !nearby_participant {
                 self.duel_active = false;
                 self.duel_continuous_timer = 0.0;
                 self.duel_target_index = None;
@@ -3259,6 +3269,25 @@ mod movement_tests {
         s.lane_target = lane;
         s.current_speed = 20.0;
         s
+    }
+
+    #[test]
+    fn experimental_duel_percentage_preserves_the_five_percent_boundary() {
+        let mut s = solver(1900., 0.);
+        let boundary = 90.01499938964844_f32;
+        let set_hp = |s: &mut RaceSolver, hp: f32| {
+            if let HpPolicy::Game(state) = &mut s.hp {
+                state.max_hp = 1800.300048828125;
+                state.hp = hp as f64;
+            }
+        };
+        set_hp(&mut s, boundary);
+        assert!(s.duel_low_hp(false));
+        assert_eq!(s.duel_low_hp(true), !cfg!(feature = "experimental-duel-hp"));
+        set_hp(&mut s, f32::from_bits(boundary.to_bits() - 1));
+        assert!(s.duel_low_hp(true));
+        set_hp(&mut s, f32::from_bits(boundary.to_bits() + 1));
+        assert!(!s.duel_low_hp(true));
     }
 
     #[test]

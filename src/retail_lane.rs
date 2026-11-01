@@ -66,6 +66,7 @@ impl TargetParameters {
 }
 
 pub struct TargetContext {
+    pub neutral_pace: bool,
     pub lane_preference: u8,
     pub owner: Horse,
     pub phase: i32,
@@ -93,6 +94,8 @@ pub struct TargetState {
     pub force_check: bool,
     pub force_in: bool,
     pub extra_outward: Option<f32>,
+    previous_can_in: Option<bool>,
+    skip_passing: bool,
     front_cache: Option<(Row, f32, f32, Option<usize>)>,
     /// Owner index when `cached` is exactly the position-sorted roster's rows.
     sorted_owner: Option<usize>,
@@ -273,6 +276,10 @@ impl TargetState {
                     && lane.to_bits() == p.block.front_lane.to_bits() => front,
             _ => front_index_iter(c.owner.point, self.cached.iter().map(|r| r.point), p.block),
         };
+        self.skip_passing = false;
+        let can_in = self.side.is_some_and(|side| side.can_in);
+        let inside_opened = self.previous_can_in == Some(false) && can_in;
+        self.previous_can_in = Some(can_in);
         let eligible = |i: usize| {
             let row = self.cached[i];
             crate::overtaking::is_target_with_block_check(
@@ -312,6 +319,15 @@ impl TargetState {
             if self.cooldown <= 0. {
                 self.force_check = true;
             }
+        }
+        // A newly opened inward gap can request one normal lane search while
+        // retaining the passing cooldown for subsequent updates.
+        if cfg!(feature = "experimental-gap-refresh") && inside_opened && self.targets.is_empty()
+            && c.previous_target == c.owner.point.lane && c.phase == 0
+            && self.side.is_some_and(|side| !side.can_out)
+            && !c.pace_down && c.neutral_pace {
+            self.skip_passing = true;
+            self.force_check = true;
         }
     }
 
@@ -362,7 +378,8 @@ impl TargetState {
                     .clamp(0., c.max_lane),
             );
         }
-        let passing = (!self.targets.is_empty() || self.cooldown > 0.)
+        let passing = !(cfg!(feature = "experimental-gap-refresh") && self.skip_passing)
+            && (!self.targets.is_empty() || self.cooldown > 0.)
             && (c.phase >= 2
                 || !(c.first_move_point - 200. <= c.owner.point.position
                     && c.owner.point.position <= c.first_move_point));
@@ -1048,6 +1065,49 @@ mod tests {
     }
 
     #[test]
+    fn experimental_gap_refresh_is_one_search_and_preserves_cooldown() {
+        let p = TargetParameters {
+            block: BlockParameters { front_distance: 2., front_lane: 0.05,
+                side_distance: 1., side_lane: 1. / 18. },
+            force_in_threshold: 0.15, cooldown: 1., outward_normalize: 1.,
+            outward_coefficient: 0.1, outward_random: 0.1,
+        };
+        for variant in 0..6 {
+            let mut c = TargetContext {
+                neutral_pace: true, lane_preference: 0,
+                owner: Horse { point: Row { position: 100., lane: 0.5 }, speed: 20., target: 22. },
+                phase: 0, max_lane: 1., vision: 20., first_move_point: 500.,
+                final_corner_start: None, empty_in_move: true,
+                previous_target: 0.5, fixed_goal: 0., has_hp: true, pace_down: false,
+            };
+            match variant {
+                1 => c.phase = 1,
+                2 => c.neutral_pace = false,
+                3 => c.pace_down = true,
+                4 => c.previous_target = 0.6,
+                _ => (),
+            }
+            let mut state = TargetState::default();
+            state.cooldown = 1.;
+            state.side = Some(SideRoom { can_in: false, can_out: variant == 5,
+                in_space: 0., out_space: 0., inner_blocker: None, inner_blocker_index: None });
+            state.update_targets(&c, &[], 0.125, p);
+            assert!(!state.skip_passing);
+            state.side.as_mut().unwrap().can_in = true;
+            state.update_targets(&c, &[], 0.125, p);
+            let refresh = cfg!(feature = "experimental-gap-refresh") && variant == 0;
+            assert_eq!(state.skip_passing, refresh);
+            assert_eq!(state.force_check, refresh);
+            assert_eq!(state.cooldown, 0.75);
+            state.force_check = false;
+            state.update_targets(&c, &[], 0.125, p);
+            assert!(!state.skip_passing);
+            assert!(!state.force_check);
+            assert_eq!(state.cooldown, 0.625);
+        }
+    }
+
+    #[test]
     fn fused_lane_cache_matches_independent_queries_and_owner_changes() {
         let p = TargetParameters {
             block: BlockParameters { front_distance: 2., front_lane: 0.05,
@@ -1065,6 +1125,7 @@ mod tests {
         for case in 0..512 {
             let owner = Horse { point: Row { position: 100., lane: 0.5 }, speed: 20., target: 22. };
             let mut c = TargetContext {
+                neutral_pace: true,
                 lane_preference: 0, owner, phase: 0, max_lane: 1., vision: 20.,
                 first_move_point: 200., final_corner_start: None, empty_in_move: true,
                 previous_target: 0.5, fixed_goal: 0., has_hp: true, pace_down: false,
@@ -1419,6 +1480,7 @@ mod tests {
                 let v = row.get("context").unwrap();
                 let n = |key| v.get_f64(key).unwrap() as f32;
                 let c = TargetContext {
+                    neutral_pace: true,
                     lane_preference: v.get("lane_preference").and_then(Value::as_i64).unwrap_or(0) as u8,
                     owner: horse(v.get("owner").unwrap()),
                     phase: n("phase") as i32,

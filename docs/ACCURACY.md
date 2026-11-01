@@ -9,7 +9,7 @@ denominators. None establishes accuracy for every possible race.
 
 | Check | Scope | Result |
 |---|---|---:|
-| Rust unit tests | Current production implementation | 163/163 pass |
+| Rust unit tests | Default build | 165/165 pass |
 | Official regression fixtures | Included captured edge cases | 82/82 pass |
 | Official practice regression | 52,096-race cohort audited on 28 October | All complete outputs preserved; all checked official observations match |
 | Third-party output regression | 437,000 uma.moe inputs | 436,999 complete outputs unchanged; one discrepancy corrected; no regressions |
@@ -55,16 +55,27 @@ See the [intake report](NEW-RACES-20261028.md),
 
 ## Third-party simulator comparison
 
-The latest uma.moe collection contains 240,000 distinct input/seed pairs across
-22 courses and fields of 9–18 runners. These lobbies have no equipped skills.
-The current production engine matches every checked exported observation in
-**213,745/240,000 races (89.0604%)**. This is agreement with another simulator,
-not an official-game accuracy percentage.
+The two latest uma.moe collections contain 400,000 sampled races plus 40 targeted
+boundary probes. The earlier 240,000-race collection has no equipped skills;
+the newer 160,000-race collection includes 32,000 races with equipped skills.
 
-Research variants achieve higher agreement with that collection but regress
-official captures and are not part of the production engine. In particular,
-the official lead-competition partner cutoff distinguishes the two simulators.
-See [third-party results and limits](UMAMOE-MOVEMENT-20261031.md).
+| Collection | Default build | Optional experimental profile |
+|---|---:|---:|
+| Earlier sampled collection | 213,745/240,000 | 239,967/240,000 |
+| New sampled collection | 140,741/160,000 | 159,938/160,000 |
+| Targeted boundary probes | 3/40 | 3/40 |
+
+These counts measure agreement with checked third-party exports, not
+official-game accuracy. The targeted probes intentionally concentrate known
+failures and are reported separately from the sampled panels. Four repeat
+controls are included in the 40 probes.
+
+The opt-in `experimental-umamoe` build has higher third-party agreement but
+regresses official captures. The default build retains the official-tested
+rules. Both profiles preserve the official lead-competition partner cutoff,
+which conflicts with some third-party outputs. See the
+[experimental results and limits](EXPERIMENTAL.md) and the
+[earlier comparison](UMAMOE-MOVEMENT-20261031.md).
 
 ## What the checks establish
 

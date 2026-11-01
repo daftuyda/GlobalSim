@@ -1,0 +1,265 @@
+{
+  "schema": "globalsim-experimental-validation-v1",
+  "date": "2026-11-01",
+  "baseCommit": "c910502",
+  "baseRelease": "v76",
+  "defaultBehaviorChanged": false,
+  "profileFeatures": {
+    "experimental-umamoe": [
+      "experimental-gap-refresh",
+      "experimental-duel-hp"
+    ]
+  },
+  "sourceFiles": {
+    "Cargo.toml": {
+      "file": "Cargo.toml",
+      "sha256": "1f55182e07bdb815c6cbc5c01c1e9ec809f8a27f4c9a185ef6bde278819746c6"
+    },
+    "src/race_solver.rs": {
+      "file": "race_solver.rs",
+      "sha256": "21eb1b2c19807a032c20497836e93ae51e49426f73428b2cceaf00b1c80b1fb5"
+    },
+    "src/race_solver_retail.rs": {
+      "file": "race_solver_retail.rs",
+      "sha256": "eeb0373604fb6408dc8f073e65eaf1200ac1bed25a2f7e5763d9981a929eeacc"
+    },
+    "src/retail_lane.rs": {
+      "file": "retail_lane.rs",
+      "sha256": "95f4c535a6392faae5386e3db8f90ae8a09d01d5690c4e1279f7f43dc3a99a62"
+    }
+  },
+  "unitTests": {
+    "default": {
+      "passed": 165,
+      "failed": 0,
+      "log": {
+        "file": "publication-final-default-tests.log",
+        "sha256": "b973c3218bf2b47bfe5da5984092a69cb8c18e37dae73846326f6245f579d1c1"
+      }
+    },
+    "experimental-gap-refresh": {
+      "passed": 165,
+      "failed": 0,
+      "log": {
+        "file": "publication-gap-only-tests.log",
+        "sha256": "79500e3cb315252cf6a9168494f928543b7e01f396cc99dd71793535ac0319b0"
+      }
+    },
+    "experimental-duel-hp": {
+      "passed": 165,
+      "failed": 0,
+      "log": {
+        "file": "publication-final-experimental-duel-hp-tests.log",
+        "sha256": "60322da368f727b06b70aede8fe6c728bb2a1a501611bc109e51caa0255e0ac0"
+      }
+    },
+    "experimental-umamoe": {
+      "passed": 165,
+      "failed": 0,
+      "log": {
+        "file": "publication-final-experimental-umamoe-tests.log",
+        "sha256": "228f6b8ec68b1db4aca2a5dc7575fe703017eab5950d0fa9815514b8e13c0c76"
+      }
+    }
+  },
+  "pythonTests": {
+    "passed": 27,
+    "failed": 0
+  },
+  "officialFixtures": {
+    "default": {
+      "total": 82,
+      "passed": 82,
+      "mode": "strict-observations-v2",
+      "engineSha256": "516ab005e75d3597e4051582dbdc6a7df9a7bb768b2e64758e15d4f0952301a4",
+      "failedCases": [],
+      "report": {
+        "file": "publication-default-official-fixtures.json",
+        "sha256": "cf716a50202de4058b5bb8b2e8fe36ceca4ca12818347cf0c2e1f31a5f965e7f"
+      }
+    },
+    "experimental-duel-hp": {
+      "total": 82,
+      "passed": 82,
+      "mode": "strict-observations-v2",
+      "engineSha256": "3bfdebe9f9247c03f76bd9f65bc45ebf1ec2071f2415334e625bbc16fcd8a6cf",
+      "failedCases": [],
+      "report": {
+        "file": "publication-final-experimental-duel-hp-official-fixtures.json",
+        "sha256": "68524d5da24819128cd44080609257d946fcacd38fb90d5acc3e72be0da51d2f"
+      }
+    },
+    "experimental-umamoe": {
+      "total": 82,
+      "passed": 73,
+      "mode": "strict-observations-v2",
+      "engineSha256": "8c6f30a18b29d1db425a5ef6f168316969f7cf7d449a097564cdee55ea15cff7",
+      "failedCases": [
+        "career-guts-order-near-tie",
+        "competition-runaway-before-front-group-16",
+        "duel-joins-finished-group-05",
+        "pacemaker-handover-refresh-2100",
+        "pacemaker-keeps-incumbent-with-forward-group-in-range",
+        "pacemaker-refresh-restarts-count-consecutive-sections",
+        "pacemaker-restores-nearest-forward-runner-career-b",
+        "pacemaker-restores-nearest-forward-runner-practice-10801",
+        "spurt-normal-cost-rounding-accepts-plan"
+      ],
+      "report": {
+        "file": "publication-final-experimental-umamoe-official-fixtures.json",
+        "sha256": "375a52f7893cc841e7e46e925500720a273c750c4df9ba750c5e981f6373e1a1"
+      }
+    }
+  },
+  "officialPracticeCohort": {
+    "default": {
+      "total": 52096,
+      "passed": 52096,
+      "errors": 0,
+      "changedCompleteOutputs": 0,
+      "engineSha256": "516ab005e75d3597e4051582dbdc6a7df9a7bb768b2e64758e15d4f0952301a4",
+      "report": {
+        "file": "summary.json",
+        "sha256": "6e706410c21b2a9777c32a33397f7c8bf2e0383290ba407bf1425dcf15f1b29b"
+      }
+    },
+    "experimental-duel-hp": {
+      "total": 52096,
+      "passed": 52096,
+      "errors": 0,
+      "changedCompleteOutputs": 0,
+      "engineSha256": "3bfdebe9f9247c03f76bd9f65bc45ebf1ec2071f2415334e625bbc16fcd8a6cf",
+      "report": {
+        "file": "summary.json",
+        "sha256": "d56a101dfa3acfa164fe2facf543c918306b74b2ec53a621a2a02e9a39eaa7a1"
+      }
+    },
+    "experimental-umamoe": {
+      "total": 52096,
+      "passed": 45026,
+      "errors": 0,
+      "changedCompleteOutputs": 7207,
+      "engineSha256": "c1a0e4f66a540c8678e50533bdb6ab65a9f926e2651daabf1a90b2db8d65e5ad",
+      "report": {
+        "file": "summary.json",
+        "sha256": "176f57dc09b230f9102f70d56dabfde00e9eba09ad4dc6962b3ceccad21abcae"
+      }
+    }
+  },
+  "officialCombinedAuditNote": "The combined cohort audit predates splitting the Cargo feature into independently selectable components; the rule expressions are unchanged. Final compiled profiles were rechecked on all 82 official fixtures and all 400,040 third-party inputs.",
+  "thirdParty": {
+    "source": "uma.moe exports; not official captures",
+    "wave2": {
+      "sampled": 240000,
+      "defaultMatches": 213745,
+      "combinedMatches": 239967
+    },
+    "wave3": {
+      "sampled": {
+        "total": 160000,
+        "defaultMatches": 140741,
+        "duelMatches": 140741,
+        "duelFixed": 0,
+        "duelRegressed": 0,
+        "duelUnchanged": 160000
+      },
+      "combinedSampledMatches": 159938,
+      "targeted": {
+        "total": 40,
+        "defaultMatches": 3,
+        "duelMatches": 3,
+        "duelFixed": 0,
+        "duelRegressed": 0,
+        "duelUnchanged": 40
+      },
+      "combinedTargetedMatches": 3,
+      "deliberateRepeatControls": 4,
+      "equippedSkillRaces": 32000,
+      "combinedSkillTraceMatches": 31997
+    },
+    "finalCombinedCompleteOutputAgreementWithPriorResearch": 400040,
+    "finalProfileReport": {
+      "file": "summary.json",
+      "sha256": "f4cf7cd3659d35af111ddd052b0024b46a8ada952aee15d69019a67d4a0f7307"
+    },
+    "limits": [
+      "Exported whole-second movement samples, elapsed finishes, order and exposed diagnostics are checked.",
+      "Equipped-skill traces check identity, time, detail branch and multiplicity.",
+      "Ordinary reports do not expose every simulation tick or every internal decision.",
+      "The 40 targeted probes concentrate known failures and are separate from sampled accuracy.",
+      "Duel-only agreement where outputs do not change does not validate the disputed arithmetic boundary."
+    ]
+  },
+  "integration": {
+    "experimental-umamoe": {
+      "modes": [
+        {
+          "allFrames": false,
+          "equivalentRepliesIncludingExpectedErrors": 45
+        },
+        {
+          "allFrames": true,
+          "equivalentRepliesIncludingExpectedErrors": 45
+        }
+      ],
+      "concurrentRuns": 24,
+      "handleIsolationAndRecovery": true,
+      "report": {
+        "file": "publication-final-experimental-umamoe-native-parity.json",
+        "sha256": "e40f42a5babe0214627ee9d674cd713c633701c8a4d7bdc9746754741c247595"
+      }
+    },
+    "experimental-duel-hp": {
+      "modes": [
+        {
+          "allFrames": false,
+          "equivalentRepliesIncludingExpectedErrors": 45
+        },
+        {
+          "allFrames": true,
+          "equivalentRepliesIncludingExpectedErrors": 45
+        }
+      ],
+      "concurrentRuns": 24,
+      "handleIsolationAndRecovery": true,
+      "report": {
+        "file": "publication-final-experimental-duel-hp-native-parity.json",
+        "sha256": "781576bc299f890e3a30c497d0f631d5db549236723b4460d188ae655004b90f"
+      }
+    }
+  },
+  "rejectedSectionHandover": {
+    "races": 400040,
+    "priorMatches": 399908,
+    "candidateMatches": 399876,
+    "fixed": 19,
+    "regressed": 51,
+    "includedInBuild": false,
+    "report": {
+      "file": "summary.json",
+      "sha256": "22bf3288d6e1ac423423cc66b03bd7832b7db8cac7936976e6aa6f070c6c78a3"
+    }
+  },
+  "finalBuilds": {
+    "experimental-umamoe": {
+      "worker": {
+        "file": "race_engine_rs_v2.exe",
+        "sha256": "8c6f30a18b29d1db425a5ef6f168316969f7cf7d449a097564cdee55ea15cff7"
+      },
+      "library": {
+        "file": "globalsim.dll",
+        "sha256": "5480616f17257a51785cdcfd5ccce869729cb172eca2e830d6e65342bc88ea68"
+      }
+    },
+    "experimental-duel-hp": {
+      "worker": {
+        "file": "race_engine_rs_v2.exe",
+        "sha256": "3bfdebe9f9247c03f76bd9f65bc45ebf1ec2071f2415334e625bbc16fcd8a6cf"
+      },
+      "library": {
+        "file": "globalsim.dll",
+        "sha256": "2ac7f5e1c7d23143ea6059d17e929fdbe3bea0a2cb1bac610ea179ab4e26339d"
+      }
+    }
+  }
+}

@@ -5,13 +5,18 @@ engine path so the validator checks the binary you intend to ship.
 
 ## Current validation
 
-The production engine with the 31 October corrections passed **163 Rust tests**
+The default build with the 31 October corrections passes **165 Rust tests**
 and **82 official captured-race fixtures**. Its final passing-route refinement
 preserved all 52,096 complete outputs in the latest official regression cohort.
 Across 437,000 third-party inputs, it preserved 436,999 complete outputs and
 corrected one discrepancy without regressions.
 
 The Python validation suite also passes all **27 tests**.
+
+The optional experimental profile has its own results and known official-fixture
+failures. Use the [experimental validation instructions](EXPERIMENTAL.md) when
+building with `experimental-umamoe`; the default-build accuracy results above do
+not describe that profile.
 
 These are separate checks. An unchanged previously failing output remains a
 failure against its reference. See [accuracy and coverage](ACCURACY.md) and the

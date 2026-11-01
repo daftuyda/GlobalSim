@@ -29,6 +29,11 @@ fast-alloc = ["dep:mimalloc"]
 # binary's size) out of the build; hosts register a course's geometry at
 # runtime with `register_course_geometry` before preparing a race on it.
 external-geometry = []
+# Opt-in third-party comparison profile. See docs/EXPERIMENTAL.md.
+experimental-umamoe = ["experimental-gap-refresh", "experimental-duel-hp"]
+# Components can be evaluated independently against official captures.
+experimental-gap-refresh = []
+experimental-duel-hp = []
 
 [dependencies]
 mimalloc = { version = "0.1.52", optional = true, default-features = false }
