@@ -2,6 +2,7 @@
 name = "race_engine_rs"
 version = "0.1.0"
 edition = "2021"
+license = "AGPL-3.0-only"
 
 # Bin crate that speaks the same JSON-on-stdin/stdout contract the existing
 # Node subprocess (race_simulator._run_simulation_node) uses -- a drop-in

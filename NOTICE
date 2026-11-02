@@ -1,0 +1,21 @@
+GlobalSim
+Copyright (C) 2026 Void (daftuyda) and GlobalSim contributors.
+Project: https://github.com/daftuyda/GlobalSim
+
+Original GlobalSim software is licensed under the GNU Affero General Public
+License, version 3 only (AGPL-3.0-only). See LICENSE for the complete terms.
+Preserve copyright, license and attribution notices as required by those terms.
+This notice adds no restrictions beyond the applicable licenses.
+
+Third-party components retain their own copyright notices and license terms:
+
+- mimalloc Rust bindings: Copyright 2019 Octavian Oncescu.
+  MIT license; see licenses/mimalloc-rust.txt.
+- mimalloc allocator: Copyright (c) 2018-2025 Microsoft Corporation, Daan Leijen.
+  MIT license; see licenses/mimalloc.txt.
+- Experimental pacing logarithm reduction and constants: adapted from SunPro's
+  log10f implementation. Copyright (C) 1993 Sun Microsystems, Inc.
+  Permission notice and source attribution: licenses/pacing-log.txt.
+
+The project license does not replace third-party licenses or grant rights to
+third-party game assets, names or data that the contributors do not own.

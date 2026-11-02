@@ -101,3 +101,17 @@ See the [input/output reference](docs/INTERFACE.md) for request fields and error
 - [Accuracy and coverage](docs/ACCURACY.md)
 - [Testing](docs/TESTING.md)
 - [Complete documentation index](docs/README.md)
+
+## License
+
+Copyright (C) 2026 Void (daftuyda) and GlobalSim contributors.
+
+GlobalSim is free software licensed under the **GNU Affero General Public
+License, version 3 only** (`AGPL-3.0-only`). You may redistribute and modify it
+under those terms. It is provided without warranty.
+
+See [LICENSE](LICENSE) for the full terms and [NOTICE](NOTICE) for attribution
+and third-party notices. Distributed modified versions must preserve the required
+notices and provide corresponding source under AGPLv3. Modified versions that
+users interact with over a network must also offer those users their
+corresponding source as required by section 13.
