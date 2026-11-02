@@ -35,6 +35,7 @@ selection. Its latest validation records:
 | Active official practice captures | **696,777/696,778** matching recorded observations |
 | Included official regression fixtures | **84/84** passing |
 | Rust unit tests | **167/167** passing |
+| Python validation tests | **39/39** passing |
 
 The practice result covers the frozen 28 October inventory. One small movement
 discrepancy remains; its raw finish times and placements match. The unresolved
@@ -90,6 +91,9 @@ numeric replay frames directly. A Python binding and a
 See the [input/output reference](docs/INTERFACE.md) for request fields and errors.
 
 ## Documentation
+
+Read the complete race mechanics reference in [Markdown](docs/RACE-MECHANICS.md)
+or [Word](docs/GlobalSim-Race-Mechanics-v77.docx).
 
 - [Race mathematics](docs/MATHEMATICS.md)
 - [Positioning, movement and field mechanics](docs/FIELD-MECHANICS.md)

@@ -76,9 +76,10 @@ timers, conditions, active effects and competition state.
 
 ## Two execution paths
 
-The default path uses the conventional solver, predominantly `f64`, Rule30
+The conventional request path uses the conventional solver, predominantly `f64`, Rule30
 randomness and its own pacing, lane and last-spurt calculations. It remains
-the path used when `experimentalRetailRuntime` is omitted.
+the path used when `experimentalRetailRuntime` is omitted. Cargo default features
+and the request runtime switches are separate settings.
 
 The reconstructed path enables `experimentalRetailRuntime`. It uses shared
 retail-style randomness, mixed-precision physics, cached state and ordered field

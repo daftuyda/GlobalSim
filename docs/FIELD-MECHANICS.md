@@ -17,7 +17,7 @@ whole tick. A zero-time update suppresses AI/movement even without delay.
 
 ## Section variation and rushing
 
-The default solver samples 24 section modifiers:
+The conventional solver samples 24 section modifiers:
 
 ```text
 maxVariation = W/5500 * log10(.1*W)

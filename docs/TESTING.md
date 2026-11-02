@@ -5,6 +5,10 @@ engine path so the validator checks the binary you intend to ship.
 
 ## Current validation
 
+The [consolidated validation summary](VALIDATION-SUMMARY-20261103.md) was reviewed
+on 3 November from the completed reports. It separates release tests, official
+observations, third-party reports, detailed traces and rejected experiments.
+
 [Version 77 release validation](V77-VALIDATION.md) records the fresh default-build
 checks and the previously completed full practice audit.
 

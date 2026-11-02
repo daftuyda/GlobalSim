@@ -104,7 +104,7 @@ Aptitude multipliers in grade order **S,A,B,C,D,E,F,G**:
 
 ## 3. Speed and acceleration
 
-[`race_solver.rs`](../src/race_solver.rs) defines the default equations:
+[`race_solver.rs`](../src/race_solver.rs) defines the conventional explanatory equations:
 
 ```text
 B = 20 - (D - 2000)/1000
@@ -205,7 +205,7 @@ a valid existing plan; start retention is handled by `SpurtState::update`.
 
 ## 6. Integration, geometry and finish time
 
-Default movement uses the solver's velocity-Verlet-style sequence; the
+Conventional movement uses the solver's velocity-Verlet-style sequence; the
 reconstructed path deliberately rounds intermediate speed and movement values
 to float32. See `step_forward` and `step_forward_retail`, not just the target
 equations, when reproducing a trajectory.
@@ -226,6 +226,10 @@ finish = frameTime - clamp((x1-D)/(x1-x0),0,1)*dt
 Only the actual adjacent crossing ticks are valid. Interpolating between
 downsampled replay frames changes the answer. Finish-time error, exact rank
 agreement and frame-by-frame position agreement measure different properties.
+
+The worker exposes this interpolated crossing as `finishTimeRaw` and the
+enclosing tick end as `finishTime`. It does not apply `FinishTimeCoef` to
+either field; any display-clock conversion belongs to the consumer.
 
 ## 7. Precision and boundaries
 

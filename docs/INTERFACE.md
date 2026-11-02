@@ -104,6 +104,11 @@ finish samples. Callers encoding replay data must not thin frames a second
 time. Use `finishTimeRaw` for numerical comparisons where provided; rounded
 display times and encoded scenario values are separate products.
 
+`finishTimeRaw` is the interpolated elapsed crossing time. `finishTime` is the
+enclosing simulation tick end. Neither field applies the `FinishTimeCoef`
+parameter; consumers requiring a display-clock conversion must handle it
+separately.
+
 Recoverable parse/build errors return `{"error":"..."}` and processing
 continues. The worker is **not a hardened validation boundary**: some invalid
 inputs, such as an unknown course reaching `get_course`, can panic. Release

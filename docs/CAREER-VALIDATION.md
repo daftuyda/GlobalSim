@@ -6,18 +6,15 @@ reports startup discrepancies separately from later simulation differences.
 
 ## Recorded coverage
 
-The latest documented inventory, frozen on **28 October 2026**, contains 13,174
-Career captures: 12,289 active and 885 quarantined. Historical audits retain
-410 active Career discrepancies. No additional Career intake was found in the
-26 or 28 October snapshots. These are accumulated records, not a fresh full
-Career audit of the 31 October source revision.
+The latest documented active inventory, frozen on **28 October 2026**, contains
+12,289 Career captures. Historical audits retain 410 active discrepancies.
+No additional active Career intake was found in the 26 or 28 October snapshots.
+These are accumulated records, not a fresh full v77 Career audit.
 
-The most recent Career intake on 25 October tested 813 races: 726 matched every
-checked observation and 87 disagreed at startup. Those 87 were subsequently
-quarantined with their original evidence retained. The intake uses one character
-card and scenario 3, limiting conclusions about other Career configurations.
-See the [intake findings](NEW-RACES-20261025.md) and
-[quarantine policy](DATASET-QUARANTINE.md).
+The 25 October intake includes 726 races matching every checked observation.
+Its narrow character-card and scenario coverage limits broader conclusions.
+The [current validation summary](VALIDATION-SUMMARY-20261103.md) keeps Career
+coverage separate from the completed official practice audit.
 
 ## Supported mechanics
 
@@ -44,12 +41,9 @@ at the first recorded movement sample. Original seeds remain consistent with
 their captured packets. Reconstructing a different seed from the replay can
 recover matching observations, but does not explain how the game selected it.
 
-In the 87-case intake, each original-seed result fails a mandatory Career goal.
-Some other goal failures retain the original seed, and some official replays
-still fail the goal. This supports further investigation of conditional retries
-or result selection; it does not establish a fixed reroll probability, a seed
-transformation or capture corruption. No outcome-dependent seed substitution
-is part of the production engine.
+Startup mismatches require additional initialization evidence before changing
+the seed-selection model. No outcome-dependent seed substitution is part of
+the production engine.
 
 Earlier late-race pacing cases were resolved by the
 [pacemaker restoration correction](PACING-FIX-20261021.md). Historical reports

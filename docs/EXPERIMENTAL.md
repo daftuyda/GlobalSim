@@ -44,6 +44,13 @@ Fukushima case. Neither improvement in third-party agreement is an official fix.
 The historical measurements below retain their original fixture and corpus
 scopes; their 82-case results are not results for the expanded 84-case suite.
 
+## Latest validation summary
+
+The [3 November review](VALIDATION-SUMMARY-20261103.md) combines the completed
+84-fixture screen, full official audit, detailed replay checks and latest
+restoration experiments. It is a documentation reconciliation, not a new race
+run. The default remains v77; no experimental rules were promoted.
+
 ## Build
 
 The original aggregate enables the gap and duel experiments:
@@ -334,14 +341,41 @@ for one runner. Its differing lane timestamp falls between recorded remote frame
 and cannot be checked from that replay. This illustrates why matching an ordinary
 report does not validate every output field.
 
-The default and complete follow-up profiles each pass **167 Rust tests** and
-retain their respective **82/82** and **72/82** official-fixture results. Native
+At the time of this numerical experiment, the default and complete follow-up
+profiles each passed **167 Rust tests** and retained their historical **82/82**
+and **72/82** official-fixture results. The later expanded screen is **84/84**
+for the default and **72/84** for the complete follow-up profile. Native
 library and worker checks pass in both frame modes, including concurrent handles
 and recovery after rejected inputs. The numerical option remains separate from
-the original aggregate, and no stable version is promoted.
+the original aggregate; these rules remain disabled in the v77 default.
 
 See the [numerical validation record](../evidence/experimental-pacing-log-20261101.json)
 for the controlled thresholds, frozen outputs, repeatability checks and scopes.
+
+### Restoration contrasts
+
+The completed Wave 6 screen compares three restoration rules on 1,402 selected
+cases. The retained full experimental profile matches 1,327. Choosing the
+previous-order forward leader after rank loss or a newly passing forward runner
+matches 1,315: 18 fixes and 30 regressions. Choosing the current-order leader
+matches 1,314: 17 fixes and 30 regressions. All three proposals were rejected.
+
+Seven fresh report/replay pairs contain five repeated cases and two one-point
+power variants. The repeated captures agree with their earlier observations.
+The retained profile matches 3/7 reports; each proposal matches 2/7 and breaks
+all three matching controls. The +1-power variant still fails. Rank loss or a
+newly passing forward runner therefore does not sufficiently explain the choice.
+
+The four retained-profile failures first disagree on the reference at 7.792 or
+8.125 seconds; their first recorded position differences occur at 8.525 seconds.
+These observations guide further investigation but do not establish the remote
+implementation. Predictions were frozen before collection, and checked outputs
+matched those predictions. No official corpus run was performed for the rejected
+rules, and neither public profile changed.
+
+See the [restoration evidence](../evidence/experimental-restoration-20261101.json)
+for individual cases and the [validation summary](VALIDATION-SUMMARY-20261103.md)
+for scope. These targeted captures are not added to the sampled denominator.
 
 ## Validation scope
 

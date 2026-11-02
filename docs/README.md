@@ -9,6 +9,7 @@ and engine configurations.
 
 | Guide | Contents |
 |---|---|
+| [Complete race mechanics](RACE-MECHANICS.md) | Consolidated v77 calculations and race behaviour; [Word edition](GlobalSim-Race-Mechanics-v77.docx) |
 | [Interface](INTERFACE.md) | JSON requests, seed sampling and result fields |
 | [In Process](IN-PROCESS.md) | Prepared Rust, C and Python integration |
 | [Binary Replay](BINARY-REPLAY.md) | Lossless binary replay protocol |
@@ -19,11 +20,17 @@ and engine configurations.
 | [Parameters](PARAMETERS.md) | Loaded parameters and selected source constants |
 | [Source Index](SOURCE-INDEX.md) | Production modules, tools and data |
 | [Accuracy](ACCURACY.md) | Current validation, inventory and known limits |
+| [Validation summary](VALIDATION-SUMMARY-20261103.md) | All current test scopes, latest findings and unresolved cases |
 | [Testing](TESTING.md) | Build, fixture and integration checks |
 | [Experimental profile](EXPERIMENTAL.md) | Optional uma.moe comparison rules and validation tradeoffs |
 | [Performance](PERFORMANCE.md) | Measured release latency and benchmark scope |
 | [Career Validation](CAREER-VALIDATION.md) | Career mechanics, coverage and outstanding evidence |
 | [Dataset Quarantine](DATASET-QUARANTINE.md) | Selection policy and recorded quarantine scope |
+
+The Word mechanics reference is generated from `RACE-MECHANICS.md`. To rebuild
+it, install Pandoc and `python-docx`, then run
+`python tools/export_mechanics_document.py` from the repository. Review the
+rendered document after changing the source or exporter.
 
 ## Third-party comparison
 

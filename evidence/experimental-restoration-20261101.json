@@ -1,0 +1,238 @@
+{
+  "schema": "globalsim-restoration-contrasts-v1",
+  "auditDate": "2026-11-01",
+  "publishedAsOf": "2026-11-03",
+  "baseCommit": "f5bdc36d4d309d5e206f9bde293cc5da4d6835c3",
+  "status": "hypothesis-rejected-no-engine-change",
+  "profile": "all-followups, including pacing-log",
+  "scope": "Full experimental profile; official default unchanged. Selected counterexamples and controls, not a representative accuracy estimate.",
+  "privateDatasetBundle": "umamoe-return-rank-20261101",
+  "sourceFindingsSha256": "abc184468b40b37bda2240191669f595aebd544213f78643a269ec8ecf90ac0e",
+  "hypotheses": {
+    "1": "On restoration, incumbent lost rank: use previous-order forward leader.",
+    "2": "On restoration, a new forward runner passed incumbent: use previous-order forward leader.",
+    "3": "Same new-runner trigger, use current-order forward leader."
+  },
+  "focusedScreen": {
+    "races": 1402,
+    "counts": {
+      "1": {
+        "total": 1402,
+        "before": 1327,
+        "after": 1315,
+        "unchanged": 1354,
+        "fixed": 18,
+        "regressed": 30
+      },
+      "2": {
+        "total": 1402,
+        "before": 1327,
+        "after": 1315,
+        "unchanged": 1354,
+        "fixed": 18,
+        "regressed": 30
+      },
+      "3": {
+        "total": 1402,
+        "before": 1327,
+        "after": 1314,
+        "unchanged": 1355,
+        "fixed": 17,
+        "regressed": 30
+      }
+    },
+    "summary": {
+      "sha256": "20f44128d4de525a30729a449aa1e40bd304d72c6642929a19c53b35f24d6544",
+      "artifact": "screen-v3/summary.json"
+    }
+  },
+  "newCaptures": {
+    "reports": 7,
+    "detailedReplays": 7,
+    "repeatedOriginalCases": 5,
+    "newPowerVariants": 2,
+    "allRepeatedObservationsUnchanged": true,
+    "matches": {
+      "retained": 3,
+      "1": 2,
+      "2": 2,
+      "3": 2
+    },
+    "cases": [
+      {
+        "id": "wave6-return-fukushima-control",
+        "reportMatches": {
+          "retained": true,
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "existingCaptureUnchanged": true,
+        "firstReferenceOrModeDifference": null,
+        "firstRecordedFrameDifference": null,
+        "comparison": {
+          "sha256": "4e556e0a3d8c38e567d35fed5945e2825b718132d6335c73f570b77c2c453272",
+          "artifact": "intake/cases/wave6-return-fukushima-control/comparison.json"
+        }
+      },
+      {
+        "id": "wave6-return-fukushima-repeat",
+        "reportMatches": {
+          "retained": false,
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "existingCaptureUnchanged": true,
+        "firstReferenceOrModeDifference": {
+          "time": 7.792193412780762,
+          "field": "reference",
+          "local": 4,
+          "remote": 0
+        },
+        "firstRecordedFrameDifference": {
+          "time": 8.524791717529297,
+          "gateIndex": 1,
+          "sourceInputIndex": 1,
+          "field": "position",
+          "local": 156.9816131591797,
+          "remote": 157.1363525390625
+        },
+        "comparison": {
+          "sha256": "0025c1195aba29b3ba4634f104ed028f06f1a066496737b2a63b7b4139df5475",
+          "artifact": "intake/cases/wave6-return-fukushima-repeat/comparison.json"
+        }
+      },
+      {
+        "id": "wave6-return-nakayama-control",
+        "reportMatches": {
+          "retained": true,
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "existingCaptureUnchanged": true,
+        "firstReferenceOrModeDifference": null,
+        "firstRecordedFrameDifference": null,
+        "comparison": {
+          "sha256": "922555961704641382bc121e2ff66b4ddde381ffde041dd487ca6704ba311ce8",
+          "artifact": "intake/cases/wave6-return-nakayama-control/comparison.json"
+        }
+      },
+      {
+        "id": "wave6-return-nakayama-reverse",
+        "reportMatches": {
+          "retained": false,
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "existingCaptureUnchanged": true,
+        "firstReferenceOrModeDifference": {
+          "time": 8.125192642211914,
+          "field": "reference",
+          "local": 12,
+          "remote": 5
+        },
+        "firstRecordedFrameDifference": {
+          "time": 8.524791717529297,
+          "gateIndex": 8,
+          "sourceInputIndex": 9,
+          "field": "position",
+          "local": 158.73191833496094,
+          "remote": 158.76026916503906
+        },
+        "comparison": {
+          "sha256": "60e444e7e3f2d3eb8490d9b7c58fdb1777af4386b964f9dccf38835a601a50d5",
+          "artifact": "intake/cases/wave6-return-nakayama-reverse/comparison.json"
+        }
+      },
+      {
+        "id": "wave6-return-third-runner-power-899",
+        "reportMatches": {
+          "retained": false,
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "existingCaptureUnchanged": null,
+        "firstReferenceOrModeDifference": {
+          "time": 7.792193412780762,
+          "field": "reference",
+          "local": 4,
+          "remote": 0
+        },
+        "firstRecordedFrameDifference": {
+          "time": 8.524791717529297,
+          "gateIndex": 1,
+          "sourceInputIndex": 1,
+          "field": "position",
+          "local": 156.9816131591797,
+          "remote": 157.1363525390625
+        },
+        "comparison": {
+          "sha256": "6efaa72da03e4a5749ef60eb208f8ebc602b4484289c19e4e837ad212ef9d4ee",
+          "artifact": "intake/cases/wave6-return-third-runner-power-899/comparison.json"
+        }
+      },
+      {
+        "id": "wave6-return-third-runner-power-901",
+        "reportMatches": {
+          "retained": false,
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "existingCaptureUnchanged": null,
+        "firstReferenceOrModeDifference": {
+          "time": 7.792193412780762,
+          "field": "reference",
+          "local": 4,
+          "remote": 0
+        },
+        "firstRecordedFrameDifference": {
+          "time": 8.524791717529297,
+          "gateIndex": 1,
+          "sourceInputIndex": 1,
+          "field": "position",
+          "local": 156.9816131591797,
+          "remote": 157.1363525390625
+        },
+        "comparison": {
+          "sha256": "75cbff897a356fb203566306fc28fa8f3ed5eba5f0e6fc5e267867814e2d90df",
+          "artifact": "intake/cases/wave6-return-third-runner-power-901/comparison.json"
+        }
+      },
+      {
+        "id": "wave6-return-tokyo-control",
+        "reportMatches": {
+          "retained": true,
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "existingCaptureUnchanged": true,
+        "firstReferenceOrModeDifference": null,
+        "firstRecordedFrameDifference": null,
+        "comparison": {
+          "sha256": "5f32037f18135103c4f46cd3b926b64ce3c352195105fa04e6105c05d5a13f70",
+          "artifact": "intake/cases/wave6-return-tokyo-control/comparison.json"
+        }
+      }
+    ],
+    "summary": {
+      "sha256": "e6568666ee151c6b844a6b49f409207c522bb7f6864e9c520244cf02e1dde9a8",
+      "artifact": "intake/summary.json"
+    }
+  },
+  "decision": "Reject all three variants: best focused result fixes 18 and regresses 30; fresh controls regress, and the +1-power held-out variant still fails. No rule based solely on incumbent rank loss or a new forward runner passing is supported.",
+  "validationNotes": [
+    "Pre-capture candidate outputs were frozen; all intake outputs matched predictions.",
+    "Changed screen outputs were retained before canonical and vector checks and repeated for consistency.",
+    "No extended official audit was run for the rejected variants. Previous 400,000-sample experimental score remains a historical score for the unchanged engine; seven selected captures are tracked separately.",
+    "Two deterministic private prototype bugs were fixed before v3: reborrowing prev_rank_of and assuming a finished incumbent remained active. They are not defects observed in the public engine."
+  ],
+  "sourceReceiptsVerified": 54,
+  "defaultEngineChanged": false,
+  "experimentalEngineChanged": false
+}

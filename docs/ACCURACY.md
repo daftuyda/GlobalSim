@@ -1,9 +1,11 @@
 # Accuracy and coverage
 
-This page describes the v77 official-priority default engine. Official replay
-comparisons,
-implementation regressions and third-party simulator comparisons have separate
-denominators. None establishes accuracy for every possible race.
+This page describes the v77 official-priority default engine. Reviewed on
+**3 November 2026** against completed audits; no races were rerun for this
+documentation update. Official replay comparisons, implementation regressions
+and third-party simulator comparisons have separate denominators. None
+establishes accuracy for every possible race. The [validation summary](VALIDATION-SUMMARY-20261103.md)
+brings together the current checks, detailed coverage and latest findings.
 
 ## Evidence priority
 
@@ -45,8 +47,8 @@ and `summary.json`, with receipts for its engine, course data, projections and
 validation tools. Use the authoritative inventory frozen from the official
 registry, including the archived cohort and existing quarantine membership.
 The gate covers exactly that inventory; an independently selected subset must
-not be described as a whole-corpus audit. Career and quarantined results are
-reported separately and cannot offset active-practice regressions.
+not be described as a whole-corpus audit. Career results and the excluded
+practice capture cannot offset active-practice regressions.
 
 Omitting the corpus arguments provides a fixture screen but always leaves the
 promotion gate closed. A closed gate exits with status 1 and records its reasons.
@@ -57,7 +59,8 @@ accuracy, and does not itself publish or deploy a build.
 
 | Check | Scope | Result |
 |---|---|---:|
-| Rust unit tests | Default build | 167/167 pass |
+| Rust unit tests | Default v77 release checks | 167/167 pass |
+| Python validation tests | Includes promotion-gate checks | 39/39 pass |
 | Official regression fixtures | Included regression cases; unresolved capture reported separately | 84/84 pass |
 | Full active official practice inventory | Frozen 28 October inventory, checked 1 November | 696,777/696,778 match recorded observations |
 | Official practice regression | 52,096-race cohort audited on 28 October | All complete outputs preserved; all checked official observations match |
@@ -92,11 +95,10 @@ See the [official-practice validation](OFFICIAL-PRIORITY-20261101.md),
 The latest documented inventory snapshot is **28 October 2026**, not a live
 count of ongoing collection:
 
-| Capture type | Registered | Active | Quarantined |
-|---|---:|---:|---:|
-| Practice | 696,779 | 696,778 | 1 |
-| Career | 13,174 | 12,289 | 885 |
-| Total | 709,953 | 709,067 | 886 |
+| Capture type | Active records | Validation status |
+|---|---:|---|
+| Practice | 696,778 | Full official audit completed 1 November |
+| Career | 12,289 | Historical coverage; no fresh full v77 audit |
 
 Practice includes 13,187 archived races outside the newer collection inventory.
 The 52,096-race intake covers every field size from 9 through 18 runners. It
@@ -113,7 +115,7 @@ included under `tests/fixtures/unresolved` and still fail strict validation.
 Career races were not rerun in this audit. Their **410 active discrepancies**
 remain a historical result, not a newly verified count.
 See the [intake report](NEW-RACES-20261028.md),
-[Career coverage](CAREER-VALIDATION.md) and [quarantine policy](DATASET-QUARANTINE.md).
+[Career coverage](CAREER-VALIDATION.md).
 
 ## Third-party simulator comparison
 
@@ -123,6 +125,20 @@ probes, but the complete official audit records two new failures and no fixes.
 It remains disabled by default. Its secondary audit required a continuation after
 validation-process errors; two affected cases remain excluded from qualified
 counts. See the [complete scoped assessment](OFFICIAL-PRIORITY-20261101.md).
+The latest qualified secondary results are:
+
+| Profile | Sampled exports | Targeted probes |
+|---|---:|---:|
+| Official-priority default | 354,484/399,998 | 3/40 |
+| Whole-metre cutoff plus pacing logarithm | 354,487/399,998 | 13/40 |
+
+The two inconclusive checker cases are excluded from these sampled totals.
+Follow-ups completed, but the original errors remain unresolved. The separate
+full experimental profile retains its own 400,000-sample audit below; the two
+audits must not be combined into a single accuracy score.
+
+### Earlier collection and profile measurements
+
 The historical measurements below retain their original denominators and profiles.
 
 The two latest uma.moe collections contain 400,000 sampled races plus 40 targeted
@@ -184,9 +200,26 @@ isolated output changes a lane sample and a spurt-start annotation; it does not
 repeat when either build replays the preceding 34,003-race sequence. A new remote
 control supports the normally reproduced spurt timing. The anomalous output is
 retained for investigation, so complete-output equivalence across the entire
-audit is not claimed. Default and combined experimental builds pass 167 Rust
-tests each and retain their respective **82/82** and **72/82** official-fixture
-results. See the [numerical validation record](../evidence/experimental-pacing-log-20261101.json).
+audit is not claimed. At the time of that numerical experiment, default and combined experimental
+builds each passed 167 Rust tests and their historical **82/82** and **72/82**
+official-fixture results were unchanged. The expanded suite now records
+**84/84** for the default and **72/84** for the full experimental profile. See the [numerical validation record](../evidence/experimental-pacing-log-20261101.json).
+
+### Latest restoration study
+
+Three additional selection experiments were rejected on a focused 1,402-race
+panel. The retained experimental profile matched 1,327 cases; two proposals
+matched 1,315 (18 fixes, 30 regressions), and the third matched 1,314 (17 fixes,
+30 regressions). Seven new report/replay pairs confirm the problem: the retained
+profile matches 3/7 reports and each proposal matches 2/7. All five repeated
+cases reproduce earlier observations; two one-point power variants provide
+additional controls. No change was retained in either engine profile.
+
+The first reference disagreements occur around 7.8–8.1 seconds, before the
+first recorded position differences. These intentionally selected cases are
+separate from the 400,000 sampled races and do not change that audit's score.
+See the [case-level findings](../evidence/experimental-restoration-20261101.json)
+and [consolidated results](VALIDATION-SUMMARY-20261103.md).
 
 ## What the checks establish
 
