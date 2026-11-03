@@ -27,8 +27,7 @@ Prepared races reuse course, roster and skill setup across seeds. Persistent
 workers support concurrent seed batches, full replays and results-only output.
 Every seed receives independent mutable race and activation state.
 
-The current engine includes refined pacemaker retention and passing-route
-selection. Its latest validation records:
+Validation of the default v77 configuration records:
 
 | Check | Result |
 |---|---:|
@@ -37,20 +36,17 @@ selection. Its latest validation records:
 | Rust unit tests | **167/167** passing |
 | Python validation tests | **39/39** passing |
 
-The practice result covers the frozen 28 October inventory. One small movement
-discrepancy remains; its raw finish times and placements match. The unresolved
-capture is retained separately from the passing regression fixtures.
-These results describe the tested configurations and recorded observations.
+The practice result covers the 28 October 2026 inventory and represents
+**99.99986% observed agreement**. These results describe the tested
+configurations and recorded observations.
 GlobalSim is an unofficial implementation and does not claim universal 1:1
 equivalence. [Accuracy and coverage](docs/ACCURACY.md) distinguishes official
 captures, third-party comparisons and known limitations.
 [Performance](docs/PERFORMANCE.md) reports measured latency and benchmark scope.
 
-Official practice captures are the primary accuracy reference. Third-party
-simulators help identify possible edge cases; improvements must preserve official
-capture agreement before entering the default engine. Optional
-[uma.moe comparison profiles](docs/EXPERIMENTAL.md) have known official regressions
-and remain separate research configurations.
+Official practice captures are the primary accuracy reference. Agreement with
+another simulator is a separate comparison and does not establish official-game
+accuracy.
 
 ## Getting started
 

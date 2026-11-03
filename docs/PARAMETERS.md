@@ -13,7 +13,7 @@ and store boundaries are specified in [mathematics](MATHEMATICS.md).
 from the loaded block parameters; the route tie rule does not hard-code a
 replacement clearance. See [field mechanics](FIELD-MECHANICS.md).
 
-## Captured Global parameters
+## Global runtime parameters
 
 | Path | Value |
 |---|---|

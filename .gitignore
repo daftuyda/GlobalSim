@@ -1,3 +1,11 @@
 /target/
 /results*.jsonl
 __pycache__/
+
+# Generated reports and private research belong outside the published guides.
+/evidence/
+/.local/
+/docs/research/
+/docs/archive/
+/docs/*-20??????.md
+/docs/V*-VALIDATION.md

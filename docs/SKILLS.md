@@ -147,7 +147,7 @@ Ordered float32 modifiers are recalculated from surviving receivers after
 expiry. Removing an effect by subtracting its old value from an accumulated
 total can round differently. Preserve source order for faithful reproduction.
 
-## How to investigate a skill
+## Tracing a skill through the engine
 
 1. Find its ID in the bundled or supplied skill table, including every detail.
 2. Resolve condition names in `activation_conditions.rs` and sampling policies.
@@ -156,10 +156,10 @@ total can round differently. Preserve source order for faithful reproduction.
 5. Run a fixed-input simulation with full frames and inspect detail/target
    events together with positions and HP.
 
-A successful unit test shows that the tested implementation behavior works.
-It does not prove the official game handles every branch the same way. The
-benchmark compares recorded starts, details, durations and visual recipients;
-it cannot observe every gameplay effect value or secondary recipient.
+A successful unit test checks the implementation behavior exercised by that
+test. Official comparisons cover recorded starts, details, durations and visual
+recipients, but cannot observe every gameplay effect value or secondary
+recipient. See [accuracy and coverage](ACCURACY.md) for validation scope.
 
 ## Order-up extension
 

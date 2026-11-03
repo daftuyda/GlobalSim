@@ -34,9 +34,9 @@ The reconstructed rushing entry compares `distance / (courseDistance / 24)`
 with `startSection - 1`, using float32 arithmetic. Preserve this quotient:
 comparing distance with a multiplied metre boundary can delay entry by one
 tick at a rounding edge, changing which consumer receives the next random
-draw. A captured 1600 m race exercises this at 399.9999694824219 m, where the
-section quotient rounds to exactly 6. An absent rushing section never starts
-rushing or consumes its activation draw.
+draw. The quotient can round to the section threshold before the distance
+reaches the multiplied boundary. An absent rushing section never starts rushing
+or consumes its activation draw.
 
 Rushing affects pacing and HP state, not just an animation. Its timers,
 exit checks and shared random draws can influence later skill outcomes.
@@ -135,8 +135,6 @@ in float64, then round each completed bound once to float32. Compare peer
 lanes inclusively against those stored bounds. The selected lane also remains
 float32. Rounding an unshifted edge before subtracting `S` can exclude a
 blocker exactly on the final corridor boundary and change the passing direction.
-Three captured races and an adjacent-float boundary test support this rule;
-see the [corridor correction](CORRIDOR-FIX-20261023.md).
 The final-corner outward preference does not disable passing or force an
 unconditional fixed lane. Finished runners are excluded where the relevant
 blocking/competition checks require active rivals.
@@ -197,10 +195,7 @@ Each invited partner must be before the section-6 entry cutoff. The cached
 group leader may already be beyond it when an eligible partner starts the
 competition; that does not admit other partners beyond their entry cutoff.
 The default cutoff retains the fractional distance: `6 * (D / 24) = D / 4`.
-For a 1,150 m race it is 287.5 m, with a strict `position < cutoff` comparison.
-Rounding it down to 287 m rejects an observed official entry and changes later
-movement and finishing results. The whole-metre alternative remains an
-[experimental third-party comparison rule](EXPERIMENTAL.md).
+The entry comparison is strictly `position < cutoff`.
 
 Competition recording is separate from these state updates. When both styles
 start in one tick, Runaway records precede ordinary Front Runner records. Each
@@ -208,7 +203,6 @@ group records its cached leader first, then partners in the initial Front
 Runner base-style roster order, which includes Runaways. Framework comparison
 sort tie swaps matter when that roster exceeds sixteen runners. Other styles
 are excluded before sorting. Duel event slots retain their activation order.
-See the [captured ordering checks](PRACTICE-FIXES-20261022.md).
 
 In the detailed runtime, duel entry first selects the longest-standing eligible
 nearby partner, then checks that partner's duel history. A selected partner
@@ -227,11 +221,9 @@ Crossing the finish line does not itself end an active retail duel. The group
 remains available to eligible entrants until its HP or separation conditions
 end participation; finishing does not grant another activation to an existing
 participant.
-The default low-stamina exit compares `remainingHP / maximumHP < 0.05` in
-double precision. It does not first calculate a float32 percentage. At a
-rounding boundary, that percentage can become exactly 5 and keep the duel
-active for an extra tick. The captured Kyoto 1,800 m regression supports the
-default exit behavior; see [precision and boundaries](MATHEMATICS.md#7-precision-and-boundaries).
+The default low-stamina exit widens the stored HP values and compares
+`remainingHP / maximumHP < 0.05` in double precision. See
+[precision and boundaries](MATHEMATICS.md#7-precision-and-boundaries).
 
 The later stamina behavior is explicitly gated by
 `experimentalLaterStaminaMechanics`. Its approximations include the flat

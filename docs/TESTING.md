@@ -1,43 +1,12 @@
 # Testing
 
-Run commands from the repository root. Use a release build and an explicit
-engine path so the validator checks the binary you intend to ship.
-
-## Current validation
-
-The [consolidated validation summary](VALIDATION-SUMMARY-20261103.md) was reviewed
-on 3 November from the completed reports. It separates release tests, official
-observations, third-party reports, detailed traces and rejected experiments.
-
-[Version 77 release validation](V77-VALIDATION.md) records the fresh default-build
-checks and the previously completed full practice audit.
-
-The default build passes **167 Rust tests**
-and **84 official captured-race regression fixtures**. The full practice audit
-matches **696,777/696,778 active official captures** from the frozen 28 October
-inventory. One movement case remains unresolved. All current races were executed;
-prior strict passes were reused only for identical captures, inputs and complete
-outputs. Changed outputs received fresh strict comparisons.
-
-The earlier passing-route refinement preserved all 52,096 complete outputs in
-its official regression cohort.
-Across 437,000 third-party inputs, it preserved 436,999 complete outputs and
-corrected one discrepancy without regressions.
-
-The Python validation suite also passes all **39 tests**, including twelve
-promotion-gate tests for missing captures, altered inputs, reduced coverage,
-quarantine changes, changed unresolved cases and stale validation receipts.
-
-The optional experimental profile has its own results and known official-fixture
-failures. Use the [experimental validation instructions](EXPERIMENTAL.md) when
-building with `experimental-umamoe`; the default-build accuracy results above do
-not describe that profile.
-
-These are separate checks. An unchanged previously failing output remains a
-failure against its reference. See [accuracy and coverage](ACCURACY.md) and the
-[current official evidence](../evidence/official-practice-validation-20261101.json).
+Run commands from the repository root. Use an explicit engine path so the
+validator checks the intended build. Published validation results and their
+scope are described in [Accuracy and coverage](ACCURACY.md).
 
 ## Build and unit tests
+
+The Python validation tools require NumPy (`python -m pip install numpy`).
 
 ```sh
 cargo test --release --locked
@@ -45,55 +14,40 @@ cargo build --release --locked
 python -m unittest discover -s tests
 ```
 
-Build release artifacts after the Rust tests so a test library's panic
-configuration does not replace the binary intended for validation or deployment.
-
-The default allocator is mimalloc. To check the platform-allocator configuration:
+Build release artifacts after the Rust tests so the validation binary has the
+intended release configuration. To test the platform allocator instead of the
+default mimalloc allocator:
 
 ```sh
 cargo test --release --locked --no-default-features --lib
 ```
 
-Unit tests cover physics boundaries, skill state, RNG consumption, sorting,
-passing, replay encoding and prepared-race isolation. Some numeric fixtures
-are implementation snapshots, as recorded in their provenance fields; those
-guard against changes rather than independently prove official behavior.
+Unit tests cover physics boundaries, skill state, random-number consumption,
+sorting, movement, replay encoding and prepared-race isolation. Implementation
+snapshot tests guard against unintended changes; they are distinct from
+comparisons with official race observations.
 
-## Official regression fixtures
+## Captured-race regression fixtures
 
 ```sh
 python tools/check_accuracy_regressions.py --engine target/release/race_engine_rs_v2.exe --report target/accuracy.json
 python tools/audit_validation_coverage.py --report target/coverage.json
 ```
 
-On Linux or macOS, omit `.exe` from the engine path. The default fixture
-directory is `tests/fixtures/accuracy`. Each compressed fixture contains its
-input and expected official observations. The default comparison includes
-strict ordering and post-finish observations; `--legacy` selects the earlier
-pre-finish comparison and must be reported separately.
-Each report includes `fixturesSha256`, binding the exact compressed fixture files
-used in that run. Promotion comparisons require matching fixture receipts.
+On Linux or macOS, omit `.exe`. The default fixture directory is
+`tests/fixtures/accuracy`. Each compressed fixture contains its input and
+expected official observations. Use `--fixtures path/to/fixtures` to select
+another fixture collection.
 
-The known unresolved official movement case is retained separately. This command
-is expected to report a strict failure and exit with status 1:
-
-```sh
-python tools/check_accuracy_regressions.py --engine target/release/race_engine_rs_v2.exe --fixtures tests/fixtures/unresolved --report target/unresolved-accuracy.json
-```
-
-Its presence outside the passing regression directory does not exclude it from
-the complete active-practice audit. Report the unresolved result separately;
-do not describe the 84 passing regression fixtures as every included capture.
-
-Recent regressions cover pacemaker retention at section boundaries, inward
-corridor rounding, competition partner cutoffs and event order. Lane unit tests
-also cover equal-cost routes, loaded body clearance, same-target ties, the
-straight fallback, and outward obstacle edges on opposite sides of a runner.
+The default checker includes strict event ordering and post-finish observations.
+The `--legacy` option selects a narrower comparison and must be reported as a
+different scope. Reports bind the engine and exact fixture files used in the
+check. A focused fixture collection does not establish whole-corpus accuracy.
 
 ## Worker and prepared-library checks
 
-Use JSONL inputs covering varied courses, skills, rosters and seeds. The
-baseline should be a separately retained validated engine.
+Use JSONL inputs covering varied courses, skills, rosters and seeds. Retain a
+separate validated engine as the baseline.
 
 ```sh
 python tools/check_worker_parity.py --engine path/to/candidate --baseline path/to/baseline --inputs path/to/races.jsonl --isolation --report target/worker-parity.json
@@ -103,53 +57,35 @@ python tools/check_native_parity.py --library target/release/globalsim.dll --bas
 ```
 
 Use `libglobalsim.so` or `libglobalsim.dylib` for the native library on other
-platforms. Worker checks exercise changing inputs and recovery. Protocol checks
-compare metadata and numeric frames across JSON and binary modes. Seed sampling
-covers serial/concurrent batches and results-only requests. Native checks cover
-repeated seeds, separate handles, output ownership, recovery and concurrency.
+platforms. These checks cover changing inputs, JSON and binary replay agreement,
+serial and concurrent seed batches, separate handles, repeated runs, output
+ownership and recovery after invalid requests.
 
-For accuracy fixes, expect intentional output changes only in diagnosed cases.
-A byte-equality checker will flag those too; classify each change against its
-reference instead of treating every changed output as a regression or a fix.
+An intentional accuracy correction can change output bytes. Compare that change
+with its reference observations before classifying it as a fix or a regression.
+Byte equality alone does not establish official accuracy.
 
-## Capture validation
+## Broader validation
 
-The wider capture dataset is maintained separately from this repository.
-Freeze the input inventory, preserve original seeds and capture linkage, and
-record engine settings and data identity. Keep quarantine explicit and report
-active, quarantined and total counts independently.
+For a mechanics change, preserve the seed, complete runner inputs, course data,
+runtime settings and reference observations. Add a focused regression and nearby
+boundary cases, then check the affected corpus. Keep unavailable observations
+separate from actual matches, and investigate output changes in unresolved cases
+as well as previously passing cases.
 
-Distinguish input-integrity failures, engine failures, observation discrepancies
-and unavailable observations. A coverage gap is not a pass. Retain full simulator
-output for diagnosis, even when the official replay only exposes sparse samples.
-Detailed replay captures can explain differences hidden by ordinary exports.
+`tools/check_official_promotion.py` checks fixture reports and full-corpus audit
+receipts for complete coverage and new official failures:
 
-For a candidate correction:
+```sh
+python tools/check_official_promotion.py --baseline-fixtures path/to/baseline/fixtures.json --candidate-fixtures path/to/candidate/fixtures.json --inventory path/to/frozen/jobs.jsonl --baseline-practice path/to/baseline/audit --candidate-practice path/to/candidate/audit --report target/promotion.json
+```
 
-1. Reproduce the original case and identify its first differing observation.
-2. Add a focused regression and nearby boundary/control cases.
-3. Run the official fixture panel, then the affected frozen cohorts.
-4. Compare complete baseline and candidate outputs; investigate every change.
-5. Check worker/prepared equivalence when shared state or execution order changes.
-6. Measure latency separately using identical inputs, output modes and build settings.
+Each audit directory supplies `config.json`, `jobs.jsonl`, `results.jsonl` and
+`summary.json`, including the engine and data identities. The inventory must
+represent the complete intended comparison scope. Omitting corpus arguments
+provides a fixture screen but leaves the promotion gate closed. The command
+reports its decision and does not publish or deploy a build.
 
-Before promoting a behavior change, run the complete frozen active-practice
-comparison and the [official regression gate](ACCURACY.md#official-regression-gate).
-An improvement on one official case or on uma.moe cannot offset a new official
-failure. The gate remains closed if full practice evidence is missing, even when
-all 84 focused regression fixtures pass. Use the authoritative inventory from the capture
-registry; a smaller selected cohort does not establish whole-corpus accuracy.
-
-Third-party simulations support diagnosis but do not override a conflicting
-official capture. See [third-party comparison](UMAMOE-MOVEMENT-20261031.md),
-[validation coverage](VALIDATION-AUDIT-20261022.md) and
-[capture integrity](VALIDATION-HARDENING-20261022.md).
-
-## Historical release checks
-
-The v76 release passed 160 Rust tests, 27 Python tests and 81 official fixtures.
-Its optimization preserved complete outputs across 470,350 frozen official
-captures, including existing Career discrepancies. It also passed 1,995 seed
-sampling comparisons and prepared-library checks. Those are release-specific
-results, not fresh measurements of every later correction.
-See [v76 validation](V76-VALIDATION.md) and [historical reports](README.md#historical-reports).
+Keep [experimental feature](EXPERIMENTAL.md) results separate from default-build
+results. Measure [performance](PERFORMANCE.md) independently using identical
+inputs, output modes and build settings.

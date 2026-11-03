@@ -64,13 +64,6 @@ for execution order, [mathematics](MATHEMATICS.md) for equations and
 | [binary_replay.rs](../src/binary_replay.rs) | Lossless GSIMRP01 packet encoding. |
 | [replay_worker.rs](../src/replay_worker.rs) | Optional JSON encoding helper for eligible full-frame requests. |
 
-## Current accuracy boundaries
-
-- `RaceField::update_pacemaker` retains the incumbent until normal selection or restoration replaces it.
-- `PassingSearch` keeps cached target identity separate from live obstacle routes and evaluates exact-cost ties with body clearance and obstacle-side direction.
-- The inward corridor calculation stores each complete shifted bound as float32 before comparison.
-- Prepared skill reuse preserves fresh mutable preconditions and observers for every seed.
-
 ## Tools and bindings
 
 | Tool | Purpose |

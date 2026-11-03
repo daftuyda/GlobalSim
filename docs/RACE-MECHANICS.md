@@ -1,6 +1,6 @@
 # GlobalSim Race Mechanics
 
-Version 77 · Complete implementation reference · Reviewed 3 November 2026
+Version 77 complete implementation reference
 
 GlobalSim models a race as interacting runners advancing through a seeded sequence of timed updates. Speed, acceleration, stamina, positioning and skills influence one another; a formula alone does not determine the finishing order. This reference brings the existing mechanics guides together and explains the calculations, state changes and ordering used by the validated configuration.
 
@@ -14,11 +14,9 @@ Omitting `experimentalRetailRuntime` selects the conventional runtime, whose ran
 
 This reference describes that validated runtime unless a section explicitly identifies a conventional or optional path. Decimal constants in explanatory equations are readable approximations of stored parameters. Exact parameter text is retained in [the parameter catalogue](PARAMETERS.md), and the source links at the end identify the operation order.
 
-### Evidence
+### Accuracy and coverage
 
-The completed full practice audit matched 696,777 of 696,778 active official captures, or 99.99986% of tested races matching all checked observations. One movement discrepancy remains, with matching raw finish times and placements. The v77 release checks passed 167 Rust tests, 39 Python validation tests and all 84 included official regression fixtures.
-
-The full inventory audit used the frozen 28 October collection and completed on 1 November. Previously verified comparisons were reused only for identical capture, input and complete-output bytes. The 3 November documentation review is not another corpus run. [The validation summary](VALIDATION-SUMMARY-20261103.md) separates those results from third-party comparisons and narrower tests.
+The [accuracy guide](ACCURACY.md) reports aggregate validation results, the observations checked and the limits of that coverage. These mechanics describe the configured implementation; agreement on recorded observations does not establish every unobserved operation of the official game.
 
 ## 2 Units clocks and runner identity
 
@@ -255,7 +253,7 @@ Ordinary checks have a two-second interval and a one-second cooldown after exit.
 
 For Pace Chasers, Late Surgers and End Closers, base minimum/maximum gaps are 3/5, 6.5/7 and 7.5/8 metres. The distance scale is approximately `max(1, 1 + 0.0008 * (D − 1000))`; the Pace Chaser minimum stays unscaled. The multiply-and-add is evaluated with wider arithmetic before storage. At 2,500 m, the Pace Chaser maximum is exactly 11 m in the supported calculation. Equality does not enter the Pace Up lottery or consume its random draw.
 
-Speed Up, Overtake and Pace Up use wisdom-dependent lotteries when applicable. The default pacing logarithm retains its established double-to-single rounding. The optional third-party logarithm calculation is not part of this default. Typical multipliers are approximately 1.04 for Speed Up/Pace Up, 1.05 for Overtake and 0.915 or 0.945 for Pace Down according to phase. The Extra multiplier is approximately 2. For applicable non-rushing checks, a floating draw in [0, 100) must be strictly below `log10(0.1 * boundedWisdom)` times the loaded mode coefficient: normally 20 for Speed Up/Overtake and 15 for Pace Up. The logarithm argument and return have explicit float32 stores. Rushing bypasses that lottery and its draw. Pace Up and Pace Down sample an exit gap from their applicable interval.
+Speed Up, Overtake and Pace Up use wisdom-dependent lotteries when applicable. The default pacing logarithm retains its established double-to-single rounding. Typical multipliers are approximately 1.04 for Speed Up/Pace Up, 1.05 for Overtake and 0.915 or 0.945 for Pace Down according to phase. The Extra multiplier is approximately 2. For applicable non-rushing checks, a floating draw in [0, 100) must be strictly below `log10(0.1 * boundedWisdom)` times the loaded mode coefficient: normally 20 for Speed Up/Overtake and 15 for Pace Up. The logarithm argument and return have explicit float32 stores. Rushing bypasses that lottery and its draw. Pace Up and Pace Down sample an exit gap from their applicable interval.
 
 ### Reference selection and restoration
 
@@ -269,7 +267,7 @@ A section boundary retains the handed-over incumbent until the normal rule repla
 
 Rushing changes HP state and pacing behaviour. It is not merely a displayed status. Initialization and subsequent entry/exit consumers must retain their order. The conventional wisdom chance uses a squared logarithmic expression; the validated path uses its own seeded preparation and runtime state transitions.
 
-Retail rushing entry compares the float32 section quotient `distance / (D / 24)` with `startSection − 1`. Replacing the quotient with a multiplied metre boundary can shift entry by a tick. In a captured 1,600 m case, position 399.9999694824219 m produces a quotient that rounds to exactly 6. An absent rushing section must not start rushing or consume an activation draw.
+Retail rushing entry compares the float32 section quotient `distance / (D / 24)` with `startSection − 1`. Replacing the quotient with a multiplied metre boundary can shift entry by a tick because the quotient can round to the section threshold before the distance reaches the multiplied boundary. An absent rushing section must not start rushing or consume an activation draw.
 
 The loaded rushing parameters use sections 2 through 9 for the sampled start, three-second exit checks, a 55-percent exit parameter and a 12-second forced end. Temporary pacing style depends on the rushing mode. Its effect on reference lookup differs in the optional staged profile and should not be silently applied to the default.
 
@@ -323,7 +321,7 @@ $$
 d_{entry}=6(D/24)
 $$
 
-The expression has the section-length rounding described earlier; it must not be replaced by arbitrary algebraic reassociation. For a 1,150 m course, the boundary is 287.5 m. An observed participant at 287.1053466796875 m is eligible. Flooring this cutoff to 287 m removes an official entry and changes the race.
+The expression has the section-length rounding described earlier; it must not be replaced by arbitrary algebraic reassociation. It retains fractional metres. Flooring the cutoff can reject participants whose positions remain below the fractional boundary and change the race.
 
 Spot Struggle adds approximately `0.0001 * (500 * G)^0.6` to target speed. Its timer duration is approximately `0.012 * sqrt(700 * G)` times the strategy-proficiency coefficient. The retail speed term preserves a float32 root-power result and modifier store. Spot Struggle also changes HP state. Its speed term is added after slope correction. When both base styles start on one tick, Runaway event records precede ordinary Front Runner records. Each group records its cached leader first, followed by partners in the prepared base-style roster order. Sorting ties and larger rosters can affect that order.
 
@@ -343,7 +341,7 @@ $$
 \Delta a=0.0001(160G)^{0.59}
 $$
 
-Loaded coefficients and intermediate stores determine the precise values. An active duel ends under its separation or low-HP conditions. The default low-HP comparison widens the stored values and evaluates `remainingHP / maximumHP < 0.05`. It does not calculate a float32 percentage first. At an observed Kyoto boundary, the wider ratio is below 0.05 while the percentage rounds to exactly 5; using the percentage delays exit by a tick.
+Loaded coefficients and intermediate stores determine the precise values. An active duel ends under its separation or low-HP conditions. The default low-HP comparison widens the stored HP values and evaluates `remainingHP / maximumHP < 0.05` in double precision.
 
 Crossing the finish does not itself end an active retail duel. An eligible racer may invite a finished partner that still meets the other checks. A finisher can also complete its own warmup while the cached pair retains a partner on the final straight. Finishing does not grant another activation to a runner that has already participated.
 
@@ -446,11 +444,9 @@ The retail model is mixed precision. Many parameters and state fields are float3
 
 Official checks cover raw finish times, placements, recorded position/speed/HP/lane, exposed state, skill identities and branch/timing/order observations, durations, visual recipient masks and competition events. Integrity checks also inspect the complete simulator output for structural and temporal consistency. Sparse official frames cannot prove equality on intervening ticks or unexposed state.
 
-The active unresolved practice case is Tokyo dirt 1,600 m, seed 580983021, with 16 runners. It has 85 sampled position differences, at most about 1.221 mm, two HP differences and two spurt-distance differences. Its raw finish times and placements match. It remains a strict failure.
+Third-party simulations help generate hypotheses but do not override conflicting official observations. Matching reported results does not establish equality of all internal decisions.
 
-Third-party simulations help generate hypotheses but do not override conflicting official captures. The full optional uma.moe profile matches 399,947/400,000 sampled reports but only 72/84 official fixtures. Recent restoration proposals fixed some selected third-party failures and regressed more controls, so none was retained. Report agreement does not establish equality of all internal decisions.
-
-Nonzero Career team-rank boundaries, optional later stamina mechanics, custom oversized fields and unsupported Conserve Power cases retain the limits described above. The [accuracy guide](ACCURACY.md) and [current validation summary](VALIDATION-SUMMARY-20261103.md) report the tested scopes without combining incompatible denominators into one score.
+Nonzero team-rank boundaries have synthetic test coverage but lack official validation. Optional later stamina mechanics and unsupported Conserve Power paths contain approximations, and custom oversized fields are outside official validation. See the [accuracy guide](ACCURACY.md) for aggregate results and current coverage limits.
 
 ## 20 Source map and companion references
 
